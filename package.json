@@ -1,0 +1,30 @@
+{
+  "name": "web3data-js",
+  "version": "0.0.1",
+  "description": "A javascript wrapper for accessing amberdata's public API.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "echo \"Error: no linter specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-coverage": "echo \"Error: no test coverage specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/web3data/web3data-js.git"
+  },
+  "keywords": [
+    "javascript",
+    "blockchain",
+    "web3"
+  ],
+  "author": "Taylor Dawson",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/web3data/web3data-js/issues"
+  },
+  "homepage": "https://github.com/web3data/web3data-js#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}
