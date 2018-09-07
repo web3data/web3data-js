@@ -32,6 +32,7 @@
     "babel-register": "^6.26.0",
     "dotenv": "^6.0.0",
     "nock": "^9.6.1",
+    "nyc": "^13.0.1",
     "parcel-bundler": "^1.9.7"
   },
   "dependencies": {

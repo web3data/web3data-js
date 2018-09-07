@@ -1,0 +1,41 @@
+[
+    {
+        "scope": "https://staging-0000-data-api.amberdata.io:443",
+        "method": "GET",
+        "path": "/api/v1/addresses/0x314159265dd8dbb310642f98f50c066173c1259b/statistics",
+        "body": "",
+        "status": 200,
+        "response": {
+            "status": 200,
+            "title": "OK",
+            "description": "Successful request",
+            "payload": {}
+        },
+        "rawHeaders": [
+            "Date",
+            "Fri, 07 Sep 2018 22:30:03 GMT",
+            "Content-Type",
+            "application/json; charset=utf-8",
+            "Content-Length",
+            "75",
+            "Connection",
+            "close",
+            "Set-Cookie",
+            "AWSALB=yBZ6lVX9wZ02mycRksXmJMX0/YfGRjbhKst5p+dvRuIs9yS9B+T7PNkWGGRJ5+/yzyK2Ia1tFMtNAEB0/DL388aa592a9NMIQAiEDJM3YvJmbPoF6Y/5xCXPXl2p; Expires=Fri, 14 Sep 2018 22:30:03 GMT; Path=/",
+            "access-control-allow-origin",
+            "*",
+            "access-control-allow-methods",
+            "GET, PUT, POST, DELETE, OPTIONS, HEAD, PATCH",
+            "access-control-allow-headers",
+            "",
+            "Access-Control-Allow-Credentials",
+            "false",
+            "access-control-max-age",
+            "0",
+            "ETag",
+            "W/\"4b-CF6cAMu50AuzLonS1lkcvIeHGCE\"",
+            "X-Response-Time",
+            "46.711ms"
+        ]
+    }
+]

@@ -2,7 +2,7 @@
     {
         "scope": "https://staging-0000-data-api.amberdata.io:443",
         "method": "GET",
-        "path": "/api/v1/addresses/0x314159265dd8dbb310642f98f50c066173c1259b/information/",
+        "path": "/api/v1/addresses/0x314159265dd8dbb310642f98f50c066173c1259b/information",
         "body": "",
         "status": 200,
         "response": {
@@ -44,7 +44,7 @@
         },
         "rawHeaders": [
             "Date",
-            "Fri, 07 Sep 2018 20:44:36 GMT",
+            "Fri, 07 Sep 2018 22:29:13 GMT",
             "Content-Type",
             "application/json; charset=utf-8",
             "Content-Length",
@@ -52,7 +52,7 @@
             "Connection",
             "close",
             "Set-Cookie",
-            "AWSALB=61L3VEdXy6ludxTevuGZO+sagWaEO4h0dA2+pRqW4GyW7FjUa3s1uNESZtFxfEZ7y/kHPo3B+QMXVvplhdFpNfIuSscEgAcGBZ+N56+6RJGseHSijQOuonXimNEB; Expires=Fri, 14 Sep 2018 20:44:36 GMT; Path=/",
+            "AWSALB=dep02HAqBl70JybK8pY9O7we6/ceKk8m5tZ+ppLjg+0NLROE864UUerLcL7gZR+lSTz0elQG7+DDUyQ6lKmKruvAz7vG6uiNDU5cJZv5bfauCkA7N94mOP+uRYhR; Expires=Fri, 14 Sep 2018 22:29:13 GMT; Path=/",
             "access-control-allow-origin",
             "*",
             "access-control-allow-methods",
@@ -66,7 +66,7 @@
             "ETag",
             "W/\"2b7-esW4beApl0eSXcDfCFlWorDb/TI\"",
             "X-Response-Time",
-            "99.810ms"
+            "90.405ms"
         ]
     }
 ]
