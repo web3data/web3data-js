@@ -4,11 +4,13 @@
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
-    "build": "parcel build index.js",
-    "lint": "echo \"Error: no linter specified\" && exit 1",
-    "test": "ava",
+    "build": "rollup -c",
+    "build-browser": "rollup --config --browserConfig",
+    "build-all": "npm run build; npm run build-browser",
+    "lint": "eslint",
+    "test": "nyc ava",
     "test-fast": "ava --fail-fast",
-    "test-verbose": "ava --verbose"
+    "testVerbose": "ava --verbose"
   },
   "repository": {
     "type": "git",
@@ -28,15 +30,24 @@
   "devDependencies": {
     "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "dotenv": "^6.0.0",
+    "eslint": "^5.5.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
     "nock": "^9.6.1",
     "nyc": "^13.0.1",
-    "parcel-bundler": "^1.9.7"
+    "parcel-bundler": "^1.9.7",
+    "rollup": "^0.65.2",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-commonjs": "^9.1.6",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-uglify": "^5.0.2"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0",
     "got": "^9.2.1",
     "ky": "^0.2.0"
   },
@@ -47,7 +58,6 @@
     "require": [
       "babel-register"
     ],
-    "inherit": true,
-    "verbose": true
+    "inherit": true
   }
 }

@@ -9,18 +9,16 @@ if(!process.env.API_KEY) {
   process.exit(1)
 }
 
-let web3data
-const API_KEY = process.env.API_KEY
-const BLOCKCHAIN_ID = '1c9c969065fcd1cf' /* Ethereum Mainnet */
 const SLUG = 'ethereum-mainnet'
+const CONFIG = {
+  'apiKey': process.env.API_KEY,
+  'blockchainId': '1c9c969065fcd1cf' /* Ethereum Mainnet */
+}
 
 /* ---- Setup and tear down ---- */
-test.before(t => {
-  let config = {
-    'apiKey': API_KEY,
-    'blockchainId': BLOCKCHAIN_ID
-  }
-  web3data = new Web3data(config)
+test.beforeEach(t => {
+
+  let web3data = new Web3data(CONFIG)
 
 })
 
@@ -149,7 +147,7 @@ test('Filters properly', async t => {
     defaultOptions,
   );
 
-  let addressLogs = await web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').logs().filte(filterOpts).retrieve()
+  let addressLogs = await web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
 
   nockDone();
