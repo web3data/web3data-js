@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/amberdata/web3data-js?branch=master)](https://travis-ci.com/amberdata/web3data-js)
+[![Discord](https://img.shields.io/discord/102860784329052160.svg)](https://forum.amberdata.io/)
 
 
 # Web3data Javascript API
@@ -29,7 +30,7 @@ bower install web3data
 ```
 Using CDN:
 ```html
-<script src=".../web3data.min.js"></script>
+<script src=".../web3data-browser.min.js"></script>
 ```
 
 ### Requirements
@@ -37,7 +38,7 @@ Using CDN:
 - npm
 ### Building
 ```bash
-npm run-script build
+npm run build
 ```
 ### Testing
 ```bash
