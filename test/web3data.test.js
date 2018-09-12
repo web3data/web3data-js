@@ -1,24 +1,29 @@
-import Web3data from '../index'
+import Web3Data from '../index'
 import test from 'ava'
 import nock from 'nock'
 import defaultOptions from './helpers/nock'
+import dotenv from 'dotenv'
 
 // Web3data object intestializes and is properly configured
+dotenv.load()
 if(!process.env.API_KEY) {
   console.log("Must set API_KEY value in .env file") //TODO: Elaborate on how to get it
   process.exit(1)
 }
 
+/* ---- Setup and tear down ---- */
 const SLUG = 'ethereum-mainnet'
+const API_KEY = process.env.API_KEY
+const BLOCKCHAIN_ID = '1c9c969065fcd1cf'
+
 const CONFIG = {
-  'apiKey': process.env.API_KEY,
-  'blockchainId': '1c9c969065fcd1cf' /* Ethereum Mainnet */
+  'apiKey': API_KEY,
+  'blockchainId':  BLOCKCHAIN_ID /* Ethereum Mainnet */
 }
 
-/* ---- Setup and tear down ---- */
 test.beforeEach(t => {
 
-  let web3data = new Web3data(CONFIG)
+  t.context.web3data = new Web3Data(CONFIG)
 
 })
 
@@ -35,43 +40,43 @@ test.after('clean up', t => {
 
 /* Test web3data object */
 test('web3data should have object \'config\'', t => {
-  t.truthy(web3data.config)
+  t.truthy(t.context.web3data.config)
 })
 
 test('web3data should have the apikey set', t => {
   //expect(web3data.config['apiKey']).to.equal(API_KEY)
-  t.is(web3data.config['apiKey'], API_KEY)
+  t.is(t.context.web3data.config['apiKey'], API_KEY)
 })
 
 test('web3data should have the correct blockchain id', t => {
-  t.is(web3data.config['blockchainId'], BLOCKCHAIN_ID)
+  t.is(t.context.web3data.config['blockchainId'], BLOCKCHAIN_ID)
 })
 
 test.todo('web3data should have the correct blockchain slug') // TBD
 
 test('throws exception when no config object is supplied', t => {
-  const error = t.throws(() => { new Web3data() }, Error);
+  const error = t.throws(() => { new Web3Data() }, Error);
   t.is(error.message, "No configuration object supplied");
 })
 
 test('throws exception when no api key is supplied', t => {
-  const error = t.throws(() => { new Web3data({}) }, Error);
+  const error = t.throws(() => { new Web3Data({}) }, Error);
   t.is(error.message, "No api key supplied");
 })
 
 test('throws exception when no blockchainid is supplied', t => {
-  const error = t.throws(() => { new Web3data({'apiKey':'apikey'}) }, Error);
+  const error = t.throws(() => { new Web3Data({'apiKey':'apikey'}) }, Error);
   t.is(error.message, "No Blockchain specified");
 })
 
 /* Test addresses method */
 test('throws exception when calling \'addresses\' without hash', t => {
-  const error = t.throws(() => { web3data.addresses() }, Error);
+  const error = t.throws(() => { t.context.web3data.addresses() }, Error);
   t.is(error.message, 'No address hash provided');
 })
 
 // Test info method
-test('Successfully gets address information', async t => {
+test.only('Successfully gets address information', async t => {
   nock.back.setMode('record');
 
   const { nockDone } = await nock.back(
@@ -79,8 +84,8 @@ test('Successfully gets address information', async t => {
     defaultOptions,
   );
 
-  let addressInfo = await web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').info().retrieve()
-  t.is(addressInfo.status, 200)
+  let addressInfo = await t.context.web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').info().retrieve()
+  t.is(addressInfo, 200)
 
   nockDone();
   nock.back.setMode('wild');
@@ -95,8 +100,7 @@ test('gets address stats', async t => {
     defaultOptions,
   );
 
-  let addressStats= await web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').stats().retrieve()
-  console.log(addressStats.status)
+  let addressStats= await t.context.web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').stats().retrieve()
   t.is(addressStats.status, 200)
 
   nockDone();
@@ -112,7 +116,7 @@ test('gets address logs', async t => {
     defaultOptions,
   );
 
-  let addressLogs = await web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').logs().retrieve()
+  let addressLogs = await t.context.web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').logs().retrieve()
   t.is(addressLogs.status, 200)
 
   nockDone();
@@ -147,7 +151,7 @@ test('Filters properly', async t => {
     defaultOptions,
   );
 
-  let addressLogs = await web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').logs().filter(filterOpts).retrieve()
+  let addressLogs = await t.context.web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
 
   nockDone();
