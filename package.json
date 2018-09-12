@@ -4,13 +4,13 @@
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
-    "build": "rollup -c",
-    "build-browser": "rollup --config --browserConfig",
+    "build": "parcel build  index.js --out-dir dist/node --out-file web3data.js --target node",
+    "build-browser": "parcel build  browser.js --out-dir dist/browser --out-file web3data.min.js",
     "build-all": "npm run build; npm run build-browser",
     "lint": "eslint",
     "test": "nyc ava",
-    "test-fast": "ava --fail-fast",
-    "testVerbose": "ava --verbose"
+    "test-fast": "npm run test --fail-fast",
+    "test-verbose": "ava --verbose"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "ava": "^0.25.0",
     "babel-cli": "^6.26.0",
     "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
@@ -40,16 +41,12 @@
     "eslint-plugin-import": "^2.14.0",
     "nock": "^9.6.1",
     "nyc": "^13.0.1",
-    "parcel-bundler": "^1.9.7",
-    "rollup": "^0.65.2",
-    "rollup-plugin-babel": "^3.0.7",
-    "rollup-plugin-commonjs": "^9.1.6",
-    "rollup-plugin-node-resolve": "^3.4.0",
-    "rollup-plugin-uglify": "^5.0.2"
+    "parcel-bundler": "^1.9.7"
   },
   "dependencies": {
     "got": "^9.2.1",
-    "ky": "^0.2.0"
+    "ky": "^0.2.0",
+    "parcel": "^1.9.7"
   },
   "ava": {
     "files": [
