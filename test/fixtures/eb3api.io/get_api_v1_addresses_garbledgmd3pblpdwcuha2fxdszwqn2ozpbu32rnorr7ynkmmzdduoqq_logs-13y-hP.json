@@ -1,0 +1,45 @@
+{
+  "body": "",
+  "method": "GET",
+  "path": "/api/v1/addresses/garbledgmd3pblpdwcuha2fxdszwqn2ozpbu32rnorr7ynkmmzdduoqq/logs",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Date",
+    "Fri, 14 Sep 2018 22:56:07 GMT",
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "104",
+    "Connection",
+    "close",
+    "Set-Cookie",
+    "AWSALB=1sPzYA4/fl19SuDt/kgsm8pxfMumGSM5hIMgAQkxOjr5bjuIuYhEXz4kFqTvkB0fG6T+kVaF/VpQRuE9iGqjeGYk0GfN7/Rx6Dd309Cmu3mGnVDnrLdS7eDWGwWC; Expires=Fri, 21 Sep 2018 22:56:07 GMT; Path=/",
+    "access-control-allow-origin",
+    "*",
+    "access-control-allow-methods",
+    "GET, PUT, POST, DELETE, OPTIONS, HEAD, PATCH",
+    "access-control-allow-headers",
+    "",
+    "Access-Control-Allow-Credentials",
+    "false",
+    "access-control-max-age",
+    "0",
+    "ETag",
+    "W/\"68-14Th6Uhcsae0pSGEoz33ih3ziN0\"",
+    "X-Response-Time",
+    "46.041ms"
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": {
+      "records": [
+      ],
+      "totalRecords": 0
+    },
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}

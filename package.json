@@ -11,8 +11,8 @@
     "build": "npm run lint; npm run build-node; npm run build-browser",
     "lint": "eslint --ext .js --ignore-path .eslintignore .",
     "lintfix": "eslint --fix --ext .js --ignore-path .eslintignore .",
-    "test-record": "cross-env AVA_PLAYBACK=record ",
-    "test": "nyc -s ava",
+    "test-record": "AVA_PLAYBACK=record npm run test",
+    "test": "AVA_PLAYBACK=playback  nyc -s ava",
     "test-fast": "nyc; npm run test --fail-fast",
     "test-verbose": "nyc ava --verbose",
     "clean-fixtures": "rm -r test/fixtures"
@@ -22,9 +22,9 @@
     "url": "git+https://github.com/web3data/web3data-js.git"
   },
   "keywords": [
-    "javascript",
     "blockchain",
-    "web3"
+    "web3",
+    "data"
   ],
   "author": "Taylor Dawson",
   "license": "Apache-2.0",
@@ -59,7 +59,7 @@
   },
   "ava": {
     "files": [
-      "test/*.test.js"
+      "test/web3data.test.js"
     ],
     "require": [
       "babel-register",
