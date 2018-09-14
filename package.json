@@ -4,13 +4,18 @@
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
-    "build": "parcel build  index.js --out-dir dist/node --out-file web3data.js --target node",
+    "build-node": "parcel build  index.js --out-dir dist/node --out-file web3data.js --target node",
+    "altbuild-node": "node scripts/build-script.js",
     "build-browser": "parcel build  browser.js --out-dir dist/browser --out-file web3data.min.js",
-    "build-all": "npm run build; npm run build-browser",
-    "lint": "eslint",
-    "test": "nyc ava",
-    "test-fast": "npm run test --fail-fast",
-    "test-verbose": "ava --verbose"
+    "altbuild-browser": "cross-env BROWSER=true node scripts/build-script.js",
+    "build": "npm run lint; npm run build-node; npm run build-browser",
+    "lint": "eslint --ext .js --ignore-path .eslintignore .",
+    "lintfix": "eslint --fix --ext .js --ignore-path .eslintignore .",
+    "test-record": "cross-env AVA_PLAYBACK=record ",
+    "test": "nyc -s ava",
+    "test-fast": "nyc; npm run test --fail-fast",
+    "test-verbose": "nyc ava --verbose",
+    "clean-fixtures": "rm -r test/fixtures"
   },
   "repository": {
     "type": "git",
@@ -29,32 +34,38 @@
   "homepage": "https://github.com/web3data/web3data-js#readme",
   "devDependencies": {
     "ava": "^0.25.0",
+    "ava-playback": "0.0.14",
     "babel-cli": "^6.26.0",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
+    "browser-env": "^3.2.5",
     "dotenv": "^6.0.0",
     "eslint": "^5.5.0",
     "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.0.1",
     "eslint-plugin-import": "^2.14.0",
-    "nock": "^9.6.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "node-fetch": "^2.2.0",
     "nyc": "^13.0.1",
+    "parcel": "^1.9.7",
     "parcel-bundler": "^1.9.7"
   },
   "dependencies": {
     "got": "^9.2.1",
-    "ky": "^0.2.0",
-    "parcel": "^1.9.7"
+    "ky": "^0.2.0"
   },
   "ava": {
     "files": [
       "test/*.test.js"
     ],
     "require": [
-      "babel-register"
+      "babel-register",
+      "ava-playback"
     ],
+    "playbacks": "test/fixtures",
     "inherit": true
   }
 }
