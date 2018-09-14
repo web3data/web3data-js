@@ -26,13 +26,6 @@ test.beforeEach(t => {
   t.context.web3data = new Web3Data(CONFIG)
 })
 
-// test.afterEach(t => {
-// });
-
-// test.after('clean up', t => {
-// })
-
-
 /**********************************
  * ----------- Tests  ----------- *
  **********************************/
