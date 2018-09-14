@@ -1,5 +1,6 @@
-import web3data from './lib/web3data-browser'
-import { load } from 'dotenv'
+import Web3DataBrowser from './lib/web3data'
+import retrieve from './lib/retrieve'
 
-load()
-export default web3data
+// Overriden to use the for browsers
+Web3DataBrowser.prototype.retrieve = retrieve
+module.exports = Web3DataBrowser
