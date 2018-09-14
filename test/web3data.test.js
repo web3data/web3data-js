@@ -12,7 +12,9 @@ if(!process.env.API_KEY) {
 /**********************************
  * -------- Tests Setup ---------- *
  **********************************/
-
+const ADDRESS = 'garbledgmd3pblpdwcuha2fxdszwqn2ozpbu32rnorr7ynkmmzdduoqq'
+const TRANSACTION = '2e8b9b4b7df7f7ae709020c05b9a315137a7acab21c0fcf3b317992baa356197'
+const TOKEN_HASH = ''
 const SLUG = ''
 const API_KEY = process.env.API_KEY
 const BLOCKCHAIN_ID = '822e2ebe02f74df8'/* Stellar */
@@ -69,35 +71,50 @@ test('throws exception when calling \'addresses\' without hash', t => {
 })
 
 /*********** Test info() ***********/
-test.only('Successfully gets address information', async t => {
-  let addressInfo = await t.context.web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').info().retrieve()
+test('Successfully gets address information', async t => {
+  let addressInfo = await t.context.web3data.addresses(ADDRESS).info().retrieve()
   t.is(addressInfo.status, 200)
 })
 
 /*********** Test stats() ***********/
 test('gets address stats', async t => {
-  let addressStats= await t.context.web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').stats().retrieve()
+  let addressStats= await t.context.web3data.addresses(ADDRESS).stats().retrieve()
   t.is(addressStats.status, 200)
 })
 
 /*********** Test logs() ***********/
 test('gets address logs', async t => {
-  let addressLogs = await t.context.web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').logs().retrieve()
+  let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().retrieve()
   t.is(addressLogs.status, 200)
 })
 
 /*********** Test transactions() ***********/
-test.todo('gets all transactions of the address'/*, t => {}*/)
-test.todo('gets single transaction of the address')
-test.todo('gets non existent transaction of the address and receives error')
+test('gets all transactions of the address', async t => {
+  let addressTransactions = await t.context.web3data.addresses(ADDRESS).transactions().retrieve()
+  t.is(addressTransactions.status, 200)
+})
+test('gets single transaction of the address', async t => {
+  let addressTransaction = await t.context.web3data.addresses(ADDRESS).transactions(TRANSACTION).retrieve()
+  t.is(addressTransaction.status, 200)
+})
 
+//, async t => {}
 /*********** Test messages() ***********/
-test.todo('gets all messages of the address')
+test('gets all messages of the address', async t => {
+  let addressMessages = await t.context.web3data.addresses(ADDRESS).messages().retrieve()
+  t.is(addressMessages.status, 200)
+})
 test.todo('gets single messages of the address')
 
 /*********** Test tokens() ***********/
-test.todo('gets all tokens of the address')
-test.todo('gets single token of the address')
+test.skip('<--REASON: endpoint returns 400-->gets all tokens of the address', async t => {
+  let addressTokens = await t.context.web3data.addresses(ADDRESS).tokens().retrieve()
+  t.is(addressTokens.status, 200)
+})
+test.skip('gets single token of the address', async t => {
+  let addressToken = await t.context.web3data.addresses(ADDRESS).tokens(TOKEN_HASH).retrieve()
+  t.is(addressToken.status, 200)
+})
 
 /**********************************
  * ------- Test Modifiers ------- *
@@ -106,6 +123,6 @@ test.todo('gets single token of the address')
 /*********** Test filters() ***********/
 test('Filters properly', async t => {
   const filterOpts = {'blockNumber':6237323}
-  let addressLogs = await t.context.web3data.addresses('0x314159265dd8dbb310642f98f50c066173c1259b').logs().filter(filterOpts).retrieve()
+  let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
 })

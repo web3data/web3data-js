@@ -1,0 +1,42 @@
+{
+  "body": "",
+  "method": "GET",
+  "path": "/api/v1/addresses/garbledgmd3pblpdwcuha2fxdszwqn2ozpbu32rnorr7ynkmmzdduoqq/tokens",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Date",
+    "Fri, 14 Sep 2018 23:19:09 GMT",
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "143",
+    "Connection",
+    "close",
+    "Set-Cookie",
+    "AWSALB=pz6xHPqtVP41pzR2ysVELOSbRf6+HHKsj6aow7bjk/lEDKHD6zU+BFXnxwdN1xdnZOkd5FPA+RrAVWZM/hl5+yRilE6WFdAyCikOpBazF66gMTahRHFvbcU9BVfJ; Expires=Fri, 21 Sep 2018 23:19:09 GMT; Path=/",
+    "access-control-allow-origin",
+    "*",
+    "access-control-allow-methods",
+    "GET, PUT, POST, DELETE, OPTIONS, HEAD, PATCH",
+    "access-control-allow-headers",
+    "",
+    "Access-Control-Allow-Credentials",
+    "false",
+    "access-control-max-age",
+    "0",
+    "ETag",
+    "W/\"8f-zQ9RNBJi6IbDdu338K9EVvIKl+Q\"",
+    "X-Response-Time",
+    "72.395ms"
+  ],
+  "response": {
+    "description": "Request was invalid or cannot be served. See message for details",
+    "error": true,
+    "message": "",
+    "status": 400,
+    "title": "BAD REQUEST"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 400
+}

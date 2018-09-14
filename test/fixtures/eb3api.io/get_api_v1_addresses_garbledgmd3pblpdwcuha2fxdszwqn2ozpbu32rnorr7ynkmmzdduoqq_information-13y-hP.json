@@ -1,0 +1,42 @@
+{
+  "body": "",
+  "method": "GET",
+  "path": "/api/v1/addresses/garbledgmd3pblpdwcuha2fxdszwqn2ozpbu32rnorr7ynkmmzdduoqq/information",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Date",
+    "Fri, 14 Sep 2018 22:55:30 GMT",
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "75",
+    "Connection",
+    "close",
+    "Set-Cookie",
+    "AWSALB=jQHa0+yEVThqfdB7/uzWWYBdhruSecPBgDWeGh3P3FAO1aTaTd9QhpKu9NCuynibmFQodHc2+79rmUnwxaFeX3QzQETK8wxk3Px86/jl58f9iOq7GOVlz81Crw3A; Expires=Fri, 21 Sep 2018 22:55:30 GMT; Path=/",
+    "access-control-allow-origin",
+    "*",
+    "access-control-allow-methods",
+    "GET, PUT, POST, DELETE, OPTIONS, HEAD, PATCH",
+    "access-control-allow-headers",
+    "",
+    "Access-Control-Allow-Credentials",
+    "false",
+    "access-control-max-age",
+    "0",
+    "ETag",
+    "W/\"4b-rCQl0rjTB+KMh4eiVVMQpAvcFT8\"",
+    "X-Response-Time",
+    "79.068ms"
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": [
+    ],
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}
