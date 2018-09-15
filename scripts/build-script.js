@@ -11,19 +11,24 @@ const entryFiles = Path.join(__dirname, '../browser.js');
 const optionsBrowser = {
   outDir: './dist/browser',
   outFile: 'web3data.min.js',
-  target: 'browser'
+  target: 'browser',
+  detailedReport: true
 };
 
-// Bundler options for browser
+// Bundler options for node
 const optionsNode = {
   outDir: './dist/node',
   outFile: 'web3data.js',
-  target: 'node'
+  target: 'node',
+  detailedReport: true
 };
 
 async function runBundle() {
 
+  // TODO: transpile ky
+  
   let options = optionsBrowser
+
   console.log(options)
   // Initializes a bundler using the entrypoint location and options provided
   const bundler = new Bundler(entryFiles, options);
