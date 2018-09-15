@@ -4,15 +4,15 @@
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
-    "build-node": "parcel build  index.js --out-dir dist/node --out-file web3data.js --target node",
-    "build-browser": "parcel build  browser.js --out-dir dist/browser --out-file web3data.min.js",
-    "build": "npm run lint; npm run build-node; npm run build-browser",
+    "build-node": "cross-env TARGET=NODE node scripts/build-script.js",
+    "build-browser": "cross-env TARGET=BROWSER node scripts/build-script.js",
+    "build": "cross-env TARGET=ALL node scripts/build-script.js",
     "lint": "eslint --ext .js --ignore-path .eslintignore .",
     "lintfix": "eslint --fix --ext .js --ignore-path .eslintignore .",
-    "test-record": "AVA_PLAYBACK=record npm run test",
-    "test": "AVA_PLAYBACK=playback  nyc -s ava",
-    "test-fast": "nyc; npm run test --fail-fast",
-    "test-verbose": "nyc ava --verbose",
+    "test-record": "cross-env AVA_PLAYBACK=record nyc -s ava",
+    "test": "cross-env AVA_PLAYBACK=playback nyc -s ava",
+    "test-fast": "cross-env AVA_PLAYBACK=playback nyc -s ava --fail-fast",
+    "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose",
     "clean-fixtures": "rm -r test/fixtures"
   },
   "repository": {
@@ -49,15 +49,17 @@
     "node-fetch": "^2.2.0",
     "nyc": "^13.0.1",
     "parcel": "^1.9.7",
-    "parcel-bundler": "^1.9.7"
+    "parcel-bundler": "^1.9.7",
+    "prettier": "^1.14.2"
   },
   "dependencies": {
+    "cross-env": "^5.2.0",
     "got": "^9.2.1",
     "ky": "^0.2.0"
   },
   "ava": {
     "files": [
-      "test/web3data.test.js"
+      "test/web3data-browser.test.js"
     ],
     "require": [
       "babel-register",

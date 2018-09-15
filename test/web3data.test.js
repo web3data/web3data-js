@@ -2,8 +2,8 @@ import fetch, {Headers} from 'node-fetch'
 import Web3Data from '../index'
 import test from 'ava'
 import dotenv from 'dotenv'
-
 dotenv.load()
+
 if(!process.env.API_KEY) {
   console.error("Must set API_KEY value in .env file") //TODO: Elaborate on how to get it
   process.exit(1)
@@ -131,14 +131,14 @@ test('<---PENDING IMPLEMENTION --->Filters properly -- blocknumber', async t => 
 
 /* -== Test to address ==- */
 test.skip('<---PENDING IMPLEMENTION --->Filters properly -- to address', async t => {
-  const ADDRESS =
+  const ADDRESS = ''
   const filterOpts = {'to': ADDRESS}
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
 })
 /* -== Test from address ==- */
 test.skip('<---PENDING IMPLEMENTION --->Filters properly -- from address', async t => {
-  const ADDRESS =
+  const ADDRESS = ''
   const filterOpts = {'from': ADDRESS}
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
