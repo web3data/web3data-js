@@ -11,6 +11,7 @@
     "lintfix": "eslint --fix --ext .js --ignore-path .eslintignore .",
     "test-record": "cross-env AVA_PLAYBACK=record nyc -s ava",
     "test": "cross-env AVA_PLAYBACK=playback nyc -s ava",
+    "test-live": "nyc -s ava",
     "test-fast": "cross-env AVA_PLAYBACK=playback nyc -s ava --fail-fast",
     "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose",
     "clean-fixtures": "rm -r test/fixtures"
@@ -59,7 +60,7 @@
   },
   "ava": {
     "files": [
-      "test/web3data-browser.test.js"
+      "test/*.test.js"
     ],
     "require": [
       "babel-register",

@@ -47,6 +47,11 @@ test('web3data should have the correct blockchain id', t => {
 
 test.todo('web3data should have the correct blockchain slug') // TBD
 
+test('web3data should have the correct headers set', t => {
+  t.is(t.context.web3data.headers['x-amberdata-api-key'], API_KEY)
+  t.is(t.context.web3data.headers['x-amberdata-blockchain-id'], BLOCKCHAIN_ID)
+})
+
 test('throws exception when no config object is supplied', t => {
   const error = t.throws(() => { new Web3Data() }, Error);
   t.is(error.message, "No configuration object supplied");
@@ -102,7 +107,7 @@ test('<---PENDING IMPLEMENTION --->gets single transaction of the address', asyn
 /*********** Test functions() ***********/
 test('gets all functions of the address', async t => {
   let addressFunctions = await t.context.web3data.addresses(ADDRESS).functions().retrieve()
-  t.is(addressfunctions.status, 200)
+  t.is(addressFunctions.status, 200)
 })
 test.todo('<---PENDING IMPLEMENTION --->gets single functions of the address')
 
