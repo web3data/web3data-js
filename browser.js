@@ -1,4 +1,3 @@
-//import 'babel-polyfill'
 import Web3DataBrowser from './lib/web3data'
 import retrieve from './lib/retrieve'
 

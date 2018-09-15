@@ -33,7 +33,7 @@ test.beforeEach(t => {
  **********************************/
 
 /*********** Test web3data() ***********/
-test('web3data should have object \'config\'', t => {
+test.only('web3data should have object \'config\'', t => {
   t.truthy(t.context.web3data.config)
 })
 
