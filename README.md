@@ -30,20 +30,37 @@ bower install web3data
 ```
 Using CDN:
 ```html
-<script src=".../web3data-browser.min.js"></script>
+<script src=".../web3data.min.js"></script>
 ```
 
 ### Requirements
 - Node.js
 - npm
 ### Building
+
+#### Builds for node and browser
+
 ```bash
 npm run build
 ```
+
+#### Builds just for node
+
+```bash
+npm run build-node
+```
+
+#### Builds just for browser
+```bash
+npm run build-browser
+```
+
 ### Testing
 ```bash
 npm test
 ```
+
+
 ## Community
 - [Discourse](https://amberdata.trydiscourse.com)
 
