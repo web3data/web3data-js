@@ -69,10 +69,10 @@ async function bundelBrowser() {
 
   const browserBundler = new Bundler(entryFileBrowser, optionsBrowser);
   const browserBundle = await browserBundler.bundle();
-  fs.unlink('./kympiled.js', (err) => {
-  if (err) throw err;
-  console.log('./kympiled.js was deleted');
-  })
+  // fs.unlink('./kympiled.js', (err) => {
+  // if (err) throw err;
+  // console.log('./kympiled.js was deleted');
+  // })
 }
 
 async function bundelNode() {

@@ -1,4 +1,5 @@
 import fetch, {Headers} from 'node-fetch'
+import 'babel-polyfill'
 import Web3Data from  '../browser'
 import test from 'ava'
 import dotenv from 'dotenv'
@@ -76,7 +77,7 @@ test('throws exception when calling \'addresses\' without hash', t => {
 })
 
 /*********** Test info() ***********/
-test.only('Successfully gets address information', async t => {
+test('Successfully gets address information', async t => {
   let addressInfo = await t.context.web3data.addresses(ADDRESS).info().retrieve()
   t.is(addressInfo.status, 200)
 })
@@ -107,7 +108,7 @@ test('<---PENDING IMPLEMENTION --->gets single transaction of the address', asyn
 /*********** Test functions() ***********/
 test('gets all functions of the address', async t => {
   let addressFunctions = await t.context.web3data.addresses(ADDRESS).functions().retrieve()
-  t.is(addressfunctions.status, 200)
+  t.is(addressFunctions.status, 200)
 })
 test.todo('<---PENDING IMPLEMENTION --->gets single functions of the address')
 
@@ -158,5 +159,6 @@ test('Test pagination: limit & offset', async t => {
   }
   let addressTransactions = await t.context.web3data.addresses(ADDRESS).transactions().limit(PAGE_SIZE).offset(0).retrieve()
   t.is(addressTransactions.status, 200)
+  console.log(addressTransactions.body)
   t.is(addressTransactions.payload.records.length, PAGE_SIZE)
 })
