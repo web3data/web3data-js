@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build-node": "parcel build  index.js --out-dir dist/node --out-file web3data.js --target node",
-    "altbuild-node": "node scripts/build-script.js",
     "build-browser": "parcel build  browser.js --out-dir dist/browser --out-file web3data.min.js",
-    "altbuild-browser": "cross-env BROWSER=true node scripts/build-script.js",
     "build": "npm run lint; npm run build-node; npm run build-browser",
     "lint": "eslint --ext .js --ignore-path .eslintignore .",
     "lintfix": "eslint --fix --ext .js --ignore-path .eslintignore .",
