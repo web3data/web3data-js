@@ -1,0 +1,91 @@
+{
+  "body": "",
+  "method": "GET",
+  "path": "/api/v1/addresses/0x595596f4fbb9fff1b610e5d67c41e8928244a622/transactions",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Date",
+    "Mon, 17 Sep 2018 21:16:32 GMT",
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "1286",
+    "Connection",
+    "close",
+    "Set-Cookie",
+    "AWSALB=cX95j2flcCt+Y7gYdydoVqdE3zL2HGw1qgJDY8TDQodh6xjE2ENLMuW0YPDBuV+I5aupDjVeOhPI7qnFM+/0XdLFWtWfJlcJSwwXWLTq7s1JDxPaLgnmTda9btLv; Expires=Mon, 24 Sep 2018 21:16:32 GMT; Path=/",
+    "access-control-allow-origin",
+    "*",
+    "access-control-allow-methods",
+    "GET, PUT, POST, DELETE, OPTIONS, HEAD, PATCH",
+    "access-control-allow-headers",
+    "",
+    "Access-Control-Allow-Credentials",
+    "false",
+    "access-control-max-age",
+    "0",
+    "ETag",
+    "W/\"506-yoN0we1sXfYbQG9A+CTRwQRv4IM\"",
+    "X-Response-Time",
+    "132.863ms"
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": {
+      "records": [
+        {
+          "blockHash": "de529e287a8389a90d39a58a5a9dd3bdff4593fda05f66d9a8c96066977a40fd",
+          "blockNumber": "6329407",
+          "blockchainId": null,
+          "contractAddress": null,
+          "cumulativeGasUsed": "6802964",
+          "from": "595596f4fbb9fff1b610e5d67c41e8928244a622",
+          "gas": "21000",
+          "gasPrice": "6000000000",
+          "gasUsed": "21000",
+          "hash": "07daa87e6ae02fe18f47c54443d336f951039f53ce9b82d3eb21f09f44950e73",
+          "inputSize": 2,
+          "nonce": "0",
+          "numLogs": "0",
+          "optionalProperties": {
+          },
+          "status": "0x1",
+          "timestamp": 1536917670000,
+          "timestampNanoseconds": 0,
+          "to": "aac4d61dfd5d99101c11dd7e4d60f3ce28b29e96",
+          "transactionIndex": "151",
+          "value": "72469610000000000"
+        },
+        {
+          "blockHash": "4cc36794a59fb67cda0eee7ed4af0fc2207bf06769d13f5828e0593491ec0acc",
+          "blockNumber": "6329354",
+          "blockchainId": null,
+          "contractAddress": null,
+          "cumulativeGasUsed": "1002426",
+          "from": "0681d8db095565fe8a346fa0277bffde9c0edbbf",
+          "gas": "21000",
+          "gasPrice": "45000000000",
+          "gasUsed": "21000",
+          "hash": "a06939d181f003de294c310492d0c9e6a5a3e44f085c7d6ddffff0b3dbc763c3",
+          "inputSize": 2,
+          "nonce": "980502",
+          "numLogs": "0",
+          "optionalProperties": {
+          },
+          "status": "0x1",
+          "timestamp": 1536916737000,
+          "timestampNanoseconds": 0,
+          "to": "595596f4fbb9fff1b610e5d67c41e8928244a622",
+          "transactionIndex": "26",
+          "value": "72595610000000000"
+        }
+      ],
+      "totalRecords": 2
+    },
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}

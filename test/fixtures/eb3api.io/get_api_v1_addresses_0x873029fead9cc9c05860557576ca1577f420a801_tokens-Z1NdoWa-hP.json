@@ -1,0 +1,95 @@
+{
+  "body": "",
+  "method": "GET",
+  "path": "/api/v1/addresses/0x873029fead9cc9c05860557576ca1577f420a801/tokens",
+  "queries": {
+    "tokenAddress": "0x744d70fdbe2ba4cf95131626614a1763df805b9e"
+  },
+  "rawHeaders": [
+    "Date",
+    "Sun, 16 Sep 2018 05:48:45 GMT",
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "1054",
+    "Connection",
+    "close",
+    "Set-Cookie",
+    "AWSALB=t+b9PEVy1orWGWEcJ6Fvx2C4G/Pkd8Im6HSxr8ngR+fVVnqX3p36NBAiaVeIxifUI14BacHU80YkAKoKjLDXh0XEQcuqPjp8pspDhEZjrwxiqF+u/M8Dh7eApegz; Expires=Sun, 23 Sep 2018 05:48:44 GMT; Path=/",
+    "access-control-allow-origin",
+    "*",
+    "access-control-allow-methods",
+    "GET, PUT, POST, DELETE, OPTIONS, HEAD, PATCH",
+    "access-control-allow-headers",
+    "",
+    "Access-Control-Allow-Credentials",
+    "false",
+    "access-control-max-age",
+    "0",
+    "ETag",
+    "W/\"41e-Unjk6cbA+kaT1yorIheae8WMUXA\"",
+    "X-Response-Time",
+    "218.820ms"
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": {
+      "records": [
+        {
+          "address": "3dc6408c31a50a51d14e0e6425c5059953832c6a",
+          "balance": "48321269594009229999999700",
+          "blockchainId": null,
+          "decimals": "18",
+          "isERC20": true,
+          "isERC721": false,
+          "name": "CCASH+",
+          "symbol": "CCASH+"
+        },
+        {
+          "address": "935636cd4e6a52227c97e68fe2c299305bd6f705",
+          "balance": "98956253470745839999999700",
+          "blockchainId": null,
+          "decimals": "18",
+          "isERC20": true,
+          "isERC721": false,
+          "name": "CCASH",
+          "symbol": "CC"
+        },
+        {
+          "address": "7d8344b6cbe6c2a26d56cbb5af75faebe47a7846",
+          "balance": "90000000000000000000000",
+          "blockchainId": null,
+          "decimals": "18",
+          "isERC20": true,
+          "isERC721": false,
+          "name": "XCOIN",
+          "symbol": "XCOIN"
+        },
+        {
+          "address": "212d95fccdf0366343350f486bda1ceafc0c2d63",
+          "balance": "0",
+          "blockchainId": null,
+          "decimals": "18",
+          "isERC20": true,
+          "isERC721": false,
+          "name": "blockwell.ai KYC Casper Token",
+          "symbol": "blockwell.ai KYC Casper Token"
+        },
+        {
+          "address": "e530441f4f73bdb6dc2fa5af7c3fc5fd551ec838",
+          "balance": "610000",
+          "decimals": "4",
+          "isERC20": true,
+          "isERC721": false,
+          "name": "GSENetwork",
+          "symbol": "GSE"
+        }
+      ],
+      "totalRecords": 5
+    },
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}
