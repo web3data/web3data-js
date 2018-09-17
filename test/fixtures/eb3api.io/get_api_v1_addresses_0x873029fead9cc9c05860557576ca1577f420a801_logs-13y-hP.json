@@ -1,0 +1,45 @@
+{
+  "body": "",
+  "method": "GET",
+  "path": "/api/v1/addresses/0x873029fead9cc9c05860557576ca1577f420a801/logs",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Date",
+    "Sun, 16 Sep 2018 05:48:44 GMT",
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "104",
+    "Connection",
+    "close",
+    "Set-Cookie",
+    "AWSALB=XCG+1oDhiQAc+hu+aIPZJWmEzDh4pniQFJvdfiZsQUpoX0Q3EXC3d9j+qk7LOyKuyt6gOcVyknFiibv+D1q+oVG+wYl2iaSp/ahL1QZA6E41D+XnTLu2SJWFV3uT; Expires=Sun, 23 Sep 2018 05:48:44 GMT; Path=/",
+    "access-control-allow-origin",
+    "*",
+    "access-control-allow-methods",
+    "GET, PUT, POST, DELETE, OPTIONS, HEAD, PATCH",
+    "access-control-allow-headers",
+    "",
+    "Access-Control-Allow-Credentials",
+    "false",
+    "access-control-max-age",
+    "0",
+    "ETag",
+    "W/\"68-14Th6Uhcsae0pSGEoz33ih3ziN0\"",
+    "X-Response-Time",
+    "55.573ms"
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": {
+      "records": [
+      ],
+      "totalRecords": 0
+    },
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}

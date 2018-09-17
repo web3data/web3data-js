@@ -1,0 +1,57 @@
+{
+  "body": "",
+  "method": "GET",
+  "path": "/api/v1/addresses/0x873029fead9cc9c05860557576ca1577f420a801/information",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Date",
+    "Sun, 16 Sep 2018 05:48:44 GMT",
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "384",
+    "Connection",
+    "close",
+    "Set-Cookie",
+    "AWSALB=9FdUmLP2lXJMZqz9Zzs/IICxv8kZIqsRJQ27ytOKhZbhHxWcvtM0Hvr7iup9D0RXzQoMKVOCTO9nTPff8nUbi5xYk1T0fHU9Qoej1A2UX9/NpI2mjuMdJ+NXWl2e; Expires=Sun, 23 Sep 2018 05:48:44 GMT; Path=/",
+    "access-control-allow-origin",
+    "*",
+    "access-control-allow-methods",
+    "GET, PUT, POST, DELETE, OPTIONS, HEAD, PATCH",
+    "access-control-allow-headers",
+    "",
+    "Access-Control-Allow-Credentials",
+    "false",
+    "access-control-max-age",
+    "0",
+    "ETag",
+    "W/\"180-NQZQL3cGLqHyy5KnsHHy68ZSvp8\"",
+    "X-Response-Time",
+    "60.466ms"
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": [
+      {
+        "contractTypes": [
+          "Token"
+        ],
+        "firstSeen": "2018-06-29T10:55:10.000Z",
+        "network": {
+          "blockchainId": "1c9c969065fcd1cf",
+          "link": "https://ethereum-mainnet.amberdata.io/addresses/0x873029fead9cc9c05860557576ca1577f420a801",
+          "name": "Ethereum",
+          "network": "Mainnet",
+          "slug": "ethereum-mainnet"
+        },
+        "probability": 1,
+        "type": "address"
+      }
+    ],
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}
