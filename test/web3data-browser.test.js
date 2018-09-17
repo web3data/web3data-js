@@ -19,6 +19,7 @@ if(!process.env.API_KEY) {
  * -------- Tests Setup ---------- *
  **********************************/
 const ADDRESS = '0x873029fead9cc9c05860557576ca1577f420a801'
+const ADDRESS_XS = '0x595596f4fbb9fff1b610e5d67c41e8928244a622'
 const TX_HASH = '0x7a3dbdc6f5b8b748d972ee9e35ecea6ff62a624816c944bf2419c430156c54ba'
 const TOKEN_HASH = '0x744d70fdbe2ba4cf95131626614a1763df805b9e' /* Status Network Token */
 const SLUG = ''
@@ -96,10 +97,11 @@ test('gets address logs', async t => {
 
 /*********** Test transactions() ***********/
 test('gets all transactions of the address', async t => {
-  let addressTransactions = await t.context.web3data.addresses(ADDRESS).transactions().retrieve()
+  let addressTransactions = await t.context.web3data.addresses(ADDRESS_XS).transactions().retrieve()
+  console.log(`addressTransactions${addressTransactions}`)
   t.is(addressTransactions.status, 200)
 })
-test('<---PENDING IMPLEMENTION --->gets single transaction of the address', async t => {
+test.skip('<---PENDING IMPLEMENTION --->gets single transaction of the address', async t => {
   let addressTransaction = await t.context.web3data.addresses(ADDRESS).transactions(TX_HASH).retrieve()
   t.is(addressTransaction.status, 200)
 })
@@ -107,17 +109,20 @@ test('<---PENDING IMPLEMENTION --->gets single transaction of the address', asyn
 
 /*********** Test functions() ***********/
 test('gets all functions of the address', async t => {
-  let addressFunctions = await t.context.web3data.addresses(ADDRESS).functions().retrieve()
+  let addressFunctions = await t.context.web3data.addresses(ADDRESS_XS).functions().retrieve()
   t.is(addressFunctions.status, 200)
 })
-test.todo('<---PENDING IMPLEMENTION --->gets single functions of the address')
+test('<---PENDING IMPLEMENTION --->gets single functions of the address', async t => {
+  let addressFunction = await t.context.web3data.addresses(ADDRESS_XS).functions(TX_HASH).retrieve()
+  t.is(addressFunction.status, 200)
+})
 
 /*********** Test tokens() ***********/
 test('gets all tokens of the address', async t => {
   let addressTokens = await t.context.web3data.addresses(ADDRESS).tokens().retrieve()
   t.is(addressTokens.status, 200)
 })
-test('gets single token of the address', async t => {
+test('<---PENDING IMPLEMENTION --->gets single token of the address', async t => {
   let addressToken = await t.context.web3data.addresses(ADDRESS).tokens(TOKEN_HASH).retrieve()
   t.is(addressToken.status, 200)
 })
@@ -142,6 +147,7 @@ test.skip('<---PENDING IMPLEMENTION --->Filters properly -- to address', async t
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
 })
+
 /* -== Test from address ==- */
 test.skip('<---PENDING IMPLEMENTION --->Filters properly -- from address', async t => {
   const ADDRESS = ''
@@ -151,6 +157,8 @@ test.skip('<---PENDING IMPLEMENTION --->Filters properly -- from address', async
 })
 
 /*********** Test pagination ***********/
+
+/* -== Test limit() offset() ==- */
 test('Test pagination: limit & offset', async t => {
   const PAGE_SIZE = 3
   const filterOpts = {
@@ -159,6 +167,29 @@ test('Test pagination: limit & offset', async t => {
   }
   let addressTransactions = await t.context.web3data.addresses(ADDRESS).transactions().limit(PAGE_SIZE).offset(0).retrieve()
   t.is(addressTransactions.status, 200)
-  console.log(addressTransactions.body)
   t.is(addressTransactions.payload.records.length, PAGE_SIZE)
+})
+
+/* -== Test size() page() ==- */
+test('Test pagination: size & page', async t => {
+  const PAGE_SIZE = 3
+  const filterOpts = {
+    'page': 0,
+    'size': PAGE_SIZE
+  }
+  let addressTransactions = await t.context.web3data.addresses(ADDRESS).transactions().size(PAGE_SIZE).page(0).retrieve()
+  t.is(addressTransactions.status, 200)
+  t.is(addressTransactions.payload.records.length, PAGE_SIZE)
+})
+
+/* -== Test orderBy() ==- */
+test('<---PENDING IMPLEMENTION --->Orderby: timestamp', async t => {
+  let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().orderBy('timestamp').retrieve()
+  t.is(addressLogs.status, 200)
+})
+
+/* -== Test dirction() ==- */
+test('<---PENDING IMPLEMENTION --->Dirction: asc|desc', async t => {
+  let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().direction('asc').retrieve()
+  t.is(addressLogs.status, 200)
 })
