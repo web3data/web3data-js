@@ -8,10 +8,10 @@
     "build-browser": "cross-env NODE_ENV=production TARGET=BROWSER node scripts/build-script.js",
     "build": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js",
     "build-clean": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js clean",
-    "lint": "eslint --ext .js --ignore-path .eslintignore .",
-    "lintfix": "eslint --fix --ext .js --ignore-path .eslintignore .",
+    "lint": "xo",
+    "lintfix": "xo --fix",
     "test-record": "cross-env AVA_PLAYBACK=record nyc -s ava",
-    "test": "cross-env AVA_PLAYBACK=playback nyc -s ava",
+    "test": "xo --quiet && cross-env AVA_PLAYBACK=playback nyc -s ava",
     "test-live": "nyc -s ava",
     "test-fast": "cross-env AVA_PLAYBACK=playback nyc -s ava --fail-fast",
     "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose",
@@ -42,18 +42,14 @@
     "babel-preset-env": "^1.7.0",
     "babel-register": "^6.26.0",
     "browser-env": "^3.2.5",
+    "cross-env": "^5.2.0",
     "dotenv": "^6.0.0",
-    "eslint": "^5.5.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-config-prettier": "^3.0.1",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-prettier": "^2.6.2",
     "node-fetch": "^2.2.0",
     "nyc": "^13.0.1",
     "parcel": "^1.9.7",
     "parcel-bundler": "^1.9.7",
     "prettier": "^1.14.2",
-    "cross-env": "^5.2.0"
+    "xo": "^0.23.0"
   },
   "dependencies": {
     "got": "^9.2.1",
@@ -69,5 +65,10 @@
     ],
     "playbacks": "test/fixtures",
     "inherit": true
+  },
+  "xo": {
+      "semicolon": false,
+      "space": true,
+      "prettier": true
   }
 }
