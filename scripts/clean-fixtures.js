@@ -1,0 +1,1 @@
+require('./deleteDir')('./test/fixtures')

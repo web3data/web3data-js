@@ -4,9 +4,10 @@
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
-    "build-node": "cross-env TARGET=NODE node scripts/build-script.js",
-    "build-browser": "cross-env TARGET=BROWSER node scripts/build-script.js",
-    "build": "cross-env TARGET=ALL node scripts/build-script.js",
+    "build-node": "cross-env NODE_ENV=production TARGET=NODE node scripts/build-script.js",
+    "build-browser": "cross-env NODE_ENV=production TARGET=BROWSER node scripts/build-script.js",
+    "build": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js",
+    "build-clean": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js clean",
     "lint": "eslint --ext .js --ignore-path .eslintignore .",
     "lintfix": "eslint --fix --ext .js --ignore-path .eslintignore .",
     "test-record": "cross-env AVA_PLAYBACK=record nyc -s ava",
@@ -51,10 +52,10 @@
     "nyc": "^13.0.1",
     "parcel": "^1.9.7",
     "parcel-bundler": "^1.9.7",
-    "prettier": "^1.14.2"
+    "prettier": "^1.14.2",
+    "cross-env": "^5.2.0"
   },
   "dependencies": {
-    "cross-env": "^5.2.0",
     "got": "^9.2.1",
     "ky": "^0.2.0"
   },
