@@ -14,8 +14,7 @@
     "test": "xo --quiet && cross-env AVA_PLAYBACK=playback nyc -s ava",
     "test-live": "nyc -s ava",
     "test-fast": "cross-env AVA_PLAYBACK=playback nyc -s ava --fail-fast",
-    "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose",
-    "clean-fixtures": "rm -r test/fixtures"
+    "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose"
   },
   "repository": {
     "type": "git",
@@ -53,7 +52,7 @@
   },
   "dependencies": {
     "got": "^9.2.1",
-    "ky": "^0.2.0"
+    "ky": "^0.3.0"
   },
   "ava": {
     "files": [
@@ -67,8 +66,8 @@
     "inherit": true
   },
   "xo": {
-      "semicolon": false,
-      "space": true,
-      "prettier": true
+    "semicolon": false,
+    "space": true,
+    "prettier": true
   }
 }

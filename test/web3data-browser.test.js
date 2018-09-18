@@ -9,11 +9,15 @@ global.window = {};
 global.window.fetch = fetch;
 global.window.Headers = Headers;
 
-// Web3data object intestializes and is properly configured
-dotenv.load()
-if(!process.env.API_KEY) {
-  console.error("Must set API_KEY value in .env file") //TODO: Elaborate on how to get it
-  process.exit(1)
+let API_KEY
+if(process.env.API_KEY) {
+  API_KEY = process.env.API_KEY
+} else {
+  console.warn("Must set API_KEY value in .env file, \n\
+  Create an account on amberdata.io to obtain one")
+
+  // Dumby key; won't work on live net
+  API_KEY = 'lbK5e0cae7xf494P3c8Q1od19h41b3fa973'
 }
 /**********************************
  * -------- Tests Setup ---------- *
@@ -23,7 +27,6 @@ const ADDRESS_XS = '0x595596f4fbb9fff1b610e5d67c41e8928244a622'
 const TX_HASH = '0x7a3dbdc6f5b8b748d972ee9e35ecea6ff62a624816c944bf2419c430156c54ba'
 const TOKEN_HASH = '0x744d70fdbe2ba4cf95131626614a1763df805b9e' /* Status Network Token */
 const SLUG = ''
-const API_KEY = process.env.API_KEY
 const BLOCKCHAIN_ID = '1c9c969065fcd1cf'/* Ethereum-mainnet */
 
 const CONFIG = {
@@ -98,7 +101,6 @@ test('gets address logs', async t => {
 /*********** Test transactions() ***********/
 test('gets all transactions of the address', async t => {
   let addressTransactions = await t.context.web3data.addresses(ADDRESS_XS).transactions().retrieve()
-  console.log(`addressTransactions${addressTransactions}`)
   t.is(addressTransactions.status, 200)
 })
 test.skip('<---PENDING IMPLEMENTION --->gets single transaction of the address', async t => {
