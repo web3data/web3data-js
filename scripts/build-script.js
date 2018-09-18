@@ -1,39 +1,27 @@
 require('dotenv').load()
-//import "babel-polyfill";
+let helpers = require('./helpers');
 const Bundler = require('parcel-bundler')
 const Path = require('path')
 var babel = require("babel-core")
 let fs = require('fs')
 
-// Single entrypoint file location:
-
-
-
-
-
 async function runBundle() {
 
-  // TODO: transpile ky with babel
+  if(process.argv[2] === 'clean') {
+    helpers.deleteDir('./dist')
+    console.log('Removed dist')
 
-  // TODO: create a temp dir and put kympiled in it
+    helpers.deleteDir('./cache')
+    console.log('Removed cache')
+  }
 
-  // Initializes a bundler using the entrypoint location and options provided
-  //const browserBundler = new Bundler(entryFileBrowser, optionsBrowser);
-  //const nodeBundler = new Bundler(entryFileNode, optionsNode);
-
-  // Run the bundler, this returns the main bundle
-  //const browserBundle = await browserBundler.bundle();
-  //const nodeBundle = await nodeBundler.bundle();
-  // transpileKy()
   switch(process.env.TARGET) {
-    case 'ALL': console.log("all");
-      await bundelBrowser()
+    case 'ALL':
       await bundelNode()
-    break;
-    case 'BROWSER': console.log("browser");
+    case 'BROWSER':
       await bundelBrowser()
     break;
-    case 'NODE': console.log("node");
+    case 'NODE':
       await bundelNode()
     break;
   }
@@ -54,41 +42,39 @@ async function transpileKy() {
 async function bundelBrowser() {
 
   // Bundler options for browser
-  const optionsBrowser = {
+  const options = {
     outDir: './dist/browser',
     outFile: 'web3data.min.js',
     target: 'browser',
-    minify: true,
-    watch: false,
     detailedReport: true
   };
 
   await transpileKy()
 
-  const entryFileBrowser = Path.join(__dirname, '../browser.js');
+  const entryFile = Path.join(__dirname, '../browser.js');
 
-  const browserBundler = new Bundler(entryFileBrowser, optionsBrowser);
-  const browserBundle = await browserBundler.bundle();
-  // fs.unlink('./kympiled.js', (err) => {
-  // if (err) throw err;
-  // console.log('./kympiled.js was deleted');
-  // })
+  const bundler = new Bundler(entryFile, options);
+  const Bundle = await bundler.bundle();
+  fs.unlink('./kympiled.js', (err) => {
+  if (err) throw err;
+  })
 }
 
 async function bundelNode() {
 
   // Bundler options for node
-  const optionsNode = {
+  const options = {
     outDir: './dist/node',
     outFile: 'web3data.js',
     target: 'node',
     watch: false,
+    minify: false,
     detailedReport: true
   };
 
-  const entryFileNode = Path.join(__dirname, '../index.js');
-  const nodeBundler = new Bundler(entryFileNode, optionsNode);
-  const nodeBundle = await nodeBundler.bundle();
+  const entryFile = Path.join(__dirname, '../index.js');
+  const bundler = new Bundler(entryFile, options);
+  const Bundle = await bundler.bundle();
 }
 
 runBundle();
