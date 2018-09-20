@@ -51,8 +51,6 @@ test('web3data should have the correct blockchain id', t => {
   t.is(t.context.web3data.config['blockchainId'], BLOCKCHAIN_ID)
 })
 
-test.todo('web3data should have the correct blockchain slug') // TBD
-
 test('web3data should have the correct headers set', t => {
   t.is(t.context.web3data.headers['x-amberdata-api-key'], API_KEY)
   t.is(t.context.web3data.headers['x-amberdata-blockchain-id'], BLOCKCHAIN_ID)
@@ -144,23 +142,21 @@ test('<---PENDING IMPLEMENTION --->gets single token of the address', async t =>
 /*********** Test filters() ***********/
 
 /* -== Test blockNumber ==- */
-test.skip('<---PENDING IMPLEMENTION --->Filters properly -- blocknumber', async t => {
+test('<---PENDING IMPLEMENTION --->Filters properly -- blocknumber', async t => {
   const filterOpts = {'blockNumber':6237323}
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
 })
 
 /* -== Test to address ==- */
-test.skip('<---PENDING IMPLEMENTION --->Filters properly -- to address', async t => {
-  const ADDRESS = ''
+test('<---PENDING IMPLEMENTION --->Filters properly -- to address', async t => {
   const filterOpts = {'to': ADDRESS}
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
 })
 
 /* -== Test from address ==- */
-test.skip('<---PENDING IMPLEMENTION --->Filters properly -- from address', async t => {
-  const ADDRESS = ''
+test('<---PENDING IMPLEMENTION --->Filters properly -- from address', async t => {
   const filterOpts = {'from': ADDRESS}
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
