@@ -55,8 +55,6 @@ test('web3data should have the correct blockchain id', t => {
   t.is(t.context.web3data.config['blockchainId'], BLOCKCHAIN_ID)
 })
 
-test.todo('web3data should have the correct blockchain slug') // TBD
-
 test('throws exception when no config object is supplied', t => {
   const error = t.throws(() => { new Web3Data() }, Error);
   t.is(error.message, "No configuration object supplied");
@@ -103,8 +101,8 @@ test('gets all transactions of the address', async t => {
   let addressTransactions = await t.context.web3data.addresses(ADDRESS_XS).transactions().retrieve()
   t.is(addressTransactions.status, 200)
 })
-test.skip('<---PENDING IMPLEMENTION --->gets single transaction of the address', async t => {
-  let addressTransaction = await t.context.web3data.addresses(ADDRESS).transactions(TX_HASH).retrieve()
+test('<---PENDING IMPLEMENTION --->gets single transaction of the address', async t => {
+  let addressTransaction = await t.context.web3data.addresses(ADDRESS_XS).transactions(TX_HASH).retrieve()
   t.is(addressTransaction.status, 200)
 })
 
@@ -143,16 +141,14 @@ test('<---PENDING IMPLEMENTION --->Filters properly -- blocknumber', async t => 
 })
 
 /* -== Test to address ==- */
-test.skip('<---PENDING IMPLEMENTION --->Filters properly -- to address', async t => {
-  const ADDRESS = ''
+test('<---PENDING IMPLEMENTION --->Filters properly -- to address', async t => {
   const filterOpts = {'to': ADDRESS}
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
 })
 
 /* -== Test from address ==- */
-test.skip('<---PENDING IMPLEMENTION --->Filters properly -- from address', async t => {
-  const ADDRESS = ''
+test('<---PENDING IMPLEMENTION --->Filters properly -- from address', async t => {
   const filterOpts = {'from': ADDRESS}
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)

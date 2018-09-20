@@ -44,13 +44,13 @@ Using CDN:
 npm run build
 ```
 
-#### Builds just for node
+#### Build for node
 
 ```bash
 npm run build-node
 ```
 
-#### Builds just for browser
+#### Build for browser
 ```bash
 npm run build-browser
 ```
@@ -59,10 +59,25 @@ npm run build-browser
 ```bash
 npm test
 ```
+This will run all tests using the prerecorded responses from [fixtures](test/fixtures/eb3ap.io).
+
+```bash
+npm test-live
+```
+Runs tests using live responses from our endpoints. (Requires API key see [Obtaining an Api key](#obtaininganapikey)).
+
+```bash
+npm test-record
+```
+Runs tests using live responses from our endpoints and records them in your fixtures folder.
+
+### Obtaining an Api key
+Create an account at Amberdata.io, and in go to your account dash board.
+Then place it in a file named `.env`. (See [example](./env.example)).
 
 
 ## Community
-- [Discourse](https://amberdata.trydiscourse.com)
+- [Discourse](https://forum.amberdata.io/)
 
 ## Resources
 - [Contributing](./CONTRIBUTING.md)
