@@ -81,7 +81,7 @@ test('throws exception when calling \'addresses\' without hash', t => {
 /*********** Test info() ***********/
 test('Successfully gets address information', async t => {
   let addressInfo = await t.context.web3data.addresses(ADDRESS).info().retrieve()
-  t.is(addressInfo.status, 200)
+  t.is(addressInfo, 200)
 })
 
 /*********** Test stats() ***********/

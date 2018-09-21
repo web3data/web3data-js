@@ -75,6 +75,12 @@ Runs tests using live responses from our endpoints and records them in your fixt
 Create an account at Amberdata.io, and in go to your account dash board.
 Then place it in a file named `.env`. (See [example](./env.example)).
 
+### example
+Run the following command to see `web3data-js` js in action!
+```bash
+superstatic --port 8080 --host 127.0.0.1
+```
+
 
 ## Community
 - [Discourse](https://forum.amberdata.io/)
