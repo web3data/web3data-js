@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Example</title>
+  <style>
+    .container {
+      margin: 30vh auto;
+      text-align: center;
+    }
+
+    #input {
+      width: 75%;
+      margin: auto;
+      flex-direction: row;
+      display: flex;
+      justify-content: center;
+    }
+
+    input {
+      width: 25%;
+    }
+
+    #output {
+      width: 75%;
+      margin: 2vh auto;
+      height: 30vh;
+      background-color: #ececec8c;
+      border-radius: 5px;
+      text-align: left;
+      word-wrap: break-word;
+      display: block;
+      overflow: auto;
+    }
+
+    #output p {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id='input'>
+      <input type="text" placeholder="api key" name="" id="apikey-input">
+      <input type="text" name="" placeholder="address" id="address-input">
+      <button onClick="getAddressInfo()" id="goBtn">Go</button>
+    </div>
+    <div id="output">
+      <p>Results<p>
+    </div>
+  </div>
+<script type="text/javascript" src="../dist/browser/web3data.min.js"></script>
+<script>
+  function getAddressInfo() {
+    let address = document.getElementById('address-input').value
+    let apiKey = document.getElementById("apikey-input").value
+    let web3data = new window.Web3Data({"apiKey":apiKey, "blockchainId": "1c9c969065fcd1cf"})
+    web3data.addresses(address).info().retrieve().then( (info) => {
+      document.getElementById('output').innerHTML = '<pre id="json">' + JSON.stringify(info.payload[0], undefined, 2) + '</pre>'
+    })
+  }
+</script>
+</body>
+</html>
