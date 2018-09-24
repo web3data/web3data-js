@@ -3,6 +3,7 @@ import 'babel-polyfill'
 import Web3Data from  '../browser'
 import test from 'ava'
 import dotenv from 'dotenv'
+dotenv.load()
 
 /* Setup the global window object to simulate running ky in a browser*/
 global.window = {};
@@ -81,7 +82,7 @@ test('throws exception when calling \'addresses\' without hash', t => {
 /*********** Test info() ***********/
 test('Successfully gets address information', async t => {
   let addressInfo = await t.context.web3data.addresses(ADDRESS).info().retrieve()
-  t.is(addressInfo, 200)
+  t.is(addressInfo.status, 200)
 })
 
 /*********** Test stats() ***********/
