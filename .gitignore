@@ -59,7 +59,7 @@ typings/
 
 # parcel build
 dist/node/
-.cache/
+.cache
 
 # IDE
 .idea/
