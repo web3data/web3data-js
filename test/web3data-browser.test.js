@@ -20,6 +20,7 @@ if(process.env.API_KEY) {
   // Dumby key; won't work on live net
   API_KEY = 'lbK5e0cae7xf494P3c8Q1od19h41b3fa973'
 }
+
 /**********************************
  * -------- Tests Setup ---------- *
  **********************************/
