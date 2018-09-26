@@ -75,56 +75,56 @@ test('throws exception when no blockchainid is supplied', t => {
 /**********************************
  * ------ Test addresses() ------ *
  **********************************/
-test('throws exception when calling \'addresses\' without hash', t => {
+test.skip('throws exception when calling \'addresses\' without hash', t => {
   const error = t.throws(() => { t.context.web3data.addresses() }, Error);
   t.is(error.message, 'No address hash provided');
 })
 
 /*********** Test info() ***********/
-test('Successfully gets address information', async t => {
+test.skip('Successfully gets address information', async t => {
   let addressInfo = await t.context.web3data.addresses(ADDRESS).info().retrieve()
   t.is(addressInfo.status, 200)
 })
 
 /*********** Test stats() ***********/
-test('gets address stats', async t => {
+test.skip('gets address stats', async t => {
   let addressStats= await t.context.web3data.addresses(ADDRESS).stats().retrieve()
   t.is(addressStats.status, 200)
 })
 
 /*********** Test logs() ***********/
-test('gets address logs', async t => {
+test.skip('gets address logs', async t => {
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().retrieve()
   t.is(addressLogs.status, 200)
 })
 
 /*********** Test transactions() ***********/
-test('gets all transactions of the address', async t => {
+test.skip('gets all transactions of the address', async t => {
   let addressTransactions = await t.context.web3data.addresses(ADDRESS_XS).transactions().retrieve()
   t.is(addressTransactions.status, 200)
 })
-test('<---PENDING IMPLEMENTION --->gets single transaction of the address', async t => {
+test.skip('<---PENDING IMPLEMENTION --->gets single transaction of the address', async t => {
   let addressTransaction = await t.context.web3data.addresses(ADDRESS_XS).transactions(TX_HASH).retrieve()
   t.is(addressTransaction.status, 200)
 })
 
 
 /*********** Test functions() ***********/
-test('gets all functions of the address', async t => {
+test.skip('gets all functions of the address', async t => {
   let addressFunctions = await t.context.web3data.addresses(ADDRESS_XS).functions().retrieve()
   t.is(addressFunctions.status, 200)
 })
-test('<---PENDING IMPLEMENTION --->gets single functions of the address', async t => {
+test.skip('<---PENDING IMPLEMENTION --->gets single functions of the address', async t => {
   let addressFunction = await t.context.web3data.addresses(ADDRESS_XS).functions(TX_HASH).retrieve()
   t.is(addressFunction.status, 200)
 })
 
 /*********** Test tokens() ***********/
-test('gets all tokens of the address', async t => {
+test.skip('gets all tokens of the address', async t => {
   let addressTokens = await t.context.web3data.addresses(ADDRESS).tokens().retrieve()
   t.is(addressTokens.status, 200)
 })
-test('<---PENDING IMPLEMENTION --->gets single token of the address', async t => {
+test.skip('<---PENDING IMPLEMENTION --->gets single token of the address', async t => {
   let addressToken = await t.context.web3data.addresses(ADDRESS).tokens(TOKEN_HASH).retrieve()
   t.is(addressToken.status, 200)
 })
@@ -136,21 +136,21 @@ test('<---PENDING IMPLEMENTION --->gets single token of the address', async t =>
 /*********** Test filters() ***********/
 
 /* -== Test blockNumber ==- */
-test('<---PENDING IMPLEMENTION --->Filters properly -- blocknumber', async t => {
+test.skip('<---PENDING IMPLEMENTION --->Filters properly -- blocknumber', async t => {
   const filterOpts = {'blockNumber':6237323}
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
 })
 
 /* -== Test to address ==- */
-test('<---PENDING IMPLEMENTION --->Filters properly -- to address', async t => {
+test.skip('<---PENDING IMPLEMENTION --->Filters properly -- to address', async t => {
   const filterOpts = {'to': ADDRESS}
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
 })
 
 /* -== Test from address ==- */
-test('<---PENDING IMPLEMENTION --->Filters properly -- from address', async t => {
+test.skip('<---PENDING IMPLEMENTION --->Filters properly -- from address', async t => {
   const filterOpts = {'from': ADDRESS}
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().filter(filterOpts).retrieve()
   t.is(addressLogs.status, 200)
@@ -159,7 +159,7 @@ test('<---PENDING IMPLEMENTION --->Filters properly -- from address', async t =>
 /*********** Test pagination ***********/
 
 /* -== Test limit() offset() ==- */
-test('Test pagination: limit & offset', async t => {
+test.skip('Test pagination: limit & offset', async t => {
   const PAGE_SIZE = 3
   const filterOpts = {
     'page': 0,
@@ -171,7 +171,7 @@ test('Test pagination: limit & offset', async t => {
 })
 
 /* -== Test size() page() ==- */
-test('Test pagination: size & page', async t => {
+test.skip('Test pagination: size & page', async t => {
   const PAGE_SIZE = 3
   const filterOpts = {
     'page': 0,
@@ -183,13 +183,13 @@ test('Test pagination: size & page', async t => {
 })
 
 /* -== Test orderBy() ==- */
-test('<---PENDING IMPLEMENTION --->Orderby: timestamp', async t => {
+test.skip('<---PENDING IMPLEMENTION --->Orderby: timestamp', async t => {
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().orderBy('timestamp').retrieve()
   t.is(addressLogs.status, 200)
 })
 
 /* -== Test dirction() ==- */
-test('<---PENDING IMPLEMENTION --->Dirction: asc|desc', async t => {
+test.skip('<---PENDING IMPLEMENTION --->Dirction: asc|desc', async t => {
   let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().direction('asc').retrieve()
   t.is(addressLogs.status, 200)
 })
