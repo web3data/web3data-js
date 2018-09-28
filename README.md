@@ -24,10 +24,6 @@ Using yarn:
 ```bash
 yarn add web3data-js
 ```
-Using bower:
-```bash
-bower install web3data-js
-```
 Using CDN:
 ```html
 <script src=".../web3data.min.js"></script>
