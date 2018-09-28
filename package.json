@@ -56,6 +56,9 @@
     "got": "^9.2.1",
     "ky": "^0.3.0"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "ava": {
     "files": [
       "test/**.test.js"
