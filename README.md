@@ -18,15 +18,15 @@
 ## Installation
 Using node:
 ```bash
-npm install web3data
+npm install web3data-js
 ```
 Using yarn:
 ```bash
-yarn add web3data
+yarn add web3data-js
 ```
 Using bower:
 ```bash
-bower install web3data
+bower install web3data-js
 ```
 Using CDN:
 ```html
@@ -72,8 +72,12 @@ npm test-record
 Runs tests using live responses from our endpoints and records them in your fixtures folder.
 
 ### Obtaining an Api key
-Create an account at Amberdata.io, and in go to your account dash board.
+Sign up for an account at Amberdata.io.
+Then go to your account dashboard and select the API Key tab.
+Request an API Key for the network that you wish.
 Then place it in a file named `.env`. (See [example](./env.example)).
+
+<!-- For additional details on obtaining an api key see() -->
 
 ### example
 Run the following command to see `web3data-js` js in action!
