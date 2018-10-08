@@ -1,8 +1,8 @@
 {
   "name": "web3data-js",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "A javascript wrapper for accessing amberdata's public API.",
-  "main": "index.js",
+  "main": "dist/web3data.js",
   "scripts": {
     "build-node": "cross-env NODE_ENV=production TARGET=NODE node scripts/build-script.js",
     "build-browser": "cross-env NODE_ENV=production TARGET=BROWSER node scripts/build-script.js",
@@ -35,6 +35,7 @@
     "ava": "^0.25.0",
     "ava-playback": "0.0.14",
     "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
     "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",

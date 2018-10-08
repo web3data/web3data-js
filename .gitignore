@@ -58,7 +58,6 @@ typings/
 .env
 
 # parcel build
-dist/node/
 .cache
 
 # IDE
