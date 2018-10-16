@@ -1,8 +1,8 @@
 {
   "name": "web3data-js",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "A javascript wrapper for accessing amberdata's public API.",
-  "main": "dist/web3data.js",
+  "main": "dist/browser/web3data.min.js",
   "scripts": {
     "build-node": "cross-env NODE_ENV=production TARGET=NODE node scripts/build-script.js",
     "build-browser": "cross-env NODE_ENV=production TARGET=BROWSER node scripts/build-script.js",
@@ -14,7 +14,8 @@
     "test": "xo --quiet && cross-env AVA_PLAYBACK=playback nyc -s ava",
     "test-live": "nyc -s ava",
     "test-fast": "cross-env AVA_PLAYBACK=playback nyc -s ava --fail-fast",
-    "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose"
+    "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose",
+    "example": "superstatic examples/"
   },
   "repository": {
     "type": "git",
