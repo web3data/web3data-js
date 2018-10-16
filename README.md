@@ -58,17 +58,17 @@ npm test
 This will run all tests using the prerecorded responses from [fixtures](test/fixtures/eb3ap.io).
 
 ```bash
-npm test-live
+npm run test-live
 ```
 Runs tests using live responses from our endpoints. (Requires API key see [Obtaining an Api key](#obtaininganapikey)).
 
 ```bash
-npm test-record
+npm run test-record
 ```
 Runs tests using live responses from our endpoints and records them in your fixtures folder.
 
 ### Obtaining an Api key
-Sign up for an account at Amberdata.io.
+Sign up for an account at [amberdata.io](https://amberdata.io/authenticate).
 Then go to your account dashboard and select the API Key tab.
 Request an API Key for the network that you wish.
 Then place it in a file named `.env`. (See [example](./env.example)).
@@ -78,7 +78,7 @@ Then place it in a file named `.env`. (See [example](./env.example)).
 ### example
 Run the following command to see `web3data-js` js in action!
 ```bash
-superstatic --port 8080 --host 127.0.0.1
+npm run examples
 ```
 
 
