@@ -15,7 +15,7 @@
     "test-live": "nyc -s ava",
     "test-fast": "cross-env AVA_PLAYBACK=playback nyc -s ava --fail-fast",
     "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose",
-    "example": "superstatic examples/"
+    "example": "superstatic"
   },
   "repository": {
     "type": "git",
