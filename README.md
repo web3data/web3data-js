@@ -7,7 +7,7 @@
 ## Table of Contents
 &nbsp;&nbsp;[Usage](#usage)
 <br/>&nbsp;&nbsp;[Installation](#installation)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;[Requirements](#requirements)
+<!-- <br/>&nbsp;&nbsp;&nbsp;&nbsp;[Requirements](#requirements) -->
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;[Building](#building)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;[Testing](#testing)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;[Community](#community)
@@ -26,12 +26,13 @@ yarn add web3data-js
 ```
 Using CDN:
 ```html
-<script src=".../web3data.min.js"></script>
+<script src="https://unpkg.com/web3data-js"></script>
 ```
 
-### Requirements
+<!-- ### Requirements
 - Node.js
-- npm
+- npm -->
+
 ### Building
 
 #### Builds for node and browser
