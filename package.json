@@ -45,17 +45,17 @@
     "babel-register": "^6.26.0",
     "browser-env": "^3.2.5",
     "cross-env": "^5.2.0",
-    "dotenv": "^6.0.0",
+    "dotenv": "^6.1.0",
     "node-fetch": "^2.2.0",
-    "nyc": "^13.0.1",
-    "parcel": "^1.9.7",
-    "parcel-bundler": "^1.9.7",
-    "prettier": "^1.14.2",
-    "superstatic": "^6.0.1",
+    "nyc": "^13.1.0",
+    "parcel": "^1.10.3",
+    "parcel-bundler": "^1.10.3",
+    "prettier": "^1.14.3",
+    "superstatic": "^6.0.3",
     "xo": "^0.23.0"
   },
   "dependencies": {
-    "got": "^9.2.1",
+    "got": "^9.3.0",
     "ky": "^0.3.0"
   },
   "publishConfig": {
