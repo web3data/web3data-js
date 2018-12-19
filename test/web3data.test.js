@@ -90,25 +90,25 @@ if (apiMode) {
   })
 
   /*********** Test info() ***********/
-  test.skip('Successfully gets address information', async t => {
+  test('Successfully gets address information', async t => {
     let addressInfo = await t.context.web3data.addresses(ADDRESS).info().retrieve()
     t.is(addressInfo.status, 200)
   })
 
   /*********** Test stats() ***********/
-  test.skip('gets address stats', async t => {
+  test('gets address stats', async t => {
     let addressStats= await t.context.web3data.addresses(ADDRESS).stats().retrieve()
     t.is(addressStats.status, 200)
   })
 
   /*********** Test logs() ***********/
-  test.skip('gets address logs', async t => {
+  test('gets address logs', async t => {
     let addressLogs = await t.context.web3data.addresses(ADDRESS).logs().retrieve()
     t.is(addressLogs.status, 200)
   })
 
   /*********** Test transactions() ***********/
-  test.skip('gets all transactions of the address', async t => {
+  test('gets all transactions of the address', async t => {
     let addressTransactions = await t.context.web3data.addresses(ADDRESS).transactions().retrieve()
     t.is(addressTransactions.status, 200)
   })
@@ -119,7 +119,7 @@ if (apiMode) {
 
 
   /*********** Test functions() ***********/
-  test.skip('gets all functions of the address', async t => {
+  test('gets all functions of the address', async t => {
     let addressFunctions = await t.context.web3data.addresses(ADDRESS).functions().retrieve()
     t.is(addressFunctions.status, 200)
   })
@@ -129,7 +129,7 @@ if (apiMode) {
   })
 
   /*********** Test tokens() ***********/
-  test.skip('gets all tokens of the address', async t => {
+  test('gets all tokens of the address', async t => {
     let addressTokens = await t.context.web3data.addresses(ADDRESS).tokens().retrieve()
     t.is(addressTokens.status, 200)
   })
@@ -168,7 +168,7 @@ if (apiMode) {
   /*********** Test pagination ***********/
 
   /* -== Test limit() offset() ==- */
-  test.skip('Test pagination: limit & offset', async t => {
+  test('Test pagination: limit & offset', async t => {
     const PAGE_SIZE = 3
     const filterOpts = {
       'page': 0,
@@ -180,7 +180,7 @@ if (apiMode) {
   })
 
   /* -== Test size() page() ==- */
-  test.skip('Test pagination: size & page', async t => {
+  test('Test pagination: size & page', async t => {
     const PAGE_SIZE = 3
     const filterOpts = {
       'page': 0,

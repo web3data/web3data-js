@@ -2,7 +2,7 @@
   "name": "web3data-js",
   "version": "0.3.6",
   "description": "A javascript wrapper for accessing amberdata's public API.",
-  "main": "dist/browser/web3data.min.js",
+  "main": "index.js",
   "scripts": {
     "build-node": "cross-env NODE_ENV=production TARGET=NODE node scripts/build-script.js",
     "build-browser": "cross-env NODE_ENV=production TARGET=BROWSER node scripts/build-script.js",
@@ -55,8 +55,7 @@
     "xo": "^0.23.0"
   },
   "dependencies": {
-    "got": "^9.3.0",
-    "ky": "^0.3.0"
+    "axios": "^0.18.0"
   },
   "publishConfig": {
     "access": "public"
