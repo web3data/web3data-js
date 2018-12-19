@@ -1,6 +1,6 @@
 import fetch, {Headers} from 'node-fetch'
 import 'babel-polyfill'
-import Web3Data from  '../browser'
+import Web3Data from  '../index'
 import test from 'ava'
 import dotenv from 'dotenv'
 dotenv.load()
@@ -81,7 +81,7 @@ test.skip('throws exception when calling \'addresses\' without hash', t => {
 })
 
 /*********** Test info() ***********/
-test.skip('Successfully gets address information', async t => {
+test.only('Successfully gets address information', async t => {
   let addressInfo = await t.context.web3data.addresses(ADDRESS).info().retrieve()
   t.is(addressInfo.status, 200)
 })
