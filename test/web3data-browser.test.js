@@ -81,7 +81,7 @@ test.skip('throws exception when calling \'addresses\' without hash', t => {
 })
 
 /*********** Test info() ***********/
-test.only('Successfully gets address information', async t => {
+test.skip('Successfully gets address information', async t => {
   let addressInfo = await t.context.web3data.addresses(ADDRESS).info().retrieve()
   t.is(addressInfo.status, 200)
 })
