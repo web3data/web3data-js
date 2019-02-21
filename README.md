@@ -6,8 +6,7 @@
 
 ## Table of Contents
 &nbsp;&nbsp;[Usage](#usage)
-<br/>&nbsp;&nbsp;[Installation](#installation)
-<!-- <br/>&nbsp;&nbsp;&nbsp;&nbsp;[Requirements](#requirements) -->
+<br/>&nbsp;&nbsp;[Installation](#installation)<!-- <br/>&nbsp;&nbsp;&nbsp;&nbsp;[Requirements](#requirements) -->
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;[Building](#building)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;[Testing](#testing)
 <br/>&nbsp;&nbsp;&nbsp;&nbsp;[Community](#community)

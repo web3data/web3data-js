@@ -26,15 +26,8 @@ class Web3Data {
 
   /* ---- Methods --- */
 
-  // addresses() {
-  // }
-
   addresses(hash) {
-    if (!hash) {
-      throw new Error('No address hash provided')
-    }
-
-    this.url.pathname += `/addresses/${hash}`
+    this.url.pathname += arguments.length === 1 ? `/addresses/${hash}` : '/addresses'
     return this
   }
 
@@ -49,12 +42,13 @@ class Web3Data {
   }
 
   transactions(txhash) {
-    this.url.pathname += '/transactions'
     if (arguments.length === 1) {
+      this.url.pathname += '/transactions'
       return this.filter({transactionHash: txhash})
+    } else {
+      this.url.pathname += '/search/transactions'
+      return this
     }
-
-    return this
   }
 
   logs() {
@@ -122,6 +116,7 @@ class Web3Data {
       const response = await axios.get(this.url.href, config)
       return response.data
     } catch (error) {
+      console.log("URL: ", this.url.href)
       return error
     }
   }

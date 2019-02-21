@@ -84,9 +84,16 @@ test('throws exception when no blockchainid is supplied', t => {
  * ------ Test addresses() ------ *
  **********************************/
 if (apiMode) {
-  test('throws exception when calling \'addresses\' without hash', t => {
-    const error = t.throws(() => { t.context.web3data.addresses() }, Error);
-    t.is(error.message, 'No address hash provided');
+  test.only('throws exception when calling \'addresses\' without hash', async t => {
+    let now = Date.now()
+    let addresses = await t.context.web3data.transactions().filter(
+        {
+          "startDate": now - 86400000,
+          "endDate": now
+        }
+    ).page(16).retrieve()
+    t.is(addresses.status, 200)
+    t.is(addresses.payload.totalRecords, 5)
   })
 
   /*********** Test info() ***********/
