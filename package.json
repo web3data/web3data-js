@@ -33,43 +33,30 @@
   },
   "homepage": "https://github.com/web3data/web3data-js#readme",
   "devDependencies": {
-    "ava": "^0.25.0",
-    "ava-playback": "0.0.14",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
-    "browser-env": "^3.2.5",
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/preset-env": "^7.3.4",
+    "@babel/register": "^7.0.0",
+    "@babel/polyfill": "^7.2.5",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "ava": "^1.2.1",
+    "ava-playback": "0.0.15",
+    "browser-env": "^3.2.6",
     "cross-env": "^5.2.0",
-    "dotenv": "^6.1.0",
-    "node-fetch": "^2.2.0",
-    "nyc": "^13.1.0",
-    "parcel": "^1.10.3",
-    "parcel-bundler": "^1.10.3",
-    "prettier": "^1.14.3",
-    "superstatic": "^6.0.3",
-    "xo": "^0.23.0"
+    "dotenv": "^6.2.0",
+    "node-fetch": "^2.3.0",
+    "nyc": "^13.3.0",
+    "parcel": "^1.11.0",
+    "parcel-bundler": "^1.11.0",
+    "prettier": "^1.16.4",
+    "superstatic": "^6.0.4",
+    "xo": "^0.24.0"
   },
   "dependencies": {
     "axios": "^0.18.0"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "ava": {
-    "files": [
-      "test/**.test.js"
-    ],
-    "require": [
-      "babel-register",
-      "ava-playback"
-    ],
-    "playbacks": "test/fixtures",
-    "inherit": true
   },
   "xo": {
     "semicolon": false,
