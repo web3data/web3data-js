@@ -52,10 +52,10 @@ class Web3Data {
       const response = await axios.get(this.baseUrl + url, {
         headers: this.headers
       })
-      console.log('DATA: ' + response.data)
+      // console.log('URL: ' + this.baseUrl + url)
       return response.data
     } catch (error) {
-      console.log('ERROR: ' + error)
+      // console.log('ERROR: ' + error)
       return error
     }
   }
