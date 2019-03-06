@@ -14,9 +14,9 @@ test.beforeEach(t => {
  **********************************/
 
 /*********** Test getAllAddresses() ***********/
-test.only('Successfully gets all addresses', async t => {
-    let response = await t.context.web3data.address.getAllAddress();
-    t.is(response, 200)
+test('Successfully gets all addresses', async t => {
+    let response = await t.context.web3data.address.getAllAddresses();
+    t.is(response.status, 200)
 });
 
 // "https://web3api.io/api/v1/addresses?page=1&size=5"
@@ -129,24 +129,6 @@ test('throws exception when calling getTokenBalances without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getTokenBalances()
     }, { instanceOf: Error, message: 'No address hash supplied' });
-});
-
-/*********** Test getTokenHolders() - current ***********/
-test('Successfully gets address Token Holders - current', async t => {
-    let response = await t.context.web3data.address.getTokenHolders(TOKEN_ADDRESS);
-    t.is(response.status, 200)
-});
-test('throws exception when calling getTokenHolders without hash', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getTokenHolders()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
-
-/*********** Test getTokenHolders() - historical ***********/
-test('Successfully gets address Token Holders Historical', async t => {
-    let filters = {holderAddresses: ADDRESS}
-    let response = await t.context.web3data.address.getTokenHolders(TOKEN_ADDRESS, filters);
-    t.is(response.status, 200)
 });
 
 /*********** Test getTokenSupply() ***********/
