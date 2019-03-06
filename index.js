@@ -9,12 +9,15 @@ class Web3Data {
     if (!this.config) {
       throw new Error('No configuration object supplied')
     }
+
     if (!this.config.apiKey) {
       throw new Error('No api key supplied')
     }
+
     if (!this.config.blockchainId) {
       throw new Error('No Blockchain specified')
     }
+
     this.url = new URL(
       this.config.baseUrl ? this.config.baseUrl : DEFAULT_BASE_URL
     )
@@ -27,7 +30,8 @@ class Web3Data {
   /* ---- Methods --- */
 
   addresses(hash) {
-    this.url.pathname += arguments.length === 1 ? `/addresses/${hash}` : '/addresses'
+    this.url.pathname +=
+      arguments.length === 1 ? `/addresses/${hash}` : '/addresses'
     return this
   }
 
@@ -45,10 +49,10 @@ class Web3Data {
     if (arguments.length === 1) {
       this.url.pathname += '/transactions'
       return this.filter({transactionHash: txhash})
-    } else {
-      this.url.pathname += '/search/transactions'
-      return this
     }
+
+    this.url.pathname += '/search/transactions'
+    return this
   }
 
   logs() {
@@ -61,6 +65,7 @@ class Web3Data {
     if (arguments.length === 1) {
       return this.filter({transactionHash: functionHash})
     }
+
     return this
   }
 
@@ -81,6 +86,7 @@ class Web3Data {
         this.url.search += `${filter}=${filterOptions[filter]}&`
       }
     }
+
     return this
   }
 
@@ -116,7 +122,7 @@ class Web3Data {
       const response = await axios.get(this.url.href, config)
       return response.data
     } catch (error) {
-      console.log("URL: ", this.url.href)
+      console.log('URL:', this.url.href)
       return error
     }
   }

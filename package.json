@@ -35,10 +35,11 @@
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-transform-runtime": "^7.3.4",
+    "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.4",
     "@babel/register": "^7.0.0",
-    "@babel/polyfill": "^7.2.5",
-    "@babel/plugin-transform-runtime": "^7.3.4",
     "ava": "^1.2.1",
     "ava-playback": "0.0.15",
     "browser-env": "^3.2.6",
@@ -53,7 +54,11 @@
     "xo": "^0.24.0"
   },
   "dependencies": {
-    "axios": "^0.18.0"
+    "axios": "^0.18.0",
+    "isomorphic-ws": "^4.0.1",
+    "mock-socket": "^8.0.5",
+    "websocket": "^1.0.28",
+    "ws": "^6.1.4"
   },
   "publishConfig": {
     "access": "public"

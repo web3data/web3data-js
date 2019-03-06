@@ -29,4 +29,5 @@ let getApiKey = () => {
 /**
  *  Returns a new Web3Data instance with API Key Set
  *  */
-export const getNewWeb3DataInstance = () => new Web3Data(getApiKey())
+export const getNewWeb3DataInstance = (config) => new Web3Data(getApiKey(), config)
+export const API_KEY = getApiKey()
