@@ -52,18 +52,19 @@ const rejectPromiseIf = (condition, message) => {
 
 const is = () => {}
 
-is.notHash = hash => is.undefined(hash) || is.emptyString(hash)
-
+// TODO: Assess lodash && treeshaking
 is.string = value => typeof value === 'string'
 is.emptyString = value => is.string(value) && value.length === 0
-is.nonEmptyString = value => !is.emptyString(value)
 is.emptyObject = object => Object.keys(object).length === 0
 is.inObject = (object, property) =>
   Object.prototype.hasOwnProperty.call(object, property)
-is.notInObject = (object, property) => !is.inObject(object, property)
-is.nonEmptyObject = object => !is.emptyObject(object)
 is.undefined = value => typeof value === 'undefined'
-is.notUndefined = value => !is.undefined(value)
 is.null = value => value === null
+
+is.notHash = hash => is.undefined(hash) || is.emptyString(hash)
+is.notUndefined = value => !is.undefined(value)
+is.nonEmptyObject = object => !is.emptyObject(object)
+is.nonEmptyString = value => !is.emptyString(value)
+is.notInObject = (object, property) => !is.inObject(object, property)
 
 export {buildFilterUrl, is, throwIf, get, rejectPromiseIf}

@@ -47,6 +47,7 @@ class Web3Data {
     this.websocketUrl += '?api_key=' + apiKey
     this.baseUrl = options.baseUrl ? options.baseUrl : DEFAULT_BASE_URL
 
+    // TODO: Map to normal naming conventions
     /* Web3Data composite modules */
     this.address = new Address(this)
     this.token = new Token(this)
@@ -54,24 +55,27 @@ class Web3Data {
     this.transaction = new Transaction(this)
     this.block = new Block(this)
     this.signature = new Signature(this)
+
+    // TODO: This should receive options, but not handle URL gen
     this.websocket = new WebSocketClient(this.websocketUrl)
   }
 
-  connect(callback) {
-    this.websocket.connect(callback)
-  }
-
-  disconnect(callback) {
-    this.websocket.disconnect(callback)
-  }
-
-  on(event, callback) {
-    this.websocket.on(event, callback)
-  }
-
-  off(event, callback) {
-    this.websocket.off(event, callback)
-  }
+  // TODO: Let's talk about this more!
+  // connect(callback) {
+  //   this.websocket.connect(callback)
+  // }
+  //
+  // disconnect(callback) {
+  //   this.websocket.disconnect(callback)
+  // }
+  //
+  // on(event, callback) {
+  //   this.websocket.on(event, callback)
+  // }
+  //
+  // off(event, callback) {
+  //   this.websocket.off(event, callback)
+  // }
 
   /**
    * Appends the API base url with the endpoint  url. Then sends an

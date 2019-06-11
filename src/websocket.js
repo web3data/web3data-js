@@ -1,103 +1,136 @@
-import {is} from './utils'
-
 const WebSocket = require('isomorphic-ws')
+import { DEFAULT_WEBSOCKET_URL } from './constants'
+import { is } from './utils'
 
-// TODO: put in constants (maybe?)
-const WEBSOCKET_OPEN = 1
-
-const dataHandler = data => {
-  // Console.log("data received: ", data.data)
-  console.log('Type:', data.data.split(' ')[0].trim())
+const formatJsonRpc = options => {
+  return JSON.stringify({
+    jsonrpc: '2.0',
+    method: 'subscribe',
+    id: options.id || 0,
+    // TODO: This is unsafe, force to be array
+    params: options.params
+  })
 }
 
-// Const eventHandlers = {}
-
-const subscribe = (websocket, event, callback) => {
-  // TODO: R.O.W.
-  console.log('subscribed to', event)
-
-  /* Send subscribe message with event */
-  websocket.send(`subscribe:${event}`)
-
-  /* Register callback with event handler */
-  // TODO: Do this
-  console.log(callback)
-}
-
-/**
- * TODO: ---
- */
 class WebSocketClient {
-  /**
-   * Creates the WebSocketClient instance.
-   * @param websocketUrl
-   */
-  constructor(websocketUrl) {
-    this.websocketUrl = websocketUrl
-    this.websocket = null
+  constructor(options) {
+    this.socket = null
+    this.baseWsUrl = DEFAULT_WEBSOCKET_URL
+    this.apiKey = options && options.apiKey ? options.apiKey : null
+
+    // Internal state management
+    this.connected = false
+
+    // Keep track of subscriptions, key/value mapping of subscription ID to listeners
+    this.registry = {}
+
+    // Keeps track of last data received by subscription key
+    this.registryArgs = {}
+
+    // Keeps track of last data received by subscription key
+    this.latestState = {}
+
+    return this
   }
 
-  /**
-   * Initialises the WebSocket connection.
-   * @param callback {function} the callback function to execute //ASK: to many callbacks?
-   */
-  connect(callback) {
-    /* Check to see if the websocket has been initialized */
-    if (is.null(this.websocket)) {
-      try {
-        /* Create new WebSocket instance and initialize connection */
-        this.websocket = new WebSocket(this.websocketUrl)
+  connect(cb) {
+    // Check if connected already, if so skip (TODO: Assess this!)
+    if (!is.null(this.socket)) return
+    this.socket = new WebSocket(`${this.baseWsUrl}?x-api-key=${this.apiKey}`)
 
-        /* Register the event handlers */
-        this.websocket.addEventListener('message', data => dataHandler(data))
-        this.websocket.addEventListener('open', () => {
-          callback('connected!')
-        }) // TODO: think about this
+    // Initialize connection attempt
+    this.socket.addEventListener('open', (e) => {
+      console.log('ws client connection opened')
+      this.connected = true
+      // Fire connected callback
+      if (cb) cb(e)
+      // TODO: bootstrap all the listeners now!
+    })
 
-        this.websocket.addEventListener('error', err => callback(err))
-      } catch (error) {
-        callback(error)
-      }
-    } else {
-      callback('Client is already connected')
-    }
+    this.socket.addEventListener('error', err => {
+      if (cb && err) cb(err)
+      // TODO: attempt re-connect here!
+    })
+
+    // Make chainable
+    return this
   }
 
   /**
    * Destroys WebSocket i.e. disconnects client and drops reference.
    * @param callback {function} the callback function that executes on close
    */
-  disconnect(callback) {
-    this.websocket.onclose = () => callback('WebSocket connection closed')
-    this.websocket.close()
-    this.websocket = null
+  disconnect(cb) {
+    this.socket.close()
+    this.socket = null
+    this.socket.onclose = () => cb('WebSocket client closed')
+  }
+
+  reconnect() {
+    // TODO: Attempt up to 3 times to re-connect if one of the following is true:
+    // 1. initial connection doesnt respond within 5 seconds
+    // 2. connection doesn't get any event within 3 minutes, and has at least 1 successful subscription
+    // 3. we got a socket error of any kind, see above
+    // Next: if reconnect is successful, trigger a subscription refresh
+  }
+
+  refreshSubscriptions() {
+    // TODO: loop each registry item and re-attempt to subscribe, using registryArgs
+  }
+
+  // message handler & method redirect based on received data
+  listen() {
+    // TODO: verify this works!!!
+    // TODO: Filter out messages for connection state update!
+    this.socket.addEventListener('message', (e) => {
+      const data = JSON.parse(e.data)
+      const id = data && data.id ? data.id
+      const res = data && data.params && data.params.result ? data.params.result : {}
+
+      // fire individual methods if they exist
+      if (is.notUndefined(this.registry[id])) this.registry[id](res)
+
+      // Store latest state for easy retrieval later
+      if (is.notUndefined(this.latestState[id])) this.latestState[id] = res
+    })
+  }
+
+  subscribe(name, args) {
+    // TODO: change this to generate a UUID, unless specified!
+    // Pass in all variables to enable a unique hash, so we can validate it doesnt exist before
+    const id = is.notUndefined(args.id) ? args.id : uuid({ name, args })
+    // TODO: Test this works
+    const evt = formatJsonRpc({ id, params: [name, ...args] })
+    this.socket.send(evt)
+
+    return id
   }
 
   /**
    * Creates a new event listener for the specified event.
-   * @param event {string} the event for which to listen
+   * @param name {string} the event for which to listen
+   * @param filters {object}
    * @param callback {function} the callback function that executes when the
    * specified event is received by the websocket data listener.
    */
-  on(event, callback) {
-    if (this.websocket.readyState === WEBSOCKET_OPEN) {
-      subscribe(this.websocket, event, callback)
-    } else {
-      this.websocket.on('open', () => {
-        subscribe(this.websocket, event, callback)
-      })
-    }
+  on({ name, filters }, callback) {
+    // sends the subscription event over to
+    const subId = this.subscribe(name, filters)
+    this.registry[subId] = callback
+    this.registryArgs[subId] = { name, filters }
   }
 
   /**
-   * Destroys event listener. Deregisters event and callback function
+   * Destroys a single event listener. Deregisters event and callback function
    * @param event {string} the event to deregister
    * @param callback {function} the callback function to execute
    */
-  off(event, callback) {
-    // TODO: Deregister
-    console.log(event, callback)
+  off({ name, filters }, callback) {
+    const id = is.notUndefined(args.id) ? args.id : uuid({ name, filters })
+    // TODO: finish & Test!
+    if (is.notUndefined(this.registry[id])) delete this.registry[id]
+    if (is.notUndefined(this.registryArgs[id])) delete this.registryArgs[id]
   }
 }
 
-export default WebSocketClient
+export default Web3Data
