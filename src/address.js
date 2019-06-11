@@ -1,5 +1,8 @@
-import {checkHash, get} from './utils'
-const ADDRESSES_ENDPOINT = '/addresses'
+import {
+  ERROR_MESSAGE_ADDRESS_NO_ADDRESS as NO_ADDRESS,
+  ADDRESSES_ENDPOINT as ENDPOINT
+} from './constants'
+import {is, get} from './utils'
 
 class Address {
   constructor(web3data) {
@@ -7,56 +10,118 @@ class Address {
   }
 
   // CONSIDER: adding "allowed" filters
-  async getAllAddresses(filterOptions) {
-    return await get(this.web3data, {endpoint: ADDRESSES_ENDPOINT, filterOptions})
+  getAllAddresses(filterOptions) {
+    return get(this.web3data, {endpoint: ENDPOINT, filterOptions})
   }
 
-  async getInformation(hash, filterOptions) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint:'information', filterOptions: filterOptions})
+  getInformation(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'information',
+      filterOptions
+    })
   }
 
-  async getStats(hash, filterOptions) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint:'statistics', filterOptions: filterOptions})
+  getStats(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'statistics',
+      filterOptions
+    })
   }
 
-  async getAdoption(hash, filterOptions) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint:'adoption', filterOptions: filterOptions})
+  getAdoption(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'adoption',
+      filterOptions
+    })
   }
 
-  async getInternalMessages(hash, filterOptions) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint:'internal-messages', filterOptions: filterOptions})
+  getInternalMessages(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'internal-messages',
+      filterOptions
+    })
   }
 
-  async getFunctions(hash, filterOptions) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint:'functions', filterOptions: filterOptions})
+  getFunctions(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'functions',
+      filterOptions
+    })
   }
 
-  async getLogs(hash, filterOptions) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint:'logs', filterOptions: filterOptions})
+  getLogs(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'logs',
+      filterOptions
+    })
   }
 
-  async getTransactions(hash, filterOptions) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint:'transactions', filterOptions: filterOptions})
-  }
-  /* Checks if the filterOptions object has a start or end Date, if it does, then the historical endpoint is hit */
-  async getBalance(hash, filterOptions = {}) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint: 'account-balances', filterOptions: filterOptions})
-  }
-
-  async getTokens(hash, filterOptions) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint:'tokens', filterOptions: filterOptions})
+  getTransactions(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'transactions',
+      filterOptions
+    })
   }
 
-  async getTokenBalances(hash, filterOptions) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint:'token-balances', filterOptions: filterOptions})
+  getBalance(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'account-balances/latest',
+      filterOptions
+    })
   }
 
-  async getTokenTransfers(hash, filterOptions) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint:'token-transfers', filterOptions: filterOptions})
+  getTokens(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'tokens',
+      filterOptions
+    })
   }
 
-  async getUsage(hash, filterOptions) {
-    return await get(this.web3data, {hash:checkHash(hash),  endpoint: ADDRESSES_ENDPOINT, subendpoint:'usage', filterOptions: filterOptions})
+  getTokenBalances(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'token-balances',
+      filterOptions
+    })
+  }
+
+  getUsage(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'usage',
+      filterOptions
+    })
   }
 }
 

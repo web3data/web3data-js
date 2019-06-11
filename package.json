@@ -41,7 +41,6 @@
     "@babel/preset-env": "^7.3.4",
     "@babel/register": "^7.0.0",
     "ava": "^1.2.1",
-    "ava-playback": "0.0.15",
     "browser-env": "^3.2.6",
     "cross-env": "^5.2.0",
     "dotenv": "^6.2.0",
@@ -54,10 +53,9 @@
     "xo": "^0.24.0"
   },
   "dependencies": {
+    "ava-playback": "file:ava-playback-0.0.15.tgz",
     "axios": "^0.18.0",
     "isomorphic-ws": "^4.0.1",
-    "mock-socket": "^8.0.5",
-    "websocket": "^1.0.28",
     "ws": "^6.1.4"
   },
   "publishConfig": {

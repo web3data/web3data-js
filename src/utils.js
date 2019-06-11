@@ -2,21 +2,36 @@
  * Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
  * the appropriate parameter(s) where applicable.
  * @param {object} web3data instance on which to call .rawQuery()
- * @param {string} subendpoint
- * @param {string} endpoint The subendpoint
+ * @param {string} subendpoint The sub-endpoint
+ * @param {string} endpoint The endpoint
  * @param {string} hash The address hash
+ * @param {string} pathParam The path parameter
  * @param {object} filterOptions The filters associated with a given endpoint
+ * @return returns a Promise of the rawQuery request from web3data
  */
-let get = (web3data, {endpoint = '', subendpoint = '', hash = '', filterOptions = {}}) => {
-  const filters = is.nonEmptyObject(filterOptions) ? '?'  + buildFilterUrl(filterOptions) : ''
+const get = (
+  web3data,
+  {
+    endpoint = '',
+    subendpoint = '',
+    hash = '',
+    path_param: pathParam = '',
+    filterOptions = {}
+  }
+) => {
+  const filters = is.nonEmptyObject(filterOptions)
+    ? '?' + buildFilterUrl(filterOptions)
+    : ''
+
   hash = hash ? '/' + hash : ''
+  pathParam = pathParam ? '/' + pathParam : ''
   subendpoint = subendpoint ? '/' + subendpoint : ''
   return web3data.rawQuery(
-      `${endpoint}${hash}${subendpoint}${filters}`
+    `${endpoint}${hash || pathParam}${subendpoint}${filters}`
   )
 }
 
-let buildFilterUrl = (filterOptions) => {
+const buildFilterUrl = filterOptions => {
   let filterUrl = ''
   for (const filter in filterOptions) {
     if ({}.hasOwnProperty.call(filterOptions, filter)) {
@@ -27,27 +42,28 @@ let buildFilterUrl = (filterOptions) => {
   return filterUrl
 }
 
-const checkHash = (hash) => {throwIf(is.undefined(hash) || is.emptyString(hash), 'No address hash supplied'); return hash}
-
 const throwIf = (bool, message) => {
   if (bool) throw new Error(message)
 }
 
-let is = () => {}
+const rejectPromiseIf = (condition, message) => {
+  if (condition) return Promise.reject(new Error(message))
+}
+
+const is = () => {}
+
+is.notHash = hash => is.undefined(hash) || is.emptyString(hash)
+
 is.string = value => typeof value === 'string'
 is.emptyString = value => is.string(value) && value.length === 0
 is.nonEmptyString = value => !is.emptyString(value)
-is.emptyObject = (object) => {
-  for (let key in object) {
-    if (object.hasOwnProperty(key))
-      return false;
-  }
-  return true;
-}
-is.nonEmptyObject = (object) => !is.emptyObject(object)
+is.emptyObject = object => Object.keys(object).length === 0
+is.inObject = (object, property) =>
+  Object.prototype.hasOwnProperty.call(object, property)
+is.notInObject = (object, property) => !is.inObject(object, property)
+is.nonEmptyObject = object => !is.emptyObject(object)
 is.undefined = value => typeof value === 'undefined'
 is.notUndefined = value => !is.undefined(value)
 is.null = value => value === null
 
-export {buildFilterUrl, is, throwIf, checkHash, get}
-
+export {buildFilterUrl, is, throwIf, get, rejectPromiseIf}

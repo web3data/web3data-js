@@ -1,6 +1,6 @@
 import Web3Data from '../src/web3data'
 import test from 'ava'
-import {API_KEY_HEADER, DEFAULT_BASE_URL, BLOCKCHAIN_ID_HEADER} from "../constants";
+import {API_KEY_HEADER, DEFAULT_BASE_URL, BLOCKCHAIN_ID_HEADER} from "../src/constants";
 
 import { getNewWeb3DataInstance, TOKEN_ADDRESS, BLOCKCHAIN_ID, API_KEY } from './constants'
 

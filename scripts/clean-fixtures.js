@@ -1,1 +1,1 @@
-require('./deleteDir')('./test/fixtures')
+require('./helpers').deleteDir('./test/fixtures')
