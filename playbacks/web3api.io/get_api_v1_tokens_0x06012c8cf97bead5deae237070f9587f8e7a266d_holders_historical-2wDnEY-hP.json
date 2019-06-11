@@ -1,0 +1,61 @@
+{
+  "body": "",
+  "method": "get",
+  "path": "/api/v1/tokens/0x06012c8cf97bead5deae237070f9587f8e7a266d/holders/historical",
+  "queries": {
+    "holderAddresses": "0x873029fead9cc9c05860557576ca1577f420a801"
+  },
+  "rawHeaders": [
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "175",
+    "Connection",
+    "close",
+    "Date",
+    "Tue, 02 Apr 2019 15:24:30 GMT",
+    "x-amzn-RequestId",
+    "69333811-555b-11e9-8496-21f384c15716",
+    "Access-Control-Allow-Origin",
+    "*",
+    "X-Response-Time",
+    "257.125ms",
+    "x-amzn-Remapped-Content-Length",
+    "175",
+    "x-amzn-Remapped-Connection",
+    "keep-alive",
+    "Set-Cookie",
+    "AWSALB=loBjUlrE+ISIr54118POt+czffrNALS3pkMe12LHw19DDMFCeKASRtYO+Fr8rcb9THpFsMkzCqYAhlVcrA+DXSQcyxUdPWLEsgCfrBaRQSXDIK95z22Oepqsv4Vl; Expires=Tue, 09 Apr 2019 15:24:30 GMT; Path=/",
+    "x-amz-apigw-id",
+    "XhC7SEd8oAMFi6A=",
+    "ETag",
+    "W/\"af-npTwC484dtjOwPtO1h0iUY7exWQ\"",
+    "x-amzn-Remapped-Date",
+    "Tue, 02 Apr 2019 15:24:30 GMT",
+    "X-Cache",
+    "Miss from cloudfront",
+    "Via",
+    "1.1 fb1574d5a6ba2d77d2a656aba08aa3c3.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Id",
+    "V_dolYl0J9KDVx5IV_7m7dnYq3MNXl83i7-EIntifeifUfIXAO2Rsg=="
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": {
+      "data": [
+      ],
+      "metadata": {
+        "columns": [
+          "timestamp",
+          "timestamp.holder*"
+        ],
+        "endDate": "N/A",
+        "startDate": "N/A"
+      }
+    },
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}

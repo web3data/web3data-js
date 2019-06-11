@@ -1,48 +1,103 @@
-require('dotenv').load()
-let WebSocketClient = require('websocket').client;
-let client = new WebSocketClient();
-client.on('connectFailed', function(error) {
-    console.log('Connect Error: ' + error.toString());
-});
-// client.connect(`wss://staging-0000-data-api.amberdata.io?api_key=${process.env.API_KEY}`);
-client.connect('ws://localhost:8080', 'echo-protocol');
+import {is} from './utils'
 
+const WebSocket = require('isomorphic-ws')
 
-// client.onerror = function(err) {
-//     console.log('Connection Error', err);
-// };
-//
-// client.onopen = function() {
-//     console.log('WebSocket Client Connected');
-// };
+// TODO: put in constants (maybe?)
+const WEBSOCKET_OPEN = 1
 
-// let Web3Data = require('./web3data').default
-//
-// let w3d = new Web3Data('whatever', {websocketUrl: 'wss://localhost:8080'}) //wss://echo.websocket.org
-// w3d.connect(status => {
-//     console.log('the status -> ' +  status)
-// })
-//
-// w3d.connect(status => {
-//     console.log('the status -> ' +  status)
-// })
+const dataHandler = data => {
+  // Console.log("data received: ", data.data)
+  console.log('Type:', data.data.split(' ')[0].trim())
+}
 
+// Const eventHandlers = {}
 
+const subscribe = (websocket, event, callback) => {
+  // TODO: R.O.W.
+  console.log('subscribed to', event)
 
-// setTimeout(function timeout() {
-//     w3d.disconnect();
-// }, 500);
-// require('dotenv').load()
+  /* Send subscribe message with event */
+  websocket.send(`subscribe:${event}`)
 
-// const WebSocket = require('ws')
-//
-// const ws = new WebSocket(`wss://staging-0000-data-api.amberdata.io?api_key=${process.env.API_KEY}`, {
-//     rejectUnauthorized: false,
-//     protocolVersion: 13
-// }); // api_key=${process.env.API_KEY}`);
-// console.log()
-// const ws = new WebSocket(`ws://localhost:8080`);
+  /* Register callback with event handler */
+  // TODO: Do this
+  console.log(callback)
+}
 
-// ws.on('UPDATE:BLOCK:LATEST', function incoming(data) {
-//     console.log(data);
-// }); UPDATE:BLOCK:LATEST
+/**
+ * TODO: ---
+ */
+class WebSocketClient {
+  /**
+   * Creates the WebSocketClient instance.
+   * @param websocketUrl
+   */
+  constructor(websocketUrl) {
+    this.websocketUrl = websocketUrl
+    this.websocket = null
+  }
+
+  /**
+   * Initialises the WebSocket connection.
+   * @param callback {function} the callback function to execute //ASK: to many callbacks?
+   */
+  connect(callback) {
+    /* Check to see if the websocket has been initialized */
+    if (is.null(this.websocket)) {
+      try {
+        /* Create new WebSocket instance and initialize connection */
+        this.websocket = new WebSocket(this.websocketUrl)
+
+        /* Register the event handlers */
+        this.websocket.addEventListener('message', data => dataHandler(data))
+        this.websocket.addEventListener('open', () => {
+          callback('connected!')
+        }) // TODO: think about this
+
+        this.websocket.addEventListener('error', err => callback(err))
+      } catch (error) {
+        callback(error)
+      }
+    } else {
+      callback('Client is already connected')
+    }
+  }
+
+  /**
+   * Destroys WebSocket i.e. disconnects client and drops reference.
+   * @param callback {function} the callback function that executes on close
+   */
+  disconnect(callback) {
+    this.websocket.onclose = () => callback('WebSocket connection closed')
+    this.websocket.close()
+    this.websocket = null
+  }
+
+  /**
+   * Creates a new event listener for the specified event.
+   * @param event {string} the event for which to listen
+   * @param callback {function} the callback function that executes when the
+   * specified event is received by the websocket data listener.
+   */
+  on(event, callback) {
+    if (this.websocket.readyState === WEBSOCKET_OPEN) {
+      subscribe(this.websocket, event, callback)
+    } else {
+      this.websocket.on('open', () => {
+        subscribe(this.websocket, event, callback)
+      })
+    }
+  }
+
+  /**
+   * Destroys event listener. Deregisters event and callback function
+   * @param event {string} the event to deregister
+   * @param callback {function} the callback function to execute
+   */
+  off(event, callback) {
+    // TODO: Deregister
+    console.log(event, callback)
+  }
+}
+
+export default WebSocketClient

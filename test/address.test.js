@@ -1,5 +1,6 @@
-import test from "ava";
-import { getNewWeb3DataInstance, ADDRESS, TOKEN_ADDRESS } from './constants'
+import test from "ava"
+import { getNewWeb3DataInstance, ADDRESS } from './constants'
+import {ERROR_MESSAGE_ADDRESS_NO_ADDRESS as NO_ADDRESS} from "../src/constants";
 
 /**********************************
  * -------- Tests Setup ---------- *
@@ -7,7 +8,7 @@ import { getNewWeb3DataInstance, ADDRESS, TOKEN_ADDRESS } from './constants'
 
 test.beforeEach(t => {
     t.context.web3data = getNewWeb3DataInstance()
-});
+})
 
 /**********************************
  * -------- Test address -------- *
@@ -15,151 +16,129 @@ test.beforeEach(t => {
 
 /*********** Test getAllAddresses() ***********/
 test('Successfully gets all addresses', async t => {
-    let response = await t.context.web3data.address.getAllAddresses();
+    let response = await t.context.web3data.address.getAllAddresses()
     t.is(response.status, 200)
-});
+})
 
 // "https://web3api.io/api/v1/addresses?page=1&size=5"
 
 /*********** Test getInformation() ***********/
 test('Successfully gets address information', async t => {
-    let response = await t.context.web3data.address.getInformation(ADDRESS);
+    let response = await t.context.web3data.address.getInformation(ADDRESS)
     t.is(response.status, 200)
-});
+})
 test('throws exception when calling getInformation without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getInformation()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
 
 /*********** Test getStats() ***********/
 test('Successfully gets address statistics', async t => {
-    let response = await t.context.web3data.address.getStats(ADDRESS);
+    let response = await t.context.web3data.address.getStats(ADDRESS)
     t.is(response.status, 200)
-});
+})
 test('throws exception when calling getStats without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getStats()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
 
 /*********** Test getAdoption() ***********/
 test('Successfully gets address adoption', async t => {
-    let response = await t.context.web3data.address.getAdoption(ADDRESS);
+    let response = await t.context.web3data.address.getAdoption(ADDRESS)
     t.is(response.status, 200)
-});
+})
 test('throws exception when calling getAdoption without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getAdoption()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
 
 /*********** Test getInternalMessages() ***********/
 test('Successfully gets address internal messages', async t => {
-    let response = await t.context.web3data.address.getInternalMessages(ADDRESS);
+    let response = await t.context.web3data.address.getInternalMessages(ADDRESS)
     t.is(response.status, 200)
-});
+})
 test('throws exception when calling getInternalMessages without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getInternalMessages()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
 
 /*********** Test getFunctions() ***********/
 test('Successfully gets address functions', async t => {
-    let response = await t.context.web3data.address.getFunctions(ADDRESS);
+    let response = await t.context.web3data.address.getFunctions(ADDRESS)
     t.is(response.status, 200)
-});
+})
 test('throws exception when calling getFunctions without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getFunctions()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
 
 /*********** Test getLogs() ***********/
 test('Successfully gets address logs', async t => {
-    let response = await t.context.web3data.address.getLogs(ADDRESS);
+    let response = await t.context.web3data.address.getLogs(ADDRESS)
     t.is(response.status, 200)
-});
+})
 test('throws exception when calling getLogs without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getLogs()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
 
 /*********** Test getTransactions() ***********/
 test('Successfully gets address transactions', async t => {
-    let response = await t.context.web3data.address.getTransactions(ADDRESS);
+    let response = await t.context.web3data.address.getTransactions(ADDRESS)
     t.is(response.status, 200)
-});
+})
 test('throws exception when calling getTransactions without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getTransactions()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
 
 /*********** Test getBalance() ***********/
 test('Successfully gets address balance', async t => {
-    let response = await t.context.web3data.address.getBalance(ADDRESS);
+    let response = await t.context.web3data.address.getBalance(ADDRESS)
     t.is(response.status, 200)
-});
+})
 test('throws exception when calling getBalance without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getBalance()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
 
 /*********** Test getTokens() ***********/
 test('Successfully gets address tokens', async t => {
-    let response = await t.context.web3data.address.getTokens(ADDRESS);
+    let response = await t.context.web3data.address.getTokens(ADDRESS)
     t.is(response.status, 200)
-});
+})
 test('throws exception when calling getTokens without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getTokens()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
 
 /*********** Test getTokenBalances() ***********/
 test('Successfully gets address token balances', async t => {
-    let response = await t.context.web3data.address.getTokenBalances(ADDRESS);
+    let response = await t.context.web3data.address.getTokenBalances(ADDRESS)
     t.is(response.status, 200)
-});
+})
 test('throws exception when calling getTokenBalances without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getTokenBalances()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
-
-/*********** Test getTokenSupply() ***********/
-test('Successfully gets address token supply', async t => {
-    let response = await t.context.web3data.address.getTokenSupply(TOKEN_ADDRESS);
-    t.is(response.status, 200)
-});
-test('throws exception when calling getTokenSupply without hash', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getTokenSupply()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
-
-/*********** Test getTokenTransfers() ***********/
-test('Successfully gets address token transfers', async t => {
-    let response = await t.context.web3data.address.getTokenTransfers(ADDRESS);
-    t.is(response.status, 200)
-});
-test('throws exception when calling getTokenTransfers without hash', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getTokenTransfers()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
 
 /*********** Test getUsage() ***********/
 test('Successfully gets address usage', async t => {
-    let response = await t.context.web3data.address.getUsage(ADDRESS);
+    let response = await t.context.web3data.address.getUsage(ADDRESS)
     t.is(response.status, 200)
-});
+})
 test('throws exception when calling getUsage without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getUsage()
-    }, { instanceOf: Error, message: 'No address hash supplied' });
-});
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})

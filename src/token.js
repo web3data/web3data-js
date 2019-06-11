@@ -1,31 +1,77 @@
-import {checkHash, get} from './utils'
-
-const TOKENS_ENDPOINT = '/tokens'
+import {is, get} from './utils'
+import {
+  ERROR_MESSAGE_TOKEN_NO_ADDRESS as NO_ADDRESS,
+  ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS as NO_HOLDER_ADDRESS,
+  TOKENS_ENDPOINT as ENDPOINT
+} from './constants'
 
 class Token {
-    constructor(web3data) {
-        this.web3data = web3data
-    }
-    async getTokenVolume(hash, filterOptions = {}) {
-        return await get(this.web3data, {hash:checkHash(hash),  endpoint: TOKENS_ENDPOINT, subendpoint:'volume', filterOptions: filterOptions})
-    }
+  constructor(web3data) {
+    this.web3data = web3data
+  }
 
-    async getTokenVelocity(hash, filterOptions = {}) {
-        return await get(this.web3data, {hash:checkHash(hash),  endpoint: TOKENS_ENDPOINT, subendpoint:'velocity', filterOptions: filterOptions})
-    }
+  getTokenVolume(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'volume',
+      filterOptions
+    })
+  }
 
-    async getTokenHolders(hash, filterOptions = {}) {
-        return await get(this.web3data, {hash:checkHash(hash),  endpoint: TOKENS_ENDPOINT, subendpoint: 'holders', filterOptions: filterOptions})
-    }
+  getTokenVelocity(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'velocity',
+      filterOptions
+    })
+  }
 
-    async getTokenHoldersHistorical(hash, filterOptions = {}) {
-        return await get(this.web3data, {hash:checkHash(hash),  endpoint: TOKENS_ENDPOINT, subendpoint: 'holders-historical', filterOptions: filterOptions})
-    }
+  getTokenHolders(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'holders/latest',
+      filterOptions
+    })
+  }
 
-    async getTokenSupply(hash, filterOptions) {
-        return await get(this.web3data, {hash:checkHash(hash),  endpoint: TOKENS_ENDPOINT, subendpoint:'supplies-current', filterOptions: filterOptions})
-    }
+  // TODO: Add error no holder address supplied
+  getTokenHoldersHistorical(hash, filterOptions = {}) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    if (is.notInObject(filterOptions, 'holderAddresses'))
+      return Promise.reject(new Error(NO_HOLDER_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'holders/historical',
+      filterOptions
+    })
+  }
 
+  getTokenSupply(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'supplies/latest',
+      filterOptions
+    })
+  }
+
+  getTokenTransfers(hash, filterOptions) {
+    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'transfers',
+      filterOptions
+    })
+  }
 }
 
 export default Token

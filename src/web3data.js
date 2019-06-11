@@ -4,13 +4,16 @@ import {
   BLOCKCHAIN_ID_HEADER,
   DEFAULT_BASE_URL,
   DEFAULT_WEBSOCKET_URL
-} from '../constants'
-import { is, throwIf } from './utils'
+} from './constants'
+import {is, throwIf} from './utils'
 import Address from './address'
 import Token from './token'
 import Contract from './contract'
+import Transaction from './transaction'
+import Block from './block'
+import Signature from './signature'
+import WebSocketClient from './websocket'
 
-const WebSocket = require('isomorphic-ws')
 /**
  * Class Web3data contains methods for hitting Amberdata's
  * API endpoints.
@@ -37,52 +40,49 @@ class Web3Data {
     if (options.blockchainId) {
       this.headers[BLOCKCHAIN_ID_HEADER] = options.blockchainId
     }
-    this.websocketUrl = options.websocketUrl ? options.websocketUrl : DEFAULT_WEBSOCKET_URL + apiKey
+
+    this.websocketUrl = options.websocketUrl
+      ? options.websocketUrl
+      : DEFAULT_WEBSOCKET_URL
+    this.websocketUrl += '?api_key=' + apiKey
     this.baseUrl = options.baseUrl ? options.baseUrl : DEFAULT_BASE_URL
 
     /* Web3Data composite modules */
     this.address = new Address(this)
     this.token = new Token(this)
     this.contract = new Contract(this)
-    this.websocket = null
+    this.transaction = new Transaction(this)
+    this.block = new Block(this)
+    this.signature = new Signature(this)
+    this.websocket = new WebSocketClient(this.websocketUrl)
   }
 
   connect(callback) {
-    if (is.null(this.websocket)) {
-      try {
-        this.websocket = new WebSocket(this.websocketUrl);
-        this.websocket.onclose = () => callback('WebSocket connection closed');
-        // TODO: Make more robust
-        this.websocket.onerror = (err) => callback(err)
-      } catch (error) {
-        callback(error)
-      }
-    } else {
-      callback("Client is already connected")
-    }
+    this.websocket.connect(callback)
   }
 
-  disconnect() {
-    this.websocket.close()
+  disconnect(callback) {
+    this.websocket.disconnect(callback)
   }
 
-  on() {
-    // this.websocket.
+  on(event, callback) {
+    this.websocket.on(event, callback)
   }
 
-  off() {
-
+  off(event, callback) {
+    this.websocket.off(event, callback)
   }
+
   /**
    * Appends the API base url with the endpoint  url. Then sends an
    * http request to the Amberdata API endpoint.
    * @param {string} url The endpoint url with any query/path params if set
    */
   async rawQuery(url) {
-      const response = await axios.get(this.baseUrl + url, {
-        headers: this.headers
-      })
-      return response.data
+    const response = await axios.get(this.baseUrl + url, {
+      headers: this.headers
+    })
+    return response.data
   }
 }
 
