@@ -19,6 +19,7 @@ import WebSocketClient from './websocket'
  * API endpoints.
  * */
 class Web3Data {
+
   /**
    * Creates a Web3Data instance
    * @param {string} apiKey  The Amberdata api key needed to access data
@@ -42,9 +43,10 @@ class Web3Data {
     }
 
     this.websocketUrl = options.websocketUrl
-      ? options.websocketUrl
+/*   ROW   ? options.websocketUrl
       : DEFAULT_WEBSOCKET_URL
-    this.websocketUrl += '?api_key=' + apiKey
+    this.websocketUrl += '?api_key=' + apiKey*/
+
     this.baseUrl = options.baseUrl ? options.baseUrl : DEFAULT_BASE_URL
 
     // TODO: Map to normal naming conventions
@@ -57,25 +59,36 @@ class Web3Data {
     this.signature = new Signature(this)
 
     // TODO: This should receive options, but not handle URL gen
-    this.websocket = new WebSocketClient(this.websocketUrl)
+    this.websocket = null
+    this.apiKey = apiKey
   }
 
-  // TODO: Let's talk about this more!
-  // connect(callback) {
-  //   this.websocket.connect(callback)
-  // }
-  //
-  // disconnect(callback) {
-  //   this.websocket.disconnect(callback)
-  // }
-  //
-  // on(event, callback) {
-  //   this.websocket.on(event, callback)
-  // }
-  //
-  // off(event, callback) {
-  //   this.websocket.off(event, callback)
-  // }
+  connect(callback) {
+    if (is.null(this.websocket)) {
+      this.websocket = new WebSocketClient(this.apiKey, {websocketUrl: this.websocketUrl})
+    }
+    return this.websocket.connect(callback)
+  }
+
+  // TODO: The following methods must error if called before `connect()`
+  disconnect(callback) {
+    throwIf(!this.websocket, 'must run `connect` method first')
+    this.websocket.disconnect(callback)
+  }
+
+  on({ eventName, filters }, callback) {
+    //TODO: Check with Trevor
+    throwIf(!eventName, 'no event specified')
+    throwIf(!callback, 'no callback provided')
+    this.websocket.on({ eventName, args: filters }, callback)
+  }
+
+  off({ eventName, filters }, callback) {
+    //TODO: Check with Trevor
+    throwIf(!eventName, 'no event specified')
+    throwIf(!callback, 'no callback provided')
+    this.websocket.off({ eventName, args: filters }, callback)
+  }
 
   /**
    * Appends the API base url with the endpoint  url. Then sends an

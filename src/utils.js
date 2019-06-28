@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 /**
  * Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
  * the appropriate parameter(s) where applicable.
@@ -67,4 +69,6 @@ is.nonEmptyObject = object => !is.emptyObject(object)
 is.nonEmptyString = value => !is.emptyString(value)
 is.notInObject = (object, property) => !is.inObject(object, property)
 
-export {buildFilterUrl, is, throwIf, get, rejectPromiseIf}
+const uuid = data => crypto.createHash('sha1').update(JSON.stringify(data)).digest('base64')
+
+export {buildFilterUrl, is, throwIf, get, rejectPromiseIf, uuid}
