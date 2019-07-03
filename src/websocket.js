@@ -64,9 +64,6 @@ class WebSocketClient {
 
       this.connected = true
 
-
-
-
       this.refreshSubscriptions()
 
       // bootstrap all the listeners now!

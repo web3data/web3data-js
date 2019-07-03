@@ -6,7 +6,7 @@ import WebSocketClient from '../src/websocket'
 
 const { promisify } = require('util')
 import { DEFAULT_WEBSOCKET_URL } from '../src/constants'
-
+import {API_KEY} from './constants'
 const CONNECTING = 0 // Socket has been created. The connection is not yet open.
 const OPEN = 1 // The connection is open and ready to communicate.
 const CLOSING = 2 // The connection is in the process of closing.
@@ -65,7 +65,7 @@ test.before(t => {
         ws.on('message', function incoming(message) {
             msg++
             console.log(`received: ${message} nMsgs: ${msg}`);
-            // ws.send(message);
+            ws.close()
         });
     });
 
@@ -109,11 +109,11 @@ const LIVE_WS_URL = DEFAULT_WEBSOCKET_URL
  * -------- Test Setup ---------- *
  **********************************/
 test.beforeEach(t => {
-    t.context.w3d = new Web3Data('', {websocketUrl: MOCK_WS_URL + '/generic'})
+    t.context.w3d = new Web3Data(API_KEY, {websocketUrl: MOCK_WS_URL + '/generic'})
 })
 
 
-/*********** Test connects to server ***********/
+/*********** Test connects to server [LIVE, MOCK] ***********/
 test.cb('Successfully connects to Websocket Server',  t => {
     t.context.w3d.connect(status => {
         t.is(status.target.readyState, OPEN)
@@ -121,7 +121,7 @@ test.cb('Successfully connects to Websocket Server',  t => {
     })
 })
 
-/*********** Test disconnect ***********/
+/*********** Test disconnect from server [LIVE, MOCK] ***********/
 test.cb('Successfully disconnects to Websocket Server',  t => {
     t.context.w3d.connect(status => {
         t.is(status.target.readyState, OPEN)
@@ -130,32 +130,24 @@ test.cb('Successfully disconnects to Websocket Server',  t => {
             t.end()
         })
     })
-
 })
 
+/*********** Test reconnect attempts 3 times [MOCK] ***********/
 
-
-
-
-/*********** Test reconnect attempts 3 times ***********/
-/*
-
-test.cb('Successfully reconnects 3 times',  t => {
-
+test.cb.only('Successfully reconnects 3 times',  t => {
     let wss = new WebSocket.Server({ port: 8081 });
-    let reconnects = -1
+    let reconnects = 0
+    const websocket = new WebSocketClient(API_KEY,   {websocketUrl: 'ws://localhost:8081'})
+    websocket.connect(status => {})
     wss.on('connection', function connection(ws) {
-        ws.close(1000)
-        reconnects++
+        if (++reconnects > 2) {
+            t.is(reconnects, 3)
+            t.end()
+        }
     });
-
-    const w3d = new Web3Data('', {websocketUrl: 'ws://localhost:8081'})
-    w3d.connect(status => {})
-    setTimeout(() => {t.is(reconnects, 3); t.end()}, 2000)
 })
-*/
 
-/*********** Test reconnect on error ***********/
+/*********** Test reconnect on error [MOCK] ***********/
 /*test.cb('Successfully reconnects on server connection closed',  t => {
 
     let wss = new WebSocket.Server({ port: 8081 });
@@ -165,7 +157,7 @@ test.cb('Successfully reconnects 3 times',  t => {
         reconnects++
     });
 
-    const w3d = new Web3Data('', {websocketUrl: 'ws://localhost:8081'})
+    const w3d = new Web3Data(API_KEY, {websocketUrl: 'ws://localhost:8081'})
     w3d.connect(status => {})
     setTimeout(() => {t.is(reconnects, 3); t.end()}, 2000)
 })*/
@@ -174,7 +166,7 @@ test.cb('Successfully reconnects 3 times',  t => {
 /*
 let i = 0
 test.cb('Successfully reconnect when no response received',  t => {
-    const websocket = new WebSocketClient('',  {websocketUrl: MOCK_WS_URL + '/generic'})
+    const websocket = new WebSocketClient(API_KEY,  {websocketUrl: MOCK_WS_URL + '/generic'})
     websocket.connect(status => {
         // t.context.w3d.subscribe('block')
         t.is(true, true)
@@ -195,7 +187,7 @@ test.cb('Successfully reconnect when no response received',  t => {
 /*
 
 test.cb('Successfully sends subscription message',  t => {
-    const websocket = new WebSocketClient('',  {websocketUrl: MOCK_WS_URL + '/no-data'})
+    const websocket = new WebSocketClient(API_KEY,  {websocketUrl: MOCK_WS_URL + '/no-data'})
     websocket.connect(status => {
         websocket.subscribe('block')
         t.is(t.context.msgRceived, true)
