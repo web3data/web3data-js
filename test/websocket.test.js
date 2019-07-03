@@ -246,3 +246,20 @@ test.cb.only('Successfully sends valid unsubscribe message (with args)',  t => {
         websocket.unsubscribe('block', {number: 7280000, id: id})
     })
 })
+/*********** Test on() [LIVE, MOCK] ***********/
+test.cb.only('Successfully calls on registers callback,',  t => {
+    const wss = new WebSocket.Server({ port: 8083 });
+    /* Regex matches the following string  as long as id contains 1 > characters */
+    const UNSUBSCRIBE_MESSAGE = '{"jsonrpc":"2.0","method":"subscribe","id":"Ie/4MEdlxOHpBSRiqgF6pZfyQuw=","params":["block",{"number":7280000}]}'
+    wss.on('connection', function connection(ws) {
+        ws.on('message', function incoming(message) {
+            t.is(message, UNSUBSCRIBE_MESSAGE)
+            t.end()
+        });
+    });
+    const websocket = new WebSocketClient(API_KEY,  {websocketUrl: 'ws://localhost:8083'})
+
+    websocket.on({eventName: 'block'}, status => {
+
+    })
+})

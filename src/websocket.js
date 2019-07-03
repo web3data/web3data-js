@@ -13,9 +13,7 @@ const formatJsonRpc = options => {
     jsonrpc: options.version || '2.0',
     method: options.method || 'subscribe',
     id: options.id || 0,
-
-    // TODO: This is unsafe, force to be array
-    params: options.params || []
+    params: options.params || [] // TODO: This is unsafe, force to be array
   })
 }
 
@@ -97,8 +95,7 @@ class WebSocketClient {
       }
 
       console.error('connection error occurred')
-
-      // This.reconnect()
+      this.reconnect()
     })
 
     this.socket.addEventListener('close', data => {
@@ -195,8 +192,8 @@ class WebSocketClient {
         // Store latest state for easy retrieval later
         if (is.notUndefined(this.latestState[uuid]))
           this.latestState[uuid] = res
+        // This.reconnects = 0
       }
-      // This.reconnects = 0
     })
   }
 
@@ -254,8 +251,6 @@ class WebSocketClient {
     // TODO: Check with Trevor
     throwIf(!eventName, 'no event specified')
     throwIf(!callback, 'no callback provided')
-
-    // Sends the subscription event over to
 
     /* Derive uuid */
     const id = uuid({eventName, args})
