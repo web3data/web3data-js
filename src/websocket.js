@@ -73,7 +73,7 @@ class WebSocketClient {
       if (callBack) callBack(result)
 
       setTimeout(()=> {
-        if (!this.responseReceived) this.socket.close()
+        if (!this.responseReceived && this.socket) this.socket.close()
       }, 1000)
 
       setTimeout(()=> {
@@ -90,8 +90,9 @@ class WebSocketClient {
       } else {
         console.error('connection error occurred')
       }
+      console.error('connection error occurred')
 
-      this.reconnect()
+      //this.reconnect()
     })
 
     this.socket.addEventListener('close', data => {
@@ -198,7 +199,6 @@ class WebSocketClient {
     /* Format and send json rpc message */
     const jsonRpcMessage = formatJsonRpc({ id, params: [eventName, ...params] })
     this.socket.send(jsonRpcMessage)
-    console.log('subscribing - ', jsonRpcMessage)
     return id
   }
 
@@ -211,7 +211,7 @@ class WebSocketClient {
   unsubscribe(eventName, args) {
 
     /* Derive uuid */
-    const id =  uuid({eventName, args})
+    const id = is.notUndefined(args) && is.notUndefined(args.id)? args.id : uuid({eventName, args})
 
     /* Format and send json rpc message */
     const jsonRpcMessage = formatJsonRpc({ id, method: 'unsubscribe', params: [this.registry[id].subId] })
@@ -222,7 +222,7 @@ class WebSocketClient {
 
   /**
    * Creates a new event listener for the specified event.
-   * @param name {string} the event for which to listen
+   * @param eventName {string} the event for which to listen
    * @param args {object} the extra arguments associated with the subscription
    * @param callback {function} the callback function that executes when the
    * specified event is received by the websocket data listener.
