@@ -28,18 +28,6 @@ const url = require('url');
 
 
 test.before(t => {
-    // This runs before all tests
-/*    t.context.wss = new WebSocket.Server({ port: 8080 });
-    // t.context.wssC = new WebSocket.Server({ port: 8081 });
-
-    t.context.wss.on('connection', function connection(ws) {
-        t.context.msgRceived = false
-        ws.on('message', function incoming(message) {
-            console.log('received: %s', message);
-            t.context.msgRceived = true
-            ws.send(message);
-        });
-    });*/
 
     const server = http.createServer();
     const wss1 = new WebSocket.Server({ noServer: true });
@@ -122,19 +110,32 @@ const LIVE_WS_URL = DEFAULT_WEBSOCKET_URL
  **********************************/
 test.beforeEach(t => {
     t.context.w3d = new Web3Data('', {websocketUrl: MOCK_WS_URL + '/generic'})
-/*
-    t.context.w3d.connect(status => {
-        console.log('the status -> ', status.type)
-    }).listen()*/
 })
 
+
+/*********** Test connects to server ***********/
 test.cb('Successfully connects to Websocket Server',  t => {
-    t.plan(1)
     t.context.w3d.connect(status => {
         t.is(status.target.readyState, OPEN)
-
+        t.end()
     })
 })
+
+/*********** Test disconnect ***********/
+test.cb('Successfully disconnects to Websocket Server',  t => {
+    t.context.w3d.connect(status => {
+        t.is(status.target.readyState, OPEN)
+        t.context.w3d.disconnect(status => {
+            console.log(status)
+            t.end()
+        })
+    })
+
+})
+
+
+
+
 
 /*********** Test reconnect attempts 3 times ***********/
 /*

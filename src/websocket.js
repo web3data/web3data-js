@@ -2,10 +2,6 @@ const WebSocket = require('isomorphic-ws')
 import { DEFAULT_WEBSOCKET_URL } from './constants'
 import {is, throwIf, uuid} from './utils'
 
-
-// TODO: Check with Trevor: option to provide id top level i.e. .on({eventName: 'block', id: '0' || 0})
-
-
 /**
  * Creates a string in json rpc format
  * @param options the json rpc options
@@ -68,14 +64,16 @@ class WebSocketClient {
 
       this.connected = true
 
-      // Fire connected callback
-      if (callBack) callBack(result)
+
 
 
       this.refreshSubscriptions()
 
       // bootstrap all the listeners now!
       this.listen()
+
+      // Fire connected callback
+      if (callBack) callBack(result)
 
       setTimeout(()=> {
         if (!this.responseReceived) this.socket.close()
