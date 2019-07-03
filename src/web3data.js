@@ -2,8 +2,7 @@ import axios from 'axios'
 import {
   API_KEY_HEADER,
   BLOCKCHAIN_ID_HEADER,
-  DEFAULT_BASE_URL,
-  DEFAULT_WEBSOCKET_URL
+  DEFAULT_BASE_URL
 } from './constants'
 import {is, throwIf} from './utils'
 import Address from './address'
@@ -19,7 +18,6 @@ import WebSocketClient from './websocket'
  * API endpoints.
  * */
 class Web3Data {
-
   /**
    * Creates a Web3Data instance
    * @param {string} apiKey  The Amberdata api key needed to access data
@@ -43,9 +41,9 @@ class Web3Data {
     }
 
     this.websocketUrl = options.websocketUrl
-/*   ROW   ? options.websocketUrl
+    /*   ROW   ? options.websocketUrl
       : DEFAULT_WEBSOCKET_URL
-    this.websocketUrl += '?api_key=' + apiKey*/
+    this.websocketUrl += '?api_key=' + apiKey */
 
     this.baseUrl = options.baseUrl ? options.baseUrl : DEFAULT_BASE_URL
 
@@ -65,8 +63,11 @@ class Web3Data {
 
   connect(callback) {
     if (is.null(this.websocket)) {
-      this.websocket = new WebSocketClient(this.apiKey, {websocketUrl: this.websocketUrl})
+      this.websocket = new WebSocketClient(this.apiKey, {
+        websocketUrl: this.websocketUrl
+      })
     }
+
     return this.websocket.connect(callback)
   }
 
@@ -76,18 +77,18 @@ class Web3Data {
     this.websocket.disconnect(callback)
   }
 
-  on({ eventName, filters }, callback) {
-    //TODO: Check with Trevor
+  on({eventName, filters}, callback) {
+    // TODO: Check with Trevor
     throwIf(!eventName, 'no event specified')
     throwIf(!callback, 'no callback provided')
-    this.websocket.on({ eventName, args: filters }, callback)
+    this.websocket.on({eventName, args: filters}, callback)
   }
 
-  off({ eventName, filters }, callback) {
-    //TODO: Check with Trevor
+  off({eventName, filters}, callback) {
+    // TODO: Check with Trevor
     throwIf(!eventName, 'no event specified')
     throwIf(!callback, 'no callback provided')
-    this.websocket.off({ eventName, args: filters }, callback)
+    this.websocket.off({eventName, args: filters}, callback)
   }
 
   /**
