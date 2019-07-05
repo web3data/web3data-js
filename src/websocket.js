@@ -26,7 +26,7 @@ const formatJsonRpc = options => {
 const isSubscriptionAck = msg => !msg.params
 
 const MAX_RECONNECTS = 3
-const NO_DATA_TIMEOUT = 30000 /* 3 minutes */
+const NO_DATA_TIMEOUT = 180000 /* 3 minutes */
 const NO_RESPONSE_TIMEOUT = 5000 /* 5 seconds */
 
 class WebSocketClient {
