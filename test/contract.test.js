@@ -58,12 +58,27 @@ test('throws exception when calling getAbi without hash', async t => {
 });
 
 /*********** Test getSourceCode() ***********/
-test('Successfully gets contract source code', async t => {
+test.skip('Successfully gets contract source code', async t => {
     let response = await t.context.web3data.contract.getSourceCode(TOKEN_ADDRESS);
     t.is(response.status, 200)
 });
-test('throws exception when calling getSourceCode without hash', async t => {
+test.skip('throws exception when calling getSourceCode without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.contract.getSourceCode()
+    }, { instanceOf: Error, message: 'No contract address supplied' });
+});
+
+/*********** Test getCode() ***********/
+test('Successfully gets contract byte code', async t => {
+    let code = await t.context.web3data.contract.getCode(TOKEN_ADDRESS);
+    t.regex(code, /0x[a-zA-Z0-9]+/g)
+});
+test('getCode returns false when no contract byte code is found', async t => {
+    let code = await t.context.web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f8e7a266e');
+    t.false(code)
+});
+test('throws exception when calling getCode without hash', async t => {
+    await t.throwsAsync(async () => {
+        await t.context.web3data.contract.getCode()
     }, { instanceOf: Error, message: 'No contract address supplied' });
 });
