@@ -16,10 +16,7 @@ class Transaction {
   async getGasPrice() {
     const response = await this.getGasPrediction()
 
-    throwIf(is.null(response) || is.undefined(response) || response.status !== 200, '/gas/predictions failed to respond')
-    throwIf(!response.payload, '/gas/predictions failed to respond with payload')
-    throwIf(!response.payload.average, '/gas/predictions failed to respond with average gas price')
-
+    // TODO" Update error messages and add them to constants file
     return new Promise(
         (resolve, reject) => {
           if (is.null(response) || is.undefined(response) || response.status !== 200) {

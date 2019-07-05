@@ -19,6 +19,30 @@ class Block {
       filterOptions
     })
   }
+
+  getBlock(blocknumber, filterOptions) {
+    return get(this.web3data, {
+      pathParam: blocknumber,
+      endpoint: ENDPOINT,
+      filterOptions
+    })
+  }
+  // TODO" Update error messages and add them to constants file
+  async getBlockNumber() {
+    const response = await this.getBlock('latest')
+    return new Promise(
+        (resolve, reject) => {
+          if (is.null(response) || is.undefined(response) || response.status !== 200) {
+            reject('/blocks/latest failed to respond')
+          } else if (!response.payload) {
+            reject('/blocks/latest failed to respond with payload')
+          } else if (!response.payload.number) {
+            reject('/blocks/latest failed to respond with expected data')
+          } else {
+            resolve(parseInt(response.payload.number))
+          }
+        })
+  }
 }
 
 export default Block

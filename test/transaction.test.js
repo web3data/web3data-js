@@ -22,14 +22,12 @@ test.beforeEach(t => {
  */
 const statusSuccess = async (t, { method, params = {} }) => {
     const response = await t.context.web3data.transaction[method]()
-
     t.is(response.status, 200)
 }
 statusSuccess.title = (providedTitle = '', input) =>  `Successfully calls ${input.method} and returns status of 200`
 
 const returnsString = async (t, { method, params = {} }) => {
     const response = await t.context.web3data.transaction[method]()
-    console.log(response)
     t.is(typeof response, 'string')
     t.is(typeof parseInt(response), 'number')
 }
