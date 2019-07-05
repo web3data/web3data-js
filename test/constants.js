@@ -20,12 +20,8 @@ let getApiKey = () => {
         console.warn("Must set API_KEY value in .env file, \n\
   Create an account on amberdata.io to obtain one")
 
-<<<<<<< HEAD
         API_KEY = 'UAK000000000000000000000000demo0001'
-=======
-        // Dumby key; won't work on live net
-        API_KEY = 'lbK5e0cae7xf494P3c8Q1od19h41b3fa973'
->>>>>>> 09eeed2ca256502e894f741ba80151e4f92af1ae
+
     }
     return API_KEY
 }
@@ -34,8 +30,4 @@ let getApiKey = () => {
  *  Returns a new Web3Data instance with API Key Set
  *  */
 export const getNewWeb3DataInstance = (config) => new Web3Data(getApiKey(), config)
-<<<<<<< HEAD
 export const API_KEY = getApiKey()
-=======
-export const API_KEY = getApiKey()
->>>>>>> 09eeed2ca256502e894f741ba80151e4f92af1ae

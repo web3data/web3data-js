@@ -29,11 +29,7 @@ class Address {
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
-<<<<<<< HEAD
       subendpoint: 'metadata',
-=======
-      subendpoint: 'statistics',
->>>>>>> 09eeed2ca256502e894f741ba80151e4f92af1ae
       filterOptions
     })
   }

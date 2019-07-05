@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 export const DEFAULT_WEBSOCKET_URL = 'wss://ws.web3api.io'
-=======
-export const DEFAULT_WEBSOCKET_URL = 'wss://web3api.io/api/v1?api_key='
->>>>>>> 09eeed2ca256502e894f741ba80151e4f92af1ae
 export const DEFAULT_BASE_URL = 'https://web3api.io/api/v1'
 export const API_KEY_HEADER = 'x-api-key'
 export const BLOCKCHAIN_ID_HEADER = 'x-amberdata-blockchain-id'

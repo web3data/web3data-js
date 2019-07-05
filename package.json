@@ -56,10 +56,7 @@
     "ava-playback": "file:ava-playback-0.0.15.tgz",
     "axios": "^0.18.0",
     "isomorphic-ws": "^4.0.1",
-<<<<<<< HEAD
     "uuid": "^3.3.2",
-=======
->>>>>>> 09eeed2ca256502e894f741ba80151e4f92af1ae
     "ws": "^6.1.4"
   },
   "publishConfig": {
