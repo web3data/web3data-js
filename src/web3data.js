@@ -2,7 +2,12 @@ import axios from 'axios'
 import {
   API_KEY_HEADER,
   BLOCKCHAIN_ID_HEADER,
+<<<<<<< HEAD
   DEFAULT_BASE_URL
+=======
+  DEFAULT_BASE_URL,
+  DEFAULT_WEBSOCKET_URL
+>>>>>>> 09eeed2ca256502e894f741ba80151e4f92af1ae
 } from './constants'
 import {is, throwIf} from './utils'
 import Address from './address'
@@ -41,6 +46,7 @@ class Web3Data {
     }
 
     this.websocketUrl = options.websocketUrl
+<<<<<<< HEAD
     /*   ROW   ? options.websocketUrl
       : DEFAULT_WEBSOCKET_URL
     this.websocketUrl += '?api_key=' + apiKey */
@@ -48,6 +54,13 @@ class Web3Data {
     this.baseUrl = options.baseUrl ? options.baseUrl : DEFAULT_BASE_URL
 
     // TODO: Map to normal naming conventions
+=======
+      ? options.websocketUrl
+      : DEFAULT_WEBSOCKET_URL
+    this.websocketUrl += '?api_key=' + apiKey
+    this.baseUrl = options.baseUrl ? options.baseUrl : DEFAULT_BASE_URL
+
+>>>>>>> 09eeed2ca256502e894f741ba80151e4f92af1ae
     /* Web3Data composite modules */
     this.address = new Address(this)
     this.token = new Token(this)
@@ -55,6 +68,7 @@ class Web3Data {
     this.transaction = new Transaction(this)
     this.block = new Block(this)
     this.signature = new Signature(this)
+<<<<<<< HEAD
 
     // TODO: This should receive options, but not handle URL gen
     this.websocket = null
@@ -89,6 +103,25 @@ class Web3Data {
     throwIf(!eventName, 'no event specified')
     throwIf(!callback, 'no callback provided')
     this.websocket.off({eventName, args: filters}, callback)
+=======
+    this.websocket = new WebSocketClient(this.websocketUrl)
+  }
+
+  connect(callback) {
+    this.websocket.connect(callback)
+  }
+
+  disconnect(callback) {
+    this.websocket.disconnect(callback)
+  }
+
+  on(event, callback) {
+    this.websocket.on(event, callback)
+  }
+
+  off(event, callback) {
+    this.websocket.off(event, callback)
+>>>>>>> 09eeed2ca256502e894f741ba80151e4f92af1ae
   }
 
   /**

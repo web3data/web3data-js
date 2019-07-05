@@ -58,7 +58,11 @@ test('throws exception when calling getAbi without hash', async t => {
 });
 
 /*********** Test getSourceCode() ***********/
+<<<<<<< HEAD
 test.only('Successfully gets contract source code', async t => {
+=======
+test('Successfully gets contract source code', async t => {
+>>>>>>> 09eeed2ca256502e894f741ba80151e4f92af1ae
     let response = await t.context.web3data.contract.getSourceCode(TOKEN_ADDRESS);
     t.is(response.status, 200)
 });

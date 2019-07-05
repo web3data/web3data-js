@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 import crypto from 'crypto'
 
+=======
+>>>>>>> 09eeed2ca256502e894f741ba80151e4f92af1ae
 /**
  * Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
  * the appropriate parameter(s) where applicable.
@@ -54,6 +57,7 @@ const rejectPromiseIf = (condition, message) => {
 
 const is = () => {}
 
+<<<<<<< HEAD
 // TODO: Assess lodash && treeshaking
 is.string = value => typeof value === 'string'
 is.emptyString = value => is.string(value) && value.length === 0
@@ -76,3 +80,20 @@ const uuid = data =>
     .digest('base64')
 
 export {buildFilterUrl, is, throwIf, get, rejectPromiseIf, uuid}
+=======
+is.notHash = hash => is.undefined(hash) || is.emptyString(hash)
+
+is.string = value => typeof value === 'string'
+is.emptyString = value => is.string(value) && value.length === 0
+is.nonEmptyString = value => !is.emptyString(value)
+is.emptyObject = object => Object.keys(object).length === 0
+is.inObject = (object, property) =>
+  Object.prototype.hasOwnProperty.call(object, property)
+is.notInObject = (object, property) => !is.inObject(object, property)
+is.nonEmptyObject = object => !is.emptyObject(object)
+is.undefined = value => typeof value === 'undefined'
+is.notUndefined = value => !is.undefined(value)
+is.null = value => value === null
+
+export {buildFilterUrl, is, throwIf, get, rejectPromiseIf}
+>>>>>>> 09eeed2ca256502e894f741ba80151e4f92af1ae
