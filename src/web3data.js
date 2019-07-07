@@ -57,7 +57,6 @@ class Web3Data {
     this.block = new Block(this)
     this.signature = new Signature(this)
 
-    // TODO: This should receive options, but not handle URL gen
     this.websocket = null
     this.apiKey = apiKey
   }
@@ -79,17 +78,29 @@ class Web3Data {
   }
 
   on({eventName, filters}, callback) {
-    // TODO: Check with Trevor
+    // TODO: Check with Trevor - throw or return error?
     throwIf(!eventName, 'no event specified')
     throwIf(!callback, 'no callback provided')
     this.websocket.on({eventName, args: filters}, callback)
   }
 
   off({eventName, filters}, callback) {
-    // TODO: Check with Trevor
+    // TODO: Check with Trevor - throw or return error?
     throwIf(!eventName, 'no event specified')
     throwIf(!callback, 'no callback provided')
     this.websocket.off({eventName, args: filters}, callback)
+  }
+
+  getGasPrice() {
+    return this.block.getGasPrice()
+  }
+
+  getBlockNumber() {
+    return this.block.getBlockNumber()
+  }
+
+  getCode(hash) {
+    return this.contract.getCode(hash)
   }
 
   /**
