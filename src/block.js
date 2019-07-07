@@ -63,6 +63,22 @@ class Block {
       }
     })
   }
+
+  async getUncle(id, index) {
+      const block = await this.getBlock(id, {validationMethod: 'full'})
+      return new Promise((resolve, reject) => {
+          // TODO: Possibly replace with lodash for readability
+          if (!block || !block.predictions && !block.numTransactions && !block.validation) {
+              reject(new Error(`There was an error with the request`))
+          } else if (block.predictions || !block.validation.uncles) {
+              resolve(null)
+          } else if (index < block.validation.uncles.length) {
+              resolve(block.validation.uncles[index])
+          } else {
+              resolve(null)
+          }
+      })
+  }
 }
 
 export default Block

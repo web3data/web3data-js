@@ -59,7 +59,24 @@ const returnsBlockObject = async (t, { method, params = {} }) => {
 }
 returnsBlockObject.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns valid block object`
 
+const returnsBlockObjectFilters = async (t, { method, params = {} }) => {
+    const {id, timeFormat, validationMethod} = params
+    const block = await t.context.web3data.block[method](id, {timeFormat, validationMethod})
+    t.is(parseInt(block.number), params.id)
+    t.true(_.has(block, 'validation'))
+    t.is(typeof block, 'object')
+}
+returnsBlockObjectFilters.title = (providedTitle = '', input) => `Successfully calls ${input.method} with filters returns valid block object`
+
+const returnsUncleObject = async (t, { method, params = {} }) => {
+    const uncle = await t.context.web3data.block[method](params.id, params.index)
+    t.is(parseInt(uncle.blockNumber), params.id)
+    t.is(typeof uncle, 'object')
+}
+returnsUncleObject.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns valid uncle object`
+
 // test([statusSuccess, rejectsPromise],  {method: 'getTokenTransfers'}, NO_NUMBER)
-test([returnsBlockObject], {method: 'getBlock', params: {id: 7000000}})
+test([returnsBlockObject, returnsBlockObjectFilters], {method: 'getBlock', params: {id: 7000000, timeFormat: 'ms', validationMethod: 'full'}})
 test([returnsNumber], {method: 'getBlockNumber'})
 test([returnsNumber, returnsNull, rejectsPromise], {method: 'getBlockTransactionCount', params: {id: 7000000}}, NO_BLOCK_ID)
+test([returnsUncleObject, returnsNull], {method: 'getUncle', params: {id: 8102326, index: 0}})
