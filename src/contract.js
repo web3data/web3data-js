@@ -56,6 +56,8 @@ class Contract {
 
   async getCode(hash) {
     const response = await this.getDetails(hash);
+
+    // TODO" Update error messages and add them to constants file
     return new Promise(
         (resolve, reject) => {
           if (is.null(response) || is.undefined(response) || response.status !== 200) {
@@ -67,7 +69,7 @@ class Contract {
               resolve(response.payload.bytecode)
             } else {
               // TODO: Eval is this the correct response for no contract byte code?
-              resolve(false) // other options null, {}, ''
+              resolve('0x')
             }
           }
         })
