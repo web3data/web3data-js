@@ -17,7 +17,7 @@ const get = (
     endpoint = '',
     subendpoint = '',
     hash = '',
-    pathParam: pathParam = '',
+    pathParam: pathParam = '', // TODO: THis should be object - pathParams { hash: "0xaB8ls..." }
     filterOptions = {}
   }
 ) => {

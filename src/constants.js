@@ -17,5 +17,5 @@ export const ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS =
 export const ERROR_MESSAGE_TRANSACTION_NO_HASH = 'No transaction hash supplied'
 export const ERROR_MESSAGE_ADDRESS_NO_ADDRESS = 'No address supplied'
 export const ERROR_MESSAGE_CONTRACT_NO_ADDRESS = 'No contract address supplied'
-export const ERROR_MESSAGE_BLOCK_NO_NUMBER = 'No block number supplied'
+export const ERROR_MESSAGE_BLOCK_NO_ID = 'No block number or hash supplied'
 export const ERROR_MESSAGE_SIGNATURE_NO_HASH = 'No signature hash supplied'

@@ -11,7 +11,11 @@ class Contract {
 
   getDetails(hash, filterOptions) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
-    return get(this.web3data, {pathParam: hash, endpoint: ENDPOINT, filterOptions})
+    return get(this.web3data, {
+      pathParam: hash,
+      endpoint: ENDPOINT,
+      filterOptions
+    })
   }
 
   getFunctions(hash, filterOptions) {
@@ -55,24 +59,25 @@ class Contract {
   }
 
   async getCode(hash) {
-    const response = await this.getDetails(hash);
+    const response = await this.getDetails(hash)
 
     // TODO" Update error messages and add them to constants file
-    return new Promise(
-        (resolve, reject) => {
-          if (is.null(response) || is.undefined(response) || response.status !== 200) {
-            reject('/contracts/:hash failed to respond')
-          } else if (!response.payload) {
-            reject('/contracts/:hash failed to respond with payload')
-          } else {
-            if (response.payload.bytecode) {
-              resolve(response.payload.bytecode)
-            } else {
-              // TODO: Eval is this the correct response for no contract byte code?
-              resolve('0x')
-            }
-          }
-        })
+    return new Promise((resolve, reject) => {
+      if (
+        is.null(response) ||
+        is.undefined(response) ||
+        response.status !== 200
+      ) {
+        reject(new Error('/contracts/:hash failed to respond'))
+      } else if (!response.payload) {
+        reject(new Error('/contracts/:hash failed to respond with payload'))
+      } else if (response.payload.bytecode) {
+        resolve(response.payload.bytecode)
+      } else {
+        // TODO: Eval is this the correct response for no contract byte code?
+        resolve('0x')
+      }
+    })
   }
 }
 
