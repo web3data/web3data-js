@@ -53,8 +53,8 @@ class Block {
   async getBlockTransactionCount(id) {
     const block = await this.getBlock(id)
     return new Promise((resolve, reject) => {
-        // TODO: Possibly replace with lodash for readability
-      if (!block || !block.predictions && !block.numTransactions) {
+      // TODO: Possibly replace with lodash for readability
+      if (!block || (!block.predictions && !block.numTransactions)) {
         reject(new Error(`There was an error with the request`))
       } else if (block.predictions) {
         resolve(null)
@@ -64,20 +64,25 @@ class Block {
     })
   }
 
+
+
   async getUncle(id, index) {
-      const block = await this.getBlock(id, {validationMethod: 'full'})
-      return new Promise((resolve, reject) => {
-          // TODO: Possibly replace with lodash for readability
-          if (!block || !block.predictions && !block.numTransactions && !block.validation) {
-              reject(new Error(`There was an error with the request`))
-          } else if (block.predictions || !block.validation.uncles) {
-              resolve(null)
-          } else if (index < block.validation.uncles.length) {
-              resolve(block.validation.uncles[index])
-          } else {
-              resolve(null)
-          }
-      })
+    const block = await this.getBlock(id, {validationMethod: 'full'})
+    return new Promise((resolve, reject) => {
+      // TODO: Possibly replace with lodash for readability
+      if (
+        !block ||
+        (!block.predictions && !block.numTransactions && !block.validation)
+      ) {
+        reject(new Error(`There was an error with the request`))
+      } else if (block.predictions || !block.validation.uncles) {
+        resolve(null)
+      } else if (index < block.validation.uncles.length) {
+        resolve(block.validation.uncles[index])
+      } else {
+        resolve(null)
+      }
+    })
   }
 }
 

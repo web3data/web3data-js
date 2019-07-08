@@ -1,4 +1,5 @@
 import test from "ava"
+import _ from 'lodash'
 import { getNewWeb3DataInstance, TX_HASH, ADDRESS } from './constants'
 import { is } from  '../src/utils'
 
@@ -33,8 +34,31 @@ const returnsString = async (t, { method, params = {} }) => {
 }
 returnsString.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns string value`
 
+const returnsTxnObject = async (t, { method, params = {} }) => {
+    const response = await t.context.web3data.transaction[method](params.hash)
+    t.true(_.has(response, 'hash'))
+    t.is(response.hash, TX_HASH)
+}
+returnsTxnObject.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns valid txn object`
+
+const returnsTxnObjects = async (t, { method }) => {
+    const transactions = await t.context.web3data.transaction[method]()
+    t.true(_.has(transactions[0], 'hash'))
+    t.true(transactions.length > 0)
+}
+returnsTxnObjects.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns array of valid txn objects`
+
+const returnsPendingTxnObjects = async (t, { method }) => {
+    const pendingTxns = await t.context.web3data.transaction[method]()
+    t.is(pendingTxns[0].statusResult.name, 'pending')
+}
+returnsPendingTxnObjects.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns array of valid pending txn objects`
+
 test([statusSuccess], {method:'getGasPrediction'})
 test([returnsString], {method:'getGasPrice'})
+test([returnsTxnObject], {method:'getTransaction', params: {hash: TX_HASH} })
+test([returnsTxnObjects], {method:'getTransactions'})
+test([returnsTxnObjects, returnsPendingTxnObjects], {method:'getPendingTransactions'})
 
 // test([statusSuccess, rejectsPromise], {method: 'getTokenVolume'}, NO_ADDRESS)
 
