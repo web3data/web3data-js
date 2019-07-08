@@ -64,24 +64,24 @@ class Block {
     })
   }
 
-  async getBlockTransactions(id, filterOptions) {
+  async getTransactions(id, filterOptions) {
       const response = await get(this.web3data, {
           pathParam: id,
           endpoint: ENDPOINT,
-          subendpoint: '/transactions',
+          subendpoint: 'transactions',
           filterOptions
       })
       return new Promise((resolve, reject) => {
-          if (!response || response.status !== 200 || !response.payload) {
+          if (!response || response.status !== 200 || !response.payload || !response.payload.records) {
               reject(new Error('There was an error with the request'))
           } else {
-              resolve(response.payload)
+              resolve(response.payload.records)
           }
       })
   }
 
   async getTransactionFromBlock(id, index) {
-      const transactions = await this.getBlockTransactions(id)
+      const transactions = await this.getTransactions(id)
       return new Promise((resolve, reject) => {
           if (!transactions) {
               reject(new Error(`There was an error with the request`))

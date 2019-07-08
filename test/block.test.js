@@ -75,19 +75,19 @@ const returnsUncleObject = async (t, { method, params = {} }) => {
 }
 returnsUncleObject.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns valid uncle object`
 
-const returnsTxnObjects = async (t, { method }) => {
-    const transactions = await t.context.web3data.transaction[method]()
+const returnsTxnObjects = async (t, { method, params = {}}) => {
+    const transactions = await t.context.web3data.block[method](params.id)
     t.true(transactions.length > 0)
     t.true(_.has(transactions[0], 'blockNumber'))
-    t.is(transactions[0].blockNumber, params.id)
+    t.is(parseInt(transactions[0].blockNumber), params.id)
 }
 returnsTxnObjects.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns array of valid txn objects`
 
 const returnsTxnObject = async (t, { method, params = {} }) => {
-    const transaction = await t.context.web3data.transaction[method](params.id, params.index)
+    const transaction = await t.context.web3data.block[method](params.id, params.index)
     t.true(_.has(transaction, 'hash'))
-    t.is(transaction.blockNumber, params.id)
-    t.is(transaction.index, params.index)
+    t.is(parseInt(transaction.blockNumber), params.id)
+    t.is(parseInt(transaction.index), params.index)
 }
 returnsTxnObject.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns valid txn object`
 
@@ -96,5 +96,5 @@ test([returnsBlockObject, returnsBlockObjectFilters], {method: 'getBlock', param
 test([returnsNumber], {method: 'getBlockNumber'})
 test([returnsNumber, returnsNull, rejectsPromise], {method: 'getBlockTransactionCount', params: {id: 7000000}}, NO_BLOCK_ID)
 test([returnsUncleObject, returnsNull, rejectsPromise], {method: 'getUncle', params: {id: 8102326, index: 0}}, NO_BLOCK_ID)
-test([returnsTxnObjects], {method: 'getBlockTransactions', params: {id: 8102326}})
-test([returnsTxnObject], {method: 'getTransactionFromBlock', params: {id: 8102326, index: 0}})
+test([returnsTxnObjects], {method: 'getTransactions', params: {id: 8102326}}, NO_BLOCK_ID)
+test([returnsTxnObject, returnsNull], {method: 'getTransactionFromBlock', params: {id: 8102326, index: 0}}, NO_BLOCK_ID)
