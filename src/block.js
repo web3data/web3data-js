@@ -80,7 +80,18 @@ class Block {
       })
   }
 
-  async getTransactionFromBlock(hash) {}
+  async getTransactionFromBlock(id, index) {
+      const transactions = await this.getBlockTransactions(id)
+      return new Promise((resolve, reject) => {
+          if (!transactions) {
+              reject(new Error(`There was an error with the request`))
+          } else if (index < transactions.length && index > -1) {
+              resolve(transactions[index])
+          }else {
+              resolve(null)
+          }
+      })
+  }
 
 
 
@@ -95,7 +106,7 @@ class Block {
         reject(new Error(`There was an error with the request`))
       } else if (block.predictions || !block.validation.uncles) {
         resolve(null)
-      } else if (index < block.validation.uncles.length) {
+      } else if (index < block.validation.uncles.length && index > -1) {
         resolve(block.validation.uncles[index])
       } else {
         resolve(null)
