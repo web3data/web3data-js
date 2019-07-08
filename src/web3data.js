@@ -104,17 +104,23 @@ class Web3Data {
   }
 
   getBlock(id, filterOptions) {
-    return this.getBlock(id, filterOptions)
+    return this.block.getBlock(id, filterOptions)
   }
-
-  getBlockTransactionCount() {
-    return this.block.getBlockTransactionCount()
-  }
-
-
 
   getUncle(id, index) {
     return this.block.getUncle(id, index)
+  }
+
+  getBlockTransactionCount(id) {
+    return this.block.getBlockTransactionCount(id)
+  }
+
+  getTransactionFromBlock(id, index) {
+    return this.block.getTransactionFromBlock(id, index)
+  }
+
+  getTransactions(id, filterOptions) {
+    return this.block.getTransactions(id, filterOptions)
   }
 
   /**
