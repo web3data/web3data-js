@@ -64,6 +64,24 @@ class Block {
     })
   }
 
+  async getBlockTransactions(id, filterOptions) {
+      const response = await get(this.web3data, {
+          pathParam: id,
+          endpoint: ENDPOINT,
+          subendpoint: '/transactions',
+          filterOptions
+      })
+      return new Promise((resolve, reject) => {
+          if (!response || response.status !== 200 || !response.payload) {
+              reject(new Error('There was an error with the request'))
+          } else {
+              resolve(response.payload)
+          }
+      })
+  }
+
+  async getTransactionFromBlock(hash) {}
+
 
 
   async getUncle(id, index) {

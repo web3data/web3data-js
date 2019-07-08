@@ -75,8 +75,17 @@ const returnsUncleObject = async (t, { method, params = {} }) => {
 }
 returnsUncleObject.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns valid uncle object`
 
+const returnsTxnObjects = async (t, { method }) => {
+    const transactions = await t.context.web3data.transaction[method]()
+    t.true(transactions.length > 0)
+    t.true(_.has(transactions[0], 'blockNumber'))
+    t.is(transactions[0].blockNumber, 8102326)
+}
+returnsTxnObjects.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns array of valid txn objects`
+
 // test([statusSuccess, rejectsPromise],  {method: 'getTokenTransfers'}, NO_NUMBER)
 test([returnsBlockObject, returnsBlockObjectFilters], {method: 'getBlock', params: {id: 7000000, timeFormat: 'ms', validationMethod: 'full'}})
 test([returnsNumber], {method: 'getBlockNumber'})
 test([returnsNumber, returnsNull, rejectsPromise], {method: 'getBlockTransactionCount', params: {id: 7000000}}, NO_BLOCK_ID)
 test([returnsUncleObject, returnsNull], {method: 'getUncle', params: {id: 8102326, index: 0}})
+test([returnsTxnObjects], {method: 'getBlockTransactions', params: {id: 8102326, index: 0}})
