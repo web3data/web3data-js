@@ -8,7 +8,7 @@ bundleBrowser = async () => {
 
   // Bundler options for browser
   const options = {
-    outDir: './dist/browser',
+    outDir: './dist',
     outFile: 'web3data.min.js',
     target: 'browser',
     detailedReport: true
