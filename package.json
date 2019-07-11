@@ -4,17 +4,16 @@
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
-    "build-node": "cross-env NODE_ENV=production TARGET=NODE node scripts/build-script.js",
-    "build-browser": "cross-env NODE_ENV=production TARGET=BROWSER node scripts/build-script.js",
     "build": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js",
     "build-clean": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js clean",
     "lint": "xo",
     "lintfix": "xo --fix",
-    "test-record": "cross-env AVA_PLAYBACK=record nyc -s ava",
     "test": "xo --quiet && cross-env AVA_PLAYBACK=playback nyc -s ava",
+    "test-record": "cross-env AVA_PLAYBACK=record nyc -s ava",
     "test-live": "nyc -s ava",
     "test-fast": "cross-env AVA_PLAYBACK=playback nyc -s ava --fail-fast",
     "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose",
+    "clean-fix": "node scripts/clean-fixtures.js",
     "example": "superstatic"
   },
   "repository": {
