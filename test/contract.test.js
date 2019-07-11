@@ -62,7 +62,7 @@ test.skip('Successfully gets contract source code', async t => {
     let response = await t.context.web3data.contract.getSourceCode(TOKEN_ADDRESS);
     t.is(response.status, 200)
 });
-test('throws exception when calling getSourceCode without hash', async t => {
+test.skip('throws exception when calling getSourceCode without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.contract.getSourceCode()
     }, { instanceOf: Error, message: 'No contract address supplied' });
