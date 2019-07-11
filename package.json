@@ -2,10 +2,12 @@
   "name": "web3data-js",
   "version": "0.3.6",
   "description": "A javascript wrapper for accessing amberdata's public API.",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js",
-    "build-clean": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js clean",
+    "postinstall": "npm run build",
+    "build": "npm run build-browser; npm run build-node",
+    "build-browser": "cross-env NODE_ENV=production rm dist/web3data.min.js; parcel build src/web3data.js --target browser --out-dir dist --out-file web3data.min.js",
+    "build-node": "cross-env NODE_ENV=production rm dist/index.js; parcel build src/web3data.js --target node --out-dir dist --out-file index.js",
     "lint": "xo",
     "lintfix": "xo --fix",
     "test": "xo --quiet && cross-env AVA_PLAYBACK=playback nyc -s ava",
@@ -13,7 +15,7 @@
     "test-live": "nyc -s ava",
     "test-fast": "cross-env AVA_PLAYBACK=playback nyc -s ava --fail-fast",
     "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose",
-    "clean-fix": "node scripts/clean-fixtures.js",
+    "clean-fix": "rm -r test/fixtures",
     "example": "superstatic"
   },
   "repository": {
@@ -54,6 +56,7 @@
   "dependencies": {
     "ava-playback": "taylorjdawson/ava-playback",
     "axios": "^0.18.0",
+    "fsevents": "^2.0.7",
     "isomorphic-ws": "^4.0.1",
     "ws": "^6.1.4"
   },

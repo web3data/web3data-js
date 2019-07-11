@@ -9,7 +9,6 @@ class Address {
     this.web3data = web3data
   }
 
-  // CONSIDER: adding "allowed" filters
   getAllAddresses(filterOptions) {
     return get(this.web3data, {endpoint: ENDPOINT, filterOptions})
   }
