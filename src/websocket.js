@@ -37,6 +37,7 @@ class WebSocketClient {
         ? options.websocketUrl
         : DEFAULT_WEBSOCKET_URL
     this.apiKey = apiKey
+    console.log('this.baseWsUrl', this.baseWsUrl)
 
     // Internal state management
     this.connected = false
@@ -68,7 +69,7 @@ class WebSocketClient {
 
       this.connected = true
 
-      // this.refreshSubscriptions()
+      this.refreshSubscriptions()
 
       // Bootstrap all the listeners now!
       this.listen()
@@ -77,7 +78,12 @@ class WebSocketClient {
       if (callBack) callBack(result)
 
       setTimeout(() => {
-        if (!this.responseReceived && is.nonEmptyObject(this.registry) && this.socket) this.socket.close()
+        if (
+          !this.responseReceived &&
+          is.nonEmptyObject(this.registry) &&
+          this.socket
+        )
+          this.socket.close()
       }, NO_RESPONSE_TIMEOUT)
 
       setTimeout(() => {
@@ -144,7 +150,7 @@ class WebSocketClient {
    * Loops through each registry item and sends subscription message
    */
   refreshSubscriptions() {
-    if(!this.registry) return
+    if (!this.registry) return
     for (const {
       args: {eventName, args}
     } of Object.values(this.registry)) {

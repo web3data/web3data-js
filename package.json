@@ -8,6 +8,7 @@
     "build-browser": "cross-env NODE_ENV=production TARGET=BROWSER node scripts/build-script.js",
     "build": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js",
     "build-clean": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js clean",
+    "build-test": "parcel ./examples/index.html -p 8080",
     "lint": "xo",
     "lintfix": "xo --fix",
     "test-record": "cross-env AVA_PLAYBACK=record nyc -s ava",
