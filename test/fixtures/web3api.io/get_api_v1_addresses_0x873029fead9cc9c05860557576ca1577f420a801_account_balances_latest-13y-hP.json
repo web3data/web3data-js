@@ -1,35 +1,34 @@
 {
   "body": "",
   "method": "get",
-  "path": "/api/v1/tokens/0x06012c8cf97bead5deae237070f9587f8e7a266d/holders/historical",
+  "path": "/api/v1/addresses/0x873029fead9cc9c05860557576ca1577f420a801/account-balances/latest",
   "queries": {
-    "holderAddresses": "0x873029fead9cc9c05860557576ca1577f420a801"
   },
   "rawHeaders": [
     "Content-Type",
     "application/json; charset=utf-8",
     "Content-Length",
-    "165",
+    "281",
     "Connection",
     "close",
     "Date",
     "Thu, 11 Jul 2019 22:05:03 GMT",
     "x-amzn-RequestId",
-    "eee7a933-a427-11e9-898e-51a013bd6ea2",
+    "ef085032-a427-11e9-881a-b70d23ccacc0",
     "Access-Control-Allow-Origin",
     "*",
     "X-Response-Time",
-    "48.838ms",
+    "63.517ms",
     "x-amzn-Remapped-Content-Length",
-    "165",
+    "281",
     "x-amzn-Remapped-Connection",
     "keep-alive",
     "Set-Cookie",
-    "AWSALB=LhSG7NKzzOX4RmpL+GJHNu6pXq5OzURMmQxWcU0iRz7ZZQBX0q7KmarMbdHF4st+r7zucc4+y4v98Dz+F+bz1s7rAGfq+GUAKDMfTyEbr+JDAadCinRE7M70JzU2; Expires=Thu, 18 Jul 2019 22:05:03 GMT; Path=/",
+    "AWSALB=FvyFlDTtdZQBpJNrvmMwhzmbyoHodhHwKunew9QqmgXeU5zAzaBLpGFKWKySr1rCC04gpXGKjlRymIiPSmqfL/BTG45dgRO5p0Ssg0O+/Tpxb732k5fT1EdsBF3N; Expires=Thu, 18 Jul 2019 22:05:03 GMT; Path=/",
     "x-amz-apigw-id",
-    "crjWWFiLoAMFh_A=",
+    "crjWYFItIAMFQfQ=",
     "ETag",
-    "W/\"a5-uAScCwJBI9boK7iLTqy1bXbDS3c\"",
+    "W/\"119-QhbbAzS6TFeHZyv6Vaf6/TOslVM\"",
     "x-amzn-Remapped-Date",
     "Thu, 11 Jul 2019 22:05:03 GMT",
     "X-Cache",
@@ -39,21 +38,19 @@
     "X-Amz-Cf-Pop",
     "HIO50-C1",
     "X-Amz-Cf-Id",
-    "lt1P9VLFttj1ldXnaUXjTWqL3F8CaGgKYIYGGaWoY5K4anI7vupf3Q=="
+    "MMx9YNjIYcUekvzeJoQ9WdQszoljUxqg66lU-OCsLw7i8mVybZTapQ=="
   ],
   "response": {
     "description": "Successful request",
     "payload": {
-      "data": [
-      ],
-      "metadata": {
-        "columns": [
-          "holder*",
-          "timestamp"
-        ],
-        "endDate": "N/A",
-        "startDate": "N/A"
-      }
+      "address": {
+        "address": "0x873029fead9cc9c05860557576ca1577f420a801"
+      },
+      "blockNumber": "7949552",
+      "blockchainId": "1c9c969065fcd1cf",
+      "timestamp": 1560418112000,
+      "timestampNanoseconds": 0,
+      "value": "26538048708525340310"
     },
     "status": 200,
     "title": "OK"

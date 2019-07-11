@@ -1,44 +1,44 @@
 {
   "body": "",
   "method": "get",
-  "path": "/api/v1/tokens/0x06012c8cf97bead5deae237070f9587f8e7a266d/velocity",
+  "path": "/api/v1/addresses/0x873029fead9cc9c05860557576ca1577f420a801/adoption",
   "queries": {
   },
   "rawHeaders": [
     "Content-Type",
     "application/json; charset=utf-8",
     "Content-Length",
-    "1406",
+    "802",
     "Connection",
     "close",
     "Date",
-    "Thu, 11 Jul 2019 22:05:03 GMT",
+    "Thu, 11 Jul 2019 22:05:04 GMT",
     "x-amzn-RequestId",
-    "ef0b849c-a427-11e9-8828-2f97d9b72316",
+    "ef16f66e-a427-11e9-a553-a58d0554ca85",
     "Access-Control-Allow-Origin",
     "*",
     "X-Response-Time",
-    "70.650ms",
+    "1021.555ms",
     "x-amzn-Remapped-Content-Length",
-    "1406",
+    "802",
     "x-amzn-Remapped-Connection",
     "keep-alive",
     "Set-Cookie",
-    "AWSALB=iO3emcd0ONoNMdumNveljNMv4iKUCOyKaafbVgDN+dHYKiTOzBoopuHYhxs/9b2FICO1L6L7oIzFs3gJK/T5vjTUua1oYjGQCNDl3gWdqVNzengb+7AR8M6QzlWB; Expires=Thu, 18 Jul 2019 22:05:03 GMT; Path=/",
+    "AWSALB=o1pFZqdz7CzKIv6KezNXNn7uiL2PQodGi8mPM8lmCEvgGmEN1CaQYUQyDP6lYVMbkLLofiQyNAwsyOMFdtRDlhPf4tlLiW0sATLgGJS0Wt0KvJe28TDjZyLdgvCk; Expires=Thu, 18 Jul 2019 22:05:03 GMT; Path=/",
     "x-amz-apigw-id",
-    "crjWYFKXoAMF35g=",
+    "crjWZFwHIAMFe0w=",
     "ETag",
-    "W/\"57e-tq/o1ztHk9qAYaxszv/INufU/pM\"",
+    "W/\"322-zgrmddyZCoovDxl1oPoozFr4+Mo\"",
     "x-amzn-Remapped-Date",
-    "Thu, 11 Jul 2019 22:05:03 GMT",
+    "Thu, 11 Jul 2019 22:05:04 GMT",
     "X-Cache",
     "Miss from cloudfront",
     "Via",
-    "1.1 e5af640ced3aa8764b82c4bc3f7af38e.cloudfront.net (CloudFront)",
+    "1.1 010c0731b9775a983eceaec0f5fa6a2f.cloudfront.net (CloudFront)",
     "X-Amz-Cf-Pop",
     "HIO50-C1",
     "X-Amz-Cf-Id",
-    "pry0xumxeo6SaEmfMNjmBiTRpnMbuK7w_bizhzvyHaEmgcmk6fKvSg=="
+    "0JMQhXF0cQJ4UApIAeqHQFpb8zU0mb8KaPjFUEjNr962EPZyub08Kw=="
   ],
   "response": {
     "description": "Successful request",
@@ -46,131 +46,135 @@
       "data": [
         [
           1560211200000,
-          "0.0019800907445214243"
+          "12"
         ],
         [
           1560297600000,
-          "0.00710349185015832204"
+          "8"
         ],
         [
           1560384000000,
-          "0.00387618132834688901"
+          "0"
         ],
         [
           1560470400000,
-          "0.00308000589218518505"
+          "0"
         ],
         [
           1560556800000,
-          "0.00308061458900182244"
+          "0"
         ],
         [
           1560643200000,
-          "0.00257174405029296578"
+          "0"
         ],
         [
           1560729600000,
-          "0.00218522157172822418"
+          "0"
         ],
         [
           1560816000000,
-          "0.00291322296442654064"
+          "0"
         ],
         [
           1560902400000,
-          "0.002382439340318738"
+          "0"
         ],
         [
           1560988800000,
-          "0.00195452547822265399"
+          "0"
         ],
         [
           1561075200000,
-          "0.00214809106591334349"
+          "0"
         ],
         [
           1561161600000,
-          "0.00303983190228711742"
+          "0"
         ],
         [
           1561248000000,
-          "0.00300513618373878628"
+          "0"
         ],
         [
           1561334400000,
-          "0.00285661416047926353"
+          "0"
         ],
         [
           1561420800000,
-          "0.00261800500835740729"
+          "0"
         ],
         [
           1561507200000,
-          "0.00282009235148102022"
+          "0"
         ],
         [
           1561593600000,
-          "0.00196061244638902787"
+          "0"
         ],
         [
           1561680000000,
-          "0.00137991568331695939"
+          "0"
         ],
         [
           1561766400000,
-          "0.00198374292542124863"
+          "0"
         ],
         [
           1561852800000,
-          "0.00154000294609259252"
+          "0"
         ],
         [
           1561939200000,
-          "0.00196852550500531392"
+          "0"
         ],
         [
           1562025600000,
-          "0.00139756789099944365"
+          "0"
         ],
         [
           1562112000000,
-          "0.00108774121133101298"
+          "0"
         ],
         [
           1562198400000,
-          "0.00226556955152435944"
+          "0"
         ],
         [
           1562284800000,
-          "0.0017761773109478992"
+          "0"
         ],
         [
           1562371200000,
-          "0.00829410282350105365"
+          "0"
         ],
         [
           1562457600000,
-          "0.0057004456878091419"
+          "0"
         ],
         [
           1562544000000,
-          "0.00206652569248393345"
+          "0"
         ],
         [
           1562630400000,
-          "0.00232887402045464783"
+          "0"
         ],
         [
           1562716800000,
-          "0.00174878595419921673"
+          "0"
+        ],
+        [
+          1562803200000,
+          "0"
         ]
       ],
       "metadata": {
         "columns": [
           "timestamp",
-          "velocity"
+          "adoption"
         ],
-        "endDate": 1562716800000,
+        "endDate": 1562803200000,
         "startDate": 1560211200000
       }
     },

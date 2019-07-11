@@ -1,0 +1,52 @@
+{
+  "body": "",
+  "method": "get",
+  "path": "/api/v1/contracts/0x06012c8cf97bead5deae237070f9587f8e7a266d/functions",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "75",
+    "Connection",
+    "close",
+    "Date",
+    "Thu, 11 Jul 2019 22:05:04 GMT",
+    "x-amzn-RequestId",
+    "eefd542d-a427-11e9-8a9f-fb9453034862",
+    "Access-Control-Allow-Origin",
+    "*",
+    "X-Response-Time",
+    "1228.602ms",
+    "x-amzn-Remapped-Content-Length",
+    "75",
+    "x-amzn-Remapped-Connection",
+    "keep-alive",
+    "Set-Cookie",
+    "AWSALB=7BI/JIcBqRq7L5GezkCTTHloWi3TDkRSk4MI0OT8zvatwWOTW7QW9Pchi4eZnQh2kUhCnokdi2pMrHc79nPJVRcLDGyOgmDewlCS1e0bYZWIhFU6W6w0vyYf8zR1; Expires=Thu, 18 Jul 2019 22:05:03 GMT; Path=/",
+    "x-amz-apigw-id",
+    "crjWXHZPoAMFVGA=",
+    "ETag",
+    "W/\"4b-CF6cAMu50AuzLonS1lkcvIeHGCE\"",
+    "x-amzn-Remapped-Date",
+    "Thu, 11 Jul 2019 22:05:04 GMT",
+    "X-Cache",
+    "Miss from cloudfront",
+    "Via",
+    "1.1 41e349e25dc4bc856d0e5d2c162428a0.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Pop",
+    "HIO50-C1",
+    "X-Amz-Cf-Id",
+    "X5yaSLViFUeTrGE4sG3nsep22ZDCVTzoqbJtIononNzLd9ML1wjDvA=="
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": {
+    },
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}

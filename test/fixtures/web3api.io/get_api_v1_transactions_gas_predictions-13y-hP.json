@@ -1,0 +1,72 @@
+{
+  "body": "",
+  "method": "get",
+  "path": "/api/v1/transactions/gas/predictions",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "311",
+    "Connection",
+    "close",
+    "Date",
+    "Thu, 11 Jul 2019 22:05:04 GMT",
+    "x-amzn-RequestId",
+    "eff0b466-a427-11e9-bb16-1d06065eb0cc",
+    "Access-Control-Allow-Origin",
+    "*",
+    "X-Response-Time",
+    "164.346ms",
+    "x-amzn-Remapped-Content-Length",
+    "311",
+    "x-amzn-Remapped-Connection",
+    "keep-alive",
+    "Set-Cookie",
+    "AWSALB=MHYVgLq6l/qAPnr0wvJcEGoC1cBKmRnudnB1kk0iKKsrmij6bNS8/qq0J0Rnp7iRUWxqfDvmbAn98DfWUciprhsHqVYCC07wrvjwAnT60aDXH2Di3Md2LY0KVVis; Expires=Thu, 18 Jul 2019 22:05:04 GMT; Path=/",
+    "x-amz-apigw-id",
+    "crjWnHLDIAMF0TQ=",
+    "ETag",
+    "W/\"137-5j4ftx8xdeVWFe0GiNKdsFZV/KE\"",
+    "x-amzn-Remapped-Date",
+    "Thu, 11 Jul 2019 22:05:04 GMT",
+    "X-Cache",
+    "Miss from cloudfront",
+    "Via",
+    "1.1 7f5e0d3b9ea85d0d75063a66c0ebc841.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Pop",
+    "HIO50-C1",
+    "X-Amz-Cf-Id",
+    "EL13JFimltrla0mjx6usaIi-MgHIyx2Y9okQ-CquQOagpVJB8omjcA=="
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": {
+      "average": {
+        "gasPrice": 20000000000,
+        "numBlocks": 2,
+        "wait": 0.5
+      },
+      "fast": {
+        "gasPrice": 36000000000,
+        "numBlocks": 2,
+        "wait": 0.5
+      },
+      "fastest": {
+        "gasPrice": 20000000000,
+        "numBlocks": 2,
+        "wait": 0.5
+      },
+      "safeLow": {
+        "gasPrice": 20000000000,
+        "numBlocks": 2,
+        "wait": 0.5
+      }
+    },
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}
