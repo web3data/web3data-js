@@ -68,7 +68,7 @@ class WebSocketClient {
 
       this.connected = true
 
-      this.refreshSubscriptions()
+      // this.refreshSubscriptions()
 
       // Bootstrap all the listeners now!
       this.listen()
@@ -77,7 +77,7 @@ class WebSocketClient {
       if (callBack) callBack(result)
 
       setTimeout(() => {
-        if (!this.responseReceived && this.socket) this.socket.close()
+        if (!this.responseReceived && is.nonEmptyObject(this.registry) && this.socket) this.socket.close()
       }, NO_RESPONSE_TIMEOUT)
 
       setTimeout(() => {
@@ -144,6 +144,7 @@ class WebSocketClient {
    * Loops through each registry item and sends subscription message
    */
   refreshSubscriptions() {
+    if(!this.registry) return
     for (const {
       args: {eventName, args}
     } of Object.values(this.registry)) {
@@ -223,6 +224,7 @@ class WebSocketClient {
    * @return {*}
    */
   unsubscribe(eventName, args) {
+    // TODO: Throw error if eventName has been subscribed to yet
     /* Derive uuid */
     const id =
       is.notUndefined(args) && is.notUndefined(args.id)
