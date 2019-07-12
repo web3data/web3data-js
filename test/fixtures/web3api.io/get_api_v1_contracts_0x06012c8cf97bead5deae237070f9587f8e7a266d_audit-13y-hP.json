@@ -1,0 +1,113 @@
+{
+  "body": "",
+  "method": "get",
+  "path": "/api/v1/contracts/0x06012c8cf97bead5deae237070f9587f8e7a266d/audit",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "3000",
+    "Connection",
+    "close",
+    "Date",
+    "Thu, 11 Jul 2019 22:05:03 GMT",
+    "x-amzn-RequestId",
+    "ef06f10c-a427-11e9-9ae5-211069d5b317",
+    "Access-Control-Allow-Origin",
+    "*",
+    "X-Response-Time",
+    "117.555ms",
+    "x-amzn-Remapped-Content-Length",
+    "3000",
+    "x-amzn-Remapped-Connection",
+    "keep-alive",
+    "Set-Cookie",
+    "AWSALB=+Rbb60MI3dIEj5Qmy/7fbf/z6KNvFsLULc4xtp7opy6UYTHWdrSKb/C0KjxoOVIqX3VnfDMwujdpprTyU4zmWYoUDLr/3BmWb6A9RKAI5KB9UT/OuuNgY4ELmBMm; Expires=Thu, 18 Jul 2019 22:05:03 GMT; Path=/",
+    "x-amz-apigw-id",
+    "crjWYFrIIAMFyKg=",
+    "ETag",
+    "W/\"bb8-y7/gjlh3oFSMuBoOPPw6sTKAVdg\"",
+    "x-amzn-Remapped-Date",
+    "Thu, 11 Jul 2019 22:05:03 GMT",
+    "X-Cache",
+    "Miss from cloudfront",
+    "Via",
+    "1.1 c34da255183aa208dd1c722ff211f9b2.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Pop",
+    "HIO50-C1",
+    "X-Amz-Cf-Id",
+    "4s0p-v4ieGyZPjsrYhvnRUzpc2SAznqCDDBdwZD3xNGwG459mrzyDA=="
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": {
+      "error": null,
+      "issues": [
+        {
+          "address": 391,
+          "code": "candidateContract.supportsInterface(InterfaceSignature_ERC721)",
+          "contract": "ClockAuction",
+          "debug": "",
+          "description": "This contract executes a message call to to another contract. Make sure that the called contract is trusted and does not execute user-supplied code.",
+          "filename": "/tmp/0x06012c8cf97bead5deae237070f9587f8e7a266dB07Fju/0x06012c8cf97bead5deae237070f9587f8e7a266d",
+          "function": "constructor",
+          "lineno": 1388,
+          "title": "Message call to external contract",
+          "type": "Informational"
+        },
+        {
+          "address": 420,
+          "code": "candidateContract.supportsInterface(InterfaceSignature_ERC721)",
+          "contract": "SaleClockAuction",
+          "debug": "",
+          "description": "This contract executes a message call to to another contract. Make sure that the called contract is trusted and does not execute user-supplied code.",
+          "filename": "/tmp/0x06012c8cf97bead5deae237070f9587f8e7a266dB07Fju/0x06012c8cf97bead5deae237070f9587f8e7a266d",
+          "function": "constructor",
+          "lineno": 1388,
+          "title": "Message call to external contract",
+          "type": "Informational"
+        },
+        {
+          "address": 420,
+          "code": "candidateContract.supportsInterface(InterfaceSignature_ERC721)",
+          "contract": "SiringClockAuction",
+          "debug": "",
+          "description": "This contract executes a message call to to another contract. Make sure that the called contract is trusted and does not execute user-supplied code.",
+          "filename": "/tmp/0x06012c8cf97bead5deae237070f9587f8e7a266dB07Fju/0x06012c8cf97bead5deae237070f9587f8e7a266d",
+          "function": "constructor",
+          "lineno": 1388,
+          "title": "Message call to external contract",
+          "type": "Informational"
+        },
+        {
+          "address": 2107,
+          "code": "uint256[5] public lastGen0SalePrices",
+          "contract": "SaleClockAuction",
+          "debug": "The exception is triggered under the following conditions:\n\n29_code(SaleClockAuction): 0x0\n30_calldata_SaleClockAuction[4]: 0x5\n30_calldata_SaleClockAuction[0]: 0x484eccb400000000000000000000000000000000000000000000000000000000\n30_calldatasize_SaleClockAuction: 0x4\n29_returndatasize: 0x20\n29_retval_420: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\n29_extcodesize_1461501637330902918203684832716283019655932542975 &\n29_code(SaleClockAuction): 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\ncall_value30: 0x0\ncall_value29: 0x0\n",
+          "description": "A reachable exception (opcode 0xfe) has been detected. This can be caused by type errors, division by zero, out-of-bounds array access, or assert violations. This is acceptable in most situations. Note however that `assert()` should only be used to check invariants. Use `require()` for regular input checking. ",
+          "filename": "/tmp/0x06012c8cf97bead5deae237070f9587f8e7a266dB07Fju/0x06012c8cf97bead5deae237070f9587f8e7a266d",
+          "function": "lastGen0SalePrices(uint256)",
+          "lineno": 1602,
+          "title": "Exception state",
+          "type": "Informational"
+        }
+      ],
+      "score": {
+        "errors": 0,
+        "information": 4,
+        "name": "C",
+        "total": 4,
+        "warnings": 0
+      },
+      "success": true,
+      "target": "sourcecode",
+      "timestamp": "2018-10-11T09:19:30.263Z"
+    },
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}
