@@ -142,7 +142,7 @@ class WebSocketClient {
    * @param callback {function} the callback function that executes when the
    * specified event is received by the websocket data listener.
    */
-  on({eventName, filters = {}}, callback) {
+  on({eventName, filters}, callback) {
     if (!callback) console.warn('no callback provided')
     if (!eventName) {
       console.error('no event specified')
@@ -167,7 +167,7 @@ class WebSocketClient {
    * @param filters
    * @param callback {function} the callback function to execute
    */
-  off({eventName, filters = {}}, callback) {
+  off({eventName, filters}, callback) {
     if (!callback) console.warn('no callback provided')
     if (!eventName) {
       console.error('no event specified')
@@ -209,7 +209,7 @@ class WebSocketClient {
     for (const {
       args: {eventName, filters}
     } of Object.values(this.registry)) {
-      this.subscribe(eventName, filters)
+      this._subscribe(eventName, filters)
     }
   }
 
@@ -222,8 +222,8 @@ class WebSocketClient {
       try {
         data = JSON.parse(message.data)
       } catch (error) {
-        console.error(`error parsing json request`, error)
-        data = {error: ''}
+        console.error('error parsing json request')
+        return
       }
 
       this.responseReceived = true
@@ -282,9 +282,12 @@ class WebSocketClient {
    * @return {*}
    */
   _unsubscribe(eventName, filters) {
-    // TODO: silent error if eventName has been subscribed to yet
     /* Derive uuid */
     const id = uuid({eventName, filters})
+    if (!this.registry[id] || !this.registry[id].subId) {
+      console.error(`Not subscribed to: '${eventName}'`)
+      return
+    }
 
     /* Format and send json rpc message */
     const jsonRpcMessage = formatJsonRpc({
@@ -292,9 +295,11 @@ class WebSocketClient {
       method: 'unsubscribe',
       params: [this.registry[id].subId]
     })
+
     if (this.socket.readyState === this.socket.OPEN)
       this.socket.send(jsonRpcMessage)
-    return uuid
+
+    return id
   }
 }
 
