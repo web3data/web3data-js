@@ -13,6 +13,9 @@ const MOCK_WS_URL = `ws://localhost:`
 let port = STARTING_PORT
 const getPort = () => port++
 
+const SUBSCRIPTION_ID = '242d29d5c0ec9268f51a39aba4ed6a36c757c03c183633568edb0531658a9799'
+const isSubscriptionAck = msg => !msg.params
+
 // ROW
 process.env.AVA_PLAYBACK = 'playback'
 //ROW
@@ -67,7 +70,7 @@ test.cb('Successfully disconnects from Websocket Server - with callback',  t => 
 })
 
 /*********** Test call disconnect before connect errors [LIVE, MOCK] ***********/
-test.cb.only('disconnect logs error if called before connect',  t => {
+test.cb('disconnect logs error if called before connect',  t => {
     const stderr = capcon.captureStderr(function scope() {
         t.context.w3d.disconnect(status => status)
         t.end()
@@ -75,5 +78,107 @@ test.cb.only('disconnect logs error if called before connect',  t => {
     t.regex(stderr, /socket is not yet connected/)
 })
 
-/*********** Test call disconnect before connect errors [LIVE, MOCK] ***********/
+/*********** Test on method sends sub method - without filters [LIVE, MOCK] ***********/
+test.cb('Successfully calls on and sends subscription message - without filters',  t => {
 
+    /* Regex matches the following string  as long as id contains 1 > characters */
+    const SUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"subscribe","id":".+","params":\["block"\]}/g
+
+    t.context.wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
+            t.regex(message, SUBSCRIBE_MESSAGE)
+            t.end()
+        })
+    })
+    t.context.w3d.connect()
+    t.context.w3d.on({eventName: 'block'}, status => status)
+
+})
+
+/*********** Test on method sends sub message - with filters [LIVE, MOCK] ***********/
+test.cb('Successfully calls on and sends subscription message - with filters',  t => {
+
+    /* Regex matches the following string  as long as id contains 1 > characters */
+    const SUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"subscribe","id":".+","params":\["block",{"number":7280000}\]}/g
+
+    t.context.wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
+            t.regex(message, SUBSCRIBE_MESSAGE)
+            t.end()
+        })
+    })
+    t.context.w3d.connect()
+    t.context.w3d.on({eventName: 'block', filters: {"number":7280000}}, status => status)
+})
+
+/*********** Test on method errors if no event name [LIVE, MOCK] ***********/
+test.cb('on method errors if called without an event name',  t => {
+    t.context.wss.on('connection', ()=>{})
+    const stderr = capcon.captureStderr(() => {
+        t.context.w3d.on({}, status => status)
+        t.end()
+    })
+    t.regex(stderr, /no event specified/)
+})
+
+/*********** Test off method sends unsub message - with filters [LIVE, MOCK] ***********/
+test.cb.only('Successfully calls off and sends unsubscription message - with filters',  t => {
+
+    /* Regex matches the following string  as long as id contains 1 > characters */
+    const UNSUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"unsubscribe","id":".+","params":\["block",{"number":7280000}\]}/g
+
+    t.context.wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
+            const data = JSON.parse(message);
+            if (isSubscriptionAck(message)) {
+                ws.send(JSON.stringify(
+                    {
+                        "jsonrpc": "2.0",
+                        "id": data.id,
+                        "result": SUBSCRIPTION_ID
+                    }
+                ));
+            } else {
+                t.regex(message, UNSUBSCRIBE_MESSAGE)
+                t.end()
+            }
+        })
+    })
+    t.context.w3d.connect(() => {
+        t.context.w3d.on({eventName: 'block', filters: {"number":7280000}}, status => status)
+        t.context.w3d.off({eventName: 'block', filters: {"number":7280000}}, status => status)
+    })
+})
+
+
+/*********** Test off errors if called before on [LIVE, MOCK] ***********/
+test.cb('Calling off before on errors',  t => {
+    t.context.wss.on('connection', () => {})
+    t.context.w3d.connect()
+    const stderr = capcon.captureStderr(function scope() {
+        t.context.w3d.off({eventName: 'block'}, status => status)
+        t.end()
+    });
+    t.regex(stderr, /Not subscribed to: 'block'/)
+})
+
+/*********** Test websocket handles erroneous server response [MOCK] ***********/
+test.cb.skip('Successfully handles erroneous server response',  t => {
+    let output = ''
+    capcon.startCapture(process.stderr, function (stderr) {
+        output += stderr;
+    });
+
+    t.context.wss.on('connection', ws => {
+        ws.on('message', () => {
+            ws.send('not json parsable response')
+        })
+    })
+
+    t.context.w3d.connect()
+    t.context.w3d.on({eventName: 'block'}, status => t.end())
+
+    capcon.stopCapture(process.stderr);
+
+    t.regex(output, /error parsing json request/)
+})
