@@ -1,8 +1,8 @@
-import {
-  ERROR_MESSAGE_CONTRACT_NO_ADDRESS as NO_ADDRESS,
-  CONTRACTS_ENDPOINT as ENDPOINT
-} from './constants'
-import {is, get} from './utils'
+const {
+  ERROR_MESSAGE_CONTRACT_NO_ADDRESS: NO_ADDRESS,
+  CONTRACTS_ENDPOINT: ENDPOINT
+} = require('./constants')
+const {is, get} = require('./utils')
 
 class Contract {
   constructor(web3data) {
@@ -55,4 +55,4 @@ class Contract {
   }
 }
 
-export default Contract
+module.exports = Contract

@@ -36,7 +36,7 @@ let rejectsPromise = async (t, endpoint, method, errorMessage) => {
         await t.context.web3data[endpoint][method]()
     }, { instanceOf: Error, message: errorMessage })
 }
-// TODO: Change title to be...
+
 rejectsPromise.title = (providedTitle = '', input) => `throws exception when calling ${input} without hash`
 
-test.skip([statusSuccess, rejectsPromise], 'signature', 'get4Byte', NO_HASH)
+test([statusSuccess, rejectsPromise], 'signature', 'get4Byte', NO_HASH)

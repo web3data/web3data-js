@@ -1,5 +1,5 @@
-import {TRANSACTIONS_ENDPOINT as ENDPOINT} from './constants'
-import {get} from './utils'
+const {TRANSACTIONS_ENDPOINT: ENDPOINT} = require('./constants')
+const {get} = require('./utils')
 
 class Transaction {
   constructor(web3data) {
@@ -14,4 +14,4 @@ class Transaction {
   }
 }
 
-export default Transaction
+module.exports = Transaction
