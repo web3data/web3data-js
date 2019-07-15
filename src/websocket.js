@@ -1,19 +1,26 @@
 import {DEFAULT_WEBSOCKET_URL} from './constants'
-import {is, throwIf, uuid} from './utils'
+import {is, uuid} from './utils'
 
 const WebSocket = require('isomorphic-ws')
 
 /**
  * Creates a string in json rpc format
  * @param options the json rpc options
- * @return {string} the json rpc formatted string
+ * @return {*} the json rpc formatted string
  */
 const formatJsonRpc = options => {
+  if (!options) return
+  if (options.params) {
+    options.params = Array.isArray(options.params)
+      ? options.params
+      : [options.params]
+  }
+
   return JSON.stringify({
     jsonrpc: options.version || '2.0',
     method: options.method || 'subscribe',
     id: options.id || 0,
-    params: options.params || [] // TODO: This is unsafe, force to be array
+    params: options.params || []
   })
 }
 
@@ -75,6 +82,7 @@ class WebSocketClient {
 
       // Fire connected callback
       if (callBack) callBack(result)
+
       setTimeout(() => {
         if (
           !this.responseReceived &&
@@ -134,9 +142,11 @@ class WebSocketClient {
    * specified event is received by the websocket data listener.
    */
   on({eventName, filters = {}}, callback) {
-    // TODO: Check with Trevor
-    throwIf(!eventName, 'no event specified')
-    throwIf(!callback, 'no callback provided')
+    if (!callback) console.warn('no callback provided')
+    if (!eventName) {
+      console.error('no event specified')
+      return
+    }
 
     /* Derive uuid */
     const id = uuid({eventName, filters})
@@ -157,8 +167,11 @@ class WebSocketClient {
    * @param callback {function} the callback function to execute
    */
   off({eventName, filters = {}}, callback) {
-    if (!eventName) console.error('no event specified')
-    if (callback) console.error('no callback provided')
+    if (!callback) console.warn('no callback provided')
+    if (!eventName) {
+      console.error('no event specified')
+      return
+    }
 
     /* Sends the unsubscribe message to the server */
     const id = this._unsubscribe(eventName, filters)
