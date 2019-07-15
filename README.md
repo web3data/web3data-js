@@ -33,9 +33,10 @@ import Web3Data from 'Web3Data'
 
 const w3d = new Web3Data('UAKe962c0fadb076fc5053476a6d5fef079')
 
-( async () => 
- const contract = w3d.contract.getDetails("0x06012c8cf97bead5deae237070f9587f8e7a266d")
- console.log(contract) // { ... }
+( async () => {
+     const contract = w3d.contract.getDetails("0x06012c8cf97bead5deae237070f9587f8e7a266d")
+     console.log(contract) // { ... }
+ }
 )()
 ```
 
