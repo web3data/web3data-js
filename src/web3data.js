@@ -31,9 +31,11 @@ class Web3Data {
       'No api key supplied'
     )
 
+    this.apiKey = apiKey
+
     /* Setup required request headers */
     this.headers = {}
-    this.headers[API_KEY_HEADER] = apiKey
+    this.headers[API_KEY_HEADER] = this.apiKey
 
     /* Setup optional request headers */
     if (options.blockchainId) {
@@ -46,8 +48,6 @@ class Web3Data {
 
     this.baseUrl = options.baseUrl ? options.baseUrl : DEFAULT_BASE_URL
 
-    // TODO: Map to normal naming conventions
-
     /* Web3Data composite modules */
     this.address = new Address(this)
     this.token = new Token(this)
@@ -56,9 +56,7 @@ class Web3Data {
     this.block = new Block(this)
     this.signature = new Signature(this)
 
-    // TODO: This should receive options, but not handle URL gen
     this.websocket = null
-    this.apiKey = apiKey
   }
 
   connect(callback) {
@@ -77,16 +75,20 @@ class Web3Data {
   }
 
   on({eventName, filters}, callback) {
-    // TODO: Check with Trevor
-    throwIf(!eventName, 'no event specified')
-    throwIf(!callback, 'no callback provided')
+    if (!callback) console.warn('no callback provided')
+    if (!eventName) {
+      console.error('no event specified')
+      return
+    }
     this.websocket.on({eventName, filters}, callback)
   }
 
   off({eventName, filters}, callback) {
-    // TODO: silent fail & change arg and filters to match
-    throwIf(!eventName, 'no event specified')
-    throwIf(!callback, 'no callback provided')
+    if (!callback) console.warn('no callback provided')
+    if (!eventName) {
+      console.error('no event specified')
+      return
+    }
     this.websocket.off({eventName, filters}, callback)
   }
 

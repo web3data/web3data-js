@@ -6,10 +6,10 @@ const WebSocket = require('isomorphic-ws')
 /**
  * Creates a string in json rpc format
  * @param options the json rpc options
- * @return {*} the json rpc formatted string
+ * @return {string} the json rpc formatted string
  */
 const formatJsonRpc = options => {
-  if (!options) return
+  if (!options) return ''
   if (options.params) {
     options.params = Array.isArray(options.params)
       ? options.params
@@ -26,9 +26,9 @@ const formatJsonRpc = options => {
 
 /**
  * Returns true if the websocket message is a subscription response
- * as seen here: docs.amberdata.io/reference/subscriptions#section-example-
- * @param msg the websocket response method
- * @return {boolean}
+ * as seen here: docs.amberdata.io/reference#connection
+ * @param msg the websocket response message
+ * @return {boolean} true if subscription ack false otherwise
  */
 const isSubscriptionAck = msg => !msg.params
 
@@ -75,6 +75,7 @@ class WebSocketClient {
 
       this.connected = true
 
+      // Send subscription messages if registered before connection est.
       this._refreshSubscriptions()
 
       // Bootstrap all the listeners now!
