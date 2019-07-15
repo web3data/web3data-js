@@ -43,7 +43,7 @@ class Web3Data {
     }
 
     this.wsConfig = {
-      websocketUrl: options.websocketUrl ? options.websocketUrl : {}
+      websocketUrl: options.websocketUrl ? options.websocketUrl : null
     }
 
     this.baseUrl = options.baseUrl ? options.baseUrl : DEFAULT_BASE_URL
@@ -80,6 +80,7 @@ class Web3Data {
       console.error('no event specified')
       return
     }
+
     this.websocket.on({eventName, filters}, callback)
   }
 
@@ -89,6 +90,7 @@ class Web3Data {
       console.error('no event specified')
       return
     }
+
     this.websocket.off({eventName, filters}, callback)
   }
 
