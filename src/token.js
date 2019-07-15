@@ -1,9 +1,9 @@
-import {is, get} from './utils'
-import {
-  ERROR_MESSAGE_TOKEN_NO_ADDRESS as NO_ADDRESS,
-  ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS as NO_HOLDER_ADDRESS,
-  TOKENS_ENDPOINT as ENDPOINT
-} from './constants'
+const {is, get} = require('./utils')
+const {
+  ERROR_MESSAGE_TOKEN_NO_ADDRESS: NO_ADDRESS,
+  ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS: NO_HOLDER_ADDRESS,
+  TOKENS_ENDPOINT: ENDPOINT
+} = require('./constants')
 
 class Token {
   constructor(web3data) {
@@ -74,4 +74,4 @@ class Token {
   }
 }
 
-export default Token
+module.exports = Token

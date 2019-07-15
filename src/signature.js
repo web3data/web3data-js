@@ -1,8 +1,8 @@
-import {get, is} from './utils'
-import {
-  SIGNATURES_ENDPOINT as ENDPOINT,
-  ERROR_MESSAGE_SIGNATURE_NO_HASH as NO_HASH
-} from './constants'
+const {get, is} = require('./utils')
+const {
+  SIGNATURES_ENDPOINT: ENDPOINT,
+  ERROR_MESSAGE_SIGNATURE_NO_HASH: NO_HASH
+} = require('./constants')
 
 class Signature {
   constructor(web3data) {
@@ -15,4 +15,4 @@ class Signature {
   }
 }
 
-export default Signature
+module.exports = Signature

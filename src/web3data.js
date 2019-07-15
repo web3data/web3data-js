@@ -1,17 +1,17 @@
-import axios from 'axios'
-import {
+const axios = require('axios')
+const {
   API_KEY_HEADER,
   BLOCKCHAIN_ID_HEADER,
   DEFAULT_BASE_URL
-} from './constants'
-import {is, throwIf} from './utils'
-import Address from './address'
-import Token from './token'
-import Contract from './contract'
-import Transaction from './transaction'
-import Block from './block'
-import Signature from './signature'
-import WebSocketClient from './websocket'
+} = require('./constants')
+const {is, throwIf} = require('./utils')
+const Address = require('./address')
+const Token = require('./token')
+const Contract = require('./contract')
+const Transaction = require('./transaction')
+const Block = require('./block')
+const Signature = require('./signature')
+const WebSocketClient = require('./websocket')
 
 /**
  * Class Web3data contains methods for hitting Amberdata's

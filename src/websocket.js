@@ -1,7 +1,6 @@
-import {DEFAULT_WEBSOCKET_URL} from './constants'
-import {is, uuid} from './utils'
-
 const WebSocket = require('isomorphic-ws')
+const {DEFAULT_WEBSOCKET_URL} = require('./constants')
+const {is, uuid} = require('./utils')
 
 /**
  * Creates a string in json rpc format
@@ -303,4 +302,4 @@ class WebSocketClient {
   }
 }
 
-export default WebSocketClient
+module.exports = WebSocketClient
