@@ -40,10 +40,9 @@ class Web3Data {
       this.headers[BLOCKCHAIN_ID_HEADER] = options.blockchainId
     }
 
-    this.websocketUrl = options.websocketUrl
-    /*   ROW   ? options.websocketUrl
-      : DEFAULT_WEBSOCKET_URL
-    this.websocketUrl += '?api_key=' + apiKey */
+    this.wsConfig = {
+      websocketUrl: options.websocketUrl ? options.websocketUrl : {}
+    }
 
     this.baseUrl = options.baseUrl ? options.baseUrl : DEFAULT_BASE_URL
 
@@ -63,33 +62,32 @@ class Web3Data {
   }
 
   connect(callback) {
-    if (is.null(this.websocket)) {
-      this.websocket = new WebSocketClient(this.apiKey, {
-        websocketUrl: this.websocketUrl
-      })
-    }
-
+    this.websocket = this.websocket
+      ? this.websocket
+      : new WebSocketClient(this.apiKey, this.wsConfig)
     return this.websocket.connect(callback)
   }
 
-  // TODO: The following methods must error if called before `connect()`
   disconnect(callback) {
-    throwIf(!this.websocket, 'must run `connect` method first')
-    this.websocket.disconnect(callback)
+    if (this.websocket) {
+      this.websocket.disconnect(callback)
+    } else {
+      console.error('socket is not yet connected')
+    }
   }
 
   on({eventName, filters}, callback) {
     // TODO: Check with Trevor
     throwIf(!eventName, 'no event specified')
     throwIf(!callback, 'no callback provided')
-    this.websocket.on({eventName, args: filters}, callback)
+    this.websocket.on({eventName, filters}, callback)
   }
 
   off({eventName, filters}, callback) {
-    // TODO: Check with Trevor
+    // TODO: silent fail & change arg and filters to match
     throwIf(!eventName, 'no event specified')
     throwIf(!callback, 'no callback provided')
-    this.websocket.off({eventName, args: filters}, callback)
+    this.websocket.off({eventName, filters}, callback)
   }
 
   /**

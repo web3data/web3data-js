@@ -37,7 +37,6 @@ class WebSocketClient {
         ? options.websocketUrl
         : DEFAULT_WEBSOCKET_URL
     this.apiKey = apiKey
-    console.log('this.baseWsUrl', this.baseWsUrl)
 
     // Internal state management
     this.connected = false
@@ -69,14 +68,13 @@ class WebSocketClient {
 
       this.connected = true
 
-      this.refreshSubscriptions()
+      this._refreshSubscriptions()
 
       // Bootstrap all the listeners now!
-      this.listen()
+      this._listen()
 
       // Fire connected callback
       if (callBack) callBack(result)
-
       setTimeout(() => {
         if (
           !this.responseReceived &&
@@ -101,12 +99,12 @@ class WebSocketClient {
       }
 
       console.error('connection error occurred')
-      this.reconnect()
+      this._reconnect()
     })
 
     this.socket.addEventListener('close', data => {
       console.log('Websocket client connection closed - code', data.code)
-      this.reconnect()
+      this._reconnect()
     })
 
     return this
@@ -117,13 +115,56 @@ class WebSocketClient {
    * @param callBack {function} the callback function that executes on close
    */
   disconnect(callBack = null) {
-    throwIf(!this.connected, 'socket is not yet connected')
-    if (callBack)
-      this.socket.onclose = () => callBack('WebSocket client closed')
-    if (this.socket) {
+    if (this.socket && this.socket.readyState === 1) {
+      this.socket.onclose = callBack
+        ? () => callBack('Websocket client connection closed')
+        : () => console.log('Websocket client connection closed')
       this.socket.close()
       this.socket = null
+    } else {
+      console.error('socket is not yet connected')
     }
+  }
+
+  /**
+   * Creates a new event listener for the specified event.
+   * @param eventName {string} the event for which to listen
+   * @param filters {object} the extra arguments associated with the subscription
+   * @param callback {function} the callback function that executes when the
+   * specified event is received by the websocket data listener.
+   */
+  on({eventName, filters = {}}, callback) {
+    // TODO: Check with Trevor
+    throwIf(!eventName, 'no event specified')
+    throwIf(!callback, 'no callback provided')
+
+    /* Derive uuid */
+    const id = uuid({eventName, filters})
+
+    if (this.connected) {
+      this._subscribe(eventName, filters)
+    }
+
+    this.registry[id] = {}
+    this.registry[id].callback = callback
+    this.registry[id].args = {eventName, filters}
+  }
+
+  /**
+   * Destroys a single event listener. Deregisters event and callback function
+   * @param eventName {string} the event to deregister
+   * @param filters
+   * @param callback {function} the callback function to execute
+   */
+  off({eventName, filters = {}}, callback) {
+    if (!eventName) console.error('no event specified')
+    if (callback) console.error('no callback provided')
+
+    /* Sends the unsubscribe message to the server */
+    const id = this._unsubscribe(eventName, filters)
+
+    if (is.notUndefined(this.registry[id])) delete this.registry[id]
+    callback('successfully unsubscribed')
   }
 
   /**
@@ -133,7 +174,7 @@ class WebSocketClient {
    *    and has at least 1 successful subscription
    * 3. we got a socket error of any kind, see above
    */
-  reconnect() {
+  _reconnect() {
     if (this.connected) {
       this.disconnect()
     }
@@ -149,25 +190,25 @@ class WebSocketClient {
   /**
    * Loops through each registry item and sends subscription message
    */
-  refreshSubscriptions() {
+  _refreshSubscriptions() {
     if (!this.registry) return
     for (const {
-      args: {eventName, args}
+      args: {eventName, filters}
     } of Object.values(this.registry)) {
-      this.subscribe(eventName, args)
+      this.subscribe(eventName, filters)
     }
   }
 
   /**
    * Sets up the on event listener
    */
-  listen() {
+  _listen() {
     this.socket.addEventListener('message', message => {
       let data
       try {
         data = JSON.parse(message.data)
       } catch (error) {
-        console.log(`error parsing json request`, error)
+        console.error(`error parsing json request`, error)
         data = {error: ''}
       }
 
@@ -207,15 +248,12 @@ class WebSocketClient {
   /**
    * Sends subscription message to the websocket connection
    * @param eventName the name of the event to subscribe to
-   * @param args the extra arguments associated with the subscription
+   * @param filters the extra arguments associated with the subscription
    * @return string the uuid of the subscription
    */
-  subscribe(eventName, args) {
-    const params = is.notUndefined(args) ? [args] : []
-    const id =
-      is.notUndefined(args) && is.notUndefined(args.id)
-        ? args.id
-        : uuid({eventName, args})
+  _subscribe(eventName, filters) {
+    const params = is.notUndefined(filters) ? [filters] : []
+    const id = uuid({eventName, filters})
 
     /* Format and send json rpc message */
     const jsonRpcMessage = formatJsonRpc({id, params: [eventName, ...params]})
@@ -226,16 +264,13 @@ class WebSocketClient {
   /**
    *
    * @param eventName
-   * @param args
+   * @param filters
    * @return {*}
    */
-  unsubscribe(eventName, args) {
-    // TODO: Throw error if eventName has been subscribed to yet
+  _unsubscribe(eventName, filters) {
+    // TODO: silent error if eventName has been subscribed to yet
     /* Derive uuid */
-    const id =
-      is.notUndefined(args) && is.notUndefined(args.id)
-        ? args.id
-        : uuid({eventName, args})
+    const id = uuid({eventName, filters})
 
     /* Format and send json rpc message */
     const jsonRpcMessage = formatJsonRpc({
@@ -246,49 +281,6 @@ class WebSocketClient {
     if (this.socket.readyState === this.socket.OPEN)
       this.socket.send(jsonRpcMessage)
     return uuid
-  }
-
-  /**
-   * Creates a new event listener for the specified event.
-   * @param eventName {string} the event for which to listen
-   * @param args {object} the extra arguments associated with the subscription
-   * @param callback {function} the callback function that executes when the
-   * specified event is received by the websocket data listener.
-   */
-  on({eventName, args = {}}, callback) {
-    // TODO: Check with Trevor
-    throwIf(!eventName, 'no event specified')
-    throwIf(!callback, 'no callback provided')
-
-    /* Derive uuid */
-    const id = uuid({eventName, args})
-
-    if (this.connected) {
-      this.subscribe(eventName, args)
-    }
-
-    this.registry[id] = {}
-    this.registry[id].callback = callback
-    this.registry[id].args = {eventName, args}
-  }
-
-  /**
-   * Destroys a single event listener. Deregisters event and callback function
-   * @param eventName {string} the event to deregister
-   * @param args
-   * @param callback {function} the callback function to execute
-   */
-  off({eventName, args = {}}, callback) {
-    // NOTE: Need to talk about have args as a param it doesnt make sense yet it is the only way
-    // NOTE: If eventName and args are not exactly the same as the ones in the on method this will fail
-    // TODO: Check with Trevor
-    throwIf(!eventName, 'no event specified')
-    throwIf(!callback, 'no callback provided')
-
-    const id = this.unsubscribe(eventName, args)
-
-    if (is.notUndefined(this.registry[id])) delete this.registry[id]
-    callback('successfully unsubscribed')
   }
 }
 
