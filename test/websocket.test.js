@@ -37,19 +37,19 @@ test.beforeEach(t => {
     t.context.wss = new WebSocket.Server({ port: PORT });
 })
 
-/*********** Test connects to server (no callback) [LIVE, MOCK] ***********/
+/*********** Test connects to server (no callback) [MOCK] ***********/
 test.cb('Successfully connects to Websocket Server - no callback',  t => {
     t.context.wss.on('connection', () => t.end())
     t.context.w3d.connect()
 })
 
-/*********** Test connects to server (with callback) [LIVE, MOCK] ***********/
+/*********** Test connects to server (with callback) [MOCK] ***********/
 test.cb('Successfully connects to Websocket Server - with callback',  t => {
     t.context.wss.on('connection', () => t.end())
     t.context.w3d.connect(status => status)
 })
 
-/*********** Test disconnect from server (no callback) [LIVE, MOCK] ***********/
+/*********** Test disconnect from server (no callback) [MOCK] ***********/
 test.cb('Successfully disconnects from Websocket Server - no callback',  t => {
     t.context.wss.on('connection', (ws) => {
         ws.on('close', () => t.end())
@@ -59,7 +59,7 @@ test.cb('Successfully disconnects from Websocket Server - no callback',  t => {
     })
 })
 
-/*********** Test disconnect from server (with callback) [LIVE, MOCK] ***********/
+/*********** Test disconnect from server (with callback) [MOCK] ***********/
 test.cb('Successfully disconnects from Websocket Server - with callback',  t => {
     t.context.wss.on('connection', (ws) => {
         ws.on('close', () => t.end())
@@ -78,7 +78,7 @@ test.cb('disconnect logs error if called before connect',  t => {
     t.regex(stderr, /socket is not yet connected/)
 })
 
-/*********** Test on method sends sub method - without filters [LIVE, MOCK] ***********/
+/*********** Test on method sends sub method - without filters [MOCK] ***********/
 test.cb('Successfully calls on and sends subscription message - without filters',  t => {
 
     /* Regex matches the following string  as long as id contains 1 > characters */
@@ -95,7 +95,7 @@ test.cb('Successfully calls on and sends subscription message - without filters'
 
 })
 
-/*********** Test on method sends sub message - with filters [LIVE, MOCK] ***********/
+/*********** Test on method sends sub message - with filters [MOCK] ***********/
 test.cb('Successfully calls on and sends subscription message - with filters',  t => {
 
     /* Regex matches the following string  as long as id contains 1 > characters */
@@ -121,16 +121,45 @@ test.cb('on method errors if called without an event name',  t => {
     t.regex(stderr, /no event specified/)
 })
 
-/*********** Test off method sends unsub message - with filters [LIVE, MOCK] ***********/
-test.cb.only('Successfully calls off and sends unsubscription message - with filters',  t => {
+/*********** Test off method sends unsub message - without filters [MOCK] ***********/
+test.cb('Successfully calls off and sends unsubscription message - without filters',  t => {
 
     /* Regex matches the following string  as long as id contains 1 > characters */
-    const UNSUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"unsubscribe","id":".+","params":\["block",{"number":7280000}\]}/g
+    const UNSUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"unsubscribe","id":".+","params":\[.+\]}/g
 
     t.context.wss.on('connection', (ws) => {
         ws.on('message', (message) => {
             const data = JSON.parse(message);
-            if (isSubscriptionAck(message)) {
+            if (data.method === 'subscribe') {
+                ws.send(JSON.stringify(
+                    {
+                        "jsonrpc": "2.0",
+                        "id": data.id,
+                        "result": SUBSCRIPTION_ID
+                    }
+                ));
+            } else {
+                t.regex(message, UNSUBSCRIBE_MESSAGE)
+                t.end()
+            }
+        })
+    })
+    t.context.w3d.connect(() => {
+        t.context.w3d.on({eventName: 'block'}, status => status)
+        setTimeout(() => t.context.w3d.off({eventName: 'block'}, status => status), 10)
+    })
+})
+
+/*********** Test off method sends unsub message - with filters [MOCK] ***********/
+test.cb('Successfully calls off and sends unsubscription message - with filters',  t => {
+
+    /* Regex matches the following string  as long as id contains 1 > characters */
+    const UNSUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"unsubscribe","id":".+","params":\[.+\]}/g
+
+    t.context.wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
+            const data = JSON.parse(message);
+            if (data.method === 'subscribe') {
                 ws.send(JSON.stringify(
                     {
                         "jsonrpc": "2.0",
@@ -146,7 +175,7 @@ test.cb.only('Successfully calls off and sends unsubscription message - with fil
     })
     t.context.w3d.connect(() => {
         t.context.w3d.on({eventName: 'block', filters: {"number":7280000}}, status => status)
-        t.context.w3d.off({eventName: 'block', filters: {"number":7280000}}, status => status)
+        setTimeout(() => t.context.w3d.off({eventName: 'block', filters: {"number":7280000}}, status => status), 10)
     })
 })
 
