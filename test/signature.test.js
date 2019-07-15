@@ -16,8 +16,8 @@ test.beforeEach(t => {
  * @param t the test object
  * @param method
  */
-let statusSuccess = async (t, endpoint, method, params) => {
-    let response = await t.context.web3data[endpoint][method]('0xe2f0a05a')
+let statusSuccess = async (t, { method, params = {} }) => {
+    let response = await t.context.web3data.signature[method]('0xe2f0a05a')
     t.is(response.status, 200)
 }
 statusSuccess.title = (providedTitle = '', input) =>  `Successfully calls ${input.method} and returns status of 200`
@@ -30,13 +30,12 @@ statusSuccess.title = (providedTitle = '', input) =>  `Successfully calls ${inpu
  * @param params
  * @param errorMessage
  */
-let rejectsPromise = async (t, endpoint, method, errorMessage) => {
+let rejectsPromise = async (t, { method, params = {} }, errorMessage) => {
 
     await t.throwsAsync(async () => {
-        await t.context.web3data[endpoint][method]()
+        await t.context.web3data.signature[method]()
     }, { instanceOf: Error, message: errorMessage })
 }
-
 rejectsPromise.title = (providedTitle = '', input) => `throws exception when calling ${input} without hash`
 
-test([statusSuccess, rejectsPromise], 'signature', 'get4Byte', NO_HASH)
+test([statusSuccess, rejectsPromise], {method: 'get4Byte'}, NO_HASH)

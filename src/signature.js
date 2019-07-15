@@ -11,7 +11,7 @@ class Signature {
 
   get4Byte(hash) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_HASH))
-    return get(this.web3data, {pathParam: hash, endpoint: ENDPOINT})
+    return get(this.web3data, {hash, endpoint: ENDPOINT})
   }
 }
 
