@@ -4,11 +4,7 @@
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
-    "build-test": "parcel ./examples/index.html -p 8080",
-    "postinstall": "npm run build",
-    "build": "npm run build-browser",
-    "build-browser": "cross-env NODE_ENV=production rm dist/web3data.min.js; parcel build index.js --target browser --out-dir dist --out-file web3data.min.js",
-    "build-node": "cross-env NODE_ENV=production rm dist/index.js; parcel build src/web3data.js --target node --out-dir dist --out-file index.js",
+    "build": "rm dist/web3data.min.js; parcel build index.js --target browser --out-dir dist --out-file web3data.min.js",
     "lint": "xo",
     "lintfix": "xo --fix",
     "test": "xo --quiet && cross-env AVA_PLAYBACK=playback nyc -s ava",
