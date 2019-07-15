@@ -57,6 +57,7 @@
   "dependencies": {
     "ava-playback": "taylorjdawson/ava-playback",
     "axios": "^0.18.0",
+    "capture-console": "^1.0.1",
     "isomorphic-ws": "^4.0.1",
     "ws": "^6.1.4"
   },
