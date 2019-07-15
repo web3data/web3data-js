@@ -51,29 +51,27 @@
       <p>Results<p>
     </div>
   </div>
-<!-- <script type="text/javascript" src="../dist/browser/web3data.min.js"></script> -->
-<script type="text/javascript" src="./index.js"></script>
-<script>
-  // function getAddressInfo() {
-  //   let address = document.getElementById('address-input').value
-  //   let apiKey = document.getElementById("apikey-input").value
-  //   // let web3data = new window.Web3Data({"apiKey":apiKey, "blockchainId": "1c9c969065fcd1cf"})
-  //
-  //   // web3data.addresses(address).info().retrieve().then( (info) => {
-  //   //   document.getElementById('output').innerHTML = '<pre id="json">' + JSON.stringify(info.payload[0], undefined, 2) + '</pre>'
-  //   // })
-  //
-  //   // websockets!!!!!!
-  //   const Web3Data = require('./web3data')
-  //   const w3d = new Web3Data(apiKey)
-  //
-  //   w3d.connect(status => {
-  //     console.log('the status -> ', status.type)
-  //   })
-  //   w3d.on({eventName: 'block'}, data => {
-  //     console.log('callback A', data)
-  //   })
-  // }
-</script>
+<script type="text/javascript" src="../dist/web3data.min.js"></script>
+  <script>
+    function getAddressInfo() {
+      const address = document.querySelector('#address-input').value
+      const apiKey = document.querySelector('#apikey-input').value
+      const web3data = new Web3Data(apiKey)
+
+      web3data.address.getInformation(address).then( info => {
+        console.log(info)
+        document.getElementById('output').innerHTML = '<pre id="json">' + JSON.stringify(info.payload, undefined, 2) + '</pre>'
+      })
+    }
+
+    const w3d = new Web3Data('***REMOVED***')
+
+    w3d.connect(status => {
+      console.log('status ->', status.type)
+    })
+    w3d.on({eventName: 'block'}, data => {
+      console.log(data)
+    })
+  </script>
 </body>
 </html>

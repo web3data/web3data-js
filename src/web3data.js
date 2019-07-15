@@ -107,4 +107,4 @@ class Web3Data {
   }
 }
 
-export default Web3Data
+module.exports = Web3Data
