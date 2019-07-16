@@ -59,14 +59,14 @@ test.cb('Successfully disconnects from Websocket Server - no callback',  t => {
 })
 
 /*********** Test disconnect from server (with callback) [MOCK] ***********/
-test.cb('Successfully disconnects from Websocket Server - with callback',  t => {
+test.cb.only('Successfully disconnects from Websocket Server - with callback',  t => {
     t.context.wss.on('connection', (ws) => {
-        ws.on('close', () => t.end())
+        ws.on('close', () => {})
     });
     t.context.w3d.connect(() => {
-        t.context.w3d.disconnect(status => status)
+        t.context.w3d.disconnect(t.end)
     })
-    t.timeout(TEST_TIMEOUT)
+    // t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test call disconnect before connect errors [LIVE, MOCK] ***********/
