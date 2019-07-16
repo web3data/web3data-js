@@ -41,9 +41,10 @@ test.cb('Successfully connects to Websocket Server - no callback',  t => {
 })
 
 /*********** Test connects to server (with callback) [MOCK] ***********/
-test.cb('Successfully connects to Websocket Server - with callback',  t => {
-    t.context.wss.on('connection', () => t.end())
-    t.context.w3d.connect(status => status)
+test.cb.only('Successfully connects to Websocket Server - with callback',  t => {
+    t.plan(2)
+    t.context.wss.on('connection', () => {t.pass()})
+    t.context.w3d.connect(() => {t.pass(); t.end()})
     t.timeout(TEST_TIMEOUT)
 })
 
@@ -59,14 +60,15 @@ test.cb('Successfully disconnects from Websocket Server - no callback',  t => {
 })
 
 /*********** Test disconnect from server (with callback) [MOCK] ***********/
-test.cb.only('Successfully disconnects from Websocket Server - with callback',  t => {
+test.cb('Successfully disconnects from Websocket Server - with callback',  t => {
+    t.plan(2)
     t.context.wss.on('connection', (ws) => {
-        ws.on('close', () => {})
+        ws.on('close', () => {t.pass(); t.end()})
     });
     t.context.w3d.connect(() => {
-        t.context.w3d.disconnect(t.end)
+        t.context.w3d.disconnect(t.pass)
     })
-    // t.timeout(TEST_TIMEOUT)
+    t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test call disconnect before connect errors [LIVE, MOCK] ***********/
@@ -211,7 +213,7 @@ test.cb.skip('Successfully handles erroneous server response',  t => {
     })
 
     t.context.w3d.connect()
-    t.context.w3d.on({eventName: 'block'}, status => t.end())
+    t.context.w3d.on({eventName: 'block'}, () => t.end())
 
     capcon.stopCapture(process.stderr);
 
