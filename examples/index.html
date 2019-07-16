@@ -45,7 +45,7 @@
     <div id='input'>
       <input type="text" placeholder="api key" name="" id="apikey-input">
       <input type="text" name="" placeholder="address" id="address-input">
-      <button onClick="getAddressInfo()" id="goBtn">Go</button>
+      <button onClick="runExample()" id="goBtn">Go</button>
     </div>
     <div id="output">
       <p>Results<p>
@@ -53,7 +53,7 @@
   </div>
 <script type="text/javascript" src="../dist/web3data.min.js"></script>
   <script>
-    function getAddressInfo() {
+    function runExample() {
       const address = document.querySelector('#address-input').value
       const apiKey = document.querySelector('#apikey-input').value
       const web3data = new Web3Data(apiKey)
@@ -62,16 +62,15 @@
         console.log(info)
         document.getElementById('output').innerHTML = '<pre id="json">' + JSON.stringify(info.payload, undefined, 2) + '</pre>'
       })
+
+      web3data.connect(status => {
+        console.log('status ->', status.type)
+      })
+
+      web3data.on({eventName: 'block'}, data => {
+        console.log(data)
+      })
     }
-
-    const w3d = new Web3Data('UAK000000000000000000000000demo0001')
-
-    w3d.connect(status => {
-      console.log('status ->', status.type)
-    })
-    w3d.on({eventName: 'block'}, data => {
-      console.log(data)
-    })
   </script>
 </body>
 </html>
