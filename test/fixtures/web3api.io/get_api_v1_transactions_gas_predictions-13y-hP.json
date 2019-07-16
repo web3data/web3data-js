@@ -12,33 +12,33 @@
     "Connection",
     "close",
     "Date",
-    "Thu, 11 Jul 2019 22:05:04 GMT",
+    "Tue, 16 Jul 2019 15:14:54 GMT",
     "x-amzn-RequestId",
-    "eff0b466-a427-11e9-bb16-1d06065eb0cc",
+    "77542e3d-a7dc-11e9-ad71-eb1a3210969e",
     "Access-Control-Allow-Origin",
     "*",
     "X-Response-Time",
-    "164.346ms",
+    "121.993ms",
     "x-amzn-Remapped-Content-Length",
     "311",
     "x-amzn-Remapped-Connection",
     "keep-alive",
     "Set-Cookie",
-    "AWSALB=MHYVgLq6l/qAPnr0wvJcEGoC1cBKmRnudnB1kk0iKKsrmij6bNS8/qq0J0Rnp7iRUWxqfDvmbAn98DfWUciprhsHqVYCC07wrvjwAnT60aDXH2Di3Md2LY0KVVis; Expires=Thu, 18 Jul 2019 22:05:04 GMT; Path=/",
+    "AWSALB=771ccgZFJefCwDnnSYFlb6DbBtatXjFbytdvCuKa5xjb7Ca8lc8p9WmN3mDW/EVAenk8u7k3nkSZK9ROKN2BHuemG4O6IVvejwWSHQuErXEd+cFSv0S99xTh0U35; Expires=Tue, 23 Jul 2019 15:14:54 GMT; Path=/",
     "x-amz-apigw-id",
-    "crjWnHLDIAMF0TQ=",
+    "c7F9UENXoAMFnUw=",
     "ETag",
-    "W/\"137-5j4ftx8xdeVWFe0GiNKdsFZV/KE\"",
+    "W/\"137-IpZk8rXiw3Qgee6+gRCcg3lkP7U\"",
     "x-amzn-Remapped-Date",
-    "Thu, 11 Jul 2019 22:05:04 GMT",
+    "Tue, 16 Jul 2019 15:14:54 GMT",
     "X-Cache",
     "Miss from cloudfront",
     "Via",
-    "1.1 7f5e0d3b9ea85d0d75063a66c0ebc841.cloudfront.net (CloudFront)",
+    "1.1 a20e81b65d2465c729ce2f6bfe539dd0.cloudfront.net (CloudFront)",
     "X-Amz-Cf-Pop",
     "HIO50-C1",
     "X-Amz-Cf-Id",
-    "EL13JFimltrla0mjx6usaIi-MgHIyx2Y9okQ-CquQOagpVJB8omjcA=="
+    "DOaExaOK0vPXnYJNHuZ9zSJGndVpgaS8q2EwcaGH-bk5Ps39GGFHuQ=="
   ],
   "response": {
     "description": "Successful request",
@@ -46,22 +46,22 @@
       "average": {
         "gasPrice": 20000000000,
         "numBlocks": 2,
-        "wait": 0.5
+        "wait": 0.4
       },
       "fast": {
-        "gasPrice": 36000000000,
-        "numBlocks": 2,
-        "wait": 0.5
-      },
-      "fastest": {
         "gasPrice": 20000000000,
         "numBlocks": 2,
-        "wait": 0.5
+        "wait": 0.4
+      },
+      "fastest": {
+        "gasPrice": 30000000000,
+        "numBlocks": 2,
+        "wait": 0.4
       },
       "safeLow": {
         "gasPrice": 20000000000,
         "numBlocks": 2,
-        "wait": 0.5
+        "wait": 0.4
       }
     },
     "status": 200,

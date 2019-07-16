@@ -8,62 +8,42 @@
     "Content-Type",
     "application/json; charset=utf-8",
     "Content-Length",
-    "871",
+    "870",
     "Connection",
     "close",
     "Date",
-    "Thu, 11 Jul 2019 22:05:03 GMT",
+    "Tue, 16 Jul 2019 15:14:52 GMT",
     "x-amzn-RequestId",
-    "ef073f0a-a427-11e9-b0d7-1923289cbffa",
+    "76368943-a7dc-11e9-846b-99cf8636cc1b",
     "Access-Control-Allow-Origin",
     "*",
     "X-Response-Time",
-    "80.657ms",
+    "9.362ms",
     "x-amzn-Remapped-Content-Length",
-    "871",
+    "870",
     "x-amzn-Remapped-Connection",
     "keep-alive",
     "Set-Cookie",
-    "AWSALB=GN4oUtV3+JKa2Vt/KLRhF80mFfMXVzoEdPSVAibn8H/2KROLZBDdoxyfyro2T+IwzJ6uMNPSUa+3AJWzhEOG7fHVHszUHaIc7bfbfAy5172K5X5mWcOcmGUl6r9n; Expires=Thu, 18 Jul 2019 22:05:03 GMT; Path=/",
+    "AWSALB=eNDoHFN5v7R0qNc1eOz2VnY6lBU0DVpPCJX4thQmoeAGF5SkLyoepVsbyBCAPkcp9HRvM8Xc/DmRMhds/GsW8ZFkvI8O8vXOC+wikdGPlSWA67G0SsFKglgsLoBQ; Expires=Tue, 23 Jul 2019 15:14:52 GMT; Path=/",
     "x-amz-apigw-id",
-    "crjWYHNOIAMFeag=",
+    "c7F9BGWyIAMFtnQ=",
     "ETag",
-    "W/\"367-GQQXSKzwOflhfaoQJ25dhVj6GEM\"",
+    "W/\"366-nNO7TW4UecdLdmtlLkGcoku+MxA\"",
     "x-amzn-Remapped-Date",
-    "Thu, 11 Jul 2019 22:05:03 GMT",
+    "Tue, 16 Jul 2019 15:14:52 GMT",
     "X-Cache",
     "Miss from cloudfront",
     "Via",
-    "1.1 d1151317ba32afe0e6370fd69fed222e.cloudfront.net (CloudFront)",
+    "1.1 d83ae0e1ba84e92e58bc1efc23a0c653.cloudfront.net (CloudFront)",
     "X-Amz-Cf-Pop",
     "HIO50-C1",
     "X-Amz-Cf-Id",
-    "7IcYrIFvHhpFniuQQxyNUWUggZ7bYBNbbS4ZJ3v6Yix0ciKBIXSz4A=="
+    "h_VGANF_obOZ9dLuM07FWp3DaOWFnS_I8Ut22xpRqsJjaj52yGYPoA=="
   ],
   "response": {
     "description": "Successful request",
     "payload": {
       "data": [
-        [
-          1560211200000,
-          "3253"
-        ],
-        [
-          1560297600000,
-          "11670"
-        ],
-        [
-          1560384000000,
-          "6368"
-        ],
-        [
-          1560470400000,
-          "5060"
-        ],
-        [
-          1560556800000,
-          "5061"
-        ],
         [
           1560643200000,
           "4225"
@@ -163,6 +143,26 @@
         [
           1562716800000,
           "2873"
+        ],
+        [
+          1562803200000,
+          "2330"
+        ],
+        [
+          1562889600000,
+          "1595"
+        ],
+        [
+          1562976000000,
+          "1960"
+        ],
+        [
+          1563062400000,
+          "2808"
+        ],
+        [
+          1563148800000,
+          "1694"
         ]
       ],
       "metadata": {
@@ -170,8 +170,8 @@
           "timestamp",
           "volume"
         ],
-        "endDate": 1562716800000,
-        "startDate": 1560211200000
+        "endDate": 1563148800000,
+        "startDate": 1560643200000
       }
     },
     "status": 200,
