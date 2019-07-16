@@ -18,9 +18,7 @@ const isSubscriptionAck = msg => !msg.params
 
 const TEST_TIMEOUT = 1000
 
-// ROW
 process.env.AVA_PLAYBACK = 'playback'
-//ROW
 
 /**
  * Tests are labeled LIVE or MOCK. When in playback mode, tests use
@@ -34,7 +32,7 @@ process.env.AVA_PLAYBACK = 'playback'
  **********************************/
 test.beforeEach(t => {
     const PORT = getPort()
-    const config = {websocketUrl: process.env.AVA_PLAYBACK === 'playback' ? MOCK_WS_URL + PORT : {} }
+    const config = {websocketUrl: process.env.AVA_PLAYBACK === 'playback' ? MOCK_WS_URL + PORT : null }
     t.context.w3d = new Web3Data(API_KEY, config)
     t.context.wss = new WebSocket.Server({ port: PORT });
 })
