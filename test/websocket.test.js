@@ -7,14 +7,11 @@ import dotenv from 'dotenv'
 
 dotenv.config();
 
-const STARTING_PORT = 8080
 const MOCK_WS_URL = `ws://localhost:`
 
-let port = STARTING_PORT
-const getPort = () => port++
+const getPort = () => parseInt(Math.random() * 65536)
 
 const SUBSCRIPTION_ID = '242d29d5c0ec9268f51a39aba4ed6a36c757c03c183633568edb0531658a9799'
-const isSubscriptionAck = msg => !msg.params
 
 const TEST_TIMEOUT = 1000
 
