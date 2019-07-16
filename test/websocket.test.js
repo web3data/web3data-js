@@ -41,7 +41,7 @@ test.cb('Successfully connects to Websocket Server - no callback',  t => {
 })
 
 /*********** Test connects to server (with callback) [MOCK] ***********/
-test.cb.only('Successfully connects to Websocket Server - with callback',  t => {
+test.cb('Successfully connects to Websocket Server - with callback',  t => {
     t.plan(2)
     t.context.wss.on('connection', () => {t.pass()})
     t.context.w3d.connect(() => {t.pass(); t.end()})
