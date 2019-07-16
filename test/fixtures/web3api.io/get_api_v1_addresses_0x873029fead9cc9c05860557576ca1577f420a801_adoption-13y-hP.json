@@ -8,62 +8,42 @@
     "Content-Type",
     "application/json; charset=utf-8",
     "Content-Length",
-    "802",
+    "801",
     "Connection",
     "close",
     "Date",
-    "Thu, 11 Jul 2019 22:05:04 GMT",
+    "Tue, 16 Jul 2019 15:14:54 GMT",
     "x-amzn-RequestId",
-    "ef16f66e-a427-11e9-a553-a58d0554ca85",
+    "7655f8bb-a7dc-11e9-8abc-71e967356414",
     "Access-Control-Allow-Origin",
     "*",
     "X-Response-Time",
-    "1021.555ms",
+    "1004.284ms",
     "x-amzn-Remapped-Content-Length",
-    "802",
+    "801",
     "x-amzn-Remapped-Connection",
     "keep-alive",
     "Set-Cookie",
-    "AWSALB=o1pFZqdz7CzKIv6KezNXNn7uiL2PQodGi8mPM8lmCEvgGmEN1CaQYUQyDP6lYVMbkLLofiQyNAwsyOMFdtRDlhPf4tlLiW0sATLgGJS0Wt0KvJe28TDjZyLdgvCk; Expires=Thu, 18 Jul 2019 22:05:03 GMT; Path=/",
+    "AWSALB=z/61LNJ5epDX1ZQtO2NsX7Fy9siMqnuOjYNNaSS6eFA5qvLT34Gr6pnbTlPhj8/oRRGyNoQKsiuu3Ner3+jnUUH4ctr3Y2yk5r0NUvFdfeL/ectPIYzxWwiDN41k; Expires=Tue, 23 Jul 2019 15:14:53 GMT; Path=/",
     "x-amz-apigw-id",
-    "crjWZFwHIAMFe0w=",
+    "c7F9DGYiIAMFXVw=",
     "ETag",
-    "W/\"322-zgrmddyZCoovDxl1oPoozFr4+Mo\"",
+    "W/\"321-qS643TF/oKcj5v+JmXGXUrJX82s\"",
     "x-amzn-Remapped-Date",
-    "Thu, 11 Jul 2019 22:05:04 GMT",
+    "Tue, 16 Jul 2019 15:14:54 GMT",
     "X-Cache",
     "Miss from cloudfront",
     "Via",
-    "1.1 010c0731b9775a983eceaec0f5fa6a2f.cloudfront.net (CloudFront)",
+    "1.1 49b94a8674d6e86a841d6523f7dbaf15.cloudfront.net (CloudFront)",
     "X-Amz-Cf-Pop",
     "HIO50-C1",
     "X-Amz-Cf-Id",
-    "0JMQhXF0cQJ4UApIAeqHQFpb8zU0mb8KaPjFUEjNr962EPZyub08Kw=="
+    "H8rJ-rOfNJjG0t7KTFN3xKWRnLGoMk5k4q8RwYK4VCVyHg24XbZjzg=="
   ],
   "response": {
     "description": "Successful request",
     "payload": {
       "data": [
-        [
-          1560211200000,
-          "12"
-        ],
-        [
-          1560297600000,
-          "8"
-        ],
-        [
-          1560384000000,
-          "0"
-        ],
-        [
-          1560470400000,
-          "0"
-        ],
-        [
-          1560556800000,
-          "0"
-        ],
         [
           1560643200000,
           "0"
@@ -167,6 +147,26 @@
         [
           1562803200000,
           "0"
+        ],
+        [
+          1562889600000,
+          "0"
+        ],
+        [
+          1562976000000,
+          "0"
+        ],
+        [
+          1563062400000,
+          "0"
+        ],
+        [
+          1563148800000,
+          "0"
+        ],
+        [
+          1563235200000,
+          "0"
         ]
       ],
       "metadata": {
@@ -174,8 +174,8 @@
           "timestamp",
           "adoption"
         ],
-        "endDate": 1562803200000,
-        "startDate": 1560211200000
+        "endDate": 1563235200000,
+        "startDate": 1560643200000
       }
     },
     "status": 200,

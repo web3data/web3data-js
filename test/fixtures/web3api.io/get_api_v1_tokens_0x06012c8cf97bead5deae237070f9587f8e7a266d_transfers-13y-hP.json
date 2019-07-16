@@ -8,92 +8,42 @@
     "Content-Type",
     "application/json; charset=utf-8",
     "Content-Length",
-    "51583",
+    "51574",
     "Connection",
     "close",
     "Date",
-    "Thu, 11 Jul 2019 22:05:03 GMT",
+    "Tue, 16 Jul 2019 15:14:52 GMT",
     "x-amzn-RequestId",
-    "ef0a73cf-a427-11e9-810a-59e99ba5fc8d",
+    "7634dc05-a7dc-11e9-9dfd-5bfcbd7bee78",
     "Access-Control-Allow-Origin",
     "*",
     "X-Response-Time",
-    "66.933ms",
+    "12.352ms",
     "x-amzn-Remapped-Content-Length",
-    "51583",
+    "51574",
     "x-amzn-Remapped-Connection",
     "keep-alive",
     "Set-Cookie",
-    "AWSALB=CoDIiQKWmDk26Nc6ECvEgQhEgOTN1a6dzn8cabXAQwXGEEr6aHyCr2zgpJCcuUjJZOS5ew8+olTcShbdRN+qsTuL1JIdYN8/AGJAkcwsowd9TUolDCE8xC//eKbl; Expires=Thu, 18 Jul 2019 22:05:03 GMT; Path=/",
+    "AWSALB=O6acLlxpT/5dTMp4EZ1yRoHqJMlBp0fQtACLz3nj9lPUgrig5Ib5G/SMovRCuIH8tsxtJwtpXmdNSTmdtyOpYIA7KeaSDrgJScu30/8keaPWIS8BkRetnkUFom5T; Expires=Tue, 23 Jul 2019 15:14:52 GMT; Path=/",
     "x-amz-apigw-id",
-    "crjWYExUIAMFdhg=",
+    "c7F9BHx6oAMFVJQ=",
     "ETag",
-    "W/\"c97f-6uB0YgZgToOgWj6t9x4xWJy9OvA\"",
+    "W/\"c976-62qJZr9UkCm+tQ1zwe37K+xZmwA\"",
     "x-amzn-Remapped-Date",
-    "Thu, 11 Jul 2019 22:05:03 GMT",
+    "Tue, 16 Jul 2019 15:14:52 GMT",
     "X-Cache",
     "Miss from cloudfront",
     "Via",
-    "1.1 9c60d6224ac0b44e908b5c9dcf70e9a5.cloudfront.net (CloudFront)",
+    "1.1 0005a84c2971ff4f5bbb79e7ebc622a9.cloudfront.net (CloudFront)",
     "X-Amz-Cf-Pop",
     "HIO50-C1",
     "X-Amz-Cf-Id",
-    "alAm1tKLl1ZH33DeGdY2CmEh-1_IdpzVxFIvGwYEaugVKxIvhtMELQ=="
+    "03x8NGp3N_g01qe2OI5huCv3Gke4L1O58Hif8pwwfazg6uR9ueyQlw=="
   ],
   "response": {
     "description": "Successful request",
     "payload": {
       "records": [
-        {
-          "amount": "1643286",
-          "blockNumber": "8132491",
-          "decimals": "0",
-          "from": {
-            "address": "0x8de12bca6a79caf05ded82308f5b35ea9e230f17"
-          },
-          "isERC20": false,
-          "isERC721": true,
-          "isERC777": false,
-          "isERC884": false,
-          "isERC998": false,
-          "logIndex": 53,
-          "name": "CryptoKitties",
-          "symbol": "CK",
-          "timestamp": 1562882640000,
-          "timestampNanoseconds": 0,
-          "to": [
-            {
-              "address": "0xb1690c08e213a35ed9bab7b318de14420fb57d8c"
-            }
-          ],
-          "tokenAddress": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
-          "transactionHash": "0x5f49edb474430ea86f8640e2b2b432587f264a1849c2330fc652397331efbf5c"
-        },
-        {
-          "amount": "1643287",
-          "blockNumber": "8132491",
-          "decimals": "0",
-          "from": {
-            "address": "0x0000000000000000000000000000000000000000"
-          },
-          "isERC20": false,
-          "isERC721": true,
-          "isERC777": false,
-          "isERC884": false,
-          "isERC998": false,
-          "logIndex": 1,
-          "name": "CryptoKitties",
-          "symbol": "CK",
-          "timestamp": 1562882640000,
-          "timestampNanoseconds": 0,
-          "to": [
-            {
-              "address": "0x29e907fe8ccce25c7cfaf90fa7d60d64dbcea8a7"
-            }
-          ],
-          "tokenAddress": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
-          "transactionHash": "0x0e4c996345c9d4d25e1b0004739b61eed3c8a1c5e1c0a9064bb5333129970a7b"
-        },
         {
           "amount": "0",
           "blockNumber": "4605167",
@@ -2543,6 +2493,56 @@
           ],
           "tokenAddress": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
           "transactionHash": "0x26e437df71058769b9a70a1ef84735e1d3a6a300535b1730632a6cf702b04e70"
+        },
+        {
+          "amount": "98",
+          "blockNumber": "4605420",
+          "decimals": "0",
+          "from": {
+            "address": "0x0000000000000000000000000000000000000000"
+          },
+          "isERC20": false,
+          "isERC721": true,
+          "isERC777": false,
+          "isERC884": false,
+          "isERC998": false,
+          "logIndex": 70,
+          "name": "CryptoKitties",
+          "symbol": "CK",
+          "timestamp": 1511418946000,
+          "timestampNanoseconds": 0,
+          "to": [
+            {
+              "address": "0xba52c75764d6f594735dc735be7f1830cdf58ddf"
+            }
+          ],
+          "tokenAddress": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
+          "transactionHash": "0xe3f92761169ebe2338037054911aac31bdf6c9d3087da1eb3cbb2ec2a60b4492"
+        },
+        {
+          "amount": "99",
+          "blockNumber": "4605422",
+          "decimals": "0",
+          "from": {
+            "address": "0x0000000000000000000000000000000000000000"
+          },
+          "isERC20": false,
+          "isERC721": true,
+          "isERC777": false,
+          "isERC884": false,
+          "isERC998": false,
+          "logIndex": 15,
+          "name": "CryptoKitties",
+          "symbol": "CK",
+          "timestamp": 1511418967000,
+          "timestampNanoseconds": 0,
+          "to": [
+            {
+              "address": "0xba52c75764d6f594735dc735be7f1830cdf58ddf"
+            }
+          ],
+          "tokenAddress": "0x06012c8cf97bead5deae237070f9587f8e7a266d",
+          "transactionHash": "0x8c07ee2a17e96cdb35c31f573b2c47e7520d6d640379613e47330eeb548ec824"
         }
       ]
     },

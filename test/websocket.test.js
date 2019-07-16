@@ -16,6 +16,8 @@ const getPort = () => port++
 const SUBSCRIPTION_ID = '242d29d5c0ec9268f51a39aba4ed6a36c757c03c183633568edb0531658a9799'
 const isSubscriptionAck = msg => !msg.params
 
+const TEST_TIMEOUT = 1000
+
 // ROW
 process.env.AVA_PLAYBACK = 'playback'
 //ROW
@@ -41,12 +43,14 @@ test.beforeEach(t => {
 test.cb('Successfully connects to Websocket Server - no callback',  t => {
     t.context.wss.on('connection', () => t.end())
     t.context.w3d.connect()
+    t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test connects to server (with callback) [MOCK] ***********/
 test.cb('Successfully connects to Websocket Server - with callback',  t => {
     t.context.wss.on('connection', () => t.end())
     t.context.w3d.connect(status => status)
+    t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test disconnect from server (no callback) [MOCK] ***********/
@@ -57,6 +61,7 @@ test.cb('Successfully disconnects from Websocket Server - no callback',  t => {
     t.context.w3d.connect(() => {
         t.context.w3d.disconnect()
     })
+    t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test disconnect from server (with callback) [MOCK] ***********/
@@ -67,6 +72,7 @@ test.cb('Successfully disconnects from Websocket Server - with callback',  t => 
     t.context.w3d.connect(() => {
         t.context.w3d.disconnect(status => status)
     })
+    t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test call disconnect before connect errors [LIVE, MOCK] ***********/
@@ -76,6 +82,7 @@ test.cb('disconnect logs error if called before connect',  t => {
         t.end()
     });
     t.regex(stderr, /socket is not yet connected/)
+    t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test on method sends sub method - without filters [MOCK] ***********/
@@ -92,7 +99,7 @@ test.cb('Successfully calls on and sends subscription message - without filters'
     })
     t.context.w3d.connect()
     t.context.w3d.on({eventName: 'block'}, status => status)
-
+    t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test on method sends sub message - with filters [MOCK] ***********/
@@ -109,6 +116,7 @@ test.cb('Successfully calls on and sends subscription message - with filters',  
     })
     t.context.w3d.connect()
     t.context.w3d.on({eventName: 'block', filters: {"number":7280000}}, status => status)
+    t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test on method errors if no event name [LIVE, MOCK] ***********/
@@ -119,6 +127,7 @@ test.cb('on method errors if called without an event name',  t => {
         t.end()
     })
     t.regex(stderr, /no event specified/)
+    t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test off method sends unsub message - without filters [MOCK] ***********/
@@ -148,6 +157,7 @@ test.cb('Successfully calls off and sends unsubscription message - without filte
         t.context.w3d.on({eventName: 'block'}, status => status)
         setTimeout(() => t.context.w3d.off({eventName: 'block'}, status => status), 10)
     })
+    t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test off method sends unsub message - with filters [MOCK] ***********/
@@ -177,6 +187,7 @@ test.cb('Successfully calls off and sends unsubscription message - with filters'
         t.context.w3d.on({eventName: 'block', filters: {"number":7280000}}, status => status)
         setTimeout(() => t.context.w3d.off({eventName: 'block', filters: {"number":7280000}}, status => status), 10)
     })
+    t.timeout(TEST_TIMEOUT)
 })
 
 
@@ -189,6 +200,7 @@ test.cb('Calling off before on errors',  t => {
         t.end()
     });
     t.regex(stderr, /Not subscribed to: 'block'/)
+    t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test websocket handles erroneous server response [MOCK] ***********/
@@ -210,4 +222,5 @@ test.cb.skip('Successfully handles erroneous server response',  t => {
     capcon.stopCapture(process.stderr);
 
     t.regex(output, /error parsing json request/)
+    t.timeout(TEST_TIMEOUT)
 })

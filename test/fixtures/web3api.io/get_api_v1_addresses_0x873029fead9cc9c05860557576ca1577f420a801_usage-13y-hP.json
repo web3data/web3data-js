@@ -12,58 +12,38 @@
     "Connection",
     "close",
     "Date",
-    "Thu, 11 Jul 2019 22:05:03 GMT",
+    "Tue, 16 Jul 2019 15:14:53 GMT",
     "x-amzn-RequestId",
-    "ef20936c-a427-11e9-8454-f373a9681a17",
+    "765275b7-a7dc-11e9-8e87-4526de469e15",
     "Access-Control-Allow-Origin",
     "*",
     "X-Response-Time",
-    "16.895ms",
+    "14.581ms",
     "x-amzn-Remapped-Content-Length",
     "778",
     "x-amzn-Remapped-Connection",
     "keep-alive",
     "Set-Cookie",
-    "AWSALB=HOM4R5jtxLBFZGnqUDBybJHVtNMMh01HTwU78zJ7+ghNrT+dQ5Aa3rzqOGWsJLlxw7LPyh+Peq+a1XeQnUZaeqU0SuVUTR194emHvBrehestvx3qMpvGyNyEHBBT; Expires=Thu, 18 Jul 2019 22:05:03 GMT; Path=/",
+    "AWSALB=NXnySNPQa3baBTiaxsPLJq/eoxICwhXjUH2+DmZrhQPv1//Dx6cwHmBANZgyaSUFpyoaMbOCzSb8VlpwqJcUP3/iDCVIljWb282yFB7S3+9+M08/I0ie3fxoNiB5; Expires=Tue, 23 Jul 2019 15:14:53 GMT; Path=/",
     "x-amz-apigw-id",
-    "crjWaExYoAMFnyA=",
+    "c7F9DE4UIAMFf9w=",
     "ETag",
-    "W/\"30a-fS/AcGJuK/P8vTZ8PXPHp+k88Pw\"",
+    "W/\"30a-AfO3La1mctFTDav4TRagNrrHg1w\"",
     "x-amzn-Remapped-Date",
-    "Thu, 11 Jul 2019 22:05:03 GMT",
+    "Tue, 16 Jul 2019 15:14:53 GMT",
     "X-Cache",
     "Miss from cloudfront",
     "Via",
-    "1.1 dbeb98709410a42541e3a4522fba8a67.cloudfront.net (CloudFront)",
+    "1.1 23206a1c229d8877bdd053c4b05f9d12.cloudfront.net (CloudFront)",
     "X-Amz-Cf-Pop",
     "HIO50-C1",
     "X-Amz-Cf-Id",
-    "iYSOscubYL2wPNfvm3DBs_UUFlxH3Hkq4Ds4qf4dHbgws79w0xBs7g=="
+    "mQ-H_c9SH4i5SCP5QDw7E26ImHKFGHhh7yV82cUobswX3TFtLGtYAw=="
   ],
   "response": {
     "description": "Successful request",
     "payload": {
       "data": [
-        [
-          1560211200000,
-          "0"
-        ],
-        [
-          1560297600000,
-          "0"
-        ],
-        [
-          1560384000000,
-          "0"
-        ],
-        [
-          1560470400000,
-          "0"
-        ],
-        [
-          1560556800000,
-          "0"
-        ],
         [
           1560643200000,
           "0"
@@ -163,6 +143,26 @@
         [
           1562716800000,
           "0"
+        ],
+        [
+          1562803200000,
+          "0"
+        ],
+        [
+          1562889600000,
+          "0"
+        ],
+        [
+          1562976000000,
+          "0"
+        ],
+        [
+          1563062400000,
+          "0"
+        ],
+        [
+          1563148800000,
+          "0"
         ]
       ],
       "metadata": {
@@ -170,8 +170,8 @@
           "timestamp",
           "usage"
         ],
-        "endDate": 1562716800000,
-        "startDate": 1560211200000
+        "endDate": 1563148800000,
+        "startDate": 1560643200000
       }
     },
     "status": 200,
