@@ -1,0 +1,58 @@
+{
+  "body": "",
+  "method": "get",
+  "path": "/api/v1/signatures/0xe2f0a05a",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "282",
+    "Connection",
+    "close",
+    "Date",
+    "Tue, 16 Jul 2019 00:05:41 GMT",
+    "x-amzn-RequestId",
+    "72e09a11-a75d-11e9-ba22-87ad0006b598",
+    "Access-Control-Allow-Origin",
+    "*",
+    "X-Response-Time",
+    "0.791ms",
+    "x-amzn-Remapped-Content-Length",
+    "282",
+    "x-amzn-Remapped-Connection",
+    "keep-alive",
+    "Set-Cookie",
+    "AWSALB=WKJhc7u5AWIWYZ30KmIBppxkI/Kx2f6E0ITIHqrvRZzuMfGZ+XbiX5QqoU3X2AzExFq2Jyoxdn3x8lt+cg0M/abA6TCifmoxgGSh7+LrZCdUcjekSqoXS0BmPtlf; Expires=Tue, 23 Jul 2019 00:05:41 GMT; Path=/",
+    "x-amz-apigw-id",
+    "c5AxUGGhIAMF-yQ=",
+    "ETag",
+    "W/\"11a-J/h5Ote302XQH1HQ35hHvSM3AHw\"",
+    "x-amzn-Remapped-Date",
+    "Tue, 16 Jul 2019 00:05:41 GMT",
+    "X-Cache",
+    "Miss from cloudfront",
+    "Via",
+    "1.1 0005a84c2971ff4f5bbb79e7ebc622a9.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Pop",
+    "HIO50-C1",
+    "X-Amz-Cf-Id",
+    "BPHoG7m2w0bKD8ntLKKzvkPkARy8GVKZaYDuXH23wKJkqHDRv4pnyg=="
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": [
+      {
+        "fullHexadecimalSignature": "0xe2f0a05a7dfb6af94ccaa246f780bf8b96a0c98efb8a48e33bd347addaa71d42",
+        "hexadecimalSignature": "0xe2f0a05a",
+        "numParameters": 4,
+        "textSignature": "TokenCLC(uint256,string,uint8,string)"
+      }
+    ],
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}
