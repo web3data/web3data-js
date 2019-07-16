@@ -3,13 +3,12 @@ import WebSocket from 'ws'
 import {API_KEY} from './constants'
 import Web3Data from '../src/web3data'
 import capcon from 'capture-console'
+import getPort from 'get-port'
 import dotenv from 'dotenv'
 
 dotenv.config();
 
 const MOCK_WS_URL = `ws://localhost:`
-
-const getPort = () => parseInt(Math.random() * 65536)
 
 const SUBSCRIPTION_ID = '242d29d5c0ec9268f51a39aba4ed6a36c757c03c183633568edb0531658a9799'
 
@@ -27,8 +26,8 @@ process.env.AVA_PLAYBACK = 'playback'
 /**********************************
  * -------- Test Setup ---------- *
  **********************************/
-test.beforeEach(t => {
-    const PORT = getPort()
+test.beforeEach(async t => {
+    const PORT = await getPort()
     const config = {websocketUrl: process.env.AVA_PLAYBACK === 'playback' ? MOCK_WS_URL + PORT : null }
     t.context.w3d = new Web3Data(API_KEY, config)
     t.context.wss = new WebSocket.Server({ port: PORT });
