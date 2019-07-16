@@ -51,7 +51,7 @@
     "xo": "^0.24.0"
   },
   "dependencies": {
-    "ava-playback": "taylorjdawson/ava-playback",
+    "ava-playback": "git+https://git@github.com/taylorjdawson/ava-playback.git",
     "axios": "^0.18.0",
     "capture-console": "^1.0.1",
     "isomorphic-ws": "^4.0.1",
