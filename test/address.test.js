@@ -45,7 +45,7 @@ test('throws exception when calling getStats without hash', async t => {
 })
 
 /*********** Test getAdoption() ***********/
-test('Successfully gets address adoption', async t => {
+test.skip('Successfully gets address adoption', async t => {
     let response = await t.context.web3data.address.getAdoption(ADDRESS)
     t.is(response.status, 200)
 })
@@ -133,7 +133,7 @@ test('throws exception when calling getTokenBalances without hash', async t => {
 })
 
 /*********** Test getUsage() ***********/
-test('Successfully gets address usage', async t => {
+test.skip('Successfully gets address usage', async t => {
     let response = await t.context.web3data.address.getUsage(ADDRESS)
     t.is(response.status, 200)
 })
