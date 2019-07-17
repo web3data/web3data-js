@@ -1,9 +1,8 @@
 const {
   BLOCKS_ENDPOINT: ENDPOINT,
-  ERROR_MESSAGE_BLOCK_NO_NUMBER: NO_BLOCK_ID,
-  is,
-  get
+  ERROR_MESSAGE_BLOCK_NO_ID: NO_BLOCK_ID
 } = require('./constants')
+const {is, get} = require('./utils')
 
 class Block {
   constructor(web3data) {

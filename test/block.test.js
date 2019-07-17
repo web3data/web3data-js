@@ -1,7 +1,7 @@
 import test from "ava"
 import { getNewWeb3DataInstance } from './constants'
 import _ from 'lodash'
-import {ERROR_MESSAGE_BLOCK_NO_ID as NO_BLOCK_ID, BLOCKS_ENDPOINT as ENDPOINT} from "../src/constants";
+import {ERROR_MESSAGE_BLOCK_NO_ID as NO_BLOCK_ID} from "../src/constants";
 
 /**********************************
  * -------- Tests Setup ---------- *

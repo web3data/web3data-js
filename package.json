@@ -48,7 +48,8 @@
     "parcel-bundler": "^1.11.0",
     "prettier": "^1.16.4",
     "superstatic": "^6.0.4",
-    "xo": "^0.24.0"
+    "xo": "^0.24.0",
+    "lodash": "^4.17.14"
   },
   "dependencies": {
     "ava-playback": "git+https://git@github.com/taylorjdawson/ava-playback.git",
