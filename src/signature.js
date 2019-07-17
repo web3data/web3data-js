@@ -1,8 +1,8 @@
-import {get, is} from './utils'
-import {
-  SIGNATURES_ENDPOINT as ENDPOINT,
-  ERROR_MESSAGE_SIGNATURE_NO_HASH as NO_HASH
-} from './constants'
+const {get, is} = require('./utils')
+const {
+  SIGNATURES_ENDPOINT: ENDPOINT,
+  ERROR_MESSAGE_SIGNATURE_NO_HASH: NO_HASH
+} = require('./constants')
 
 class Signature {
   constructor(web3data) {
@@ -11,8 +11,8 @@ class Signature {
 
   get4Byte(hash) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_HASH))
-    return get(this.web3data, {pathParam: hash, endpoint: ENDPOINT})
+    return get(this.web3data, {hash, endpoint: ENDPOINT})
   }
 }
 
-export default Signature
+module.exports = Signature

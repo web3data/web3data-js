@@ -1,37 +1,36 @@
 {
   "body": "",
   "method": "get",
-  "path": "/api/v1/tokens/0x06012c8cf97bead5deae237070f9587f8e7a266d/holders/historical",
+  "path": "/api/v1/contracts/0x06012c8cf97bead5deae237070f9587f8e7a266d/abi",
   "queries": {
-    "holderAddresses": "0x873029fead9cc9c05860557576ca1577f420a801"
   },
   "rawHeaders": [
     "Content-Type",
     "application/json; charset=utf-8",
     "Content-Length",
-    "165",
+    "75",
     "Connection",
     "close",
     "Date",
-    "Tue, 16 Jul 2019 15:14:52 GMT",
+    "Tue, 16 Jul 2019 15:14:53 GMT",
     "x-amzn-RequestId",
-    "761df8b1-a7dc-11e9-9a6e-d9a09412e5dc",
+    "76388596-a7dc-11e9-8f42-8f7a5c3ef0e4",
     "Access-Control-Allow-Origin",
     "*",
     "X-Response-Time",
-    "6.761ms",
+    "933.486ms",
     "x-amzn-Remapped-Content-Length",
-    "165",
+    "75",
     "x-amzn-Remapped-Connection",
     "keep-alive",
     "Set-Cookie",
-    "AWSALB=frHUckONrVGmoR2n9nIdlRduCke1kLKkQbUSHnC+TM0ukD7suULgVkoVZRSaqE1EmqFWwCDlrbPdeuyrenaV935G3iB/lpzfTkE4sPHXiYmS/mRsPJq4LcoJgPX4; Expires=Tue, 23 Jul 2019 15:14:52 GMT; Path=/",
+    "AWSALB=d8/dB5WVvY1FgnqYLIo67zuUPhE/WOEvVt6tYfkB8BvQYW6f1ebsmbvbZ1eAmcPDdnfB2VDMdOYiQG1SV4R2NI6tRr0qRTyIJp2u/FVjbWkccmMGIu/47Mimm6Wk; Expires=Tue, 23 Jul 2019 15:14:52 GMT; Path=/",
     "x-amz-apigw-id",
-    "c7F8_HwZoAMFjeA=",
+    "c7F9BGjyIAMF_mg=",
     "ETag",
-    "W/\"a5-uAScCwJBI9boK7iLTqy1bXbDS3c\"",
+    "W/\"4b-CF6cAMu50AuzLonS1lkcvIeHGCE\"",
     "x-amzn-Remapped-Date",
-    "Tue, 16 Jul 2019 15:14:52 GMT",
+    "Tue, 16 Jul 2019 15:14:53 GMT",
     "X-Cache",
     "Miss from cloudfront",
     "Via",
@@ -39,21 +38,11 @@
     "X-Amz-Cf-Pop",
     "HIO50-C1",
     "X-Amz-Cf-Id",
-    "VRKl1Ma76f3SQnNwfN_KVbWpxgjND7bLwe1brCfAdFClUaR37cjAig=="
+    "OGQsdfKlOnuIS_40dWvwBg01hJ51Pe8P7SFLyp8LBpzaL9buVM9ilQ=="
   ],
   "response": {
     "description": "Successful request",
     "payload": {
-      "data": [
-      ],
-      "metadata": {
-        "columns": [
-          "holder*",
-          "timestamp"
-        ],
-        "endDate": "N/A",
-        "startDate": "N/A"
-      }
     },
     "status": 200,
     "title": "OK"

@@ -1,44 +1,44 @@
 {
   "body": "",
   "method": "get",
-  "path": "/api/v1/tokens/0x06012c8cf97bead5deae237070f9587f8e7a266d/velocity",
+  "path": "/api/v1/addresses/0x873029fead9cc9c05860557576ca1577f420a801/usage",
   "queries": {
   },
   "rawHeaders": [
     "Content-Type",
     "application/json; charset=utf-8",
     "Content-Length",
-    "1407",
+    "778",
     "Connection",
     "close",
     "Date",
-    "Tue, 16 Jul 2019 15:14:52 GMT",
+    "Tue, 16 Jul 2019 15:14:53 GMT",
     "x-amzn-RequestId",
-    "7620b80c-a7dc-11e9-8d36-6ff8fc191c91",
+    "765275b7-a7dc-11e9-8e87-4526de469e15",
     "Access-Control-Allow-Origin",
     "*",
     "X-Response-Time",
-    "22.455ms",
+    "14.581ms",
     "x-amzn-Remapped-Content-Length",
-    "1407",
+    "778",
     "x-amzn-Remapped-Connection",
     "keep-alive",
     "Set-Cookie",
-    "AWSALB=S0QjaXwS12lthEzAOl5g4w7Qf7xz9hYeJImMZ3VbB2D+qp8NyXzgmNZlDGUaV2CQtDDhlBsZVmQ6QCUDCkp0ZAWlgXbeonRHW6rya1xMZfSTO7I0DDs3CRU1wl2Z; Expires=Tue, 23 Jul 2019 15:14:52 GMT; Path=/",
+    "AWSALB=NXnySNPQa3baBTiaxsPLJq/eoxICwhXjUH2+DmZrhQPv1//Dx6cwHmBANZgyaSUFpyoaMbOCzSb8VlpwqJcUP3/iDCVIljWb282yFB7S3+9+M08/I0ie3fxoNiB5; Expires=Tue, 23 Jul 2019 15:14:53 GMT; Path=/",
     "x-amz-apigw-id",
-    "c7F9AG65IAMFlZA=",
+    "c7F9DE4UIAMFf9w=",
     "ETag",
-    "W/\"57f-ckAHWOrsSEgOMJNZ6pA2nL3RVY8\"",
+    "W/\"30a-AfO3La1mctFTDav4TRagNrrHg1w\"",
     "x-amzn-Remapped-Date",
-    "Tue, 16 Jul 2019 15:14:52 GMT",
+    "Tue, 16 Jul 2019 15:14:53 GMT",
     "X-Cache",
     "Miss from cloudfront",
     "Via",
-    "1.1 e5af640ced3aa8764b82c4bc3f7af38e.cloudfront.net (CloudFront)",
+    "1.1 23206a1c229d8877bdd053c4b05f9d12.cloudfront.net (CloudFront)",
     "X-Amz-Cf-Pop",
     "HIO50-C1",
     "X-Amz-Cf-Id",
-    "KXCXUhZfGI90hCmVCUR4VaNewmLifLGix7nR0kqusQA11vrii49yPw=="
+    "mQ-H_c9SH4i5SCP5QDw7E26ImHKFGHhh7yV82cUobswX3TFtLGtYAw=="
   ],
   "response": {
     "description": "Successful request",
@@ -46,129 +46,129 @@
       "data": [
         [
           1560643200000,
-          "0.00256743387870287771"
+          "0"
         ],
         [
           1560729600000,
-          "0.00218155920107534461"
+          "0"
         ],
         [
           1560816000000,
-          "0.00290834048366200538"
+          "0"
         ],
         [
           1560902400000,
-          "0.00237844643816403867"
+          "0"
         ],
         [
           1560988800000,
-          "0.00195124974781418706"
+          "0"
         ],
         [
           1561075200000,
-          "0.00214449092495679419"
+          "0"
         ],
         [
           1561161600000,
-          "0.00303473722845968552"
+          "0"
         ],
         [
           1561248000000,
-          "0.00300009965897185971"
+          "0"
         ],
         [
           1561334400000,
-          "0.00285182655449765801"
+          "0"
         ],
         [
           1561420800000,
-          "0.00261361730468664545"
+          "0"
         ],
         [
           1561507200000,
-          "0.00281536595503678874"
+          "0"
         ],
         [
           1561593600000,
-          "0.00195732651439099861"
+          "0"
         ],
         [
           1561680000000,
-          "0.00137760298296317723"
+          "0"
         ],
         [
           1561766400000,
-          "0.00198041822738288248"
+          "0"
         ],
         [
           1561852800000,
-          "0.00153742194393332086"
+          "0"
         ],
         [
           1561939200000,
-          "0.00196522631094085362"
+          "0"
         ],
         [
           1562025600000,
-          "0.00139522560603593071"
+          "0"
         ],
         [
           1562112000000,
-          "0.00108591818727622307"
+          "0"
         ],
         [
           1562198400000,
-          "0.00226177251988925701"
+          "0"
         ],
         [
           1562284800000,
-          "0.0017732004871136088"
+          "0"
         ],
         [
           1562371200000,
-          "0.00828020213756341106"
+          "0"
         ],
         [
           1562457600000,
-          "0.00569089189918401178"
+          "0"
         ],
         [
           1562544000000,
-          "0.00206306225282751949"
+          "0"
         ],
         [
           1562630400000,
-          "0.00232497089228809707"
+          "0"
         ],
         [
           1562716800000,
-          "0.00174585503751795685"
+          "0"
         ],
         [
           1562803200000,
-          "0.00141588661239708996"
+          "0"
         ],
         [
           1562889600000,
-          "0.00096924426900144141"
+          "0"
         ],
         [
           1562976000000,
-          "0.0011910462490550628"
+          "0"
         ],
         [
           1563062400000,
-          "0.0017063560547686818"
+          "0"
         ],
         [
           1563148800000,
-          "0.0010294042581118757"
+          "0"
         ]
       ],
       "metadata": {
         "columns": [
           "timestamp",
-          "velocity"
+          "usage"
         ],
         "endDate": 1563148800000,
         "startDate": 1560643200000

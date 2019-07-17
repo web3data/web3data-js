@@ -1,8 +1,8 @@
-import {get, is} from './utils'
-import {
-  BLOCKS_ENDPOINT as ENDPOINT,
-  ERROR_MESSAGE_BLOCK_NO_NUMBER as NO_BLOCK_NUMBER
-} from './constants'
+const {get, is} = require('./utils')
+const {
+  BLOCKS_ENDPOINT: ENDPOINT,
+  ERROR_MESSAGE_BLOCK_NO_NUMBER: NO_BLOCK_NUMBER
+} = require('./constants')
 
 class Block {
   constructor(web3data) {
@@ -31,8 +31,8 @@ class Block {
   // TODO" Update error messages and add them to constants file
   async getBlockNumber() {
     const response = await this.getBlock('latest')
-    return parseInt(response.payload.number)
+    return parseInt(response.payload.number, 10)
   }
 }
 
-export default Block
+module.exports = Block

@@ -1,8 +1,8 @@
-import {
-  ERROR_MESSAGE_CONTRACT_NO_ADDRESS as NO_ADDRESS,
-  CONTRACTS_ENDPOINT as ENDPOINT
-} from './constants'
-import {is, get} from './utils'
+const {
+  ERROR_MESSAGE_CONTRACT_NO_ADDRESS: NO_ADDRESS,
+  CONTRACTS_ENDPOINT: ENDPOINT
+} = require('./constants')
+const {is, get} = require('./utils')
 
 class Contract {
   constructor(web3data) {
@@ -11,7 +11,11 @@ class Contract {
 
   getDetails(hash, filterOptions) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
-    return get(this.web3data, {pathParam: hash, endpoint: ENDPOINT, filterOptions})
+    return get(this.web3data, {
+      pathParam: hash,
+      endpoint: ENDPOINT,
+      filterOptions
+    })
   }
 
   getFunctions(hash, filterOptions) {
@@ -55,25 +59,26 @@ class Contract {
   }
 
   async getCode(hash) {
-    const response = await this.getDetails(hash);
+    const response = await this.getDetails(hash)
 
     // TODO" Update error messages and add them to constants file
-    return new Promise(
-        (resolve, reject) => {
-          if (is.null(response) || is.undefined(response) || response.status !== 200) {
-            reject('/contracts/:hash failed to respond')
-          } else if (!response.payload) {
-            reject('/contracts/:hash failed to respond with payload')
-          } else {
-            if (response.payload.bytecode) {
-              resolve(response.payload.bytecode)
-            } else {
-              // TODO: Eval is this the correct response for no contract byte code?
-              resolve('0x')
-            }
-          }
-        })
+    return new Promise((resolve, reject) => {
+      if (
+        is.null(response) ||
+        is.undefined(response) ||
+        response.status !== 200
+      ) {
+        reject(new Error('/contracts/:hash failed to respond'))
+      } else if (!response.payload) {
+        reject(new Error('/contracts/:hash failed to respond with payload'))
+      } else if (response.payload.bytecode) {
+        resolve(response.payload.bytecode)
+      } else {
+        // TODO: Eval is this the correct response for no contract byte code?
+        resolve('0x')
+      }
+    })
   }
 }
 
-export default Contract
+module.exports = Contract

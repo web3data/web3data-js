@@ -1,4 +1,4 @@
-import crypto from 'crypto'
+const crypto = require('crypto')
 
 /**
  * Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
@@ -75,4 +75,4 @@ const uuid = data =>
     .update(JSON.stringify(data))
     .digest('base64')
 
-export {buildFilterUrl, is, throwIf, get, rejectPromiseIf, uuid}
+module.exports = {buildFilterUrl, is, throwIf, get, rejectPromiseIf, uuid}
