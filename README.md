@@ -31,7 +31,7 @@ Using CDN:
 ```js
 import Web3Data from 'Web3Data'
 
-const w3d = new Web3Data('UAKe962c0fadb076fc5053476a6d5fef079')
+const w3d = new Web3Data('<api-key>')
 
 ( async () => {
      const contract = await w3d.contract.getDetails("0x06012c8cf97bead5deae237070f9587f8e7a266d")
@@ -44,7 +44,8 @@ const w3d = new Web3Data('UAKe962c0fadb076fc5053476a6d5fef079')
 ```js
 import Web3Data from 'Web3Data'
 
-const w3d = new Web3Data('UAKe962c0fadb076fc5053476a6d5fef079')
+const w3d = new Web3Data('<api-key>')
+
 
 w3d.connect(status => {
   console.log('status ->', status.type)
