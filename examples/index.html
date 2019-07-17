@@ -45,22 +45,32 @@
     <div id='input'>
       <input type="text" placeholder="api key" name="" id="apikey-input">
       <input type="text" name="" placeholder="address" id="address-input">
-      <button onClick="getAddressInfo()" id="goBtn">Go</button>
+      <button onClick="runExample()" id="goBtn">Go</button>
     </div>
     <div id="output">
       <p>Results<p>
     </div>
   </div>
-<script type="text/javascript" src="../dist/browser/web3data.min.js"></script>
-<script>
-  function getAddressInfo() {
-    let address = document.getElementById('address-input').value
-    let apiKey = document.getElementById("apikey-input").value
-    let web3data = new window.Web3Data({"apiKey":apiKey, "blockchainId": "1c9c969065fcd1cf"})
-    web3data.addresses(address).info().retrieve().then( (info) => {
-      document.getElementById('output').innerHTML = '<pre id="json">' + JSON.stringify(info.payload[0], undefined, 2) + '</pre>'
-    })
-  }
-</script>
+<script type="text/javascript" src="../dist/web3data.min.js"></script>
+  <script>
+    function runExample() {
+      const address = document.querySelector('#address-input').value
+      const apiKey = document.querySelector('#apikey-input').value
+      const web3data = new Web3Data(apiKey)
+
+      web3data.address.getInformation(address).then( info => {
+        console.log(info)
+        document.getElementById('output').innerHTML = '<pre id="json">' + JSON.stringify(info.payload, undefined, 2) + '</pre>'
+      })
+
+      web3data.connect(status => {
+        console.log('status ->', status.type)
+      })
+
+      web3data.on({eventName: 'block'}, data => {
+        console.log(data)
+      })
+    }
+  </script>
 </body>
 </html>

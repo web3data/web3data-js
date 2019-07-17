@@ -2,91 +2,99 @@
 [![Discord](https://img.shields.io/discord/102860784329052160.svg)](https://forum.amberdata.io/)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 
-# Web3data Javascript API
+# web3data.js Javascript API
+Wrapper for [Amberdata.io](http://amberdata.io)'s [REST API](docs.amberdata.io)
 
 ## Table of Contents
-&nbsp;&nbsp;[Usage](#usage)
-<br/>&nbsp;&nbsp;[Installation](#installation)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;[Building](#building)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;[Testing](#testing)
-<br/>&nbsp;&nbsp;&nbsp;&nbsp;[Community](#community)
-<br/>&nbsp;&nbsp;[Resources](#resources)
-<br/>&nbsp;&nbsp;[Licensing](#licensing)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Building](#building)
+- [Testing](#testing)
+- [API Key](#)
+- [Commands](#commands)
+- [Community](#community)
+- [Resources](#resources)
+- [Licensing](#licensing)
 
-## Usage
 ## Installation
-Using node:
+Using npm:
 ```bash
 npm install web3data-js
 ```
-Using yarn:
-```bash
-yarn add web3data-js
-```
+
 Using CDN:
 ```html
-<script src="https://unpkg.com/web3data-js"></script>
+<script src="https://unpkg.com/web3data-js/dist/web3data.min.js"></script>
 ```
 
-<!-- ### Requirements
-- Node.js
-- npm -->
+## Usage
+```js
+import Web3Data from 'Web3Data'
 
-### Building
+const w3d = new Web3Data('<api-key>')
 
-#### Builds for node and browser
-
-```bash
-npm run build
+( async () => {
+     const contract = await w3d.contract.getDetails("0x06012c8cf97bead5deae237070f9587f8e7a266d")
+     console.log(contract) // { ... }
+ }
+)()
 ```
 
-#### Build for node
+#### Websockets
+```js
+import Web3Data from 'Web3Data'
 
-```bash
-npm run build-node
+const w3d = new Web3Data('<api-key>')
+
+
+w3d.connect(status => {
+  console.log('status ->', status.type)
+})
+w3d.on({eventName: 'block'}, data => {
+  console.log(data)
+})
 ```
 
-#### Build for browser
-```bash
-npm run build-browser
-```
-
-### Testing
+## Testing
+This will run all tests using the prerecorded responses from the [fixtures](test/fixtures/web3ap.io).
 ```bash
 npm test
 ```
-This will run all tests using the prerecorded responses from [fixtures](test/fixtures/eb3ap.io).
 
+Runs tests using live responses from our endpoints. (Requires API key see [Obtaining an Api key](#obtaininganapikey)).
 ```bash
 npm run test-live
 ```
-Runs tests using live responses from our endpoints. (Requires API key see [Obtaining an Api key](#obtaininganapikey)).
 
+Runs tests using live responses from our endpoints and records them in your [fixtures folder](test/fixtures/web3ap.io).
 ```bash
 npm run test-record
 ```
-Runs tests using live responses from our endpoints and records them in your fixtures folder.
 
-### Obtaining an Api key
-Sign up for an account at [amberdata.io](https://amberdata.io/authenticate).
-Then go to your account dashboard and select the API Key tab.
-Request an API Key for the network that you wish.
-Then place it in a file named `.env`. (See [example](./env.example)).
+## Obtaining an API key
+Visit [Amberdata.io](https://amberdata.io/pricing) and select the developer plan to get started!
+
+Once you have you're key place it in a file named `.env` &mdash; see [./env.example](./env.example) for reference.
 
 <!-- For additional details on obtaining an api key see() -->
 
-### example
-Run the following command to see `web3data-js` js in action!
+## Commands
 ```bash
-npm run examples
+npm run build # Build for browser and output as `dist/web3data.min.js`
+npm run lint # run linter
+npm run lintfix # fix linting errors
+npm run test # runs all tests in playback mode
+npm run test-record # run tests in record mode
+npm run test-live # run tests hitting live endpoints
+npm run test-fast # run tests but stop when one fails
+npm run test-verbose # run tests with verbose output
+npm run clean-fix # deletes the fixtures
+npm run example # runs the example - see web3data-js in action!
 ```
-
 
 ## Community
 - [Discourse](https://forum.amberdata.io/)
-
 ## Resources
 - [Contributing](./CONTRIBUTING.md)
 ## Licensing
-
 This project is licensed under the [Apache Licence 2.0](./LICENSE).

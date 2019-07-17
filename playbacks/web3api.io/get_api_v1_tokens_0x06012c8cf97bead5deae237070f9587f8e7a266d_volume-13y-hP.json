@@ -1,0 +1,180 @@
+{
+  "body": "",
+  "method": "get",
+  "path": "/api/v1/tokens/0x06012c8cf97bead5deae237070f9587f8e7a266d/volume",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "869",
+    "Connection",
+    "close",
+    "Date",
+    "Tue, 02 Apr 2019 15:24:31 GMT",
+    "x-amzn-RequestId",
+    "69338613-555b-11e9-9b5c-33e81df12e7d",
+    "Access-Control-Allow-Origin",
+    "*",
+    "X-Response-Time",
+    "188.935ms",
+    "x-amzn-Remapped-Content-Length",
+    "869",
+    "x-amzn-Remapped-Connection",
+    "keep-alive",
+    "Set-Cookie",
+    "AWSALB=v51zcUNQTu5qVeEFGQBGYEXVc8cWSWJOUS8BP/2NmIXXXpQjziV7dYksh65De3ckQfFatNbWdWLynG6HrFe4EwCrXaf/CNjdB7tMhzuBP+TJrZQfgo2c90FUc0ER; Expires=Tue, 09 Apr 2019 15:24:30 GMT; Path=/",
+    "x-amz-apigw-id",
+    "XhC7SFgOoAMFdhQ=",
+    "ETag",
+    "W/\"365-HvP6pLRr2sK9OAJ3Ivb1Ito3Qa4\"",
+    "x-amzn-Remapped-Date",
+    "Tue, 02 Apr 2019 15:24:31 GMT",
+    "X-Cache",
+    "Miss from cloudfront",
+    "Via",
+    "1.1 078ca3a7cfdee29c8e3514176205c50a.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Id",
+    "Bu0nLOXaORJyVHEsu-UqtYiCm-FLKoGI4dRJ3hgSiNTv2n2lkStFiA=="
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": {
+      "data": [
+        [
+          1551571200000,
+          "6869"
+        ],
+        [
+          1551657600000,
+          "4866"
+        ],
+        [
+          1551744000000,
+          "4996"
+        ],
+        [
+          1551830400000,
+          "4950"
+        ],
+        [
+          1551916800000,
+          "6504"
+        ],
+        [
+          1552003200000,
+          "6378"
+        ],
+        [
+          1552089600000,
+          "6463"
+        ],
+        [
+          1552176000000,
+          "6148"
+        ],
+        [
+          1552262400000,
+          "4678"
+        ],
+        [
+          1552348800000,
+          "4206"
+        ],
+        [
+          1552435200000,
+          "3872"
+        ],
+        [
+          1552521600000,
+          "3714"
+        ],
+        [
+          1552608000000,
+          "4276"
+        ],
+        [
+          1552694400000,
+          "7738"
+        ],
+        [
+          1552780800000,
+          "7022"
+        ],
+        [
+          1552867200000,
+          "5109"
+        ],
+        [
+          1552953600000,
+          "7538"
+        ],
+        [
+          1553040000000,
+          "5082"
+        ],
+        [
+          1553126400000,
+          "4686"
+        ],
+        [
+          1553212800000,
+          "5191"
+        ],
+        [
+          1553299200000,
+          "5887"
+        ],
+        [
+          1553385600000,
+          "6720"
+        ],
+        [
+          1553472000000,
+          "5401"
+        ],
+        [
+          1553558400000,
+          "4794"
+        ],
+        [
+          1553644800000,
+          "4966"
+        ],
+        [
+          1553731200000,
+          "4730"
+        ],
+        [
+          1553817600000,
+          "3564"
+        ],
+        [
+          1553904000000,
+          "6938"
+        ],
+        [
+          1553990400000,
+          "9121"
+        ],
+        [
+          1554076800000,
+          "5454"
+        ]
+      ],
+      "metadata": {
+        "columns": [
+          "timestamp",
+          "volume"
+        ],
+        "endDate": 1554076800000,
+        "startDate": 1551571200000
+      }
+    },
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}

@@ -1,6 +1,7 @@
-const Web3Data = require('./lib/web3data')
-const retrieve = require('./lib/node/retrieve').default
+const Web3Data = require('./src/web3data')
+// eslint-disable-next-line no-undef
+if (typeof window !== 'undefined' && typeof window.Web3Data === 'undefined') {
+  window.Web3Data = Web3Data // eslint-disable-line no-undef
+}
 
-// Overriden to use the for browsers
-Web3Data.prototype.retrieve = retrieve
 module.exports = Web3Data
