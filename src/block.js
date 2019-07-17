@@ -1,9 +1,8 @@
-import {get, is} from './utils'
-
-import {
-  BLOCKS_ENDPOINT as ENDPOINT,
-  ERROR_MESSAGE_BLOCK_NO_ID as NO_BLOCK_ID
-} from './constants'
+const {get, is} = require('./utils')
+const {
+  BLOCKS_ENDPOINT: ENDPOINT,
+  ERROR_MESSAGE_BLOCK_NO_NUMBER: NO_BLOCK_NUMBER
+} = require('./constants')
 
 class Block {
   constructor(web3data) {
@@ -115,4 +114,4 @@ class Block {
   }
 }
 
-export default Block
+module.exports = Block

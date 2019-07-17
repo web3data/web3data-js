@@ -1,15 +1,14 @@
-import {
-  ERROR_MESSAGE_ADDRESS_NO_ADDRESS as NO_ADDRESS,
-  ADDRESSES_ENDPOINT as ENDPOINT
-} from './constants'
-import {is, get} from './utils'
+const {
+  ERROR_MESSAGE_ADDRESS_NO_ADDRESS: NO_ADDRESS,
+  ADDRESSES_ENDPOINT: ENDPOINT
+} = require('./constants')
+const {is, get} = require('./utils')
 
 class Address {
   constructor(web3data) {
     this.web3data = web3data
   }
 
-  // CONSIDER: adding "allowed" filters
   getAllAddresses(filterOptions) {
     return get(this.web3data, {endpoint: ENDPOINT, filterOptions})
   }
@@ -125,4 +124,4 @@ class Address {
   }
 }
 
-export default Address
+module.exports = Address
