@@ -1,7 +1,7 @@
 const {get, is} = require('./utils')
 const {
   BLOCKS_ENDPOINT: ENDPOINT,
-  ERROR_MESSAGE_BLOCK_NO_NUMBER: NO_BLOCK_NUMBER
+  ERROR_MESSAGE_BLOCK_NO_ID: NO_BLOCK_ID
 } = require('./constants')
 
 class Block {
@@ -27,10 +27,8 @@ class Block {
       filterOptions
     })
     return new Promise((resolve, reject) => {
-      if (!response || response.status !== 200) {
-        reject(new Error(`/blocks/${id} failed to respond`))
-      } else if (!response.payload) {
-        reject(new Error(`/blocks/${id} failed to respond with payload`))
+      if (!response || response.status !== 200 || !response.payload) {
+        reject(new Error(`error with request`))
       } else {
         resolve(response.payload)
       }
@@ -44,7 +42,7 @@ class Block {
       if (!block | !block.number) {
         reject(new Error('There was an error with the request'))
       } else {
-        resolve(parseInt(block.number))
+        resolve(parseInt(block.number, 10))
       }
     })
   }
@@ -58,41 +56,44 @@ class Block {
       } else if (block.predictions) {
         resolve(null)
       } else {
-        resolve(parseInt(block.numTransactions))
+        resolve(parseInt(block.numTransactions, 10))
       }
     })
   }
 
   async getTransactions(id, filterOptions) {
-      const response = await get(this.web3data, {
-          pathParam: id,
-          endpoint: ENDPOINT,
-          subendpoint: 'transactions',
-          filterOptions
-      })
-      return new Promise((resolve, reject) => {
-          if (!response || response.status !== 200 || !response.payload || !response.payload.records) {
-              reject(new Error('There was an error with the request'))
-          } else {
-              resolve(response.payload.records)
-          }
-      })
+    const response = await get(this.web3data, {
+      pathParam: id,
+      endpoint: ENDPOINT,
+      subendpoint: 'transactions',
+      filterOptions
+    })
+    return new Promise((resolve, reject) => {
+      if (
+        !response ||
+        response.status !== 200 ||
+        !response.payload ||
+        !response.payload.records
+      ) {
+        reject(new Error('There was an error with the request'))
+      } else {
+        resolve(response.payload.records)
+      }
+    })
   }
 
   async getTransactionFromBlock(id, index) {
-      const transactions = await this.getTransactions(id)
-      return new Promise((resolve, reject) => {
-          if (!transactions) {
-              reject(new Error(`There was an error with the request`))
-          } else if (index < transactions.length && index > -1) {
-              resolve(transactions[index])
-          }else {
-              resolve(null)
-          }
-      })
+    const transactions = await this.getTransactions(id)
+    return new Promise((resolve, reject) => {
+      if (!transactions) {
+        reject(new Error(`There was an error with the request`))
+      } else if (index < transactions.length && index > -1) {
+        resolve(transactions[index])
+      } else {
+        resolve(null)
+      }
+    })
   }
-
-
 
   async getUncle(id, index) {
     const block = await this.getBlock(id, {validationMethod: 'full'})

@@ -1,5 +1,8 @@
-const {TRANSACTIONS_ENDPOINT: ENDPOINT} = require('./constants')
-const {get} = require('./utils')
+const {
+  TRANSACTIONS_ENDPOINT: ENDPOINT,
+  ERROR_MESSAGE_TRANSACTION_NO_HASH: NO_HASH
+} = require('./constants')
+const {get, is} = require('./utils')
 
 class Transaction {
   constructor(web3data) {
@@ -14,17 +17,22 @@ class Transaction {
   }
 
   async getTransactions(filterOptions) {
-      const response = await get(this.web3data, {
-          endpoint: ENDPOINT,
-          filterOptions
-      })
-      return new Promise((resolve, reject) => {
-          if (!response || response.status !== 200 || !response.payload || !response.payload.records) {
-              reject(new Error('There was an error with the request'))
-          } else {
-              resolve(response.payload.records)
-          }
-      })
+    const response = await get(this.web3data, {
+      endpoint: ENDPOINT,
+      filterOptions
+    })
+    return new Promise((resolve, reject) => {
+      if (
+        !response ||
+        response.status !== 200 ||
+        !response.payload ||
+        !response.payload.records
+      ) {
+        reject(new Error('There was an error with the request'))
+      } else {
+        resolve(response.payload.records)
+      }
+    })
   }
 
   async getTransaction(hash, filterOptions) {
@@ -44,14 +52,14 @@ class Transaction {
   }
 
   async getPendingTransactions() {
-      const pendingTransactions = await this.getTransactions({status: 'pending'})
-      return new Promise((resolve, reject) => {
-          if (is.undefined(pendingTransactions) || is.null(pendingTransactions)) {
-              reject(new Error('There was an error with the request'))
-          } else {
-              resolve(pendingTransactions)
-          }
-      })
+    const pendingTransactions = await this.getTransactions({status: 'pending'})
+    return new Promise((resolve, reject) => {
+      if (is.undefined(pendingTransactions) || is.null(pendingTransactions)) {
+        reject(new Error('There was an error with the request'))
+      } else {
+        resolve(pendingTransactions)
+      }
+    })
   }
 
   async getGasPrice() {
@@ -65,12 +73,8 @@ class Transaction {
         response.status !== 200
       ) {
         reject(new Error('/gas/predictions failed to respond'))
-      } else if (!response.payload) {
-        reject(new Error('/gas/predictions failed to respond with payload'))
-      } else if (!response.payload.average) {
-        reject(
-          new Error('/gas/predictions failed to respond with average gas price')
-        )
+      } else if (!response.payload || !response.payload.average) {
+        reject(new Error('error with request'))
       } else {
         resolve(`${response.payload.average.gasPrice}`)
       }
