@@ -1,9 +1,9 @@
-import {get, is} from './utils'
-
-import {
-  BLOCKS_ENDPOINT as ENDPOINT,
-  ERROR_MESSAGE_BLOCK_NO_ID as NO_BLOCK_ID
-} from './constants'
+const {
+  BLOCKS_ENDPOINT: ENDPOINT,
+  ERROR_MESSAGE_BLOCK_NO_NUMBER: NO_BLOCK_ID,
+  is,
+  get
+} = require('./constants')
 
 class Block {
   constructor(web3data) {
@@ -28,10 +28,8 @@ class Block {
       filterOptions
     })
     return new Promise((resolve, reject) => {
-      if (!response || response.status !== 200) {
-        reject(new Error(`/blocks/${id} failed to respond`))
-      } else if (!response.payload) {
-        reject(new Error(`/blocks/${id} failed to respond with payload`))
+      if (!response || response.status !== 200 || !response.payload) {
+        reject(new Error(`error with request`))
       } else {
         resolve(response.payload)
       }
@@ -45,7 +43,7 @@ class Block {
       if (!block | !block.number) {
         reject(new Error('There was an error with the request'))
       } else {
-        resolve(parseInt(block.number))
+        resolve(parseInt(block.number, 10))
       }
     })
   }
@@ -53,32 +51,35 @@ class Block {
   async getBlockTransactionCount(id) {
     const block = await this.getBlock(id)
     return new Promise((resolve, reject) => {
-        // TODO: Possibly replace with lodash for readability
-      if (!block || !block.predictions && !block.numTransactions) {
+      // TODO: Possibly replace with lodash for readability
+      if (!block || (!block.predictions && !block.numTransactions)) {
         reject(new Error(`There was an error with the request`))
       } else if (block.predictions) {
         resolve(null)
       } else {
-        resolve(parseInt(block.numTransactions))
+        resolve(parseInt(block.numTransactions, 10))
       }
     })
   }
 
   async getUncle(id, index) {
-      const block = await this.getBlock(id, {validationMethod: 'full'})
-      return new Promise((resolve, reject) => {
-          // TODO: Possibly replace with lodash for readability
-          if (!block || !block.predictions && !block.numTransactions && !block.validation) {
-              reject(new Error(`There was an error with the request`))
-          } else if (block.predictions || !block.validation.uncles) {
-              resolve(null)
-          } else if (index < block.validation.uncles.length) {
-              resolve(block.validation.uncles[index])
-          } else {
-              resolve(null)
-          }
-      })
+    const block = await this.getBlock(id, {validationMethod: 'full'})
+    return new Promise((resolve, reject) => {
+      // TODO: Possibly replace with lodash for readability
+      if (
+        !block ||
+        (!block.predictions && !block.numTransactions && !block.validation)
+      ) {
+        reject(new Error(`There was an error with the request`))
+      } else if (block.predictions || !block.validation.uncles) {
+        resolve(null)
+      } else if (index < block.validation.uncles.length) {
+        resolve(block.validation.uncles[index])
+      } else {
+        resolve(null)
+      }
+    })
   }
 }
 
-export default Block
+module.exports = Block

@@ -1,5 +1,5 @@
-import {TRANSACTIONS_ENDPOINT as ENDPOINT} from './constants'
-import {get, is} from './utils'
+const {TRANSACTIONS_ENDPOINT: ENDPOINT} = require('./constants')
+const {get, is} = require('./utils')
 
 class Transaction {
   constructor(web3data) {
@@ -24,12 +24,8 @@ class Transaction {
         response.status !== 200
       ) {
         reject(new Error('/gas/predictions failed to respond'))
-      } else if (!response.payload) {
-        reject(new Error('/gas/predictions failed to respond with payload'))
-      } else if (!response.payload.average) {
-        reject(
-          new Error('/gas/predictions failed to respond with average gas price')
-        )
+      } else if (!response.payload || !response.payload.average) {
+        reject(new Error('error with request'))
       } else {
         resolve(`${response.payload.average.gasPrice}`)
       }
@@ -37,4 +33,4 @@ class Transaction {
   }
 }
 
-export default Transaction
+module.exports = Transaction

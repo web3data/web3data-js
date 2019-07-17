@@ -1,17 +1,17 @@
-import axios from 'axios'
-import {
+const axios = require('axios')
+const {
   API_KEY_HEADER,
   BLOCKCHAIN_ID_HEADER,
   DEFAULT_BASE_URL
-} from './constants'
-import {is, throwIf} from './utils'
-import Address from './address'
-import Token from './token'
-import Contract from './contract'
-import Transaction from './transaction'
-import Block from './block'
-import Signature from './signature'
-import WebSocketClient from './websocket'
+} = require('./constants')
+const {is, throwIf} = require('./utils')
+const Address = require('./address')
+const Token = require('./token')
+const Contract = require('./contract')
+const Transaction = require('./transaction')
+const Block = require('./block')
+const Signature = require('./signature')
+const WebSocketClient = require('./websocket')
 
 /**
  * Class Web3data contains methods for hitting Amberdata's
@@ -31,23 +31,22 @@ class Web3Data {
       'No api key supplied'
     )
 
+    this.apiKey = apiKey
+
     /* Setup required request headers */
     this.headers = {}
-    this.headers[API_KEY_HEADER] = apiKey
+    this.headers[API_KEY_HEADER] = this.apiKey
 
     /* Setup optional request headers */
     if (options.blockchainId) {
       this.headers[BLOCKCHAIN_ID_HEADER] = options.blockchainId
     }
 
-    this.websocketUrl = options.websocketUrl
-    /*   ROW   ? options.websocketUrl
-      : DEFAULT_WEBSOCKET_URL
-    this.websocketUrl += '?api_key=' + apiKey */
+    this.wsConfig = {
+      websocketUrl: options.websocketUrl ? options.websocketUrl : null
+    }
 
     this.baseUrl = options.baseUrl ? options.baseUrl : DEFAULT_BASE_URL
-
-    // TODO: Map to normal naming conventions
 
     /* Web3Data composite modules */
     this.address = new Address(this)
@@ -58,37 +57,41 @@ class Web3Data {
     this.signature = new Signature(this)
 
     this.websocket = null
-    this.apiKey = apiKey
   }
 
   connect(callback) {
-    if (is.null(this.websocket)) {
-      this.websocket = new WebSocketClient(this.apiKey, {
-        websocketUrl: this.websocketUrl
-      })
-    }
-
+    this.websocket = this.websocket
+      ? this.websocket
+      : new WebSocketClient(this.apiKey, this.wsConfig)
     return this.websocket.connect(callback)
   }
 
-  // TODO: The following methods must error if called before `connect()`
   disconnect(callback) {
-    throwIf(!this.websocket, 'must run `connect` method first')
-    this.websocket.disconnect(callback)
+    if (this.websocket) {
+      this.websocket.disconnect(callback)
+    } else {
+      console.error('socket is not yet connected')
+    }
   }
 
   on({eventName, filters}, callback) {
-    // TODO: Check with Trevor - throw or return error?
-    throwIf(!eventName, 'no event specified')
-    throwIf(!callback, 'no callback provided')
-    this.websocket.on({eventName, args: filters}, callback)
+    if (!callback) console.warn('no callback provided')
+    if (!eventName) {
+      console.error('no event specified')
+      return
+    }
+
+    this.websocket.on({eventName, filters}, callback)
   }
 
   off({eventName, filters}, callback) {
-    // TODO: Check with Trevor - throw or return error?
-    throwIf(!eventName, 'no event specified')
-    throwIf(!callback, 'no callback provided')
-    this.websocket.off({eventName, args: filters}, callback)
+    if (!callback) console.warn('no callback provided')
+    if (!eventName) {
+      console.error('no event specified')
+      return
+    }
+
+    this.websocket.off({eventName, filters}, callback)
   }
 
   getGasPrice() {
@@ -128,4 +131,4 @@ class Web3Data {
   }
 }
 
-export default Web3Data
+module.exports = Web3Data

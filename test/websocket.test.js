@@ -1,265 +1,222 @@
 import test from "ava";
-// import { WebSocket, Server } from 'mock-socket'
-const WebSocket = require('ws');
-const Web3Data = require('../src/web3data').default
-import WebSocketClient from '../src/websocket'
-
-const { promisify } = require('util')
-import { DEFAULT_WEBSOCKET_URL } from '../src/constants'
+import WebSocket from 'ws'
 import {API_KEY} from './constants'
-const CONNECTING = 0 // Socket has been created. The connection is not yet open.
-const OPEN = 1 // The connection is open and ready to communicate.
-const CLOSING = 2 // The connection is in the process of closing.
-const CLOSED = 3 // The connection is closed or couldn't be opened.
+import Web3Data from '../src/web3data'
+import capcon from 'capture-console'
+import getPort from 'get-port'
+import dotenv from 'dotenv'
 
-const http = require('http');
-const url = require('url');
+dotenv.config();
 
-/*
-* Test...
-* only connects once with multiple connects called
-* reconnects
-* on and off before connection happens
-* disconnect
-*
-*
-*
-* */
+const MOCK_WS_URL = `ws://localhost:`
 
+const SUBSCRIPTION_ID = '242d29d5c0ec9268f51a39aba4ed6a36c757c03c183633568edb0531658a9799'
 
-test.before(t => {
+const TEST_TIMEOUT = 5000
 
-    const server = http.createServer();
-    const wss1 = new WebSocket.Server({ noServer: true });
-    const wss2 = new WebSocket.Server({ noServer: true });
-    const wss3 = new WebSocket.Server({ noServer: true });
-    const wss4 = new WebSocket.Server({ noServer: true });
+process.env.AVA_PLAYBACK = 'playback'
 
-    /* generic */
-    wss1.on('connection', function connection(ws) {
-        ws.on('message', function incoming(message) {
-            const data = JSON.parse(message);
-            console.log('received message');
-            ws.send(JSON.stringify(
-                {
-                    "jsonrpc": "2.0",
-                    "id": data.id,
-                    "result": "242d29d5c0ec9268f51a39aba4ed6a36c757c03c183633568edb0531658a9799"
-                }
-            ));
-        });
-    });
-
-    /* no-data */
-    wss2.on('connection', function connection(ws) {
-        ws.on('message', function incoming(message) {
-            console.log('received: %s', message);
-
-            ws.send(message);
-        });
-    });
-
-    /* error */
-    wss3.on('connection', function connection(ws) {
-       ws.on('message', function incoming(message) {
-            console.log('received: %s', message);
-            // ws.send(message);
-            ws.terminate();
-        });
-        ws.close(1014)
-    });
-
-    /* no-response */
-    let msg = 0
-    wss4.on('connection', function connection(ws) {
-        ws.on('message', function incoming(message) {
-            msg++
-            console.log(`received: ${message} nMsgs: ${msg}`);
-            ws.close()
-        });
-    });
-
-    server.on('upgrade', function upgrade(request, socket, head) {
-        const pathname = url.parse(request.url).pathname;
-        console.log(pathname)
-        switch (pathname) {
-            case '/generic':
-                wss1.handleUpgrade(request, socket, head, function done(ws) {
-                    wss1.emit('connection', ws, request);
-                });
-                break;
-            case '/close':
-                wss2.handleUpgrade(request, socket, head, function done(ws) {
-                    wss2.emit('connection', ws, request);
-                });
-                break;
-            case '/error':
-                wss3.handleUpgrade(request, socket, head, function done(ws) {
-                    wss3.emit('connection', ws, request);
-                });
-                break;
-            case '/no-response':
-                wss4.handleUpgrade(request, socket, head, function done(ws) {
-                    wss4.emit('connection', ws, request);
-                });
-                break;
-            default:
-                socket.destroy();
-            break;
-        }
-    });
-
-    server.listen(8080);
-});
-
-const MOCK_WS_URL = 'ws://localhost:8080'
-const LIVE_WS_URL = DEFAULT_WEBSOCKET_URL
+/**
+ * Tests are labeled LIVE or MOCK. When in playback mode, tests use
+ * local websocket server. When in live mode they hit web3api server.
+ * This is based on the AVA_PLAYBACK env var set at runtime.
+ * By Default it uses the mock server.
+ */
 
 /**********************************
  * -------- Test Setup ---------- *
  **********************************/
-test.beforeEach(t => {
-    t.context.w3d = new Web3Data(API_KEY, {websocketUrl: MOCK_WS_URL + '/generic'})
-    t.context.wss = new WebSocket.Server({ port: 8081 });
+test.beforeEach(async t => {
+    const PORT = await getPort()
+    const config = {websocketUrl: process.env.AVA_PLAYBACK === 'playback' ? MOCK_WS_URL + PORT : null }
+    t.context.w3d = new Web3Data(API_KEY, config)
+    t.context.wss = new WebSocket.Server({ port: PORT });
 })
 
-/*********** Test connects to server [LIVE, MOCK] ***********/
-test.cb('Successfully connects to Websocket Server',  t => {
-    t.context.w3d.connect(status => {
-        t.is(status.target.readyState, OPEN)
-        t.end()
+/*********** Test connects to server (no callback) [MOCK] ***********/
+test.cb('Successfully connects to Websocket Server - no callback',  t => {
+    t.context.wss.on('connection', () => t.end())
+    t.context.w3d.connect()
+    t.timeout(TEST_TIMEOUT)
+})
+
+/*********** Test connects to server (with callback) [MOCK] ***********/
+test.cb('Successfully connects to Websocket Server - with callback',  t => {
+    t.plan(2)
+    t.context.wss.on('connection', () => {t.pass()})
+    t.context.w3d.connect(() => {t.pass(); t.end()})
+    t.timeout(TEST_TIMEOUT)
+})
+
+/*********** Test disconnect from server (no callback) [MOCK] ***********/
+test.cb('Successfully disconnects from Websocket Server - no callback',  t => {
+    t.context.wss.on('connection', (ws) => {
+        ws.on('close', () => t.end())
+    });
+    t.context.w3d.connect(() => {
+        t.context.w3d.disconnect()
     })
+    t.timeout(TEST_TIMEOUT)
 })
 
-/*********** Test disconnect from server [LIVE, MOCK] ***********/
-test.cb('Successfully disconnects to Websocket Server',  t => {
-    t.context.w3d.connect(status => {
-        t.is(status.target.readyState, OPEN)
-        t.context.w3d.disconnect(status => {
-            // TODO Might want an t.is here but don't force websocket.js to match test
+/*********** Test disconnect from server (with callback) [MOCK] ***********/
+test.cb('Successfully disconnects from Websocket Server - with callback',  t => {
+    t.plan(2)
+    t.context.wss.on('connection', (ws) => {
+        ws.on('close', () => {t.pass(); t.end()})
+    });
+    t.context.w3d.connect(() => {
+        t.context.w3d.disconnect(t.pass)
+    })
+    t.timeout(TEST_TIMEOUT)
+})
+
+/*********** Test call disconnect before connect errors [LIVE, MOCK] ***********/
+test.cb('disconnect logs error if called before connect',  t => {
+    const stderr = capcon.captureStderr(function scope() {
+        t.context.w3d.disconnect(status => status)
+        t.end()
+    });
+    t.regex(stderr, /socket is not yet connected/)
+    t.timeout(TEST_TIMEOUT)
+})
+
+/*********** Test on method sends sub method - without filters [MOCK] ***********/
+test.cb('Successfully calls on and sends subscription message - without filters',  t => {
+
+    /* Regex matches the following string  as long as id contains 1 > characters */
+    const SUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"subscribe","id":".+","params":\["block"\]}/g
+
+    t.context.wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
+            t.regex(message, SUBSCRIBE_MESSAGE)
             t.end()
         })
     })
+    t.context.w3d.connect()
+    t.context.w3d.on({eventName: 'block'}, status => status)
+    t.timeout(TEST_TIMEOUT)
 })
 
-/*********** Test reconnect attempts 3 times [MOCK] ***********/
-test.cb('Successfully reconnects 3 times',  t => {
-    let wss = new WebSocket.Server({ port: 8082 });
-    let reconnects = -1
-    const w3d = new Web3Data(API_KEY, {websocketUrl: 'ws://localhost:8082'})
-    w3d.connect(status => {})
-    wss.on('connection', function connection(ws) {
-        if (++reconnects >= 3) {
-            t.is(reconnects, 3)
-            t.end()
-        }
-    });
-})
+/*********** Test on method sends sub message - with filters [MOCK] ***********/
+test.cb('Successfully calls on and sends subscription message - with filters',  t => {
 
-/* Having issues inducing an error skip for now */
-/*********** Test reconnect on error [MOCK] ***********/
-test.cb.skip('Successfully reconnects on server error',  t => {
-    const w3d = new Web3Data(API_KEY, {websocketUrl: MOCK_WS_URL + '/error'})
-    w3d.connect(status => {})
-})
-
-/* Not really possible without waiting for 30secs */
-/*********** Test reconnect on no data received ***********/
-test.cb.skip('Successfully reconnects on no data received',  t => {
-    const websocket = new WebSocketClient(API_KEY,  {websocketUrl: MOCK_WS_URL + '/no-data'})
-    websocket.connect(status => {
-        websocket.subscribe('block')
-        t.is(t.context.msgRceived, true)
-        t.end()
-    })
-})
-
-/*********** Test subscribe() no args [LIVE, MOCK] ***********/
-test.cb('Successfully sends valid subscription message (no args)',  t => {
-    const wss = new WebSocket.Server({ port: 8083 });
-    /* Regex matches the following string  as long as id contains 1 > characters */
-    const SUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"subscribe","id":".+","params":\["block"\]}/g
-    wss.on('connection', function connection(ws) {
-        ws.on('message', function incoming(message) {
-            t.regex(message, SUBSCRIBE_MESSAGE)
-            t.end()
-        });
-    });
-    const websocket = new WebSocketClient(API_KEY,  {websocketUrl: 'ws://localhost:8083'})
-    websocket.connect(status => {
-        websocket.subscribe('block')
-    })
-})
-
-/*********** Test subscribe() with args [LIVE, MOCK] ***********/
-test.cb('Successfully sends valid subscription message (with args)',  t => {
-    const wss = new WebSocket.Server({ port: 8082 });
     /* Regex matches the following string  as long as id contains 1 > characters */
     const SUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"subscribe","id":".+","params":\["block",{"number":7280000}\]}/g
-    wss.on('connection', function connection(ws) {
-        ws.on('message', function incoming(message) {
+
+    t.context.wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
             t.regex(message, SUBSCRIBE_MESSAGE)
             t.end()
-        });
-    });
-    const websocket = new WebSocketClient(API_KEY,  {websocketUrl: 'ws://localhost:8082'})
-    websocket.connect(status => {
-        websocket.subscribe('block', {number: 7280000})
+        })
     })
+    t.context.w3d.connect()
+    t.context.w3d.on({eventName: 'block', filters: {"number":7280000}}, status => status)
+    t.timeout(TEST_TIMEOUT)
 })
 
-/*********** Test unsubscribe() no args [LIVE, MOCK] ***********/
-test.cb('Successfully sends valid unsubscribe message (no args)',  t => {
-    const wss = new WebSocket.Server({ port: 8083 });
-    /* Regex matches the following string  as long as id contains 1 > characters */
-    const UNSUBSCRIBE_MESSAGE = '{"jsonrpc":"2.0","method":"unsubscribe","id":"uuid","params":["subId"]}'
-    wss.on('connection', function connection(ws) {
-        ws.on('message', function incoming(message) {
-            t.is(message, UNSUBSCRIBE_MESSAGE)
-            t.end()
-        });
-    });
-    const websocket = new WebSocketClient(API_KEY,  {websocketUrl: 'ws://localhost:8083'})
-
-    websocket.connect(status => {
-        websocket.registry['uuid'] = {subId: 'subId'}
-        websocket.unsubscribe('block', {id: 'uuid'})
+/*********** Test on method errors if no event name [LIVE, MOCK] ***********/
+test.cb('on method errors if called without an event name',  t => {
+    t.context.wss.on('connection', ()=>{})
+    const stderr = capcon.captureStderr(() => {
+        t.context.w3d.on({}, status => status)
+        t.end()
     })
+    t.regex(stderr, /no event specified/)
+    t.timeout(TEST_TIMEOUT)
 })
 
-/*********** Test unsubscribe() with args [LIVE, MOCK] ***********/
-test.cb.only('Successfully sends valid unsubscribe message (with args)',  t => {
-    const wss = new WebSocket.Server({ port: 8083 });
-    /* Regex matches the following string  as long as id contains 1 > characters */
-    const UNSUBSCRIBE_MESSAGE = '{"jsonrpc":"2.0","method":"subscribe","id":"Ie/4MEdlxOHpBSRiqgF6pZfyQuw=","params":["block",{"number":7280000}]}'
-    wss.on('connection', function connection(ws) {
-        ws.on('message', function incoming(message) {
-            t.is(message, UNSUBSCRIBE_MESSAGE)
-            t.end()
-        });
-    });
-    const websocket = new WebSocketClient(API_KEY,  {websocketUrl: 'ws://localhost:8083'})
+/*********** Test off method sends unsub message - without filters [MOCK] ***********/
+test.cb('Successfully calls off and sends unsubscription message - without filters',  t => {
 
-    websocket.connect(status => {
-        const id = websocket.subscribe('block', {number: 7280000})
-        websocket.registry[id] = {subId: 'subId'}
-        websocket.unsubscribe('block', {number: 7280000, id: id})
+    /* Regex matches the following string  as long as id contains 1 > characters */
+    const UNSUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"unsubscribe","id":".+","params":\[.+\]}/g
+
+    t.context.wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
+            const data = JSON.parse(message);
+            if (data.method === 'subscribe') {
+                ws.send(JSON.stringify(
+                    {
+                        "jsonrpc": "2.0",
+                        "id": data.id,
+                        "result": SUBSCRIPTION_ID
+                    }
+                ));
+            } else {
+                t.regex(message, UNSUBSCRIBE_MESSAGE)
+                t.end()
+            }
+        })
     })
+    t.context.w3d.connect(() => {
+        t.context.w3d.on({eventName: 'block'}, status => status)
+        setTimeout(() => t.context.w3d.off({eventName: 'block'}, status => status), 10)
+    })
+    t.timeout(TEST_TIMEOUT)
 })
-/*********** Test on() [LIVE, MOCK] ***********/
-test.cb.only('Successfully calls on registers callback,',  t => {
-    const wss = new WebSocket.Server({ port: 8083 });
+
+/*********** Test off method sends unsub message - with filters [MOCK] ***********/
+test.cb('Successfully calls off and sends unsubscription message - with filters',  t => {
+
     /* Regex matches the following string  as long as id contains 1 > characters */
-    const UNSUBSCRIBE_MESSAGE = '{"jsonrpc":"2.0","method":"subscribe","id":"Ie/4MEdlxOHpBSRiqgF6pZfyQuw=","params":["block",{"number":7280000}]}'
-    wss.on('connection', function connection(ws) {
-        ws.on('message', function incoming(message) {
-            t.is(message, UNSUBSCRIBE_MESSAGE)
-            t.end()
-        });
-    });
-    const websocket = new WebSocketClient(API_KEY,  {websocketUrl: 'ws://localhost:8083'})
+    const UNSUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"unsubscribe","id":".+","params":\[.+\]}/g
 
-    websocket.on({eventName: 'block'}, status => {
-
+    t.context.wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
+            const data = JSON.parse(message);
+            if (data.method === 'subscribe') {
+                ws.send(JSON.stringify(
+                    {
+                        "jsonrpc": "2.0",
+                        "id": data.id,
+                        "result": SUBSCRIPTION_ID
+                    }
+                ));
+            } else {
+                t.regex(message, UNSUBSCRIBE_MESSAGE)
+                t.end()
+            }
+        })
     })
+    t.context.w3d.connect(() => {
+        t.context.w3d.on({eventName: 'block', filters: {"number":7280000}}, status => status)
+        setTimeout(() => t.context.w3d.off({eventName: 'block', filters: {"number":7280000}}, status => status), 10)
+    })
+    t.timeout(TEST_TIMEOUT)
+})
+
+
+/*********** Test off errors if called before on [LIVE, MOCK] ***********/
+test.cb('Calling off before on errors',  t => {
+    t.context.wss.on('connection', () => {})
+    t.context.w3d.connect()
+    const stderr = capcon.captureStderr(function scope() {
+        t.context.w3d.off({eventName: 'block'}, status => status)
+        t.end()
+    });
+    t.regex(stderr, /Not subscribed to: 'block'/)
+    t.timeout(TEST_TIMEOUT)
+})
+
+/*********** Test websocket handles erroneous server response [MOCK] ***********/
+test.cb.skip('Successfully handles erroneous server response',  t => {
+    let output = ''
+    capcon.startCapture(process.stderr, function (stderr) {
+        output += stderr;
+    });
+
+    t.context.wss.on('connection', ws => {
+        ws.on('message', () => {
+            ws.send('not json parsable response')
+        })
+    })
+
+    t.context.w3d.connect()
+    t.context.w3d.on({eventName: 'block'}, () => t.end())
+
+    capcon.stopCapture(process.stderr);
+
+    t.regex(output, /error parsing json request/)
+    t.timeout(TEST_TIMEOUT)
 })
