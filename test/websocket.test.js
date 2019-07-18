@@ -6,7 +6,7 @@ import capcon from 'capture-console'
 import getPort from 'get-port'
 import dotenv from 'dotenv'
 
-dotenv.config();
+dotenv.config()
 
 const MOCK_WS_URL = `ws://localhost:`
 
