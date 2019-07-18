@@ -1,20 +1,18 @@
 {
   "name": "web3data-js",
-  "version": "0.3.6",
+  "version": "0.3.9",
   "description": "A javascript wrapper for accessing amberdata's public API.",
-  "main": "dist/browser/web3data.min.js",
+  "main": "index.js",
   "scripts": {
-    "build-node": "cross-env NODE_ENV=production TARGET=NODE node scripts/build-script.js",
-    "build-browser": "cross-env NODE_ENV=production TARGET=BROWSER node scripts/build-script.js",
-    "build": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js",
-    "build-clean": "cross-env NODE_ENV=production TARGET=ALL node scripts/build-script.js clean",
+    "build": "rm dist/web3data.min.js; parcel build index.js --target browser --out-dir dist --out-file web3data.min.js",
     "lint": "xo",
     "lintfix": "xo --fix",
-    "test-record": "cross-env AVA_PLAYBACK=record nyc -s ava",
     "test": "xo --quiet && cross-env AVA_PLAYBACK=playback nyc -s ava",
+    "test-record": "cross-env AVA_PLAYBACK=record nyc -s ava",
     "test-live": "nyc -s ava",
     "test-fast": "cross-env AVA_PLAYBACK=playback nyc -s ava --fail-fast",
     "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose",
+    "clean-fix": "rm -r test/fixtures",
     "example": "superstatic"
   },
   "repository": {
@@ -33,44 +31,35 @@
   },
   "homepage": "https://github.com/web3data/web3data-js#readme",
   "devDependencies": {
-    "ava": "^0.25.0",
-    "ava-playback": "0.0.14",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-plugin-external-helpers": "^6.22.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
-    "browser-env": "^3.2.5",
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.4",
+    "@babel/node": "^7.5.0",
+    "@babel/plugin-transform-runtime": "^7.5.0",
+    "@babel/polyfill": "^7.4.4",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/register": "^7.4.4",
+    "ava": "^2.2.0",
+    "browser-env": "^3.2.6",
     "cross-env": "^5.2.0",
-    "dotenv": "^6.1.0",
-    "node-fetch": "^2.2.0",
-    "nyc": "^13.1.0",
-    "parcel": "^1.10.3",
-    "parcel-bundler": "^1.10.3",
-    "prettier": "^1.14.3",
-    "superstatic": "^6.0.3",
-    "xo": "^0.23.0"
+    "dotenv": "^8.0.0",
+    "node-fetch": "^2.6.0",
+    "nyc": "^14.1.1",
+    "parcel": "^1.12.3",
+    "parcel-bundler": "^1.12.3",
+    "prettier": "^1.18.2",
+    "superstatic": "^6.0.4",
+    "xo": "^0.24.0"
   },
   "dependencies": {
-    "got": "^9.3.0",
-    "ky": "^0.3.0"
+    "ava-playback": "git+https://git@github.com/taylorjdawson/ava-playback.git",
+    "axios": "^0.19.0",
+    "capture-console": "^1.0.1",
+    "get-port": "^5.0.0",
+    "isomorphic-ws": "^4.0.1",
+    "ws": "^7.1.0"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "ava": {
-    "files": [
-      "test/**.test.js"
-    ],
-    "require": [
-      "babel-register",
-      "ava-playback"
-    ],
-    "playbacks": "test/fixtures",
-    "inherit": true
   },
   "xo": {
     "semicolon": false,

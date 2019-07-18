@@ -1,0 +1,57 @@
+{
+  "body": "",
+  "method": "get",
+  "path": "/api/v1/tokens/0x06012c8cf97bead5deae237070f9587f8e7a266d/supplies/latest",
+  "queries": {
+  },
+  "rawHeaders": [
+    "Content-Type",
+    "application/json; charset=utf-8",
+    "Content-Length",
+    "197",
+    "Connection",
+    "close",
+    "Date",
+    "Tue, 16 Jul 2019 15:14:52 GMT",
+    "x-amzn-RequestId",
+    "7620de33-a7dc-11e9-afcd-3f491296e1bb",
+    "Access-Control-Allow-Origin",
+    "*",
+    "X-Response-Time",
+    "92.610ms",
+    "x-amzn-Remapped-Content-Length",
+    "197",
+    "x-amzn-Remapped-Connection",
+    "keep-alive",
+    "Set-Cookie",
+    "AWSALB=u96M5lXNJ6qi4cIW60DDaNEXSNdernEEEx+u+Mup3BxR1o8d/NUpMI+eGSYHn3FNckFI5liylEezwt7V8XEZuv3B/50HeN4ZJgKgEVDHmLOPYQwVuMCx6pmCiFa9; Expires=Tue, 23 Jul 2019 15:14:52 GMT; Path=/",
+    "x-amz-apigw-id",
+    "c7F9AHH2IAMFS4Q=",
+    "ETag",
+    "W/\"c5-nHUQSlTu4BpyPpTRQ2J8M5L9sxI\"",
+    "x-amzn-Remapped-Date",
+    "Tue, 16 Jul 2019 15:14:52 GMT",
+    "X-Cache",
+    "Miss from cloudfront",
+    "Via",
+    "1.1 9c60d6224ac0b44e908b5c9dcf70e9a5.cloudfront.net (CloudFront)",
+    "X-Amz-Cf-Pop",
+    "HIO50-C1",
+    "X-Amz-Cf-Id",
+    "r2c82Oqga69du11W-qmxbwrhUvgEQnYILhTrMuGwHS-lR2g0JzQB7w=="
+  ],
+  "response": {
+    "description": "Successful request",
+    "payload": {
+      "circulatingSupply": "1645951",
+      "totalBurned": "0",
+      "totalMinted": "1645873",
+      "totalSupply": "1645873",
+      "totalTransfers": "2070364"
+    },
+    "status": 200,
+    "title": "OK"
+  },
+  "scope": "https://web3api.io:443",
+  "status": 200
+}
