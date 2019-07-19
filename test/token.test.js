@@ -2,16 +2,22 @@ import test from "ava"
 import { getNewWeb3DataInstance, TOKEN_ADDRESS, ADDRESS } from './constants'
 import { ERROR_MESSAGE_TOKEN_NO_ADDRESS as NO_ADDRESS } from '../src/constants'
 import { ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS as NO_HOLDER_ADDRESS } from '../src/constants'
+import {setUpPolly} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
  **********************************/
+test.before(t => {
+    t.context.polly = setUpPolly('token')
+})
+
+test.after(async t => {
+    await t.context.polly.stop()
+})
 
 test.beforeEach(t => {
     t.context.web3data = getNewWeb3DataInstance()
 })
-
-// TODO: Make macros either A) more generic or B) more specific
 
 /**
  * Test that method is called and returns successfully, i.e. a status of 200
