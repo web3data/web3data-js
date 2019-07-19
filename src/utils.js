@@ -54,7 +54,6 @@ const rejectPromiseIf = (condition, message) => {
 
 const is = () => {}
 
-// TODO: Assess lodash && treeshaking
 is.string = value => typeof value === 'string'
 is.emptyString = value => is.string(value) && value.length === 0
 is.emptyObject = object => Object.keys(object).length === 0

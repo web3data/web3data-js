@@ -15,8 +15,6 @@ class Transaction {
 
   async getGasPrice() {
     const response = await this.getGasPrediction()
-
-    // TODO" Update error messages and add them to constants file
     return new Promise((resolve, reject) => {
       if (
         is.null(response) ||

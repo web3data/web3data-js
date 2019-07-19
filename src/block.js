@@ -28,7 +28,6 @@ class Block {
     })
   }
 
-  // TODO" Update error messages and add them to constants file
   async getBlockNumber() {
     const response = await this.getBlock('latest')
     return parseInt(response.payload.number, 10)
