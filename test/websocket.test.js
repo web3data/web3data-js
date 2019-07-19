@@ -22,8 +22,6 @@ const SUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"subscribe","id":".+","par
 
 const TEST_TIMEOUT = 5000
 
-process.env.AVA_PLAYBACK = 'playback'
-
 /**
  * Creates a string in json rpc format
  * @param options the json rpc options
@@ -44,14 +42,15 @@ const subAck = (id) => formatJsonRpc({
     id,
     result: SUBSCRIPTION_ID
 })
-
+const TEST_BLOCK_DATA = {
+    "blockchainId": "1c9c969065fcd1cf",
+    "number": 7549499,
+}
 const subResponse = (id) => formatJsonRpc({
     id,
     method: "subscription",
     params: {
-        result: {
-            block: "7000000"
-        },
+        result: TEST_BLOCK_DATA,
         subscription: SUBSCRIPTION_ID
     }
 })
@@ -242,22 +241,19 @@ test.cb.skip('Successfully handles erroneous server response',  t => {
     t.timeout(TEST_TIMEOUT)
 })
 
-test.cb.skip('Successfully subscribes, receives, and outputs data', t => {
+/*********** Test client receives and outputs data via callback [LIVE, MOCK] ***********/
+test.cb.only('Successfully subscribes, receives, and outputs data', t => {
     t.context.wss.on('connection', (ws) => {
         ws.on('message', (message) => {
             const data = JSON.parse(message);
-            if (data.method === 'subscribe') {
-                ws.send(subAck(data.id))
-                ws.send(subResponse(data.id))
-            } else {
-                t.regex(message, UNSUBSCRIBE_MESSAGE)
-                t.end()
-            }
+            ws.send(subAck(data.id))
+            ws.send(subResponse(data.id))
         })
     })
     t.context.w3d.connect(() => {
         t.context.w3d.on({eventName: 'block'}, status => {
-            console.log(status)
+            t.is(JSON.stringify(TEST_BLOCK_DATA), JSON.stringify(status))
+            t.end()
         })
     })
     t.timeout(TEST_TIMEOUT)
