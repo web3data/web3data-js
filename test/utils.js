@@ -14,6 +14,11 @@ export const setUpPolly = (recordingName) => {
             fs: {
                 recordingsDir: path.resolve(__dirname, 'recordings')
             }
+        },
+        matchRequestsBy: {
+            headers: {
+                exclude: ['x-api-key']
+            }
         }
     });
 }
