@@ -84,6 +84,10 @@ class Web3Data {
     this.websocket.on({eventName, filters}, callback)
   }
 
+  once({eventName, filters}, callback) {
+    this.websocket.once({eventName, filters}, callback)
+  }
+
   off({eventName, filters}, callback) {
     if (!callback) console.warn('no callback provided')
     if (!eventName) {

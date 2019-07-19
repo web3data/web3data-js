@@ -160,6 +160,13 @@ class WebSocketClient {
     this.registry[id].args = {eventName, filters}
   }
 
+  once({eventName, filters}, callback) {
+    this.on({eventName, filters}, data => {
+      this.off({eventName, filters}, ()=>{})
+      callback(data)
+    })
+  }
+
   /**
    * Destroys a single event listener. Deregisters event and callback function
    * @param eventName {string} the event to deregister
