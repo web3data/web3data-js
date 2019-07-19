@@ -1,11 +1,20 @@
 import test from "ava"
+
 import {getNewWeb3DataInstance, TX_HASH} from './constants'
 import _ from 'lodash'
 import {ERROR_MESSAGE_BLOCK_NO_ID as NO_BLOCK_ID, BLOCKS_ENDPOINT as ENDPOINT} from "../src/constants";
+import {setUpPolly} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
  **********************************/
+test.before(t => {
+    t.context.polly = setUpPolly('block')
+})
+
+test.after(async t => {
+    await t.context.polly.stop()
+})
 
 test.beforeEach(t => {
     t.context.web3data = getNewWeb3DataInstance()

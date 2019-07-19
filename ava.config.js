@@ -3,12 +3,11 @@ export default {
   sources: ['**/*.{js,jsx}', '!dist/**/*'],
   cache: true,
   concurrency: 5,
-  require: ['@babel/register', 'ava-playback'],
+  require: ['@babel/register'],
   babel: {
     testOptions: {
       presets: [['ava/stage-4', false]]
     }
   },
-  playbacks: 'test/fixtures',
   inherit: true
 }

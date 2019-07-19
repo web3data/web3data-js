@@ -20,7 +20,7 @@ let getApiKey = () => {
         console.warn("Must set API_KEY value in .env file, \n\
   Create an account on amberdata.io to obtain one")
 
-        API_KEY = 'UAK000000000000000000000000demo0001'
+        API_KEY = 'API_KEY'
 
     }
     return API_KEY

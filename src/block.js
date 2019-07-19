@@ -35,7 +35,6 @@ class Block {
     })
   }
 
-  // TODO Update error messages and add them to constants file
   async getBlockNumber() {
     const block = await this.getBlock('latest')
     return new Promise((resolve, reject) => {
@@ -50,7 +49,6 @@ class Block {
   async getBlockTransactionCount(id) {
     const block = await this.getBlock(id)
     return new Promise((resolve, reject) => {
-      // TODO: Possibly replace with lodash for readability
       if (!block || (!block.predictions && !block.numTransactions)) {
         reject(new Error(`There was an error with the request`))
       } else if (block.predictions) {
@@ -98,7 +96,6 @@ class Block {
   async getUncle(id, index) {
     const block = await this.getBlock(id, {validationMethod: 'full'})
     return new Promise((resolve, reject) => {
-      // TODO: Possibly replace with lodash for readability
       if (
         !block ||
         (!block.predictions && !block.numTransactions && !block.validation)
