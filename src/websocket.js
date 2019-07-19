@@ -238,21 +238,21 @@ class WebSocketClient {
 
         const res =
           data && data.params && data.params.result ? data.params.result : {}
-        const id =
+        const subId =
           data && data.params && data.params.subscription
             ? data.params.subscription
             : ''
 
-        // Get the uuid
-        const uuid = this.registrySubIds[id]
+        // Get the uid
+        const id = this.registrySubIds[subId]
 
         // Fire individual methods if they exist
-        if (is.notUndefined(this.registry[uuid]))
-          this.registry[uuid].callback(res)
+        if (is.notUndefined(this.registry[id]))
+          this.registry[id].callback(res)
 
         // Store latest state for easy retrieval later
-        if (is.notUndefined(this.latestState[uuid]))
-          this.latestState[uuid] = res
+        if (is.notUndefined(this.latestState[id]))
+          this.latestState[id] = res
         // This.reconnects = 0
       }
     })
