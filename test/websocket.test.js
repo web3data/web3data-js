@@ -242,7 +242,7 @@ test.cb.skip('Successfully handles erroneous server response',  t => {
     t.timeout(TEST_TIMEOUT)
 })
 
-test.cb('Successfully subscribes, receives, and outputs data', t => {
+test.cb.skip('Successfully subscribes, receives, and outputs data', t => {
     t.context.wss.on('connection', (ws) => {
         ws.on('message', (message) => {
             const data = JSON.parse(message);
