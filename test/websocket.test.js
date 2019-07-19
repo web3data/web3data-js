@@ -67,7 +67,7 @@ const subResponse = (id) => formatJsonRpc({
  **********************************/
 test.beforeEach(async t => {
     const PORT = await getPort()
-    const config = {websocketUrl: process.env.AVA_PLAYBACK === 'playback' ? MOCK_WS_URL + PORT : null }
+    const config = {websocketUrl: MOCK_WS_URL + PORT }
     t.context.w3d = new Web3Data(API_KEY, config)
     t.context.wss = new WebSocket.Server({ port: PORT });
 })
@@ -242,7 +242,7 @@ test.cb.skip('Successfully handles erroneous server response',  t => {
 })
 
 /*********** Test client receives and outputs data via callback [LIVE, MOCK] ***********/
-test.cb.only('Successfully subscribes, receives, and outputs data', t => {
+test.cb('Successfully subscribes, receives, and outputs data', t => {
     t.context.wss.on('connection', (ws) => {
         ws.on('message', (message) => {
             const data = JSON.parse(message);
