@@ -247,12 +247,10 @@ class WebSocketClient {
         const id = this.registrySubIds[subId]
 
         // Fire individual methods if they exist
-        if (is.notUndefined(this.registry[id]))
-          this.registry[id].callback(res)
+        if (is.notUndefined(this.registry[id])) this.registry[id].callback(res)
 
         // Store latest state for easy retrieval later
-        if (is.notUndefined(this.latestState[id]))
-          this.latestState[id] = res
+        if (is.notUndefined(this.latestState[id])) this.latestState[id] = res
         // This.reconnects = 0
       }
     })

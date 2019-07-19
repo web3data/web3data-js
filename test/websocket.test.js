@@ -242,4 +242,23 @@ test.cb.skip('Successfully handles erroneous server response',  t => {
     t.timeout(TEST_TIMEOUT)
 })
 
-test.todo('Successfully subscribes, receives, and outputs data')
+test.cb('Successfully subscribes, receives, and outputs data', t => {
+    t.context.wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
+            const data = JSON.parse(message);
+            if (data.method === 'subscribe') {
+                ws.send(subAck(data.id))
+                ws.send(subResponse(data.id))
+            } else {
+                t.regex(message, UNSUBSCRIBE_MESSAGE)
+                t.end()
+            }
+        })
+    })
+    t.context.w3d.connect(() => {
+        t.context.w3d.on({eventName: 'block'}, status => {
+            console.log(status)
+        })
+    })
+    t.timeout(TEST_TIMEOUT)
+})
