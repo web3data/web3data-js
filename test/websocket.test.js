@@ -66,7 +66,7 @@ test.cb('Successfully disconnects from Websocket Server - with callback',  t => 
         ws.on('close', () => {t.pass(); t.end()})
     });
     t.context.w3d.connect(() => {
-        t.context.w3d.disconnect(t.pass)
+        t.context.w3d.disconnect(() => t.pass())
     })
     t.timeout(TEST_TIMEOUT)
 })

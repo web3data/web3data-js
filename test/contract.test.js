@@ -1,10 +1,17 @@
 import test from "ava";
 import { getNewWeb3DataInstance, ADDRESS, TOKEN_ADDRESS } from './constants'
+import {setUpPolly} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
  **********************************/
+test.before(t => {
+    t.context.polly = setUpPolly('contract')
+})
 
+test.after(async t => {
+    await t.context.polly.stop()
+})
 test.beforeEach(t => {
     t.context.web3data = getNewWeb3DataInstance()
 });

@@ -12,7 +12,7 @@
     "test-live": "nyc -s ava",
     "test-fast": "cross-env AVA_PLAYBACK=playback nyc -s ava --fail-fast",
     "test-verbose": "cross-env AVA_PLAYBACK=playback nyc ava --verbose",
-    "clean-fix": "rm -r test/fixtures",
+    "clean-recs": "rm -r test/recordings",
     "example": "superstatic"
   },
   "repository": {
@@ -38,11 +38,15 @@
     "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.5.4",
     "@babel/register": "^7.4.4",
+    "@pollyjs/core": "^2.6.0",
+    "@pollyjs/persister-fs": "^2.6.0",
+    "@pollyjs/adapter-node-http": "^2.6.0",
     "ava": "^2.2.0",
     "browser-env": "^3.2.6",
+    "capture-console": "^1.0.1",
     "cross-env": "^5.2.0",
     "dotenv": "^8.0.0",
-    "node-fetch": "^2.6.0",
+    "get-port": "^5.0.0",
     "nyc": "^14.1.1",
     "parcel": "^1.12.3",
     "parcel-bundler": "^1.12.3",
@@ -51,10 +55,7 @@
     "xo": "^0.24.0"
   },
   "dependencies": {
-    "ava-playback": "git+https://git@github.com/taylorjdawson/ava-playback.git",
     "axios": "^0.19.0",
-    "capture-console": "^1.0.1",
-    "get-port": "^5.0.0",
     "isomorphic-ws": "^4.0.1",
     "ws": "^7.1.0"
   },
