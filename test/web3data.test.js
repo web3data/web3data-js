@@ -3,10 +3,18 @@ import test from 'ava'
 import {API_KEY_HEADER, DEFAULT_BASE_URL, BLOCKCHAIN_ID_HEADER} from "../src/constants";
 
 import { getNewWeb3DataInstance, TOKEN_ADDRESS, BLOCKCHAIN_ID, API_KEY } from './constants'
+import {setUpPolly} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
  **********************************/
+test.before(t => {
+    t.context.polly = setUpPolly('web3data')
+})
+
+test.after(async t => {
+    await t.context.polly.stop()
+})
 
 test.beforeEach(t => {
     t.context.web3data = getNewWeb3DataInstance()

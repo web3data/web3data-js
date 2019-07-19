@@ -1,10 +1,18 @@
 import test from "ava"
 import { getNewWeb3DataInstance, ADDRESS } from './constants'
 import {ERROR_MESSAGE_ADDRESS_NO_ADDRESS as NO_ADDRESS} from "../src/constants";
+import {setUpPolly} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
  **********************************/
+test.before(t => {
+    t.context.polly = setUpPolly('address')
+})
+
+test.after(async t => {
+    await t.context.polly.stop()
+})
 
 test.beforeEach(t => {
     t.context.web3data = getNewWeb3DataInstance()
@@ -45,7 +53,7 @@ test('throws exception when calling getStats without hash', async t => {
 })
 
 /*********** Test getAdoption() ***********/
-test.skip('Successfully gets address adoption', async t => {
+test('Successfully gets address adoption', async t => {
     let response = await t.context.web3data.address.getAdoption(ADDRESS)
     t.is(response.status, 200)
 })
@@ -133,7 +141,7 @@ test('throws exception when calling getTokenBalances without hash', async t => {
 })
 
 /*********** Test getUsage() ***********/
-test.skip('Successfully gets address usage', async t => {
+test('Successfully gets address usage', async t => {
     let response = await t.context.web3data.address.getUsage(ADDRESS)
     t.is(response.status, 200)
 })

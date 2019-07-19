@@ -1,16 +1,21 @@
 import test from "ava"
 import _ from 'lodash'
-import { getNewWeb3DataInstance, TX_HASH, ADDRESS } from './constants'
-import { is } from  '../src/utils'
+import { getNewWeb3DataInstance, TX_HASH } from './constants'
 
-import {
-    ERROR_MESSAGE_TOKEN_NO_ADDRESS as NO_ADDRESS,
-    ERROR_MESSAGE_TRANSACTION_NO_HASH as NO_HASH
-} from "../src/constants";
+import {ERROR_MESSAGE_TRANSACTION_NO_HASH as NO_HASH} from "../src/constants";
+import {setUpPolly} from "./utils";
+
 
 /**********************************
  * -------- Tests Setup ---------- *
  **********************************/
+test.before(t => {
+    t.context.polly = setUpPolly('transaction')
+})
+
+test.after(async t => {
+    await t.context.polly.stop()
+})
 
 test.beforeEach(t => {
     t.context.web3data = getNewWeb3DataInstance()
@@ -59,6 +64,4 @@ test([returnsString], {method:'getGasPrice'})
 test([returnsTxnObject], {method:'getTransaction', params: {hash: TX_HASH} })
 test([returnsTxnObjects], {method:'getTransactions'})
 test([returnsTxnObjects, returnsPendingTxnObjects], {method:'getPendingTransactions'})
-
-// test([statusSuccess, rejectsPromise], {method: 'getTokenVolume'}, NO_ADDRESS)
 
