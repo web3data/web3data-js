@@ -1,11 +1,20 @@
 import test from "ava"
+
 import { getNewWeb3DataInstance } from './constants'
 
 import {ERROR_MESSAGE_SIGNATURE_NO_HASH as NO_HASH, ADDRESS} from "../src/constants";
+import {setUpPolly} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
  **********************************/
+test.before(t => {
+    t.context.polly = setUpPolly('signature')
+})
+
+test.after(async t => {
+    await t.context.polly.stop()
+})
 
 test.beforeEach(t => {
     t.context.web3data = getNewWeb3DataInstance()
@@ -15,6 +24,8 @@ test.beforeEach(t => {
  * Test that method is called and returns successfully, i.e. a status of 200
  * @param t the test object
  * @param method
+ * @param params
+ * @return {Promise<void>}
  */
 let statusSuccess = async (t, { method, params = {} }) => {
     let response = await t.context.web3data.signature[method]('0xe2f0a05a')
