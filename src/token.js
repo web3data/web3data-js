@@ -40,7 +40,6 @@ class Token {
     })
   }
 
-  // TODO: Add error no holder address supplied
   getTokenHoldersHistorical(hash, filterOptions = {}) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
     if (is.notInObject(filterOptions, 'holderAddresses'))

@@ -17,7 +17,7 @@ const get = (
     endpoint = '',
     subendpoint = '',
     hash = '',
-    pathParam: pathParam = '', // TODO: THis should be object - pathParams { hash: "0xaB8ls..." }
+    pathParam: pathParam = '',
     filterOptions = {}
   }
 ) => {
@@ -54,7 +54,6 @@ const rejectPromiseIf = (condition, message) => {
 
 const is = () => {}
 
-// TODO: Assess lodash && treeshaking
 is.string = value => typeof value === 'string'
 is.emptyString = value => is.string(value) && value.length === 0
 is.emptyObject = object => Object.keys(object).length === 0
