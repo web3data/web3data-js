@@ -4,7 +4,7 @@ const {
   BLOCKCHAIN_ID_HEADER,
   DEFAULT_BASE_URL
 } = require('./constants')
-const {is, throwIf} = require('./utils')
+const {is, throwIf, get} = require('./utils')
 const Address = require('./address')
 const Token = require('./token')
 const Contract = require('./contract')
@@ -124,6 +124,14 @@ class Web3Data {
 
   getTransactions(id, filterOptions) {
     return this.block.getTransactions(id, filterOptions)
+  }
+
+  async getEtherPrice() {
+    const response = await get(this, {
+      endpoint: '/market/prices/eth/latest'
+    })
+    throwIf(!response || response.status !== 200 || !response.payload)
+    return response.payload
   }
 
   /**
