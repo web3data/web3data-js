@@ -2,7 +2,7 @@ const {
   ERROR_MESSAGE_ADDRESS_NO_ADDRESS: NO_ADDRESS,
   ADDRESSES_ENDPOINT: ENDPOINT
 } = require('./constants')
-const {is, get} = require('./utils')
+const {is, get, throwIf} = require('./utils')
 
 class Address {
   constructor(web3data) {
@@ -11,6 +11,15 @@ class Address {
 
   getAllAddresses(filterOptions) {
     return get(this.web3data, {endpoint: ENDPOINT, filterOptions})
+  }
+
+  async getBalance(hash) {
+    const response = await this.getBalanceLatest(hash)
+    throwIf(
+      !response || response.status !== 200 || !response.payload,
+      'error with request'
+    )
+    return response.payload.value
   }
 
   getInformation(hash, filterOptions) {
@@ -83,7 +92,7 @@ class Address {
     })
   }
 
-  getBalance(hash, filterOptions) {
+  getBalanceLatest(hash, filterOptions) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
     return get(this.web3data, {
       hash,
