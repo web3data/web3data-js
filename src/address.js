@@ -16,10 +16,15 @@ class Address {
   async getBalance(hash) {
     const response = await this.getBalanceLatest(hash)
     throwIf(
-      !response || response.status !== 200 || !response.payload,
+      !response || (response.status === 200 && !response.payload),
       'error with request'
     )
-    return response.payload.value
+    let balance
+    if (response.status !== 404) {
+      balance = response.payload.value
+    }
+
+    return balance
   }
 
   getInformation(hash, filterOptions) {
