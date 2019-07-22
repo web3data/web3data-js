@@ -53,6 +53,11 @@ test('Web3data rawQuery accepts url and returns valid response', async t => {
     t.is(response.status, 200)
 });
 
+test('Web3data getEtherPrice returns valid response', async t => {
+    let response = await t.context.web3data.getEtherPrice();
+    t.true(response.hasOwnProperty('eth_btc'))
+});
+
 /**********************************
  * ------- Test Modifiers ------- *
  **********************************/
