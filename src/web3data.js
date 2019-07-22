@@ -95,7 +95,7 @@ class Web3Data {
   }
 
   getGasPrice() {
-    return this.block.getGasPrice()
+    return this.transaction.getGasPrice()
   }
 
   getBlockNumber() {
@@ -124,6 +124,10 @@ class Web3Data {
 
   getTransactions(id, filterOptions) {
     return this.block.getTransactions(id, filterOptions)
+  }
+
+  getBalance(hash) {
+    return this.address.getBalance(hash)
   }
 
   /**
