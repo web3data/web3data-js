@@ -26,8 +26,8 @@ test.beforeEach(t => {
  * @param method
  * @param params
  */
-let statusSuccess = async (t, endpoint, method, params) => {
-    let response = await t.context.web3data[endpoint][method](700000)
+const statusSuccess = async (t, { method, params = {} }) => {
+    const response = await t.context.web3data.block[method]()
     t.is(response.status, 200)
 }
 statusSuccess.title = (providedTitle = '', input) =>  `Successfully calls ${input.method} and returns status of 200`
@@ -39,12 +39,21 @@ statusSuccess.title = (providedTitle = '', input) =>  `Successfully calls ${inpu
  * @param method
  * @param errorMessage
  */
-let rejectsPromise = async (t, endpoint, method, errorMessage) => {
+const rejectsPromise = async (t, { method, params = {} }, errorMessage) => {
     await t.throwsAsync(async () => {
-        await t.context.web3data[endpoint][method]()
+        await t.context.web3data.token[method]()
     }, { instanceOf: Error, message: errorMessage })
 }
-// TODO: Change title to be...
-rejectsPromise.title = (providedTitle = '', input) => `throws exception when calling ${input} without hash`
 
-test.skip([statusSuccess, rejectsPromise], 'block', 'getTokenTransfers', NO_NUMBER)
+/* Dynamically creates title based on input */
+rejectsPromise.title = (providedTitle = '', input) => `throws exception when calling ${input.method} without hash`
+
+const returnsNumber = async (t, { method, params = {} }) => {
+    const response = await t.context.web3data.block[method]()
+    console.log(response)
+    t.is(typeof response, 'number')
+}
+returnsNumber.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns number value`
+
+// test([statusSuccess, rejectsPromise],  {method: 'getTokenTransfers'}, NO_NUMBER)
+test([returnsNumber], {method: 'getBlockNumber'})

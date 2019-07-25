@@ -19,6 +19,19 @@ class Block {
       filterOptions
     })
   }
+
+  getBlock(blocknumber, filterOptions) {
+    return get(this.web3data, {
+      pathParam: blocknumber,
+      endpoint: ENDPOINT,
+      filterOptions
+    })
+  }
+
+  async getBlockNumber() {
+    const response = await this.getBlock('latest')
+    return parseInt(response.payload.number, 10)
+  }
 }
 
 module.exports = Block

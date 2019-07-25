@@ -53,6 +53,25 @@ test('Web3data rawQuery accepts url and returns valid response', async t => {
     t.is(response.status, 200)
 });
 
+/*********** Test .eth ***********/
+test('web3data.eth successfully call method getGasPrice', async t => {
+    const price = await t.context.web3data.eth.getGasPrice()
+    /* Regex matches a string that is numerical */
+    t.regex(price.toString(), /[0-9]/g)
+})
+
+test('web3data.eth successfully call method getBlockNumber', async t => {
+    const number = await t.context.web3data.eth.getBlockNumber()
+    /* Regex matches a string that is numerical */
+    t.regex(number.toString(), /[0-9]/g)
+})
+
+test('web3data.eth successfully call method getCode', async t => {
+    const code = await t.context.web3data.eth.getCode(TOKEN_ADDRESS)
+    /* Regex matches a string that begins with 0x and has alphanumeric chars */
+    t.regex(code, /0x\w+/g)
+})
+
 /**********************************
  * ------- Test Modifiers ------- *
  **********************************/
