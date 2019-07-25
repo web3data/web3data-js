@@ -21,7 +21,7 @@ class Transaction {
         is.undefined(response) ||
         response.status !== 200
       ) {
-        reject(new Error('/gas/predictions failed to respond'))
+        reject(new Error('Failed to retrieve gas price.'))
       } else if (!response.payload || !response.payload.average) {
         reject(new Error('error with request'))
       } else {

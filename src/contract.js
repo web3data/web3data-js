@@ -66,9 +66,9 @@ class Contract {
         is.undefined(response) ||
         response.status !== 200
       ) {
-        reject(new Error('/contracts/:hash failed to respond'))
+        reject(new Error('Failed to retrieve contract code.'))
       } else if (!response.payload) {
-        reject(new Error('/contracts/:hash failed to respond with payload'))
+        reject(new Error('Failed to retrieve contract code.'))
       } else if (response.payload.bytecode) {
         resolve(response.payload.bytecode)
       } else {
