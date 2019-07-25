@@ -21,3 +21,10 @@ module.exports.ERROR_MESSAGE_CONTRACT_NO_ADDRESS =
   'No contract address supplied'
 module.exports.ERROR_MESSAGE_BLOCK_NO_NUMBER = 'No block number supplied'
 module.exports.ERROR_MESSAGE_SIGNATURE_NO_HASH = 'No signature hash supplied'
+
+/* Ethereum based methods */
+module.exports.ETH_METHODS = {
+  block: 'getBlockNumber',
+  contract: 'getCode',
+  transaction: 'getGasPrice'
+}
