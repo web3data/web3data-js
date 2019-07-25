@@ -1,5 +1,5 @@
 const crypto = require('crypto')
-
+const {ETH_METHODS} = require('./constants')
 /**
  * Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
  * the appropriate parameter(s) where applicable.
@@ -17,7 +17,7 @@ const get = (
     endpoint = '',
     subendpoint = '',
     hash = '',
-    path_param: pathParam = '',
+    pathParam: pathParam = '',
     filterOptions = {}
   }
 ) => {
@@ -54,7 +54,6 @@ const rejectPromiseIf = (condition, message) => {
 
 const is = () => {}
 
-// TODO: Assess lodash && treeshaking
 is.string = value => typeof value === 'string'
 is.emptyString = value => is.string(value) && value.length === 0
 is.emptyObject = object => Object.keys(object).length === 0
@@ -75,4 +74,33 @@ const uuid = data =>
     .update(JSON.stringify(data))
     .digest('base64')
 
-module.exports = {buildFilterUrl, is, throwIf, get, rejectPromiseIf, uuid}
+/**
+ * Creates an object containing Ethereum based methods.
+ * @param web3data { object } the web3data instance
+ * @returns methods { object } an object containing Ethereum based methods.
+ */
+const ethFactory = function(web3data) {
+  const methods = {}
+
+  for (const method in ETH_METHODS) {
+    /*  Assigns function bound to it's class instance
+        Ex: getBlockNumber = web3data.block.getBlockNumber.bind(web3data.block) */
+    if ({}.hasOwnProperty.call(ETH_METHODS, method)) {
+      methods[method] = web3data[ETH_METHODS[method]][method].bind(
+        web3data[ETH_METHODS[method]]
+      )
+    }
+  }
+
+  return methods
+}
+
+module.exports = {
+  buildFilterUrl,
+  is,
+  throwIf,
+  get,
+  rejectPromiseIf,
+  uuid,
+  ethFactory
+}
