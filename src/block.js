@@ -2,7 +2,7 @@ const {
   BLOCKS_ENDPOINT: ENDPOINT,
   ERROR_MESSAGE_BLOCK_NO_ID: NO_BLOCK_ID
 } = require('./constants')
-const {is, get} = require('./utils')
+const {is, get, throwIf} = require('./utils')
 
 class Block {
   constructor(web3data) {
@@ -37,13 +37,8 @@ class Block {
 
   async getBlockNumber() {
     const block = await this.getBlock('latest')
-    return new Promise((resolve, reject) => {
-      if (!block | !block.number) {
-        reject(new Error('There was an error with the request'))
-      } else {
-        resolve(parseInt(block.number, 10))
-      }
-    })
+    throwIf(block | !block.number, 'Failed to retrieve block number')
+    return parseInt(block.number, 10)
   }
 
   async getBlockTransactionCount(id) {
