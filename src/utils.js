@@ -86,8 +86,8 @@ const ethFactory = function(web3data) {
     /*  Assigns function bound to it's class instance
         Ex: getBlockNumber = web3data.block.getBlockNumber.bind(web3data.block) */
     if ({}.hasOwnProperty.call(ETH_METHODS, method)) {
-      methods[ETH_METHODS[method]] = web3data[method][ETH_METHODS[method]].bind(
-        web3data[method]
+      methods[method] = web3data[ETH_METHODS[method]][method].bind(
+        web3data[ETH_METHODS[method]]
       )
     }
   }
