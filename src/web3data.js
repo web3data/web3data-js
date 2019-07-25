@@ -97,30 +97,6 @@ class Web3Data {
     this.websocket.off({eventName, filters}, callback)
   }
 
-  getGasPrice() {
-    return this.block.getGasPrice()
-  }
-
-  getBlockNumber() {
-    return this.block.getBlockNumber()
-  }
-
-  getCode(hash) {
-    return this.contract.getCode(hash)
-  }
-
-  getBlock(id, filterOptions) {
-    return this.getBlock(id, filterOptions)
-  }
-
-  getBlockTransactionCount() {
-    return this.block.getBlockTransactionCount()
-  }
-
-  getUncle(id, index) {
-    return this.block.getUncle(id, index)
-  }
-
   /**
    * Appends the API base url with the endpoint  url. Then sends an
    * http request to the Amberdata API endpoint.
