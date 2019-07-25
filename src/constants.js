@@ -25,7 +25,7 @@ module.exports.ERROR_MESSAGE_SIGNATURE_NO_HASH = 'No signature hash supplied'
 
 /* Ethereum based methods */
 module.exports.ETH_METHODS = {
-  block: 'getBlockNumber',
-  contract: 'getCode',
-  transaction: 'getGasPrice'
+  getBlockNumber: 'block',
+  getCode: 'contract',
+  getGasPrice: 'transaction'
 }
