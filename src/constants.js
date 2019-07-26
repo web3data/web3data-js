@@ -10,11 +10,12 @@ module.exports.TRANSACTIONS_ENDPOINT = '/transactions'
 module.exports.BLOCKS_ENDPOINT = '/blocks'
 module.exports.CONTRACTS_ENDPOINT = '/contracts'
 module.exports.SIGNATURES_ENDPOINT = '/signatures'
+module.exports.MARKET_ENDPOINT = '/market'
 
+/* Error messages */
 module.exports.ERROR_MESSAGE_TOKEN_NO_ADDRESS = 'No token address supplied'
 module.exports.ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS =
   'No token holder address supplied'
-
 module.exports.ERROR_MESSAGE_TRANSACTION_NO_HASH =
   'No transaction hash supplied'
 module.exports.ERROR_MESSAGE_ADDRESS_NO_ADDRESS = 'No address supplied'
@@ -34,5 +35,6 @@ module.exports.ETH_METHODS = {
   getTransactionFromBlock: 'block',
   getTransactions: 'block',
   getTransaction: 'transaction',
-  getPendingTransactions: 'transaction'
+  getPendingTransactions: 'transaction',
+  getEtherPrice: 'market'
 }

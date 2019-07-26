@@ -60,6 +60,7 @@ test('Web3data rawQuery accepts url and returns valid response', async t => {
     t.is(response.status, 200)
 });
 
+
 /*********** Test .eth ***********/
 test('web3data.eth successfully calls method getGasPrice', async t => {
     const price = await t.context.web3data.eth.getGasPrice()
@@ -115,6 +116,11 @@ test('web3data.eth successfully calls method getPendingTransactions', async t =>
 test('web3data.eth successfully calls method getUncle', async t => {
     const uncle = await t.context.web3data.eth.getUncle(BLOCK_NUMBER, 0)
     t.is(parseInt(uncle.blockNumber), BLOCK_NUMBER)
+})
+
+test('Web3data.eth successfully calls getEtherPrice returns valid response', async t => {
+    let response = await t.context.web3data.eth.getEtherPrice();
+    t.true(response.hasOwnProperty('eth_btc'))
 })
 
 /**********************************
