@@ -2,6 +2,7 @@ const {
   BLOCKS_ENDPOINT: ENDPOINT,
   ERROR_MESSAGE_BLOCK_NO_ID: NO_BLOCK_ID
 } = require('./constants')
+
 const {is, get, throwIf} = require('./utils')
 
 class Block {
@@ -37,19 +38,45 @@ class Block {
 
   async getBlockNumber() {
     const block = await this.getBlock('latest')
-    throwIf(block | !block.number, 'Failed to retrieve block number')
+    throwIf(block | !block.number, 'Failed to retrieve block number.')
     return parseInt(block.number, 10)
   }
 
   async getBlockTransactionCount(id) {
     const block = await this.getBlock(id)
+    throwIf(
+      !block || (!block.predictions && !block.numTransactions),
+      'Failed to retrieve block transaction count.'
+    )
+    return block.predictions ? null : parseInt(block.numTransactions, 10)
+  }
+
+  async getTransactions(id, filterOptions) {
+    const response = await get(this.web3data, {
+      pathParam: id,
+      endpoint: ENDPOINT,
+      subendpoint: 'transactions',
+      filterOptions
+    })
+    throwIf(
+      !response ||
+        response.status !== 200 ||
+        !response.payload ||
+        !response.payload.records,
+      'Failed to retrieve transactions.'
+    )
+    return response.payload.records
+  }
+
+  async getTransactionFromBlock(id, index) {
+    const transactions = await this.getTransactions(id)
     return new Promise((resolve, reject) => {
-      if (!block || (!block.predictions && !block.numTransactions)) {
-        reject(new Error(`There was an error with the request`))
-      } else if (block.predictions) {
-        resolve(null)
+      if (!transactions) {
+        reject(new Error(`Failed to retrieve transaction.`))
+      } else if (index < transactions.length && index > -1) {
+        resolve(transactions[index])
       } else {
-        resolve(parseInt(block.numTransactions, 10))
+        resolve(null)
       }
     })
   }
@@ -61,10 +88,10 @@ class Block {
         !block ||
         (!block.predictions && !block.numTransactions && !block.validation)
       ) {
-        reject(new Error(`There was an error with the request`))
+        reject(new Error(`Failed to retrieve uncle.`))
       } else if (block.predictions || !block.validation.uncles) {
         resolve(null)
-      } else if (index < block.validation.uncles.length) {
+      } else if (index < block.validation.uncles.length && index > -1) {
         resolve(block.validation.uncles[index])
       } else {
         resolve(null)
