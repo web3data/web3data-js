@@ -1,6 +1,6 @@
 import test from "ava"
 import _ from 'lodash'
-import { getNewWeb3DataInstance, TX_HASH } from './constants'
+import { getNewWeb3DataInstance, TXN_HASH } from './constants'
 import {ERROR_MESSAGE_TRANSACTION_NO_HASH as NO_HASH} from "../src/constants";
 import {setUpPolly} from "./utils";
 
@@ -40,7 +40,7 @@ returnsString.title = (providedTitle = '', input) => `Successfully calls ${input
 const returnsTxnObject = async (t, { method, params = {} }) => {
     const response = await t.context.web3data.transaction[method](params.hash)
     t.true(_.has(response, 'hash'))
-    t.is(response.hash, TX_HASH)
+    t.is(response.hash, TXN_HASH)
 }
 returnsTxnObject.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns valid txn object`
 
@@ -59,7 +59,7 @@ returnsPendingTxnObjects.title = (providedTitle = '', input) => `Successfully ca
 
 test([statusSuccess], {method:'getGasPrediction'})
 test([returnsString], {method:'getGasPrice'})
-test([returnsTxnObject], {method:'getTransaction', params: {hash: TX_HASH} })
+test([returnsTxnObject], {method:'getTransaction', params: {hash: TXN_HASH} })
 test([returnsTxnObjects], {method:'getTransactions'})
 test([returnsTxnObjects, returnsPendingTxnObjects], {method:'getPendingTransactions'})
 

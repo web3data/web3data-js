@@ -38,21 +38,17 @@ class Block {
 
   async getBlockNumber() {
     const block = await this.getBlock('latest')
-    throwIf(block | !block.number, 'Failed to retrieve block number')
+    throwIf(block | !block.number, 'Failed to retrieve block number.')
     return parseInt(block.number, 10)
   }
 
   async getBlockTransactionCount(id) {
     const block = await this.getBlock(id)
-    return new Promise((resolve, reject) => {
-      if (!block || (!block.predictions && !block.numTransactions)) {
-        reject(new Error(`There was an error with the request`))
-      } else if (block.predictions) {
-        resolve(null)
-      } else {
-        resolve(parseInt(block.numTransactions, 10))
-      }
-    })
+    throwIf(
+      !block || (!block.predictions && !block.numTransactions),
+      'Failed to retrieve block transaction count.'
+    )
+    return block.predictions ? null : parseInt(block.numTransactions, 10)
   }
 
   async getTransactions(id, filterOptions) {
@@ -62,18 +58,14 @@ class Block {
       subendpoint: 'transactions',
       filterOptions
     })
-    return new Promise((resolve, reject) => {
-      if (
-        !response ||
+    throwIf(
+      !response ||
         response.status !== 200 ||
         !response.payload ||
-        !response.payload.records
-      ) {
-        reject(new Error('There was an error with the request'))
-      } else {
-        resolve(response.payload.records)
-      }
-    })
+        !response.payload.records,
+      'Failed to retrieve transactions.'
+    )
+    return response.payload.records
   }
 
   async getTransactionFromBlock(id, index) {

@@ -32,5 +32,7 @@ module.exports.ETH_METHODS = {
   getCode: 'contract',
   getGasPrice: 'transaction',
   getTransactionFromBlock: 'block',
-  getTransactions: 'block'
+  getTransactions: 'block',
+  getTransaction: 'transaction',
+  getPendingTransactions: 'transaction'
 }
