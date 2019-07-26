@@ -48,7 +48,8 @@
     "parcel": "^1.12.3",
     "prettier": "^1.18.2",
     "superstatic": "^6.0.4",
-    "xo": "^0.24.0"
+    "xo": "^0.24.0",
+    "lodash": "^4.17.14"
   },
   "dependencies": {
     "axios": "^0.19.0",
