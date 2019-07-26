@@ -1,8 +1,9 @@
-const {get, is} = require('./utils')
 const {
   BLOCKS_ENDPOINT: ENDPOINT,
   ERROR_MESSAGE_BLOCK_NO_ID: NO_BLOCK_ID
 } = require('./constants')
+
+const {is, get, throwIf} = require('./utils')
 
 class Block {
   constructor(web3data) {
@@ -37,26 +38,17 @@ class Block {
 
   async getBlockNumber() {
     const block = await this.getBlock('latest')
-    return new Promise((resolve, reject) => {
-      if (!block | !block.number) {
-        reject(new Error('There was an error with the request'))
-      } else {
-        resolve(parseInt(block.number, 10))
-      }
-    })
+    throwIf(block | !block.number, 'Failed to retrieve block number.')
+    return parseInt(block.number, 10)
   }
 
   async getBlockTransactionCount(id) {
     const block = await this.getBlock(id)
-    return new Promise((resolve, reject) => {
-      if (!block || (!block.predictions && !block.numTransactions)) {
-        reject(new Error(`There was an error with the request`))
-      } else if (block.predictions) {
-        resolve(null)
-      } else {
-        resolve(parseInt(block.numTransactions, 10))
-      }
-    })
+    throwIf(
+      !block || (!block.predictions && !block.numTransactions),
+      'Failed to retrieve block transaction count.'
+    )
+    return block.predictions ? null : parseInt(block.numTransactions, 10)
   }
 
   async getTransactions(id, filterOptions) {
@@ -66,25 +58,21 @@ class Block {
       subendpoint: 'transactions',
       filterOptions
     })
-    return new Promise((resolve, reject) => {
-      if (
-        !response ||
+    throwIf(
+      !response ||
         response.status !== 200 ||
         !response.payload ||
-        !response.payload.records
-      ) {
-        reject(new Error('There was an error with the request'))
-      } else {
-        resolve(response.payload.records)
-      }
-    })
+        !response.payload.records,
+      'Failed to retrieve transactions.'
+    )
+    return response.payload.records
   }
 
   async getTransactionFromBlock(id, index) {
     const transactions = await this.getTransactions(id)
     return new Promise((resolve, reject) => {
       if (!transactions) {
-        reject(new Error(`There was an error with the request`))
+        reject(new Error(`Failed to retrieve transaction.`))
       } else if (index < transactions.length && index > -1) {
         resolve(transactions[index])
       } else {
@@ -100,7 +88,7 @@ class Block {
         !block ||
         (!block.predictions && !block.numTransactions && !block.validation)
       ) {
-        reject(new Error(`There was an error with the request`))
+        reject(new Error(`Failed to retrieve uncle.`))
       } else if (block.predictions || !block.validation.uncles) {
         resolve(null)
       } else if (index < block.validation.uncles.length && index > -1) {
