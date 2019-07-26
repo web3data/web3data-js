@@ -13,15 +13,20 @@ class Address {
     return get(this.web3data, {endpoint: ENDPOINT, filterOptions})
   }
 
-  async getBalance(hash) {
-    const response = await this.getBalanceLatest(hash)
+  async getBalance(hash, metadata = false, filterOptions) {
+    const response = await get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'account-balances/latest',
+      filterOptions
+    })
     throwIf(
       !response || (response.status === 200 && !response.payload),
       'error with request'
     )
     let balance
     if (response.status !== 404) {
-      balance = response.payload.value
+      balance = metadata ? response.payload : response.payload.value
     }
 
     return balance
