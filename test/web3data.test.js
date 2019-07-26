@@ -8,7 +8,7 @@ import {
     BLOCKCHAIN_ID,
     API_KEY,
     BLOCK_NUMBER,
-    TXN_HASH
+    TXN_HASH, ADDRESS
 } from './constants'
 import {setUpPolly} from "./utils";
 
@@ -123,18 +123,24 @@ test('Web3data.eth successfully calls getEtherPrice returns valid response', asy
     t.true(response.hasOwnProperty('eth_btc'))
 })
 
+test('Web3data.eth successfully calls getBalance returns valid response', async t => {
+    let balance = await t.context.web3data.eth.getBalance(ADDRESS);
+    /* Regex matches a string that is numerical */
+    t.regex(balance.toString(), /[0-9]/g)
+})
+
 /**********************************
  * ------- Test Modifiers ------- *
  **********************************/
 
-    /*********** Test pagination ***********/
-    test('Test pagination: limit & offset', async t => {
-        const PAGE_SIZE = 3;
-        const filterOpts = {
-            'page': 0,
-            'size': 3
-        };
-        let addressTransactions = await t.context.web3data.address.getAllAddresses(filterOpts);
-        t.is(addressTransactions.status, 200);
-        t.is(addressTransactions.payload.records.length, PAGE_SIZE)
-    });
+/*********** Test pagination ***********/
+test('Test pagination: limit & offset', async t => {
+    const PAGE_SIZE = 3
+    const filterOpts = {
+        'page': 0,
+        'size': 3
+    };
+    let addressTransactions = await t.context.web3data.address.getAllAddresses(filterOpts);
+    t.is(addressTransactions.status, 200);
+    t.is(addressTransactions.payload.records.length, PAGE_SIZE)
+})

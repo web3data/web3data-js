@@ -36,5 +36,6 @@ module.exports.ETH_METHODS = {
   getTransactions: 'block',
   getTransaction: 'transaction',
   getPendingTransactions: 'transaction',
-  getEtherPrice: 'market'
+  getEtherPrice: 'market',
+  getBalance: 'address'
 }
