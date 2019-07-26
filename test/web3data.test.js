@@ -2,7 +2,14 @@ import Web3Data from '../src/web3data'
 import test from 'ava'
 import {API_KEY_HEADER, DEFAULT_BASE_URL, BLOCKCHAIN_ID_HEADER} from "../src/constants";
 
-import { getNewWeb3DataInstance, TOKEN_ADDRESS, BLOCKCHAIN_ID, API_KEY, BLOCK_NUMBER } from './constants'
+import {
+    getNewWeb3DataInstance,
+    TOKEN_ADDRESS,
+    BLOCKCHAIN_ID,
+    API_KEY,
+    BLOCK_NUMBER,
+    TXN_HASH
+} from './constants'
 import {setUpPolly} from "./utils";
 
 /**********************************
@@ -78,13 +85,34 @@ test('web3data.eth successfully calls method getBlock', async t => {
     t.regex(block.number.toString(), /[0-9]/g)
 })
 
-test('web3data.eth successfully calls method getBlockTransactionCount', async t => {
-    const txns = await t.context.web3data.eth.getBlockTransactionCount(BLOCK_NUMBER)
-    /* Regex matches a string that is numerical */
-    t.regex(txns.toString(), /[0-9]/g)
+test('web3data.eth successfully calls method getTransactionFromBlock', async t => {
+    const txn = await t.context.web3data.eth.getTransactionFromBlock(BLOCK_NUMBER, 0)
+    t.is(parseInt(txn.blockNumber), BLOCK_NUMBER)
 })
 
-test.only('web3data.eth successfully calls method getUncle', async t => {
+test('web3data.eth successfully calls method getBlockTransactionCount', async t => {
+    const txnsCount = await t.context.web3data.eth.getBlockTransactionCount(BLOCK_NUMBER)
+    /* Regex matches a string that is numerical */
+    t.regex(txnsCount.toString(), /[0-9]/g)
+})
+
+test('web3data.eth successfully calls method getTransaction', async t => {
+    const txn = await t.context.web3data.eth.getTransaction(TXN_HASH)
+    /* Regex matches a string that is numerical */
+    t.is(txn.hash, TXN_HASH)
+})
+
+test('web3data.eth successfully calls method getTransactions', async t => {
+    const txns = await t.context.web3data.eth.getTransactions(BLOCK_NUMBER)
+    t.true(txns.length > 0)
+})
+
+test('web3data.eth successfully calls method getPendingTransactions', async t => {
+    const pendTxns = await t.context.web3data.eth.getPendingTransactions()
+    t.true(pendTxns.length > 0)
+})
+
+test('web3data.eth successfully calls method getUncle', async t => {
     const uncle = await t.context.web3data.eth.getUncle(BLOCK_NUMBER, 0)
     t.is(parseInt(uncle.blockNumber), BLOCK_NUMBER)
 })
