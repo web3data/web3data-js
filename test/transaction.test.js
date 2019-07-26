@@ -1,10 +1,8 @@
 import test from "ava"
 import _ from 'lodash'
 import { getNewWeb3DataInstance, TX_HASH } from './constants'
-
 import {ERROR_MESSAGE_TRANSACTION_NO_HASH as NO_HASH} from "../src/constants";
 import {setUpPolly} from "./utils";
-
 
 /**********************************
  * -------- Tests Setup ---------- *

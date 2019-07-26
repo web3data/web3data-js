@@ -2,7 +2,7 @@ import Web3Data from '../src/web3data'
 import test from 'ava'
 import {API_KEY_HEADER, DEFAULT_BASE_URL, BLOCKCHAIN_ID_HEADER} from "../src/constants";
 
-import { getNewWeb3DataInstance, TOKEN_ADDRESS, BLOCKCHAIN_ID, API_KEY } from './constants'
+import { getNewWeb3DataInstance, TOKEN_ADDRESS, BLOCKCHAIN_ID, API_KEY, BLOCK_NUMBER } from './constants'
 import {setUpPolly} from "./utils";
 
 /**********************************
@@ -52,6 +52,42 @@ test('Web3data rawQuery accepts url and returns valid response', async t => {
     let response = await t.context.web3data.rawQuery('/addresses');
     t.is(response.status, 200)
 });
+
+/*********** Test .eth ***********/
+test('web3data.eth successfully calls method getGasPrice', async t => {
+    const price = await t.context.web3data.eth.getGasPrice()
+    /* Regex matches a string that is numerical */
+    t.regex(price.toString(), /[0-9]/g)
+})
+
+test('web3data.eth successfully calls method getBlockNumber', async t => {
+    const number = await t.context.web3data.eth.getBlockNumber()
+    /* Regex matches a string that is numerical */
+    t.regex(number.toString(), /[0-9]/g)
+})
+
+test('web3data.eth successfully calls method getCode', async t => {
+    const code = await t.context.web3data.eth.getCode(TOKEN_ADDRESS)
+    /* Regex matches a string that begins with 0x and has alphanumeric chars */
+    t.regex(code, /0x\w+/g)
+})
+
+test('web3data.eth successfully calls method getBlock', async t => {
+    const block = await t.context.web3data.eth.getBlock(BLOCK_NUMBER)
+    /* Regex matches a string that is numerical */
+    t.regex(block.number.toString(), /[0-9]/g)
+})
+
+test('web3data.eth successfully calls method getBlockTransactionCount', async t => {
+    const txns = await t.context.web3data.eth.getBlockTransactionCount(BLOCK_NUMBER)
+    /* Regex matches a string that is numerical */
+    t.regex(txns.toString(), /[0-9]/g)
+})
+
+test.only('web3data.eth successfully calls method getUncle', async t => {
+    const uncle = await t.context.web3data.eth.getUncle(BLOCK_NUMBER, 0)
+    t.is(parseInt(uncle.blockNumber), BLOCK_NUMBER)
+})
 
 /**********************************
  * ------- Test Modifiers ------- *

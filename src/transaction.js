@@ -2,6 +2,7 @@ const {
   TRANSACTIONS_ENDPOINT: ENDPOINT,
   ERROR_MESSAGE_TRANSACTION_NO_HASH: NO_HASH
 } = require('./constants')
+
 const {get, is} = require('./utils')
 
 class Transaction {
@@ -28,7 +29,7 @@ class Transaction {
         !response.payload ||
         !response.payload.records
       ) {
-        reject(new Error('There was an error with the request'))
+        reject(new Error('Failed to retrieve transactions.'))
       } else {
         resolve(response.payload.records)
       }
@@ -44,7 +45,7 @@ class Transaction {
     })
     return new Promise((resolve, reject) => {
       if (!response || response.status !== 200 || !response.payload) {
-        reject(new Error('There was an error with the request'))
+        reject(new Error('Failed to retrieve transaction.'))
       } else {
         resolve(response.payload)
       }
@@ -55,7 +56,7 @@ class Transaction {
     const pendingTransactions = await this.getTransactions({status: 'pending'})
     return new Promise((resolve, reject) => {
       if (is.undefined(pendingTransactions) || is.null(pendingTransactions)) {
-        reject(new Error('There was an error with the request'))
+        reject(new Error('Failed to retrieve pending transactions.'))
       } else {
         resolve(pendingTransactions)
       }
@@ -70,9 +71,9 @@ class Transaction {
         is.undefined(response) ||
         response.status !== 200
       ) {
-        reject(new Error('/gas/predictions failed to respond'))
+        reject(new Error('Failed to retrieve gas price.'))
       } else if (!response.payload || !response.payload.average) {
-        reject(new Error('error with request'))
+        reject(new Error('Failed to retrieve gas price.'))
       } else {
         resolve(`${response.payload.average.gasPrice}`)
       }

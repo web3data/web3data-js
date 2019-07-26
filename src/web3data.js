@@ -4,7 +4,7 @@ const {
   BLOCKCHAIN_ID_HEADER,
   DEFAULT_BASE_URL
 } = require('./constants')
-const {is, throwIf} = require('./utils')
+const {is, throwIf, ethFactory} = require('./utils')
 const Address = require('./address')
 const Token = require('./token')
 const Contract = require('./contract')
@@ -56,6 +56,9 @@ class Web3Data {
     this.block = new Block(this)
     this.signature = new Signature(this)
 
+    /* Attach eth specific methods under eth namespace */
+    this.eth = ethFactory(this)
+
     this.websocket = null
   }
 
@@ -92,38 +95,6 @@ class Web3Data {
     }
 
     this.websocket.off({eventName, filters}, callback)
-  }
-
-  getGasPrice() {
-    return this.block.getGasPrice()
-  }
-
-  getBlockNumber() {
-    return this.block.getBlockNumber()
-  }
-
-  getCode(hash) {
-    return this.contract.getCode(hash)
-  }
-
-  getBlock(id, filterOptions) {
-    return this.block.getBlock(id, filterOptions)
-  }
-
-  getUncle(id, index) {
-    return this.block.getUncle(id, index)
-  }
-
-  getBlockTransactionCount(id) {
-    return this.block.getBlockTransactionCount(id)
-  }
-
-  getTransactionFromBlock(id, index) {
-    return this.block.getTransactionFromBlock(id, index)
-  }
-
-  getTransactions(id, filterOptions) {
-    return this.block.getTransactions(id, filterOptions)
   }
 
   /**
