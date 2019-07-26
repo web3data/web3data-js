@@ -192,7 +192,7 @@ class WebSocketClient {
   once({eventName, filters}, callback) {
     this.on({eventName, filters}, data => {
       this.off({eventName, filters}, () => {})
-      callback(data)
+      if (callback) callback(data)
 
       // Kill the callback so that we don't stack em and call more than one
       this.registry[uuid({eventName, filters})].callback = null
