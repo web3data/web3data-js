@@ -109,11 +109,6 @@ class Address {
 
     throwIf(response.error, response.message)
 
-    /* If no address is found don't break just log error */
-    if (response.status === NOT_FOUND) {
-      console.error('Address does not yet exist.')
-    }
-
     return response.status === NOT_FOUND ? null : response.payload
   }
 
