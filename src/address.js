@@ -2,7 +2,7 @@ const {
   ERROR_MESSAGE_ADDRESS_NO_ADDRESS: NO_ADDRESS,
   ADDRESSES_ENDPOINT: ENDPOINT
 } = require('./constants')
-const {is, get} = require('./utils')
+const {is, get, throwIf} = require('./utils')
 
 class Address {
   constructor(web3data) {
@@ -10,7 +10,11 @@ class Address {
   }
 
   getAllAddresses(filterOptions) {
-    return get(this.web3data, {endpoint: ENDPOINT, filterOptions})
+    return get(this.web3data, {endpoint: ENDPOINT, filterOptions}).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 
   getInformation(hash, filterOptions) {
@@ -20,7 +24,11 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'information',
       filterOptions
-    })
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 
   getStats(hash, filterOptions) {
@@ -30,7 +38,11 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'metadata',
       filterOptions
-    })
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 
   getAdoption(hash, filterOptions) {
@@ -40,7 +52,11 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'adoption',
       filterOptions
-    })
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 
   getInternalMessages(hash, filterOptions) {
@@ -50,7 +66,11 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'internal-messages',
       filterOptions
-    })
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 
   getFunctions(hash, filterOptions) {
@@ -60,7 +80,11 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'functions',
       filterOptions
-    })
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 
   getLogs(hash, filterOptions) {
@@ -70,17 +94,25 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'logs',
       filterOptions
-    })
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 
   getTransactions(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    throwIf(!hash, NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
       subendpoint: 'transactions',
       filterOptions
-    })
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 
   getBalance(hash, filterOptions) {
@@ -90,7 +122,11 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'account-balances/latest',
       filterOptions
-    })
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 
   getTokens(hash, filterOptions) {
@@ -100,7 +136,11 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'tokens',
       filterOptions
-    })
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 
   getTokenBalances(hash, filterOptions) {
@@ -110,7 +150,11 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'token-balances',
       filterOptions
-    })
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 
   getUsage(hash, filterOptions) {
@@ -120,7 +164,11 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'usage',
       filterOptions
-    })
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
   }
 }
 
