@@ -36,6 +36,8 @@ module.exports.ETH_METHODS = {
   getTransactions: 'block',
   getTransaction: 'transaction',
   getPendingTransactions: 'transaction',
-  getEtherPrice: 'market',
-  getBalance: 'address'
+  getEtherPrice: 'market'
 }
+
+/* HTTP Response codes */
+module.exports.HTTP_CODE_NOT_FOUND = 404
