@@ -1,6 +1,6 @@
 {
   "name": "web3data-js",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {

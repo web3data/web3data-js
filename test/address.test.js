@@ -28,8 +28,6 @@ test('Successfully gets all addresses', async t => {
     t.is(response.status, 200)
 })
 
-// "https://web3api.io/api/v1/addresses?page=1&size=5"
-
 /*********** Test getInformation() ***********/
 test('Successfully gets address information', async t => {
     let response = await t.context.web3data.address.getInformation(ADDRESS)
@@ -68,6 +66,7 @@ test('Successfully gets address internal messages', async t => {
     let response = await t.context.web3data.address.getInternalMessages(ADDRESS)
     t.is(response.status, 200)
 })
+
 test('throws exception when calling getInternalMessages without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getInternalMessages()
@@ -79,6 +78,7 @@ test('Successfully gets address functions', async t => {
     let response = await t.context.web3data.address.getFunctions(ADDRESS)
     t.is(response.status, 200)
 })
+
 test('throws exception when calling getFunctions without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getFunctions()
@@ -90,6 +90,7 @@ test('Successfully gets address logs', async t => {
     let response = await t.context.web3data.address.getLogs(ADDRESS)
     t.is(response.status, 200)
 })
+
 test('throws exception when calling getLogs without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getLogs()
@@ -101,20 +102,10 @@ test('Successfully gets address transactions', async t => {
     let response = await t.context.web3data.address.getTransactions(ADDRESS)
     t.is(response.status, 200)
 })
+
 test('throws exception when calling getTransactions without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getTransactions()
-    }, { instanceOf: Error, message: NO_ADDRESS })
-})
-
-/*********** Test getBalance() ***********/
-test('Successfully gets address balance', async t => {
-    let response = await t.context.web3data.address.getBalance(ADDRESS)
-    t.is(response.status, 200)
-})
-test('throws exception when calling getBalance without hash', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getBalance()
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
 
@@ -123,6 +114,7 @@ test('Successfully gets address tokens', async t => {
     let response = await t.context.web3data.address.getTokens(ADDRESS)
     t.is(response.status, 200)
 })
+
 test('throws exception when calling getTokens without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getTokens()
@@ -134,6 +126,7 @@ test('Successfully gets address token balances', async t => {
     let response = await t.context.web3data.address.getTokenBalances(ADDRESS)
     t.is(response.status, 200)
 })
+
 test('throws exception when calling getTokenBalances without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getTokenBalances()
@@ -145,8 +138,22 @@ test('Successfully gets address usage', async t => {
     let response = await t.context.web3data.address.getUsage(ADDRESS)
     t.is(response.status, 200)
 })
+
 test('throws exception when calling getUsage without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getUsage()
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
+
+/*********** Test getBalance() ***********/
+test('Successfully gets address balance', async t => {
+    let balance = await t.context.web3data.address.getBalance(ADDRESS)
+    /* Test that balance is numerical */
+    t.regex(balance.value, /[0-9]/)
+})
+
+test('throws exception when calling getBalance without hash', async t => {
+    await t.throwsAsync(async () => {
+        await t.context.web3data.address.getBalance()
     }, { instanceOf: Error, message: NO_ADDRESS })
 })

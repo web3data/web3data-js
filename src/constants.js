@@ -38,3 +38,6 @@ module.exports.ETH_METHODS = {
   getPendingTransactions: 'transaction',
   getEtherPrice: 'market'
 }
+
+/* HTTP Response codes */
+module.exports.HTTP_CODE_NOT_FOUND = 404
