@@ -258,3 +258,22 @@ test.cb('Successfully subscribes, receives, and outputs data', t => {
     })
     t.timeout(TEST_TIMEOUT)
 })
+
+test.cb('Successfully call once, outputs data and unsubscribes', t => {
+    t.context.wss.on('connection', (ws) => {
+        ws.on('message', (message) => {
+            const data = JSON.parse(message);
+            ws.send(subAck(data.id))
+            for(let i = 0; i < 20; i++) {
+                ws.send(subResponse(data.id))
+            }
+        })
+    })
+    t.context.w3d.connect(() => {
+        t.context.w3d.once({eventName: 'block'}, status => {
+            t.is(JSON.stringify(TEST_BLOCK_DATA), JSON.stringify(status))
+            t.end()
+        })
+    })
+    t.timeout(TEST_TIMEOUT)
+})
