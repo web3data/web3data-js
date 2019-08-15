@@ -17,7 +17,11 @@ class Block {
       endpoint: ENDPOINT,
       subendpoint: 'token-transfers',
       filterOptions
-    })
+    }).then(
+        response =>
+            response.error ? throwIf(true, response.message) : response.payload,
+        error => throwIf(true, error.response.data.message)
+    )
   }
 
   async getBlock(id, filterOptions) {
