@@ -2,7 +2,7 @@ const {
   ERROR_MESSAGE_ADDRESS_NO_ADDRESS: NO_ADDRESS,
   ADDRESSES_ENDPOINT: ENDPOINT
 } = require('./constants')
-const {is, get, throwIf} = require('./utils')
+const {is, get, throwIf, onFulfilled, onError} = require('./utils')
 
 class Address {
   constructor(web3data) {
@@ -108,11 +108,7 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'transactions',
       filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+    }).then(onFulfilled, onError)
   }
 
   getBalance(hash, filterOptions) {
