@@ -121,7 +121,9 @@ class Address {
             : response.payload
       )
       .catch(error =>
-        error.response ? throwIf(true, error.response.data.message) : 'Error with request'
+        error.response
+          ? throwIf(true, error.response.data.message)
+          : 'Error with request'
       )
   }
 
@@ -148,7 +150,9 @@ class Address {
             : response.payload
       )
       .catch(error =>
-        error.response ? throwIf(true, error.response.data.message) : 'Error with request'
+        error.response
+          ? throwIf(true, error.response.data.message)
+          : 'Error with request'
       )
   }
 
