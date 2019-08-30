@@ -61,6 +61,7 @@ const rejectPromiseIf = (condition, message) => {
 const is = () => {}
 
 is.string = value => typeof value === 'string'
+is.bool = value => typeof value === 'boolean'
 is.emptyString = value => is.string(value) && value.length === 0
 is.emptyObject = object => Object.keys(object).length === 0
 is.inObject = (object, property) =>

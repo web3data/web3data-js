@@ -1,6 +1,6 @@
 {
   "name": "web3data-js",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
@@ -53,7 +53,6 @@
   },
   "dependencies": {
     "axios": "^0.19.0",
-    "ccxws": "^0.26.3",
     "isomorphic-ws": "^4.0.1",
     "ws": "^7.1.0"
   },

@@ -4,7 +4,7 @@ const {
   BLOCKCHAIN_ID_HEADER,
   DEFAULT_BASE_URL
 } = require('./constants')
-const {is, throwIf, ethFactory} = require('./utils')
+const {is, throwIf} = require('./utils')
 const Address = require('./address')
 const Token = require('./token')
 const Contract = require('./contract')
@@ -12,6 +12,7 @@ const Transaction = require('./transaction')
 const Block = require('./block')
 const Signature = require('./signature')
 const Market = require('./market')
+const Eth = require('./eth')
 const WebSocketClient = require('./websocket')
 
 /**
@@ -35,7 +36,9 @@ class Web3Data {
     this.apiKey = apiKey
 
     /* Setup required request headers */
-    this.headers = {}
+    this.headers = {
+      'Cache-Control': 'no-cache'
+    }
     this.headers[API_KEY_HEADER] = this.apiKey
 
     /* Setup optional request headers */
@@ -59,7 +62,7 @@ class Web3Data {
     this.market = new Market(this)
 
     /* Attach eth specific methods under eth namespace */
-    this.eth = ethFactory(this)
+    this.eth = new Eth(this)
 
     this.websocket = null
   }
@@ -89,6 +92,10 @@ class Web3Data {
     this.websocket.on({eventName, filters}, callback)
   }
 
+  once({eventName, filters}, callback) {
+    this.websocket.once({eventName, filters}, callback)
+  }
+
   off({eventName, filters}, callback) {
     if (!callback) console.warn('no callback provided')
     if (!eventName) {
@@ -102,13 +109,15 @@ class Web3Data {
   /**
    * Appends the API base url with the endpoint  url. Then sends an
    * http request to the Amberdata API endpoint.
-   * @param {string} url The endpoint url with any query/path params if set
+   * @param {string} url - The endpoint url with any query/path params if set
+   * @return {*} the axios request object
    */
-  async rawQuery(url) {
-    const response = await axios.get(this.baseUrl + url, {
-      headers: this.headers
-    })
-    return response.data
+  rawQuery(url) {
+    return axios
+      .get(this.baseUrl + url, {
+        headers: this.headers
+      })
+      .then(r => r.data)
   }
 }
 
