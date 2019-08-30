@@ -48,10 +48,10 @@ const throwIf = (bool, message) => {
   if (bool) throw new Error(message)
 }
 
-const throwNow = (message) => throwIf(true, message)
+const throwNow = message => throwIf(true, message)
 
 const onFullfilled = response =>
-    response.error ? throwIf(true, response.message) : response.payload
+  response.error ? throwIf(true, response.message) : response.payload
 const onError = error => throwIf(true, error.response.data.message)
 
 const rejectPromiseIf = (condition, message) => {

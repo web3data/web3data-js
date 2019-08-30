@@ -108,13 +108,13 @@ test([returnsUncleObject, returnsNull, rejectsPromise], {method: 'getUncle', par
 test([returnsTxnObjects], {method: 'getTransactions', params: {id: 8102326}}, NO_BLOCK_ID)
 test([returnsTxnObject, returnsNull], {method: 'getTransactionFromBlock', params: {id: 8102326, index: 0}}, NO_BLOCK_ID)
 
-/*********** Test getUsage() ***********/
+/*********** Test getTokenTransfers() ***********/
 test('Successfully gets block token transfers', async t => {
     const response = await t.context.web3data.block.getTokenTransfers(7000000)
-    t.true({}.hasOwnProperty.call(response, 'metadata'))
+    t.truthy(response.metadata)
 })
-test('throws exception when calling getUsage without hash', async t => {
+test('throws exception when calling getTokenTransfers without block id', async t => {
     await t.throwsAsync(async () => {
-        await t.context.web3data.address.getTokenTransfers()
+        await t.context.web3data.block.getTokenTransfers()
     }, { instanceOf: Error, message: NO_BLOCK_ID })
 })
