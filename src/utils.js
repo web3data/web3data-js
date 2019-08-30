@@ -48,6 +48,12 @@ const throwIf = (bool, message) => {
   if (bool) throw new Error(message)
 }
 
+const throwNow = message => throwIf(true, message)
+
+const onFullfilled = response =>
+  response.error ? throwIf(true, response.message) : response.payload
+const onError = error => throwIf(true, error.response.data.message)
+
 const rejectPromiseIf = (condition, message) => {
   if (condition) return Promise.reject(new Error(message))
 }
@@ -55,6 +61,7 @@ const rejectPromiseIf = (condition, message) => {
 const is = () => {}
 
 is.string = value => typeof value === 'string'
+is.bool = value => typeof value === 'boolean'
 is.emptyString = value => is.string(value) && value.length === 0
 is.emptyObject = object => Object.keys(object).length === 0
 is.inObject = (object, property) =>
@@ -102,5 +109,8 @@ module.exports = {
   get,
   rejectPromiseIf,
   uuid,
-  ethFactory
+  ethFactory,
+  throwNow,
+  onFulfilled: onFullfilled,
+  onError
 }

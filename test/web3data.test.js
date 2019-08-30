@@ -133,14 +133,14 @@ test('Web3data.eth successfully calls getBalance returns valid response', async 
  * ------- Test Modifiers ------- *
  **********************************/
 
-/*********** Test pagination ***********/
-test('Test pagination: limit & offset', async t => {
-    const PAGE_SIZE = 3
-    const filterOpts = {
-        'page': 0,
-        'size': 3
-    };
-    let addressTransactions = await t.context.web3data.address.getAllAddresses(filterOpts);
-    t.is(addressTransactions.status, 200);
-    t.is(addressTransactions.payload.records.length, PAGE_SIZE)
-})
+    /*********** Test pagination ***********/
+    test('Test pagination: limit & offset', async t => {
+        const PAGE_SIZE = 3;
+        const filterOpts = {
+            'page': 0,
+            'size': 3
+        };
+        let addressTransactions = await t.context.web3data.address.getAllAddresses(filterOpts);
+        t.is(addressTransactions.records.length, PAGE_SIZE)
+    });
+

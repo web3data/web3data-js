@@ -24,14 +24,15 @@ test.beforeEach(t => {
 
 /*********** Test getAllAddresses() ***********/
 test('Successfully gets all addresses', async t => {
-    let response = await t.context.web3data.address.getAllAddresses()
-    t.is(response.status, 200)
+    let addresses = await t.context.web3data.address.getAllAddresses()
+    t.true({}.hasOwnProperty.call(addresses, 'records'))
+    t.true({}.hasOwnProperty.call(addresses, 'totalRecords'))
 })
 
 /*********** Test getInformation() ***********/
 test('Successfully gets address information', async t => {
-    let response = await t.context.web3data.address.getInformation(ADDRESS)
-    t.is(response.status, 200)
+    let info = await t.context.web3data.address.getInformation(ADDRESS)
+    t.true({}.hasOwnProperty.call(info, 'balance'))
 })
 test('throws exception when calling getInformation without hash', async t => {
     await t.throwsAsync(async () => {
@@ -41,8 +42,11 @@ test('throws exception when calling getInformation without hash', async t => {
 
 /*********** Test getStats() ***********/
 test('Successfully gets address statistics', async t => {
-    let response = await t.context.web3data.address.getStats(ADDRESS)
-    t.is(response.status, 200)
+    let stats = await t.context.web3data.address.getStats(ADDRESS)
+
+    /* payload usually returns array however this guards against any changes */
+    stats = Array.isArray(stats) ? stats[0] : stats
+    t.true({}.hasOwnProperty.call(stats, 'firstSeen'))
 })
 test('throws exception when calling getStats without hash', async t => {
     await t.throwsAsync(async () => {
@@ -52,8 +56,8 @@ test('throws exception when calling getStats without hash', async t => {
 
 /*********** Test getAdoption() ***********/
 test('Successfully gets address adoption', async t => {
-    let response = await t.context.web3data.address.getAdoption(ADDRESS)
-    t.is(response.status, 200)
+    const response = await t.context.web3data.address.getAdoption(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'metadata'))
 })
 test('throws exception when calling getAdoption without hash', async t => {
     await t.throwsAsync(async () => {
@@ -63,8 +67,9 @@ test('throws exception when calling getAdoption without hash', async t => {
 
 /*********** Test getInternalMessages() ***********/
 test('Successfully gets address internal messages', async t => {
-    let response = await t.context.web3data.address.getInternalMessages(ADDRESS)
-    t.is(response.status, 200)
+    const response = await t.context.web3data.address.getInternalMessages(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.true({}.hasOwnProperty.call(response, 'totalRecords'))
 })
 
 test('throws exception when calling getInternalMessages without hash', async t => {
@@ -75,8 +80,9 @@ test('throws exception when calling getInternalMessages without hash', async t =
 
 /*********** Test getFunctions() ***********/
 test('Successfully gets address functions', async t => {
-    let response = await t.context.web3data.address.getFunctions(ADDRESS)
-    t.is(response.status, 200)
+    const response = await t.context.web3data.address.getFunctions(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.true({}.hasOwnProperty.call(response, 'totalRecords'))
 })
 
 test('throws exception when calling getFunctions without hash', async t => {
@@ -87,8 +93,8 @@ test('throws exception when calling getFunctions without hash', async t => {
 
 /*********** Test getLogs() ***********/
 test('Successfully gets address logs', async t => {
-    let response = await t.context.web3data.address.getLogs(ADDRESS)
-    t.is(response.status, 200)
+    const response = await t.context.web3data.address.getLogs(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'records'))
 })
 
 test('throws exception when calling getLogs without hash', async t => {
@@ -99,8 +105,8 @@ test('throws exception when calling getLogs without hash', async t => {
 
 /*********** Test getTransactions() ***********/
 test('Successfully gets address transactions', async t => {
-    let response = await t.context.web3data.address.getTransactions(ADDRESS)
-    t.is(response.status, 200)
+    const response = await t.context.web3data.address.getTransactions(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'records'))
 })
 
 test('throws exception when calling getTransactions without hash', async t => {
@@ -109,10 +115,22 @@ test('throws exception when calling getTransactions without hash', async t => {
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
 
+/*********** Test getBalance() ***********/
+test('Successfully gets address balance', async t => {
+    const response = await t.context.web3data.address.getBalance(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'value'))
+})
+test('throws exception when calling getBalance without hash', async t => {
+    await t.throwsAsync(async () => {
+        await t.context.web3data.address.getBalance()
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
+
 /*********** Test getTokens() ***********/
 test('Successfully gets address tokens', async t => {
-    let response = await t.context.web3data.address.getTokens(ADDRESS)
-    t.is(response.status, 200)
+    const response = await t.context.web3data.address.getTokens(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.true({}.hasOwnProperty.call(response, 'totalRecords'))
 })
 
 test('throws exception when calling getTokens without hash', async t => {
@@ -123,8 +141,9 @@ test('throws exception when calling getTokens without hash', async t => {
 
 /*********** Test getTokenBalances() ***********/
 test('Successfully gets address token balances', async t => {
-    let response = await t.context.web3data.address.getTokenBalances(ADDRESS)
-    t.is(response.status, 200)
+    const response = await t.context.web3data.address.getTokenBalances(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.true({}.hasOwnProperty.call(response, 'totalRecords'))
 })
 
 test('throws exception when calling getTokenBalances without hash', async t => {
@@ -135,8 +154,8 @@ test('throws exception when calling getTokenBalances without hash', async t => {
 
 /*********** Test getUsage() ***********/
 test('Successfully gets address usage', async t => {
-    let response = await t.context.web3data.address.getUsage(ADDRESS)
-    t.is(response.status, 200)
+    const response = await t.context.web3data.address.getUsage(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'metadata'))
 })
 
 test('throws exception when calling getUsage without hash', async t => {
