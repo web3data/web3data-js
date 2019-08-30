@@ -30,15 +30,22 @@ test('Successfully gets all addresses', async t => {
 })
 
 /*********** Test getInformation() ***********/
-test('Successfully gets address information', async t => {
-    let info = await t.context.web3data.address.getInformation(ADDRESS)
-    t.true({}.hasOwnProperty.call(info, 'balance'))
-})
 test('throws exception when calling getInformation without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getInformation()
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
+test('Successfully gets address information', async t => {
+    let info = await t.context.web3data.address.getInformation(ADDRESS)
+    t.truthy(info.balance)
+})
+test('Successfully gets address information + pricing data', async t => {
+    let info = await t.context.web3data.address.getInformation(ADDRESS, {includePrice: true, currency: 'usd'})
+    t.truthy(info.balance)
+    t.truthy(info.price.balance)
+    t.is(info.price.balance.currency, 'usd')
+})
+
 
 /*********** Test getStats() ***********/
 test('Successfully gets address statistics', async t => {
