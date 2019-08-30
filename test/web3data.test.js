@@ -135,6 +135,5 @@ test('Web3data.eth successfully calls getEtherPrice returns valid response', asy
             'size': 3
         };
         let addressTransactions = await t.context.web3data.address.getAllAddresses(filterOpts);
-        t.is(addressTransactions.status, 200);
-        t.is(addressTransactions.payload.records.length, PAGE_SIZE)
+        t.is(addressTransactions.records.length, PAGE_SIZE)
     });
