@@ -18,9 +18,9 @@ class Block {
       subendpoint: 'token-transfers',
       filterOptions
     }).then(
-        response =>
-            response.error ? throwIf(true, response.message) : response.payload,
-        error => throwIf(true, error.response.data.message)
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
     )
   }
 
