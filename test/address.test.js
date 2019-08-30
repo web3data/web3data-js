@@ -1,7 +1,7 @@
 import test from "ava"
 import { getNewWeb3DataInstance, ADDRESS } from './constants'
 import {ERROR_MESSAGE_ADDRESS_NO_ADDRESS as NO_ADDRESS} from "../src/constants";
-import {setUpPolly} from "./utils";
+import {setUpPolly, hasProp} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
@@ -37,12 +37,13 @@ test('throws exception when calling getInformation without hash', async t => {
 })
 test('Successfully gets address information', async t => {
     let info = await t.context.web3data.address.getInformation(ADDRESS)
-    t.truthy(info.balance)
+    t.true({}.hasOwnProperty.call(info, 'balance'))
 })
 test('Successfully gets address information + pricing data', async t => {
     let info = await t.context.web3data.address.getInformation(ADDRESS, {includePrice: true, currency: 'usd'})
-    t.truthy(info.balance)
-    t.truthy(info.price.balance)
+    t.true({}.hasOwnProperty.call(info, 'balance'))
+    t.true({}.hasOwnProperty.call(info, 'price'))
+    t.true({}.hasOwnProperty.call(info.price.balance, 'currency'))
     t.is(info.price.balance.currency, 'usd')
 })
 
