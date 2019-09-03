@@ -103,7 +103,13 @@ class Address {
     )
   }
 
-  getTransactions(hash, filterOptions) {
+  /**
+   * Retrieves the transactions where this address was either the originator or a recipient.
+   * @param {String} hash - the address of the account
+   * @param {Object} filterOptions - the filter options associated with the request
+   * @return {Promise<Object>} the object containing the array of transaction objects
+   */
+  getTransactions(hash, filterOptions = {}) {
     throwIf(!hash, NO_ADDRESS)
     return get(this.web3data, {
       hash,
