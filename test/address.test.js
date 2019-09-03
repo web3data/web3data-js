@@ -123,17 +123,6 @@ test('throws exception when calling getTransactions without hash', async t => {
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
 
-/*********** Test getBalance() ***********/
-test('Successfully gets address balance', async t => {
-    const response = await t.context.web3data.address.getBalance(ADDRESS)
-    t.true({}.hasOwnProperty.call(response, 'value'))
-})
-test('throws exception when calling getBalance without hash', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getBalance()
-    }, { instanceOf: Error, message: NO_ADDRESS })
-})
-
 /*********** Test getTokens() ***********/
 test('Successfully gets address tokens', async t => {
     const response = await t.context.web3data.address.getTokens(ADDRESS)
