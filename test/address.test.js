@@ -55,6 +55,8 @@ test('Successfully gets address metadata - no filters', async t => {
 test('Successfully gets address metadata - with filters', async t => {
     const metadata = (await t.context.web3data.address.getMetadata(ADDRESS, {timeFormat: 'ms'}))[0]
     t.true({}.hasOwnProperty.call(metadata, 'firstSeen'))
+
+    /*test that first seen is a number implying that it is in ms*/
     t.regex(`${metadata.firstSeen}`, /[0-9]/)
 })
 
