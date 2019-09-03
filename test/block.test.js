@@ -106,7 +106,7 @@ test([returnsNumber], {method: 'getBlockNumber'})
 test([returnsNumber, returnsNull, rejectsPromise], {method: 'getBlockTransactionCount', params: {id: 7000000}}, NO_BLOCK_ID)
 test([returnsUncleObject, returnsNull, rejectsPromise], {method: 'getUncle', params: {id: 8102326, index: 0}}, NO_BLOCK_ID)
 test([returnsTxnObjects], {method: 'getTransactions', params: {id: 8102326}}, NO_BLOCK_ID)
-test([returnsTxnObject, returnsNull], {method: 'getTransactionFromBlock', params: {id: 8102326, index: 0}}, NO_BLOCK_ID)
+test([returnsTxnObject, returnsNull], {method: 'getTransactionFromBlock', params: {id: 7000000, index: 0}}, NO_BLOCK_ID)
 
 /*********** Test getTokenTransfers() ***********/
 test('Successfully gets block token transfers', async t => {
