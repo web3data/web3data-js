@@ -40,18 +40,22 @@ test('throws exception when calling getInformation without hash', async t => {
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
 
-/*********** Test getStats() ***********/
-test('Successfully gets address statistics', async t => {
-    let stats = await t.context.web3data.address.getStats(ADDRESS)
-
-    /* payload usually returns array however this guards against any changes */
-    stats = Array.isArray(stats) ? stats[0] : stats
-    t.true({}.hasOwnProperty.call(stats, 'firstSeen'))
-})
+/*********** Test getMetadata() ***********/
 test('throws exception when calling getStats without hash', async t => {
     await t.throwsAsync(async () => {
-        await t.context.web3data.address.getStats()
+        await t.context.web3data.address.getMetadata()
     }, { instanceOf: Error, message: NO_ADDRESS })
+})
+
+test('Successfully gets address metadata - no filters', async t => {
+    const metadata = (await t.context.web3data.address.getMetadata(ADDRESS))[0]
+    t.true({}.hasOwnProperty.call(metadata, 'firstSeen'))
+})
+
+test('Successfully gets address metadata - with filters', async t => {
+    const metadata = (await t.context.web3data.address.getMetadata(ADDRESS, {timeFormat: 'ms'}))[0]
+    t.true({}.hasOwnProperty.call(metadata, 'firstSeen'))
+    t.regex(`${metadata.firstSeen}`, /[0-9]/)
 })
 
 /*********** Test getAdoption() ***********/
@@ -112,17 +116,6 @@ test('Successfully gets address transactions', async t => {
 test('throws exception when calling getTransactions without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getTransactions()
-    }, { instanceOf: Error, message: NO_ADDRESS })
-})
-
-/*********** Test getBalance() ***********/
-test('Successfully gets address balance', async t => {
-    const response = await t.context.web3data.address.getBalance(ADDRESS)
-    t.true({}.hasOwnProperty.call(response, 'value'))
-})
-test('throws exception when calling getBalance without hash', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getBalance()
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
 
