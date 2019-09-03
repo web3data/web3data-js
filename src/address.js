@@ -114,6 +114,22 @@ class Address {
   }
 
   /**
+   * Retrieves pending transactions the specified address is involved in.
+   * @param {String} hash - the address of the account
+   * @param {Object} filterOptions - the filter options associated with the request
+   * @return {Promise<Object>} the array of pending transactions
+   */
+  getPendingTransactions(hash, filterOptions = {}) {
+    throwIf(!hash, NO_ADDRESS)
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'pending-transactions',
+      filterOptions
+    }).then(onFulfilled, onError)
+  }
+
+  /**
    * Retrieves the balance data of the given address. Returns null if no address is found.
    * @param {String} hash - the address of the account
    * @param {Object} filterOptions - the filter options associated with the request

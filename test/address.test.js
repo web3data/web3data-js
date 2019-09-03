@@ -115,6 +115,31 @@ test('throws exception when calling getTransactions without hash', async t => {
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
 
+/*********** Test getPendingTransactions() ***********/
+test('throws exception when calling getPendingTransactions without hash', async t => {
+    await t.throwsAsync(async () => {
+        await t.context.web3data.address.getPendingTransactions()
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
+
+test('Successfully gets address pending transactions - no filters', async t => {
+    const response = await t.context.web3data.address.getPendingTransactions(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'records'))
+})
+
+test('Successfully gets address pending transactions - with filters', async t => {
+    const response = await t.context.web3data.address.getPendingTransactions(ADDRESS, {includePrice: true})
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.true({}.hasOwnProperty.call(response.records[0], 'price'))
+})
+
+test('Successfully gets address pending transactions - with pagination', async t => {
+    const SIZE = 5
+    const response = await t.context.web3data.address.getPendingTransactions(ADDRESS, {page: 0, size: SIZE})
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.is(response.records.length, SIZE)
+})
+
 /*********** Test getTokens() ***********/
 test('Successfully gets address tokens', async t => {
     const response = await t.context.web3data.address.getTokens(ADDRESS)
