@@ -116,16 +116,22 @@ test('throws exception when calling getTransactions without hash', async t => {
 })
 
 /*********** Test getTokens() ***********/
-test('Successfully gets address tokens', async t => {
+test('throws exception when calling getTokens without hash', async t => {
+    await t.throwsAsync(async () => {
+        await t.context.web3data.address.getTokens()
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
+
+test('Successfully gets address tokens - no filters', async t => {
     const response = await t.context.web3data.address.getTokens(ADDRESS)
     t.true({}.hasOwnProperty.call(response, 'records'))
     t.true({}.hasOwnProperty.call(response, 'totalRecords'))
 })
 
-test('throws exception when calling getTokens without hash', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getTokens()
-    }, { instanceOf: Error, message: NO_ADDRESS })
+test('Successfully gets address tokens - with filters', async t => {
+    const response = await t.context.web3data.address.getTokens(ADDRESS, {amountGt: 1000})
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.true({}.hasOwnProperty.call(response, 'totalRecords'))
 })
 
 /*********** Test getTokenBalances() ***********/
