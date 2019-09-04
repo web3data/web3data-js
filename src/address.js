@@ -248,18 +248,20 @@ class Address {
     }).then(onFulfilled, onError)
   }
 
-  getTokens(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+  /**
+   * Retrieves the balance data of the given address. Returns null if no address is found.
+   * @param {String} hash - the address of the account.
+   * @param {Object} filterOptions - the filter options associated with the request.
+   * @return {Promise<Object>} the token balance data of the account.
+   */
+  getTokens(hash, filterOptions = {}) {
+    throwIf(is.notHash(hash), NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
       subendpoint: 'tokens',
       filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+    }).then(onFulfilled, onError)
   }
 
   /**
