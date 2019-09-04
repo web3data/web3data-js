@@ -139,15 +139,23 @@ test('Successfully gets address logs - with filters', async t => {
 })
 
 /*********** Test getTransactions() ***********/
-test('Successfully gets address transactions', async t => {
-    const response = await t.context.web3data.address.getTransactions(ADDRESS)
-    t.true({}.hasOwnProperty.call(response, 'records'))
-})
-
 test('throws exception when calling getTransactions without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getTransactions()
     }, { instanceOf: Error, message: NO_ADDRESS })
+})
+
+test('Successfully gets address transactions - no filters', async t => {
+    const response = await t.context.web3data.address.getTransactions(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.true({}.hasOwnProperty.call(response.records[0], 'blockNumber'))
+})
+
+test('Successfully gets address transactions - with filters', async t => {
+    const response = await t.context.web3data.address.getTransactions(ADDRESS, {includePrice: true, validationMethod: 'full'})
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.true({}.hasOwnProperty.call(response.records[0], 'blockNumber'))
+    t.true({}.hasOwnProperty.call(response.records[0], 'price'))
 })
 
 /*********** Test getPendingTransactions() ***********/
