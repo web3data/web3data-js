@@ -1,7 +1,7 @@
-import test from "ava"
+import test, {only} from "ava"
 import { getNewWeb3DataInstance, ADDRESS } from './constants'
 import {ERROR_MESSAGE_ADDRESS_NO_ADDRESS as NO_ADDRESS} from "../src/constants";
-import {setUpPolly} from "./utils";
+import {setUpPolly, hasProp} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
@@ -30,28 +30,42 @@ test('Successfully gets all addresses', async t => {
 })
 
 /*********** Test getInformation() ***********/
-test('Successfully gets address information', async t => {
-    let info = await t.context.web3data.address.getInformation(ADDRESS)
-    t.true({}.hasOwnProperty.call(info, 'balance'))
-})
 test('throws exception when calling getInformation without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getInformation()
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
-
-/*********** Test getStats() ***********/
-test('Successfully gets address statistics', async t => {
-    let stats = await t.context.web3data.address.getStats(ADDRESS)
-
-    /* payload usually returns array however this guards against any changes */
-    stats = Array.isArray(stats) ? stats[0] : stats
-    t.true({}.hasOwnProperty.call(stats, 'firstSeen'))
+test('Successfully gets address information', async t => {
+    let info = await t.context.web3data.address.getInformation(ADDRESS)
+    t.true({}.hasOwnProperty.call(info, 'balance'))
 })
-test('throws exception when calling getStats without hash', async t => {
+test('Successfully gets address information + pricing data', async t => {
+    let info = await t.context.web3data.address.getInformation(ADDRESS, {includePrice: true, currency: 'usd'})
+    t.true({}.hasOwnProperty.call(info, 'balance'))
+    t.true({}.hasOwnProperty.call(info, 'price'))
+    t.true({}.hasOwnProperty.call(info.price.balance, 'currency'))
+    t.is(info.price.balance.currency, 'usd')
+})
+
+
+/*********** Test getMetadata() ***********/
+test('throws exception when calling getMetadata without hash', async t => {
     await t.throwsAsync(async () => {
-        await t.context.web3data.address.getStats()
+        await t.context.web3data.address.getMetadata()
     }, { instanceOf: Error, message: NO_ADDRESS })
+})
+
+test('Successfully gets address metadata - no filters', async t => {
+    const metadata = (await t.context.web3data.address.getMetadata(ADDRESS))[0]
+    t.true({}.hasOwnProperty.call(metadata, 'firstSeen'))
+})
+
+test('Successfully gets address metadata - with filters', async t => {
+    const metadata = (await t.context.web3data.address.getMetadata(ADDRESS, {timeFormat: 'ms'}))[0]
+    t.true({}.hasOwnProperty.call(metadata, 'firstSeen'))
+
+    /*test that first seen is a number implying that it is in ms*/
+    t.regex(`${metadata.firstSeen}`, /[0-9]/)
 })
 
 /*********** Test getAdoption() ***********/
@@ -79,16 +93,30 @@ test('throws exception when calling getInternalMessages without hash', async t =
 })
 
 /*********** Test getFunctions() ***********/
+test('throws exception when calling getFunctions without hash', async t => {
+    await t.throwsAsync(async () => {
+        await t.context.web3data.address.getFunctions()
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
 test('Successfully gets address functions', async t => {
     const response = await t.context.web3data.address.getFunctions(ADDRESS)
     t.true({}.hasOwnProperty.call(response, 'records'))
     t.true({}.hasOwnProperty.call(response, 'totalRecords'))
 })
 
-test('throws exception when calling getFunctions without hash', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getFunctions()
-    }, { instanceOf: Error, message: NO_ADDRESS })
+test('Successfully gets address functions + filters', async t => {
+    const response = await t.context.web3data.address.getFunctions(ADDRESS, {validationMethod: 'full'})
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.true({}.hasOwnProperty.call(response, 'totalRecords'))
+    t.true({}.hasOwnProperty.call(response.records[0], 'validation'))
+})
+
+test('Successfully gets address functions pagination', async t => {
+    const SIZE = 5
+    const response = await t.context.web3data.address.getFunctions(ADDRESS, {page: 0, size: SIZE})
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.true({}.hasOwnProperty.call(response, 'totalRecords'))
+    t.is(response.records.length, SIZE)
 })
 
 /*********** Test getLogs() ***********/
@@ -179,14 +207,39 @@ test('throws exception when calling getUsage without hash', async t => {
 })
 
 /*********** Test getBalance() ***********/
-test('Successfully gets address balance', async t => {
-    let balance = await t.context.web3data.address.getBalance(ADDRESS)
-    /* Test that balance is numerical */
-    t.regex(balance.value, /[0-9]/)
-})
-
 test('throws exception when calling getBalance without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getBalance()
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
+test('Successfully gets address balance (no filters)', async t => {
+    const balance = await t.context.web3data.address.getBalance(ADDRESS)
+    /* Test that balance is numerical */
+    t.regex(balance.value, /[0-9]/)
+})
+
+
+test('Successfully gets address balance and include\'s pricing and correct currency', async t => {
+    const balance = await t.context.web3data.address.getBalance(ADDRESS, {includePrice: true, currency: 'btc'})
+    /* Test that balance is numerical */
+    t.regex(balance.value, /[0-9]/)
+    /* Test that price exists */
+    t.truthy(balance.price)
+    /* Test that price is correct currency */
+    t.is(balance.price.value.currency, 'btc')
+})
+
+test('Successfully gets historical address balance', async t => {
+    const balance = await t.context.web3data.address.getBalance(ADDRESS, {startDate: 1526184430, endDate: 1556184430})
+
+    /* Note: The data property only present in historical balance */
+    t.truthy(balance.data)
+    t.true(Array.isArray(balance.data))
+})
+
+test('Successfully gets historical address balance + paginates properly', async t => {
+    const SIZE = 5
+    const balance = await t.context.web3data.address.getBalance(ADDRESS, {startDate: 1506184430, page: 0, size: SIZE})
+    t.is(balance.data.length, SIZE)
+})
+

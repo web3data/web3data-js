@@ -50,9 +50,9 @@ const throwIf = (bool, message) => {
 
 const throwNow = message => throwIf(true, message)
 
-const onFullfilled = response =>
-  response.error ? throwIf(true, response.message) : response.payload
-const onError = error => throwIf(true, error.response.data.message)
+const onFulfilled = response =>
+  response.error ? throwNow(response.message) : response.payload
+const onError = error => throwNow(error.response.data.message)
 
 const rejectPromiseIf = (condition, message) => {
   if (condition) return Promise.reject(new Error(message))
@@ -111,6 +111,6 @@ module.exports = {
   uuid,
   ethFactory,
   throwNow,
-  onFulfilled: onFullfilled,
+  onFulfilled,
   onError
 }
