@@ -61,32 +61,30 @@ class Address {
     )
   }
 
-  getInternalMessages(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
-    return get(this.web3data, {
-      hash,
-      endpoint: ENDPOINT,
-      subendpoint: 'internal-messages',
-      filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+  /**
+   * Retrieves the functions (aka internal messages) where this address is either the originator or a recipient.
+   * @param {String} hash - the address of the account.
+   * @param {Object} filterOptions - the filter options associated with the request.
+   * @return {*} the balance data of the account or if no address is found.
+   */
+  getInternalMessages(hash, filterOptions = {}) {
+    return this.getFunctions(hash, filterOptions)
   }
 
-  getFunctions(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+  /**
+   * Retrieves the functions (aka internal messages) where this address is either the originator or a recipient.
+   * @param {String} hash - the address of the account.
+   * @param {Object} filterOptions - the filter options associated with the request.
+   * @return {*} the balance data of the account or if no address is found.
+   */
+  getFunctions(hash, filterOptions = {}) {
+    throwIf(is.notHash(hash), NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
       subendpoint: 'functions',
       filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+    }).then(onFulfilled, onError)
   }
 
   getLogs(hash, filterOptions) {
