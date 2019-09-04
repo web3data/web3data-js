@@ -110,30 +110,75 @@ class Address {
   }
 
   /**
-   * Retrieves the balance data of the given address. Returns null if no address is found.
+   * Retrieves the latest or historical balance data of the given address depending upon
+   * Returns null if no address is found.
    * @param {String} hash - the address of the account
    * @param {Object} filterOptions - the filter options associated with the request
    * @return {*} the balance data of the account or if no address is found.
    */
-  async getBalance(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
-    let response
-    try {
-      response = await get(this.web3data, {
-        hash,
-        endpoint: ENDPOINT,
-        subendpoint: 'account-balances/latest',
-        filterOptions
-      })
-    } catch (error) {
-      if (error.response) {
-        throwIf(true, error.response.data.message)
-      }
-    }
+  getBalance(hash, filterOptions = {}) {
+    throwIf(is.notHash(hash), NO_ADDRESS)
+    return filterOptions.startDate || filterOptions.endDate
+      ? this.getHistoricalBalance(hash, filterOptions).then(data => data)
+      : this.getLatestBalance(hash, filterOptions).then(data => data)
+  }
 
-    throwIf(response.error, response.message)
+  /**
+   * Retrieves the latest balance data of the given address. Returns null if no address is found.
+   * @param {String} hash - the address of the account
+   * @param {Object} filterOptions - the filter options associated with the request
+   * @return {*} the balance data of the account or if no address is found.
+   */
+  getLatestBalance(hash, filterOptions = {}) {
+    throwIf(is.notHash(hash), NO_ADDRESS)
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'account-balances/latest',
+      filterOptions
+    })
+      .then(
+        /* If response has an error throw, if the address is not found return null, otherwise return the data */
+        response =>
+          throwIf(response.error, response.message) ||
+          response.status === NOT_FOUND
+            ? null
+            : response.payload
+      )
+      .catch(error =>
+        error.response
+          ? throwIf(true, error.response.data.message)
+          : 'Error with request'
+      )
+  }
 
-    return response.status === NOT_FOUND ? null : response.payload
+  /**
+   * Retrieves the historical balance data of the given address. Returns null if no address is found.
+   * @param {String} hash - the address of the account
+   * @param {Object} filterOptions - the filter options associated with the request
+   * @return {*} the historical balance data of the account or if no address is found.
+   */
+  getHistoricalBalance(hash, filterOptions = {}) {
+    throwIf(is.notHash(hash), NO_ADDRESS)
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'account-balances/historical',
+      filterOptions
+    })
+      .then(
+        /* If response has an error throw, if the address is not found return null, otherwise return the data */
+        response =>
+          throwIf(response.error, response.message) ||
+          response.status === NOT_FOUND
+            ? null
+            : response.payload
+      )
+      .catch(error =>
+        error.response
+          ? throwIf(true, error.response.data.message)
+          : 'Error with request'
+      )
   }
 
   getTokens(hash, filterOptions) {
