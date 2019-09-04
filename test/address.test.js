@@ -120,15 +120,22 @@ test('Successfully gets address functions pagination', async t => {
 })
 
 /*********** Test getLogs() ***********/
-test('Successfully gets address logs', async t => {
-    const response = await t.context.web3data.address.getLogs(ADDRESS)
-    t.true({}.hasOwnProperty.call(response, 'records'))
-})
-
 test('throws exception when calling getLogs without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getLogs()
     }, { instanceOf: Error, message: NO_ADDRESS })
+})
+
+test('Successfully gets address logs - no filters', async t => {
+    const response = await t.context.web3data.address.getLogs(ADDRESS)
+    t.true({}.hasOwnProperty.call(response, 'records'))
+})
+
+test('Successfully gets address logs - with filters', async t => {
+    const BLOCK_NUMBER = '7280571'
+    const response = await t.context.web3data.address.getLogs(ADDRESS, {blockNumber: BLOCK_NUMBER})
+    t.true({}.hasOwnProperty.call(response, 'records'))
+    t.is(response.records[0].blockNumber, BLOCK_NUMBER)
 })
 
 /*********** Test getTransactions() ***********/

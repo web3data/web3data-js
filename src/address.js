@@ -83,18 +83,20 @@ class Address {
     }).then(onFulfilled, onError)
   }
 
-  getLogs(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+  /**
+   * Retrieves the logs for the transactions where this address is either the originator or a recipient.
+   * @param {String} hash - the address of the account
+   * @param {Object} filterOptions - the filter options associated with the request
+   * @return {Promise<Object>} the object containing the array of logs
+   */
+  getLogs(hash, filterOptions = {}) {
+    throwIf(is.notHash(hash), NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
       subendpoint: 'logs',
       filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+    }).then(onFulfilled, onError)
   }
 
   getTransactions(hash, filterOptions) {
