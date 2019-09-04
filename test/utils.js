@@ -7,7 +7,8 @@ import FSPersister from '@pollyjs/persister-fs';
 export const setUpPolly = (recordingName) => {
     Polly.register(FSPersister);
     Polly.register(NodeHttpAdapter);
-    return new Polly(`${recordingName}`, {
+
+    const polly = new Polly(`${recordingName}`, {
         adapters: ['node-http'],
         persister: 'fs',
         persisterOptions: {
@@ -21,4 +22,9 @@ export const setUpPolly = (recordingName) => {
             }
         }
     });
+    const { server } = polly;
+    server.any().on('beforePersist', (req, recording) => {
+        recording.request.headers = recording.request.headers.filter(({ name }) => name !== 'x-api-key')
+    });
+    return polly
 }
