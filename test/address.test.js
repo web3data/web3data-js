@@ -165,3 +165,90 @@ test('throws exception when calling getBalance without hash', async t => {
         await t.context.web3data.address.getBalance()
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
+
+/*********** Test getBalances() ***********/
+test('throws exception when calling getBalances without hash', async t => {
+    await t.throwsAsync(async () => {
+        await t.context.web3data.address.getBalances()
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
+
+test('Successfully gets address balances - no filters', async t => {
+    const balances = await t.context.web3data.address.getBalances(ADDRESS)
+    t.true({}.hasOwnProperty.call(balances, 'balance'))
+    /* Test that balance is numerical */
+    t.regex(balances.balance, /[0-9]/)
+})
+
+test('Successfully gets address balances - with filters', async t => {
+    const balances = await t.context.web3data.address.getBalances(ADDRESS, {includePrice: true})
+    t.true({}.hasOwnProperty.call(balances, 'balance'))
+    t.true({}.hasOwnProperty.call(balances, 'price'))
+})
+
+/*********** Test getBalancesBatch() ***********/
+test('throws exception when calling getBalancesBatch without array of hashes', async t => {
+    await t.throwsAsync(async () => {
+        await t.context.web3data.address.getBalancesBatch()
+    }, { instanceOf: Error, message: 'Must be array of valid address hashes' })
+    await t.throwsAsync(async () => {
+        await t.context.web3data.address.getBalancesBatch(ADDRESS)
+    }, { instanceOf: Error, message: 'Must be array of valid address hashes' })
+})
+
+test('throws exception when calling getBalancesBatch with array of empty string', async t => {
+    await t.throwsAsync(async () => {
+        await t.context.web3data.address.getBalancesBatch([''])
+    }, { instanceOf: Error, message: NO_ADDRESS})
+})
+
+test('Successfully gets address batch balances - no filters', async t => {
+    const balances = await t.context.web3data.address.getBalancesBatch([ADDRESS, '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'])
+    t.true({}.hasOwnProperty.call(balances, ADDRESS))
+    /* Test that balance is numerical */
+    t.regex(balances[ADDRESS].balance, /[0-9]/)
+})
+
+test('Successfully gets address batch balances - with filters', async t => {
+    const balances = await t.context.web3data.address.getBalancesBatch(
+        [ADDRESS, '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'],
+        {includePrice: true})
+    t.true({}.hasOwnProperty.call(balances, ADDRESS))
+    t.true({}.hasOwnProperty.call(balances[ADDRESS], 'price'))
+})
+
+/*********** Test getMultipleBalances() ***********/
+test('throws exception when calling getBalancesBatch without hash or array of hashes', async t => {
+    await t.throwsAsync(async () => {
+        await t.context.web3data.address.getMultipleBalances()
+    }, { instanceOf: Error, message: NO_ADDRESS })
+    await t.throwsAsync(async () => {
+        await t.context.web3data.address.getMultipleBalances([''])
+    }, { instanceOf: Error, message: NO_ADDRESS })
+})
+
+test('Successfully gets single address multiple balances  - no filters', async t => {
+    const balances = await t.context.web3data.address.getMultipleBalances(ADDRESS)
+    t.true({}.hasOwnProperty.call(balances, 'balance'))
+    /* Test that balance is numerical */
+    t.regex(balances.balance, /[0-9]/)
+})
+
+test('Successfully get multiple address balances  - no filters', async t => {
+    const balances = await t.context.web3data.address.getMultipleBalances([ADDRESS, '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'])
+    t.true({}.hasOwnProperty.call(balances, ADDRESS))
+    /* Test that balance is numerical */
+    t.regex(balances[ADDRESS].balance, /[0-9]/)
+})
+
+test('Successfully gets single address multiple balances  - with filters', async t => {
+    const balances = await t.context.web3data.address.getMultipleBalances(ADDRESS, {includePrice: true})
+    t.true({}.hasOwnProperty.call(balances, 'balance'))
+    t.true({}.hasOwnProperty.call(balances, 'price'))
+})
+
+test('Successfully get multiple address balances  - with filters', async t => {
+    const balances = await t.context.web3data.address.getMultipleBalances([ADDRESS, '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'], {includePrice: true})
+    t.true({}.hasOwnProperty.call(balances, ADDRESS))
+    t.true({}.hasOwnProperty.call(balances[ADDRESS], 'price'))
+})

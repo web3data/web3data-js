@@ -140,6 +140,51 @@ class Address {
     return response.status === NOT_FOUND ? null : response.payload
   }
 
+  /**
+   * Retrieves the latest account and token balances for the specified address(es).
+   * @param {Array|String} hashes - the array or string containing the address(es) of the account
+   * @param {Object} filterOptions - the filter options associated with the request
+   * @return {Promise<Object>} the balance data of the account(s)
+   */
+  getMultipleBalances(hashes, filterOptions = {}) {
+    return Array.isArray(hashes)
+      ? this.getBalancesBatch(hashes, filterOptions)
+      : this.getBalances(hashes, filterOptions)
+  }
+
+  /**
+   * Retrieves the latest account and token balances for the specified address.
+   * @param {String} hash - the address of the account
+   * @param {Object} filterOptions - the filter options associated with the request
+   * @return {Promise<Object>} the balance data of the account
+   */
+  getBalances(hash, filterOptions = {}) {
+    throwIf(is.notHash(hash), NO_ADDRESS)
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'balances',
+      filterOptions
+    }).then(onFulfilled, onError)
+  }
+
+  /**
+   * Retrieves the latest account and token balances for the specified addresses.
+   * @param {Array|String} hashes - the array containing the address(es) of the account.
+   * @param {Object} filterOptions - the filter options associated with the request.
+   * @return {Promise<Object>} the balance data of the account(s).
+   */
+  getBalancesBatch(hashes, filterOptions = {}) {
+    throwIf(!Array.isArray(hashes), 'Must be array of valid address hashes')
+    hashes.map(hash => throwIf(is.notHash(hash), NO_ADDRESS))
+    filterOptions.addresses = hashes
+    return get(this.web3data, {
+      endpoint: ENDPOINT,
+      subendpoint: 'balances',
+      filterOptions
+    }).then(onFulfilled, onError)
+  }
+
   getTokens(hash, filterOptions) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
     return get(this.web3data, {
