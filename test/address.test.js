@@ -48,18 +48,24 @@ test('Successfully gets address information + pricing data', async t => {
 })
 
 
-/*********** Test getStats() ***********/
-test('Successfully gets address statistics', async t => {
-    let stats = await t.context.web3data.address.getStats(ADDRESS)
-
-    /* payload usually returns array however this guards against any changes */
-    stats = Array.isArray(stats) ? stats[0] : stats
-    t.true({}.hasOwnProperty.call(stats, 'firstSeen'))
-})
-test('throws exception when calling getStats without hash', async t => {
+/*********** Test getMetadata() ***********/
+test('throws exception when calling getMetadata without hash', async t => {
     await t.throwsAsync(async () => {
-        await t.context.web3data.address.getStats()
+        await t.context.web3data.address.getMetadata()
     }, { instanceOf: Error, message: NO_ADDRESS })
+})
+
+test('Successfully gets address metadata - no filters', async t => {
+    const metadata = (await t.context.web3data.address.getMetadata(ADDRESS))[0]
+    t.true({}.hasOwnProperty.call(metadata, 'firstSeen'))
+})
+
+test('Successfully gets address metadata - with filters', async t => {
+    const metadata = (await t.context.web3data.address.getMetadata(ADDRESS, {timeFormat: 'ms'}))[0]
+    t.true({}.hasOwnProperty.call(metadata, 'firstSeen'))
+
+    /*test that first seen is a number implying that it is in ms*/
+    t.regex(`${metadata.firstSeen}`, /[0-9]/)
 })
 
 /*********** Test getAdoption() ***********/
