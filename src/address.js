@@ -217,6 +217,22 @@ class Address {
     )
   }
 
+  /**
+   * Retrieves all token transfers involving the specified address.
+   * @param {String} hash - the address of the account
+   * @param {Object} filterOptions - the filter options associated with the request
+   * @return {Promise<Object>} the object containing the array of token transfer objects.
+   */
+  getTokenTransfers(hash, filterOptions = {}) {
+    throwIf(is.notHash(hash), NO_ADDRESS)
+    return get(this.web3data, {
+      hash,
+      endpoint: ENDPOINT,
+      subendpoint: 'token-transfers',
+      filterOptions
+    }).then(onFulfilled, onError)
+  }
+
   getTokenBalances(hash, filterOptions) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
     return get(this.web3data, {
