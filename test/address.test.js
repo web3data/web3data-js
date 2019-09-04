@@ -49,7 +49,7 @@ test('Successfully gets address information + pricing data', async t => {
 
 
 /*********** Test getMetadata() ***********/
-test('throws exception when calling getStats without hash', async t => {
+test('throws exception when calling getMetadata without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getMetadata()
     }, { instanceOf: Error, message: NO_ADDRESS })
