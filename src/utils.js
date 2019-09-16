@@ -102,6 +102,27 @@ const ethFactory = function(web3data) {
   return methods
 }
 
+/**
+ * Creates a string in json rpc format.
+ * @param {object} options - The json rpc options.
+ * @return {string} The json rpc formatted string.
+ */
+const formatJsonRpc = options => {
+  if (!options) return ''
+  if (options.params) {
+    options.params = Array.isArray(options.params)
+        ? options.params
+        : [options.params]
+  }
+
+  return JSON.stringify({
+    jsonrpc: options.version || '2.0',
+    method: options.method || 'subscribe',
+    id: options.id || 0,
+    params: options.params || []
+  })
+}
+
 module.exports = {
   buildFilterUrl,
   is,
@@ -112,5 +133,6 @@ module.exports = {
   ethFactory,
   throwNow,
   onFulfilled,
-  onError
+  onError,
+  formatJsonRpc
 }
