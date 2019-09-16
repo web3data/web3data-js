@@ -307,6 +307,15 @@ class Address {
       error => throwIf(true, error.response.data.message)
     )
   }
+
+  // TODO: Needs tests
+  getMetrics(filterOptions) {
+    return get(this.web3data, {
+      endpoint: ENDPOINT,
+      subendpoint: 'metrics/latest',
+      filterOptions
+    }).then(onFulfilled, onError)
+  }
 }
 
 module.exports = Address

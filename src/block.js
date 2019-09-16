@@ -3,25 +3,19 @@ const {
   ERROR_MESSAGE_BLOCK_NO_ID: NO_BLOCK_ID
 } = require('./constants')
 
-const {is, get, throwIf} = require('./utils')
+const {is, get, throwIf, onFulfilled, onError} = require('./utils')
 
 class Block {
   constructor(web3data) {
     this.web3data = web3data
   }
 
-  getTokenTransfers(id, filterOptions) {
-    if (is.undefined(id)) return Promise.reject(new Error(NO_BLOCK_ID))
+  // TODO: Needs tests
+  getBlocks(filterOptions) {
     return get(this.web3data, {
-      pathParam: id,
       endpoint: ENDPOINT,
-      subendpoint: 'token-transfers',
       filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+    }).then(onFulfilled, onError)
   }
 
   async getBlock(id, filterOptions) {
@@ -101,6 +95,51 @@ class Block {
         resolve(null)
       }
     })
+  }
+
+  getTokenTransfers(id, filterOptions) {
+    if (is.undefined(id)) return Promise.reject(new Error(NO_BLOCK_ID))
+    return get(this.web3data, {
+      pathParam: id,
+      endpoint: ENDPOINT,
+      subendpoint: 'token-transfers',
+      filterOptions
+    }).then(
+      response =>
+        response.error ? throwIf(true, response.message) : response.payload,
+      error => throwIf(true, error.response.data.message)
+    )
+  }
+
+  // TODO: Needs tests
+  getLogs(id, filterOptions) {
+    throwIf(is.notHash(id), NO_BLOCK_ID)
+    return get(this.web3data, {
+      id,
+      endpoint: ENDPOINT,
+      subendpoint: 'logs',
+      filterOptions
+    }).then(onFulfilled, onError)
+  }
+
+  // TODO: Needs tests
+  getFunctions(id, filterOptions) {
+    throwIf(is.notHash(id), NO_BLOCK_ID)
+    return get(this.web3data, {
+      id,
+      endpoint: ENDPOINT,
+      subendpoint: 'functions',
+      filterOptions
+    }).then(onFulfilled, onError)
+  }
+
+  // TODO: Needs tests
+  getMetrics(filterOptions) {
+    return get(this.web3data, {
+      endpoint: ENDPOINT,
+      subendpoint: 'metrics/latest',
+      filterOptions
+    }).then(onFulfilled, onError)
   }
 }
 
