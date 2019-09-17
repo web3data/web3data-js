@@ -1,11 +1,13 @@
 const {throwIf, ethFactory} = require('./utils')
+const {BLOCKCHAIN_ID_ETHEREUM_MAINNET: BLOCKCHAIN_ID} = require('./constants')
 
 /**
  * Class for all Ethereum based methods.
  */
 class Eth {
-  constructor(web3data) {
-    this.web3data = web3data
+  constructor(Web3data, apiKey, options) {
+    options.blockchainId = BLOCKCHAIN_ID
+    this.web3data = new Web3data(apiKey, options)
 
     /* Get object containing eth specific methods */
     const methods = ethFactory(this.web3data)
@@ -33,6 +35,10 @@ class Eth {
     }
 
     return balance && balance.value ? balance.value : null
+  }
+
+  rpc(method, params) {
+    return this.web3data.rpc(method, params)
   }
 }
 

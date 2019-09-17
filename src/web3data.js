@@ -2,9 +2,10 @@ const axios = require('axios')
 const {
   API_KEY_HEADER,
   BLOCKCHAIN_ID_HEADER,
-  DEFAULT_BASE_URL
+  DEFAULT_BASE_URL,
+  DEFAULT_RPC_URL
 } = require('./constants')
-const {is, throwIf} = require('./utils')
+const {is, throwIf, formatJsonRpc, onError, onFulfilled} = require('./utils')
 const Address = require('./address')
 const Token = require('./token')
 const Contract = require('./contract')
@@ -13,13 +14,10 @@ const Block = require('./block')
 const Signature = require('./signature')
 const Market = require('./market')
 const Eth = require('./eth')
+const Btc = require('./btc')
 const WebSocketClient = require('./websocket')
 
-/**
- * Class Web3data contains methods for hitting Amberdata's
- * API endpoints.
- * */
-class Web3Data {
+class Web3DataFactory {
   /**
    * Creates a Web3Data instance
    * @param {string} apiKey  The Amberdata api key needed to access data
@@ -34,6 +32,7 @@ class Web3Data {
     )
 
     this.apiKey = apiKey
+    this.blockchainId = null
 
     /* Setup required request headers */
     this.headers = {
@@ -43,6 +42,7 @@ class Web3Data {
 
     /* Setup optional request headers */
     if (options.blockchainId) {
+      this.blockchainId = options.blockchainId
       this.headers[BLOCKCHAIN_ID_HEADER] = options.blockchainId
     }
 
@@ -60,9 +60,43 @@ class Web3Data {
     this.block = new Block(this)
     this.signature = new Signature(this)
     this.market = new Market(this)
+  }
 
-    /* Attach eth specific methods under eth namespace */
-    this.eth = new Eth(this)
+  /**
+   * Appends the API base url with the endpoint  url. Then sends an
+   * http request to the Amberdata API endpoint.
+   * @param {string} url - The endpoint url with any query/path params if set
+   * @return {*} the axios request object
+   */
+  rawQuery(url) {
+    return axios
+      .get(this.baseUrl + url, {
+        headers: this.headers
+      })
+      .then(r => r.data)
+  }
+
+  rpc(method, params) {
+    console.log(this.headers)
+    return axios
+      .post(DEFAULT_RPC_URL, formatJsonRpc({method, params}), {
+        headers: this.headers
+      })
+      .then(onFulfilled, onError)
+  }
+}
+
+/**
+ * Class Web3data contains methods for hitting Amberdata's
+ * API endpoints.
+ * */
+class Web3Data extends Web3DataFactory {
+  constructor(apiKey, options = {}) {
+    super(apiKey, options)
+
+    /* Instantiates a new Web3data.js instance with blockchain specific methods */
+    this.eth = new Eth(Web3DataFactory, apiKey, options)
+    this.btc = new Btc(Web3DataFactory, apiKey, options)
 
     this.websocket = null
   }
@@ -104,20 +138,6 @@ class Web3Data {
     }
 
     this.websocket.off({eventName, filters}, callback)
-  }
-
-  /**
-   * Appends the API base url with the endpoint  url. Then sends an
-   * http request to the Amberdata API endpoint.
-   * @param {string} url - The endpoint url with any query/path params if set
-   * @return {*} the axios request object
-   */
-  rawQuery(url) {
-    return axios
-      .get(this.baseUrl + url, {
-        headers: this.headers
-      })
-      .then(r => r.data)
   }
 }
 

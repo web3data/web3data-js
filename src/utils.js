@@ -111,8 +111,8 @@ const formatJsonRpc = options => {
   if (!options) return ''
   if (options.params) {
     options.params = Array.isArray(options.params)
-        ? options.params
-        : [options.params]
+      ? options.params
+      : [options.params]
   }
 
   return JSON.stringify({
