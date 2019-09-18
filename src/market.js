@@ -45,12 +45,12 @@ class Market {
 
   // TODO: Needs tests
   // Returns supported details for each of our market endpoint data features
-  getOhlcv(pair, filterOptions) {
-    throwIf(is.notUndefined(pair), NO_MARKET_PAIR)
+  getOhlcv(pair, filterOptions = {}) {
+    throwIf(is.undefined(pair), NO_MARKET_PAIR)
     const subendpoint =
       filterOptions.startDate || filterOptions.endDate ? 'historical' : 'latest'
     return get(this.web3data, {
-      pair,
+      pathParam: pair,
       endpoint: `${ENDPOINT}/ohlcv`,
       subendpoint,
       filterOptions
@@ -60,20 +60,9 @@ class Market {
   // TODO: Needs tests
   // Returns supported details for each of our market endpoint data features
   getOrders(pair, filterOptions) {
-    throwIf(is.notUndefined(pair), NO_MARKET_PAIR)
+    throwIf(is.undefined(pair), NO_MARKET_PAIR)
     return get(this.web3data, {
-      pair,
-      endpoint: `${ENDPOINT}/orders`,
-      filterOptions
-    }).then(onFulfilled, onError)
-  }
-
-  // TODO: Needs tests
-  // Returns supported details for each of our market endpoint data features
-  getOrderBooks(pair, filterOptions) {
-    throwIf(is.notUndefined(pair), NO_MARKET_PAIR)
-    return get(this.web3data, {
-      pair,
+      pathParam: pair,
       endpoint: `${ENDPOINT}/orders`,
       filterOptions
     }).then(onFulfilled, onError)
@@ -82,9 +71,9 @@ class Market {
   // TODO: Needs tests
   // Returns supported details for each of our market endpoint data features
   getBbos(pair, filterOptions) {
-    throwIf(is.notUndefined(pair), NO_MARKET_PAIR)
+    throwIf(is.undefined(pair), NO_MARKET_PAIR)
     return get(this.web3data, {
-      pair,
+      pathParam: pair,
       endpoint: `${ENDPOINT}/orders`,
       subendpoint: 'bbo',
       filterOptions
@@ -94,11 +83,11 @@ class Market {
   // TODO: Needs tests
   // Returns supported details for each of our market endpoint data features
   getPrices(base, filterOptions) {
-    throwIf(is.notUndefined(base), NO_MARKET_PAIR)
+    throwIf(is.undefined(base), NO_MARKET_PAIR)
     const subendpoint =
       filterOptions.startDate || filterOptions.endDate ? 'historical' : 'latest'
     return get(this.web3data, {
-      base,
+      pathParam: base,
       endpoint: `${ENDPOINT}/prices`,
       subendpoint,
       filterOptions
@@ -122,9 +111,9 @@ class Market {
   // TODO: Needs tests
   // Returns supported details for each of our market endpoint data features
   getVwap(base, filterOptions) {
-    throwIf(is.notHash(base), NO_MARKET_PAIR)
+    throwIf(is.undefined(base), NO_MARKET_PAIR)
     return get(this.web3data, {
-      base,
+      pathParam: base,
       endpoint: `${ENDPOINT}/prices`,
       subendpoint: 'wap/latest',
       filterOptions
@@ -134,12 +123,12 @@ class Market {
   // TODO: Needs tests
   // Returns supported details for each of our market endpoint data features
   getTickers(pair, filterOptions) {
-    throwIf(is.notUndefined(pair), NO_MARKET_PAIR)
+    throwIf(is.undefined(pair), NO_MARKET_PAIR)
     const subendpoint =
       filterOptions.startDate || filterOptions.endDate ? 'historical' : 'latest'
     return get(this.web3data, {
-      pair,
-      endpoint: `${ENDPOINT}/trades`,
+      pathParam: pair,
+      endpoint: `${ENDPOINT}/tickers`,
       subendpoint,
       filterOptions
     }).then(onFulfilled, onError)
@@ -148,9 +137,9 @@ class Market {
   // TODO: Needs tests
   // Returns supported details for each of our market endpoint data features
   getTrades(pair, filterOptions) {
-    throwIf(is.notUndefined(pair), NO_MARKET_PAIR)
+    throwIf(is.undefined(pair), NO_MARKET_PAIR)
     return get(this.web3data, {
-      pair,
+      pathParam: pair,
       endpoint: `${ENDPOINT}/trades`,
       subendpoint: 'historical',
       filterOptions
