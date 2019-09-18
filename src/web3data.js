@@ -36,9 +36,7 @@ class Web3Data {
     this.apiKey = apiKey
 
     /* Setup required request headers */
-    this.headers = {
-      'Cache-Control': 'no-cache'
-    }
+    this.headers = {}
     this.headers[API_KEY_HEADER] = this.apiKey
 
     /* Setup optional request headers */
