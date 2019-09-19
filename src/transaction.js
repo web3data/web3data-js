@@ -3,18 +3,11 @@ const {
   ERROR_MESSAGE_TRANSACTION_NO_HASH: NO_HASH
 } = require('./constants')
 
-const {get, is} = require('./utils')
+const {is, get, onFulfilled, onError} = require('./utils')
 
 class Transaction {
   constructor(web3data) {
     this.web3data = web3data
-  }
-
-  getGasPrediction() {
-    return get(this.web3data, {
-      endpoint: ENDPOINT,
-      subendpoint: 'gas/predictions'
-    })
   }
 
   async getTransactions(filterOptions) {
@@ -63,6 +56,13 @@ class Transaction {
     })
   }
 
+  getGasPrediction() {
+    return get(this.web3data, {
+      endpoint: ENDPOINT,
+      subendpoint: 'gas/predictions'
+    })
+  }
+
   async getGasPrice() {
     const response = await this.getGasPrediction()
     return new Promise((resolve, reject) => {
@@ -78,6 +78,24 @@ class Transaction {
         resolve(`${response.payload.average.gasPrice}`)
       }
     })
+  }
+
+  // TODO: Needs tests
+  getVolume(filterOptions) {
+    return get(this.web3data, {
+      endpoint: ENDPOINT,
+      subendpoint: 'volume',
+      filterOptions
+    }).then(onFulfilled, onError)
+  }
+
+  // TODO: Needs tests
+  getMetrics(filterOptions) {
+    return get(this.web3data, {
+      endpoint: ENDPOINT,
+      subendpoint: 'metrics/latest',
+      filterOptions
+    }).then(onFulfilled, onError)
   }
 }
 
