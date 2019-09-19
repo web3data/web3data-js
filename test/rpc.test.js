@@ -1,4 +1,3 @@
-import Web3Data from '../src/web3data'
 import test from 'ava'
 import {
     API_KEY_HEADER,
@@ -12,7 +11,7 @@ import {
     getNewWeb3DataInstance,
     MOCK_RAW_TXN_DATA,
     MOCK_CALL_DATA,
-    MOCK_EXEC_DATA, ADDRESS
+    MOCK_EXEC_DATA,
 } from './constants'
 
 import {setUpPolly} from "./utils";
