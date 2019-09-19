@@ -37,6 +37,7 @@ class Eth {
     return balance && balance.value ? balance.value : null
   }
 
+  /* See Web3Data class for details on rpc method */
   rpc(method, params) {
     return this.web3data.rpc(method, params)
   }

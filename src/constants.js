@@ -29,6 +29,7 @@ module.exports.ERROR_MESSAGE_CONTRACT_NO_ADDRESS =
   'No contract address supplied'
 module.exports.ERROR_MESSAGE_BLOCK_NO_ID = 'No block number or hash supplied'
 module.exports.ERROR_MESSAGE_SIGNATURE_NO_HASH = 'No signature hash supplied'
+module.exports.ERROR_RPC_NO_METHOD = 'No RPC method provided'
 
 /* Ethereum based methods */
 module.exports.ETH_METHODS = {

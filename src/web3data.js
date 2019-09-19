@@ -3,9 +3,10 @@ const {
   API_KEY_HEADER,
   BLOCKCHAIN_ID_HEADER,
   DEFAULT_BASE_URL,
-  DEFAULT_RPC_URL
+  DEFAULT_RPC_URL,
+  ERROR_RPC_NO_METHOD
 } = require('./constants')
-const {is, throwIf, formatJsonRpc, onError, onFulfilled} = require('./utils')
+const {is, throwIf, formatJsonRpc} = require('./utils')
 const Address = require('./address')
 const Token = require('./token')
 const Contract = require('./contract')
@@ -38,6 +39,7 @@ class Web3DataFactory {
     this.headers = {
       'Cache-Control': 'no-cache'
     }
+
     this.headers[API_KEY_HEADER] = this.apiKey
 
     /* Setup optional request headers */
@@ -76,13 +78,23 @@ class Web3DataFactory {
       .then(r => r.data)
   }
 
-  rpc(method, params) {
-    console.log(this.headers)
+  /**
+   * Method used to interact with web3api json rpc endpoints.
+   * @param {string} method - the json rpc method to call
+   * @param { Array|String } params - the parameters to the json rpc call
+   * @return {Promise<AxiosResponse<T>>} returns the json rpc result
+   */
+  rpc(method, params = []) {
+    throwIf(!method, ERROR_RPC_NO_METHOD)
     return axios
-      .post(DEFAULT_RPC_URL, formatJsonRpc({method, params}), {
-        headers: this.headers
-      })
-      .then(onFulfilled, onError)
+      .post(
+        `${DEFAULT_RPC_URL}?${API_KEY_HEADER}=${this.apiKey}&${BLOCKCHAIN_ID_HEADER}=${this.blockchainId}`,
+        formatJsonRpc({method, params}),
+        {
+          headers: this.headers
+        }
+      )
+      .then(r => r.data, r => r.response.data)
   }
 }
 

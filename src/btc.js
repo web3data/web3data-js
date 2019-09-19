@@ -9,6 +9,7 @@ class Btc {
     this.web3data = new Web3data(apiKey, options)
   }
 
+  /* See Web3Data class for details on rpc method */
   rpc(method, params) {
     return this.web3data.rpc(method, params)
   }
