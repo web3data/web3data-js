@@ -36,10 +36,14 @@ class Web3DataFactory {
     this.blockchainId = null
 
     /* Setup required request headers */
+<<<<<<< HEAD
     this.headers = {
       'Cache-Control': 'no-cache'
     }
 
+=======
+    this.headers = {}
+>>>>>>> master
     this.headers[API_KEY_HEADER] = this.apiKey
 
     /* Setup optional request headers */

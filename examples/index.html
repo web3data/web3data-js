@@ -44,17 +44,51 @@
   <div class="container">
     <div id='input'>
       <input type="text" placeholder="api key" name="" id="apikey-input">
-      <input type="text" name="" placeholder="address" id="address-input">
-      <button onClick="runExample()" id="goBtn">Go</button>
+    </div>
+    <div id='input'>
+      <select id="parent_method" class="" name="">
+        <option value="market">Market</option>
+        <option value="address">Addresses</option>
+        <option value="token">Tokens</option>
+        <option value="contract">Contracts</option>
+        <option value="transaction">Transactions</option>
+        <option value="block">Blocks</option>
+        <option value="signature">Signatures</option>
+      </select>
+      <select id="child_method" class="" name="">
+        <option value="getInformation">Address Info</option>
+        <option value="getEtherPrice">Get Ether Price</option>
+        <option value="getRankings">Rankings</option>
+        <option value="getOhlcv">OHLCV</option>
+        <option value="getOrders">Orders</option>
+        <option value="getBbos">BBBOS</option>
+        <option value="getPrices">Prices</option>
+        <option value="getTokenPrices">Token Prices</option>
+        <option value="getVwap">VWAP/TWAP</option>
+        <option value="getTickers">Tickers</option>
+        <option value="getTrades">Trades</option>
+      </select>
+    </div>
+    <div id='input'>
+      <input type="text" name="" placeholder="Variables" id="params-input">
+      <input type="text" name="" placeholder="Query Params" id="query-input">
+      <!-- <button onClick="runExample()" id="goBtn">Go</button> -->
+    </div>
+    <div id='input'>
+      <button onClick="runMethod()" id="goBtn">Method</button>
     </div>
     <div id="output">
       <p>Results<p>
     </div>
   </div>
-<script type="text/javascript" src="../dist/web3data.min.js"></script>
+  <script type="text/javascript" src="../dist/web3data.min.js"></script>
   <script>
+    function setResult(data) {
+      document.getElementById('output').innerHTML = '<pre id="json">' + JSON.stringify(data, undefined, 2) + '</pre>'
+    }
+
     function runExample() {
-      const address = document.querySelector('#address-input').value
+      const address = document.querySelector('#params-input').value
       const apiKey = document.querySelector('#apikey-input').value
       const web3data = new Web3Data(apiKey)
 
@@ -70,6 +104,27 @@
       web3data.on({eventName: 'block'}, data => {
         console.log(data)
       })
+    }
+
+    function runMethod() {
+      const apiKey = document.querySelector('#apikey-input').value
+      const params = document.querySelector('#params-input').value
+      const query = document.querySelector('#query-input').value
+      console.log('query', query)
+      const queryObj = query ? JSON.parse(query) : {}
+      console.log('queryObj', typeof queryObj, queryObj)
+      console.log('params', params)
+      const parentMethod = document.querySelector('#parent_method').value
+      const childMethod = document.querySelector('#child_method').value
+      const web3data = new Web3Data(apiKey)
+      console.log('parentMethod', parentMethod)
+      console.log('childMethod', childMethod)
+
+      if (web3data[parentMethod] && web3data[parentMethod][childMethod]) {
+        web3data[parentMethod][childMethod](params, queryObj).then(setResult, (err) => {
+          console.log('err', err)
+        })
+      }
     }
   </script>
 </body>

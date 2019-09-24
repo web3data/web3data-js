@@ -58,28 +58,28 @@ _rejectsPromise.title = (providedTitle = '', input) => `Rejects promise if ${inp
  * -------- Test Tokens -------- *
  **********************************/
 
-test([statusSuccess, rejectsPromise], {method: 'getTokenHolders' }, NO_ADDRESS)
+test([statusSuccess, rejectsPromise], {method: 'getHolders' }, NO_ADDRESS)
 
 test('Successfully gets address Token Holders Historical', async t => {
     let filters = {holderAddresses: ADDRESS}
-    let response = await t.context.web3data.token.getTokenHoldersHistorical(TOKEN_ADDRESS, filters);
+    let response = await t.context.web3data.token.getHoldersHistorical(TOKEN_ADDRESS, filters);
     t.is(response.status, 200)
 });
 
 test('Rejects promise if no token address supplied', async t => {
     let filters = {holderAddresses: ADDRESS}
     await t.throwsAsync(async () => {
-        await t.context.web3data.token.getTokenHoldersHistorical('',filters);
+        await t.context.web3data.token.getHoldersHistorical('',filters);
     }, { instanceOf: Error, message: NO_ADDRESS })
 });
 
 test('Rejects promise if no holder address supplied', async t => {
     await t.throwsAsync(async () => {
-        await t.context.web3data.token.getTokenHoldersHistorical(TOKEN_ADDRESS);
+        await t.context.web3data.token.getHoldersHistorical(TOKEN_ADDRESS);
     }, { instanceOf: Error, message: NO_HOLDER_ADDRESS })
 });
 
-test([statusSuccess, rejectsPromise], {method: 'getTokenVolume'}, NO_ADDRESS)
-test([statusSuccess, rejectsPromise], {method: 'getTokenVelocity'}, NO_ADDRESS)
-test([statusSuccess, rejectsPromise], {method: 'getTokenSupply'}, NO_ADDRESS)
-test([statusSuccess, rejectsPromise], {method: 'getTokenTransfers'}, NO_ADDRESS)
+test([statusSuccess, rejectsPromise], {method: 'getVolume'}, NO_ADDRESS)
+test([statusSuccess, rejectsPromise], {method: 'getVelocity'}, NO_ADDRESS)
+test([statusSuccess, rejectsPromise], {method: 'getSupplies'}, NO_ADDRESS)
+test([statusSuccess, rejectsPromise], {method: 'getTransfers'}, NO_ADDRESS)

@@ -1,6 +1,6 @@
 {
   "name": "web3data-js",
-  "version": "0.4.0",
+  "version": "0.5.1",
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "test-fast": "cross-env nyc -s ava --fail-fast",
     "test-verbose": "cross-env nyc ava --verbose",
     "clean-recs": "rm -r test/recordings",
-    "example": "superstatic"
+    "example": "superstatic --port 8000"
   },
   "repository": {
     "type": "git",
