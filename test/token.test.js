@@ -54,16 +54,37 @@ let _rejectsPromise = async (t, promise, errorMessage) => {
 
 _rejectsPromise.title = (providedTitle = '', input) => `Rejects promise if ${input.prototype.name} is called without hash`
 
+/**
+ * Checks that the response contains the specified field
+ * @param t - the test context
+ * @param blockchain - the blockchain namespace e.g. 'eth'
+ * @param method - the RPC method
+ * @param field - the field for which to check it's existence in the response
+ * @param params - the RPC method parameters
+ */
+const returnsObjectWithField = async (t, {method, field, params = [] }) => {
+    const resp = await t.context.web3data.token[method](params)
+
+    t.true({}.hasOwnProperty.call(resp, 'payload'))
+
+    /* If response is an array of objects, then we want to check for the field on one of the objects*/
+    resp.result = Array.isArray(resp.payload) ? resp.payload[0] : resp.payload
+    resp.result = resp.payload.data &&  Array.isArray(resp.payload.data) ? resp.payload.data[0] : resp.payload
+    t.true({}.hasOwnProperty.call(resp.result, field))
+}
+returnsObjectWithField.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns valid object containing expected field`
+
+
 /**********************************
  * -------- Test Tokens -------- *
  **********************************/
 
-test([statusSuccess, rejectsPromise], {method: 'getHolders' }, NO_ADDRESS)
+test([rejectsPromise], {method: 'getHolders' }, NO_ADDRESS)
 
 test('Successfully gets address Token Holders Historical', async t => {
-    let filters = {holderAddresses: ADDRESS}
-    let response = await t.context.web3data.token.getHoldersHistorical(TOKEN_ADDRESS, filters);
-    t.is(response.status, 200)
+    const filters = {holderAddresses: ADDRESS}
+    const holdersHistorical = await t.context.web3data.token.getHoldersHistorical(TOKEN_ADDRESS, filters);
+    t.true({}.hasOwnProperty.call(holdersHistorical.data[0], 'timestamp'))
 });
 
 test('Rejects promise if no token address supplied', async t => {
@@ -79,7 +100,7 @@ test('Rejects promise if no holder address supplied', async t => {
     }, { instanceOf: Error, message: NO_HOLDER_ADDRESS })
 });
 
-test([statusSuccess, rejectsPromise], {method: 'getVolume'}, NO_ADDRESS)
-test([statusSuccess, rejectsPromise], {method: 'getVelocity'}, NO_ADDRESS)
-test([statusSuccess, rejectsPromise], {method: 'getSupplies'}, NO_ADDRESS)
-test([statusSuccess, rejectsPromise], {method: 'getTransfers'}, NO_ADDRESS)
+test([rejectsPromise], {method: 'getVolume'}, NO_ADDRESS)
+test([rejectsPromise], {method: 'getVelocity'}, NO_ADDRESS)
+test([rejectsPromise], {method: 'getSupplies'}, NO_ADDRESS)
+test([rejectsPromise], {method: 'getTransfers'}, NO_ADDRESS)
