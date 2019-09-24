@@ -1,9 +1,5 @@
 import test from 'ava'
 import {
-    API_KEY_HEADER,
-    DEFAULT_BASE_URL,
-    BLOCKCHAIN_ID_HEADER,
-    ERROR_MESSAGE_ADDRESS_NO_ADDRESS as NO_ADDRESS,
     ERROR_RPC_NO_METHOD as NO_METHOD
 } from "../src/constants";
 
@@ -20,7 +16,7 @@ import {setUpPolly} from "./utils";
  * -------- Tests Setup ---------- *
  **********************************/
 test.before(t => {
-    t.context.polly = setUpPolly('rpc')
+    t.context.polly = setUpPolly('rpc' + Date.now())
 })
 
 test.after(async t => {
