@@ -8,7 +8,7 @@ export const setUpPolly = (recordingName) => {
     Polly.register(FSPersister);
     Polly.register(NodeHttpAdapter);
 
-    const polly = new Polly(`${recordingName}`, {
+    const polly = new Polly(`${recordingName}_${Date.now()}` , {
         adapters: ['node-http'],
         persister: 'fs',
         persisterOptions: {

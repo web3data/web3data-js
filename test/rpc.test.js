@@ -16,7 +16,7 @@ import {setUpPolly} from "./utils";
  * -------- Tests Setup ---------- *
  **********************************/
 test.before(t => {
-    t.context.polly = setUpPolly('rpc' + Date.now())
+    t.context.polly = setUpPolly('rpc')
 })
 
 test.after(async t => {
