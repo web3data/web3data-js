@@ -1,7 +1,13 @@
 module.exports.DEFAULT_WEBSOCKET_URL = 'wss://ws.web3api.io'
 module.exports.DEFAULT_BASE_URL = 'https://web3api.io/api/v1'
+module.exports.DEFAULT_RPC_URL = 'https://rpc.web3api.io'
+
 module.exports.API_KEY_HEADER = 'x-api-key'
 module.exports.BLOCKCHAIN_ID_HEADER = 'x-amberdata-blockchain-id'
+
+module.exports.BLOCKCHAIN_ID_ETHEREUM_MAINNET = '1c9c969065fcd1cf'
+module.exports.BLOCKCHAIN_ID_ETHEREUM_RINKEBY = '1b3f7a72b3e99c13'
+module.exports.BLOCKCHAIN_ID_BITCOIN = '408fa195a34b533de9ad9889f076045e'
 
 /* Endpoints */
 module.exports.ADDRESSES_ENDPOINT = '/addresses'
@@ -24,6 +30,7 @@ module.exports.ERROR_MESSAGE_CONTRACT_NO_ADDRESS =
 module.exports.ERROR_MESSAGE_BLOCK_NO_ID = 'No block number or hash supplied'
 module.exports.ERROR_MESSAGE_MARKET_NO_PAIR = 'No market pair supplied'
 module.exports.ERROR_MESSAGE_SIGNATURE_NO_HASH = 'No signature hash supplied'
+module.exports.ERROR_RPC_NO_METHOD = 'No RPC method provided'
 
 /* Ethereum based methods */
 module.exports.ETH_METHODS = {

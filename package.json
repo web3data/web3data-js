@@ -1,6 +1,6 @@
 {
   "name": "web3data-js",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
@@ -36,20 +36,20 @@
     "@babel/plugin-transform-runtime": "^7.5.0",
     "@babel/preset-env": "^7.5.4",
     "@babel/register": "^7.4.4",
+    "@pollyjs/adapter-node-http": "^2.6.0",
     "@pollyjs/core": "^2.6.0",
     "@pollyjs/persister-fs": "^2.6.0",
-    "@pollyjs/adapter-node-http": "^2.6.0",
-    "ava": "^2.2.0",
+    "ava": "^2.4.0",
     "capture-console": "^1.0.1",
     "cross-env": "^5.2.0",
     "dotenv": "^8.0.0",
     "get-port": "^5.0.0",
+    "lodash": "^4.17.14",
     "nyc": "^14.1.1",
     "parcel": "^1.12.3",
     "prettier": "^1.18.2",
     "superstatic": "^6.0.4",
-    "xo": "^0.24.0",
-    "lodash": "^4.17.14"
+    "xo": "^0.24.0"
   },
   "dependencies": {
     "axios": "^0.19.0",
