@@ -26,7 +26,7 @@ class Token {
       endpoint: ENDPOINT,
       subendpoint: 'volume',
       filterOptions
-    })
+    }).then(onFulfilled, onError)
   }
 
   getVelocity(hash, filterOptions) {
@@ -36,7 +36,7 @@ class Token {
       endpoint: ENDPOINT,
       subendpoint: 'velocity',
       filterOptions
-    })
+    }).then(onFulfilled, onError)
   }
 
   getHolders(hash, filterOptions) {
@@ -46,7 +46,7 @@ class Token {
       endpoint: ENDPOINT,
       subendpoint: 'holders/latest',
       filterOptions
-    })
+    }).then(onFulfilled, onError)
   }
 
   getHoldersHistorical(hash, filterOptions = {}) {
@@ -58,7 +58,7 @@ class Token {
       endpoint: ENDPOINT,
       subendpoint: 'holders/historical',
       filterOptions
-    })
+    }).then(onFulfilled, onError)
   }
 
   getSupplies(hash, filterOptions) {
@@ -68,7 +68,7 @@ class Token {
       endpoint: ENDPOINT,
       subendpoint: 'supplies/latest',
       filterOptions
-    })
+    }).then(onFulfilled, onError)
   }
 
   getTransfers(hash, filterOptions) {
@@ -78,7 +78,7 @@ class Token {
       endpoint: ENDPOINT,
       subendpoint: 'transfers',
       filterOptions
-    })
+    }).then(onFulfilled, onError)
   }
 }
 
