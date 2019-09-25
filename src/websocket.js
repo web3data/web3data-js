@@ -49,7 +49,7 @@ const responseType = message => {
 }
 
 const MAX_RECONNECTS = 3
-const NO_DATA_TIMEOUT = 180000 // 3 minutes
+const NO_DATA_TIMEOUT = 180000 * 10 // 30 minutes, give bitcoin some breathing room
 const NO_RESPONSE_TIMEOUT = 5000 // 5 seconds
 
 /**
@@ -63,12 +63,17 @@ class WebSocketClient {
         ? options.websocketUrl
         : DEFAULT_WEBSOCKET_URL
     this.apiKey = apiKey
+    this.blockchainId = null
 
     // Internal state management
     this.connected = false
     this.reconnects = 0
     this.responseReceived = false
     this.dataReceived = false
+
+    if (options.blockchainId) {
+      this.blockchainId = options.blockchainId
+    }
 
     // Keep track of subscriptions, key/value mapping of subscription ID to listeners
     this.registry = {}
@@ -89,12 +94,17 @@ class WebSocketClient {
   connect(callBack) {
     // Check if connected already, if so skip
     if (!is.null(this.socket)) return
-
-    this.socket = new WebSocket(`${this.baseWsUrl}?x-api-key=${this.apiKey}`)
+    const apiKeyParam = this.apiKey ? `?x-api-key=${this.apiKey}` : ''
+    const blockchainId = this.blockchainId
+      ? `&x-amberdata-blockchain-id=${this.blockchainId}`
+      : ''
+    this.socket = new WebSocket(
+      `${this.baseWsUrl}${apiKeyParam}${blockchainId}`
+    )
 
     // Initialize connection attempt
     this.socket.addEventListener('open', result => {
-      console.log('websocket client connection opened')
+      console.info('websocket client connection opened')
 
       this.connected = true
 
@@ -134,7 +144,7 @@ class WebSocketClient {
     })
 
     this.socket.addEventListener('close', data => {
-      console.log('Websocket client connection closed - code', data.code)
+      console.info('Websocket client connection closed - code', data.code)
       this._reconnect()
     })
   }
@@ -147,7 +157,7 @@ class WebSocketClient {
     if (this.socket && this.socket.readyState === 1) {
       this.socket.onclose = callBack
         ? () => callBack('Websocket client connection closed')
-        : () => console.log('Websocket client connection closed')
+        : () => console.info('Websocket client connection closed')
       this.socket.close()
       this.socket = null
     } else {
@@ -238,7 +248,7 @@ class WebSocketClient {
     }
 
     if (++this.reconnects <= MAX_RECONNECTS) {
-      console.log(
+      console.warn(
         `attempting to reconnect...${this.reconnects}/${MAX_RECONNECTS}`
       )
       this.connect()

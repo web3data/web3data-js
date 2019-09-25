@@ -46,6 +46,7 @@ class Web3DataFactory {
     }
 
     this.wsConfig = {
+      ...options,
       websocketUrl: options.websocketUrl ? options.websocketUrl : null
     }
 

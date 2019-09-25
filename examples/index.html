@@ -44,6 +44,7 @@
   <div class="container">
     <div id='input'>
       <input type="text" placeholder="api key" name="" id="apikey-input">
+      <input type="text" placeholder="Blockchain ID" name="" id="blockchainId-input">
     </div>
     <div id='input'>
       <select id="parent_method" class="" name="">
@@ -76,6 +77,7 @@
     </div>
     <div id='input'>
       <button onClick="runMethod()" id="goBtn">Method</button>
+      <button onClick="runExample()" id="goBtn">Connect to WS</button>
     </div>
     <div id="output">
       <p>Results<p>
@@ -90,11 +92,9 @@
     function runExample() {
       const address = document.querySelector('#params-input').value
       const apiKey = document.querySelector('#apikey-input').value
-      const web3data = new Web3Data(apiKey)
-
-      web3data.address.getInformation(address).then( info => {
-        console.log(info)
-        document.getElementById('output').innerHTML = '<pre id="json">' + JSON.stringify(info.payload, undefined, 2) + '</pre>'
+      const blockchainId = document.querySelector('#blockchainId-input').value
+      const web3data = new Web3Data(apiKey, {
+        blockchainId,
       })
 
       web3data.connect(status => {
@@ -102,23 +102,28 @@
       })
 
       web3data.on({eventName: 'block'}, data => {
-        console.log(data)
+        console.log('block', data)
+        setResult(data)
+      })
+      web3data.on({eventName: 'block', filters: { number: 595931 }}, data => {
+        console.log('block NUMBER', data)
+        setResult(data)
+      })
+      web3data.on({eventName: 'transaction'}, data => {
+        console.log('transaction', data)
+        setResult(data)
       })
     }
 
     function runMethod() {
       const apiKey = document.querySelector('#apikey-input').value
+      const blockchainId = document.querySelector('#blockchainId-input').value
       const params = document.querySelector('#params-input').value
       const query = document.querySelector('#query-input').value
-      console.log('query', query)
       const queryObj = query ? JSON.parse(query) : {}
-      console.log('queryObj', typeof queryObj, queryObj)
-      console.log('params', params)
       const parentMethod = document.querySelector('#parent_method').value
       const childMethod = document.querySelector('#child_method').value
-      const web3data = new Web3Data(apiKey)
-      console.log('parentMethod', parentMethod)
-      console.log('childMethod', childMethod)
+      const web3data = new Web3Data(apiKey, { blockchainId })
 
       if (web3data[parentMethod] && web3data[parentMethod][childMethod]) {
         web3data[parentMethod][childMethod](params, queryObj).then(setResult, (err) => {
