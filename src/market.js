@@ -145,6 +145,24 @@ class Market {
       filterOptions
     }).then(onFulfilled, onError)
   }
+
+  // TODO: Needs tests
+  // Retrieves information about supported exchange-pairs (indexed by exchange)
+  getExchanges(filterOptions) {
+    return get(this.web3data, {
+      endpoint: `${ENDPOINT}/exchanges`,
+      filterOptions
+    }).then(onFulfilled, onError)
+  }
+
+  // TODO: Needs tests
+  // Retrieves information about supported exchange-pairs (indexed by pair)
+  getPairs(filterOptions) {
+    return get(this.web3data, {
+      endpoint: `${ENDPOINT}/pairs`,
+      filterOptions
+    }).then(onFulfilled, onError)
+  }
 }
 
 module.exports = Market
