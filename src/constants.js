@@ -18,8 +18,13 @@ module.exports.CONTRACTS_ENDPOINT = '/contracts'
 module.exports.SIGNATURES_ENDPOINT = '/signatures'
 module.exports.MARKET_ENDPOINT = '/market'
 
-// const MARKET_FEATURES = ['pairs', 'exchanges', 'ohlcv', 'prices', 'tickers']
-module.exports.MARKET_FEATURES = ['pairs', 'exchanges', 'ohlcv', 'prices', 'tickers']
+module.exports.MARKET_FEATURES = [
+  'pairs',
+  'exchanges',
+  'ohlcv',
+  'prices',
+  'tickers'
+]
 
 /* Error messages */
 module.exports.ERROR_MESSAGE_TOKEN_NO_ADDRESS = 'No token address supplied'
@@ -32,7 +37,9 @@ module.exports.ERROR_MESSAGE_CONTRACT_NO_ADDRESS =
   'No contract address supplied'
 module.exports.ERROR_MESSAGE_BLOCK_NO_ID = 'No block number or hash supplied'
 module.exports.ERROR_MESSAGE_MARKET_NO_PAIR = 'No market pair supplied'
-module.exports.ERROR_MESSAGE_MARKET_NO_FEATURE = `Missing or unknown. Features: '${module.exports.MARKET_FEATURES.join('\', \'')}'`
+module.exports.ERROR_MESSAGE_MARKET_NO_FEATURE = `Missing or unknown. Features: '${module.exports.MARKET_FEATURES.join(
+  "', '"
+)}'`
 module.exports.ERROR_MESSAGE_SIGNATURE_NO_HASH = 'No signature hash supplied'
 module.exports.ERROR_RPC_NO_METHOD = 'No RPC method provided'
 

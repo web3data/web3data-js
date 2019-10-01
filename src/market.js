@@ -43,35 +43,46 @@ class Market {
   //       tickers/information
   //     */
   getFeatures(features, filterOptions) {
-
     // Force feature to be array but allows non-array input
     features = Array.isArray(features) ? features : [features]
 
     // Iterate through each feature and if all is valid return array of promises
     features = features.map(feature => {
-
       // Check each feature that it is valid
-      throwIf(is.undefined(feature) || FEATURES.indexOf(feature) < 0 , NO_FEATURE)
+      throwIf(
+        is.undefined(feature) || FEATURES.indexOf(feature) < 0,
+        NO_FEATURE
+      )
 
       // Append necessary url paths
       switch (feature) {
-        case 'prices': feature += '/pairs'; break;
+        case 'prices':
+          feature += '/pairs'
+          break
         case 'ohlcv':
-        case 'tickers': feature += '/information'; break;
+        case 'tickers':
+          feature += '/information'
+          break
+        default:
       }
 
       // Return a promise that retrieves the data from the server
-      return get(this.web3data, {
-        endpoint: ENDPOINT,
-        subendpoint: feature,
-        filterOptions
-      }).then(onFulfilled, onError)
-         // Return an object with 'feature' as the key and response the value
-        .then(response => ({ [feature] : response }))
+      return (
+        get(this.web3data, {
+          endpoint: ENDPOINT,
+          subendpoint: feature,
+          filterOptions
+        })
+          .then(onFulfilled, onError)
+          // Return an object with 'feature' as the key and response the value
+          .then(response => ({[feature]: response}))
+      )
     })
 
     // Returns array of promises that once resolved are merged into a single object
-    return Promise.all([...features]).then(data => data.reduce((accumObj, curObj) => ({...accumObj, ...curObj }) ))
+    return Promise.all([...features]).then(data =>
+      data.reduce((accumObj, curObj) => ({...accumObj, ...curObj}))
+    )
   }
 
   // TODO: Needs tests
@@ -176,7 +187,6 @@ class Market {
       filterOptions
     }).then(onFulfilled, onError)
   }
-
 }
 
 module.exports = Market
