@@ -42,7 +42,7 @@ class Market {
   //       prices/pairs
   //       tickers/information
   //     */
-  getFeatures(features, filterOptions) {
+  getFeatures(features = FEATURES, filterOptions = {}) {
     // Force feature to be array but allows non-array input
     features = Array.isArray(features) ? features : [features]
 
@@ -75,7 +75,8 @@ class Market {
         })
           .then(onFulfilled, onError)
           // Return an object with 'feature' as the key and response the value
-          .then(response => ({[feature]: response}))
+          // .split('/')[0] removes the extra endpoint added above in switch
+          .then(response => ({[feature.split('/')[0]]: response}))
       )
     })
 
