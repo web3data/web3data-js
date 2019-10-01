@@ -1,7 +1,9 @@
 const {is, get, throwIf, onFulfilled, onError} = require('./utils')
 const {
+  MARKET_FEATURES: FEATURES,
   MARKET_ENDPOINT: ENDPOINT,
-  ERROR_MESSAGE_MARKET_NO_PAIR: NO_MARKET_PAIR
+  ERROR_MESSAGE_MARKET_NO_PAIR: NO_MARKET_PAIR,
+  ERROR_MESSAGE_MARKET_NO_FEATURE: NO_FEATURE
 } = require('./constants')
 
 class Market {
@@ -33,15 +35,44 @@ class Market {
 
   // TODO: Needs tests
   // Returns supported details for each of our market endpoint data features
-  // TODO: finish
-  // getFeatures(filterOptions) {
-  //   // throwIf(is.notHash(id), NO_MARKET_PAIR)
-  //   return get(this.web3data, {
-  //     endpoint: ENDPOINT,
-  //     subendpoint: 'functions',
-  //     filterOptions
-  //   }).then(onFulfilled, onError)
-  // }
+  /*
+  //       pairs
+  //       exchanges
+  //       ohlcv/information
+  //       prices/pairs
+  //       tickers/information
+  //     */
+  getFeatures(features, filterOptions) {
+
+    // Force feature to be array but allows non-array input
+    features = Array.isArray(features) ? features : [features]
+
+    // Iterate through each feature and if all is valid return array of promises
+    features = features.map(feature => {
+
+      // Check each feature that it is valid
+      throwIf(is.undefined(feature) || FEATURES.indexOf(feature) < 0 , NO_FEATURE)
+
+      // Append necessary url paths
+      switch (feature) {
+        case 'prices': feature += '/pairs'; break;
+        case 'ohlcv':
+        case 'tickers': feature += '/information'; break;
+      }
+
+      // Return a promise that retrieves the data from the server
+      return get(this.web3data, {
+        endpoint: ENDPOINT,
+        subendpoint: feature,
+        filterOptions
+      }).then(onFulfilled, onError)
+         // Return an object with 'feature' as the key and response the value
+        .then(response => ({ [feature] : response }))
+    })
+
+    // Returns array of promises that once resolved are merged into a single object
+    return Promise.all([...features]).then(data => data.reduce((accumObj, curObj) => ({...accumObj, ...curObj }) ))
+  }
 
   // TODO: Needs tests
   // Returns supported details for each of our market endpoint data features
@@ -146,23 +177,6 @@ class Market {
     }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
-  // Retrieves information about supported exchange-pairs (indexed by exchange)
-  getExchanges(filterOptions) {
-    return get(this.web3data, {
-      endpoint: `${ENDPOINT}/exchanges`,
-      filterOptions
-    }).then(onFulfilled, onError)
-  }
-
-  // TODO: Needs tests
-  // Retrieves information about supported exchange-pairs (indexed by pair)
-  getPairs(filterOptions) {
-    return get(this.web3data, {
-      endpoint: `${ENDPOINT}/pairs`,
-      filterOptions
-    }).then(onFulfilled, onError)
-  }
 }
 
 module.exports = Market
