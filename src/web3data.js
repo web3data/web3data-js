@@ -91,7 +91,7 @@ class Web3DataFactory {
           headers: this.headers
         }
       )
-      .then(r => r.data, r => r.response.data)
+      .then(response => response.data, response => response.response.data)
   }
 }
 
