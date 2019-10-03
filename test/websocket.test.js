@@ -88,7 +88,7 @@ test.cb('Successfully connects to Websocket Server - with callback',  t => {
 })
 
 /*********** Test reconnects to server on error (no callback) [MOCK] ***********/
-test.cb('Successfully reconnects to Websocket Server on error 3 times',  t => {
+test.cb.only('Successfully reconnects to Websocket Server on error 3 times',  t => {
     let reconnects = 0
     t.context.wss.on('connection', ws => {
         if(++reconnects > 3) {

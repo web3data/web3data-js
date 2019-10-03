@@ -146,7 +146,7 @@ class WebSocketClient {
 
     this.socket.addEventListener('close', data => {
       console.info('Websocket client connection closed - code', data.code)
-      this._reconnect(callBack)
+      this._reconnect()
     })
   }
 
@@ -243,7 +243,7 @@ class WebSocketClient {
    * 3. We got a socket error of any kind.
    * @private
    */
-  _reconnect(callback) {
+  _reconnect() {
     if (this.socket.readyState === 1) {
       this.disconnect()
     }
@@ -252,7 +252,7 @@ class WebSocketClient {
       console.warn(
         `attempting to reconnect...${this.reconnects}/${MAX_RECONNECTS}`
       )
-      this.connect(callback)
+      this.connect()
     }
   }
 
