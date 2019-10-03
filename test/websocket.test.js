@@ -87,6 +87,22 @@ test.cb('Successfully connects to Websocket Server - with callback',  t => {
     t.timeout(TEST_TIMEOUT)
 })
 
+/*********** Test reconnects to server on error (no callback) [MOCK] ***********/
+test.cb('Successfully reconnects to Websocket Server on error 3 times',  t => {
+    let reconnects = 0
+    t.context.wss.on('connection', ws => {
+        if(++reconnects > 3) {
+            t.end()
+        } else {
+            ws.terminate()
+        }
+    });
+    t.context.w3d.connect(() => {
+
+    })
+    t.timeout(TEST_TIMEOUT)
+})
+
 /*********** Test disconnect from server (no callback) [MOCK] ***********/
 test.cb('Successfully disconnects from Websocket Server - no callback',  t => {
     t.context.wss.on('connection', (ws) => {
