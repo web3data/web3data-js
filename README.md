@@ -2,15 +2,16 @@
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 [![Try web3data-js on RunKit](https://badge.runkitcdn.com/web3data-js.svg)](https://npm.runkit.com/web3data-js)
 
-# web3data.js Javascript API
+# Web3data.js Javascript API
 Wrapper for [Amberdata.io](http://amberdata.io)'s [REST API](docs.amberdata.io)
+
 
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
 - [Building](#building)
 - [Testing](#testing)
-- [API Key](#)
+- [API Key](#obtaining-an-api-key)
 - [Commands](#commands)
 - [Community](#community)
 - [Resources](#resources)
@@ -27,17 +28,20 @@ Using CDN:
 <script src="https://unpkg.com/web3data-js/dist/web3data.min.js"></script>
 ```
 
+## Getting Started
+Check out the [Quick Start](quick-start.md) documentation to get started.
+
+
 ## Usage
 ```js
 import Web3Data from 'Web3Data'
 
 const w3d = new Web3Data('<api-key>')
 
-( async () => {
+;( async () => {
      const contract = await w3d.contract.getDetails("0x06012c8cf97bead5deae237070f9587f8e7a266d")
      console.log(contract) // { ... }
- }
-)()
+})()
 ```
 
 #### Websockets
@@ -45,7 +49,6 @@ const w3d = new Web3Data('<api-key>')
 import Web3Data from 'Web3Data'
 
 const w3d = new Web3Data('<api-key>')
-
 
 w3d.connect(status => {
   console.log('status ->', status.type)
@@ -74,9 +77,7 @@ npm run test-record
 ## Obtaining an API key
 Visit [Amberdata.io](https://amberdata.io/pricing) and select the developer plan to get started!
 
-Once you have you're key place it in a file named `.env` &mdash; see [./env.example](./env.example) for reference.
-
-<!-- For additional details on obtaining an api key see() -->
+Once you have you're key place it in a file named `.env` &mdash; see [env.example](./env.example) for reference.
 
 ## Commands
 ```bash
@@ -92,9 +93,8 @@ npm run clean-fix # deletes the fixtures
 npm run example # runs the example - see web3data-js in action!
 ```
 
-## Community
-- [Discourse](https://forum.amberdata.io/)
 ## Resources
 - [Contributing](./CONTRIBUTING.md)
+
 ## Licensing
 This project is licensed under the [Apache Licence 2.0](./LICENSE).

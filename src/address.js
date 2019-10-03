@@ -6,12 +6,33 @@ const {
 
 const {is, get, throwIf, onFulfilled, onError} = require('./utils')
 
+/**
+ * Contains methods pertaining to the `/address` endpoint of Amberdata's API.
+ */
 class Address {
+
+  /**
+   * Creates an instance of Address.
+   * @param {Web3Data} web3data
+   */
   constructor(web3data) {
     this.web3data = web3data
   }
 
-  getAllAddresses(filterOptions) {
+  /**
+   * Returns every address that has been seen on the network.
+   * @param {Object} filterOptions The filters associated with the request
+   * @param {string} [filterOptions.hash] Filter by a specific address
+   * @param {string} [filterOptions.size] The size of the response. <b>Default:</b> `100`
+   * @return {Promise<Object>}  containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on return
+   * @public
+   * @example
+   * web3data.address.getAllAddresses({
+   *   size: 100,
+   *
+   * })
+   */
+  getAllAddresses(filterOptions = {}) {
     return get(this.web3data, {endpoint: ENDPOINT, filterOptions}).then(
       response =>
         response.error ? throwIf(true, response.message) : response.payload,
@@ -87,7 +108,10 @@ class Address {
    * Retrieves the logs for the transactions where this address is either the originator or a recipient.
    * @param {String} hash - the address of the account
    * @param {Object} filterOptions - the filter options associated with the request
-   * @return {Promise<Object>} the object containing the array of logs
+   * @return {Promise} Promise object containing the array of logs
+   * @public
+   * @example
+   * web3data.getLogs('0x...')
    */
   getLogs(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)

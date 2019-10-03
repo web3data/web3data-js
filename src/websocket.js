@@ -6,6 +6,7 @@ const {is, uuid} = require('./utils')
  * Creates a string in json rpc format.
  * @param {object} options - The json rpc options.
  * @return {string} The json rpc formatted string.
+ * @private
  */
 const formatJsonRpc = options => {
   if (!options) return ''
@@ -33,6 +34,7 @@ const RESPONSE_TYPE = {
  * Returns enum corresponding to the response type.
  * @param {object} message - The response message from the server.
  * @return {number} The response type (see constants above).
+ * @private
  */
 const responseType = message => {
   if (message.params) {
@@ -56,6 +58,13 @@ const NO_RESPONSE_TIMEOUT = 5000 // 5 seconds
  * Wrapper for Web3data websockets
  */
 class WebSocketClient {
+
+  /**
+   * Instantiates the WebSocketClient.
+   * @param apiKey
+   * @param options
+   * @return {WebSocketClient}
+   */
   constructor(apiKey, options) {
     this.socket = null
     this.baseWsUrl =
@@ -304,6 +313,7 @@ class WebSocketClient {
    * given subscription Id.
    * @param {object} data - The parsed json data sent from the server.
    * @private
+   * @ignore
    */
   _subHandler(data) {
     const id = data && data.id ? data.id : ''

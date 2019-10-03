@@ -18,13 +18,17 @@ const Eth = require('./eth')
 const Btc = require('./btc')
 const WebSocketClient = require('./websocket')
 
+/**
+ * Contains common methods used in
+ */
 class Web3DataFactory {
   /**
    * Creates a Web3Data instance
    * @param {string} apiKey  The Amberdata api key needed to access data
    * @param {object} options  Contains additional configuration options:
-   *  - blockchainId: specifies the blockchain to get data from
-   *  - baseUrl: the base url of API calls
+   * @param blockchainId: specifies the blockchain to get data from
+   * @param - baseUrl: the base url of API calls
+   * @param - websocketUrl: the websocket url to use
    */
   constructor(apiKey, options = {}) {
     throwIf(
@@ -79,7 +83,7 @@ class Web3DataFactory {
   /**
    * Method used to interact with web3api json rpc endpoints.
    * @param {string} method - the json rpc method to call
-   * @param { Array|String } params - the parameters to the json rpc call
+   * @param {(array|string)} params - the parameters to the json rpc call
    * @return {Promise<AxiosResponse<T>>} returns the json rpc result
    */
   rpc(method, params = []) {

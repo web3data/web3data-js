@@ -7,21 +7,37 @@
   <meta name="description" content="A javascript wrapper for accessing amberdata's public API.">
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="stylesheet" href="//unpkg.com/docsify/lib/themes/vue.css">
+  <style>
+    .sidebar-logo {
+      height: 85px;
+    }
+    .app-sub-sidebar li:before {
+      display: none;
+    }
+  </style>
 </head>
 <body>
   <div id="app"></div>
   <script>
     window.$docsify = {
-      name: 'web3data-js',
+      name: '<img src="https://web3data.org/static/web3data_logo_bug_color_v1.svg" alt="W3D Logo" class="sidebar-logo">',
       repo: 'https://github.com/web3data/web3data-js',
+      themeColor: '#269883',
       loadSidebar: true,
+      auto2top: true,
+      autoHeader: false,
+      subMaxLevel: 4,
+      maxLevel: 4,
       alias: {
         '/.*/_sidebar.md': '/_sidebar.md',
         '.*?/CONTRIBUTING':
-                'https://raw.githubusercontent.com/Netflix/pollyjs/master/CONTRIBUTING'
+                'https://raw.githubusercontent.com/web3data/web3data-js/master/CONTRIBUTING'
       },
+      homepage: 'https://raw.githubusercontent.com/web3data/web3data-js/master/README.md'
     }
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
+  <script src="//unpkg.com/docsify-copy-code"></script>
+
 </body>
 </html>
