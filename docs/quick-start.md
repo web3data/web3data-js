@@ -38,7 +38,7 @@ the hood.
 web3data.eth.address.getBalance()
 
 // Bitcoin
-web3data.eth.address.getBalance()
+web3data.btc.address.getBalance()
 ```
 
 Note: When using the namespaced methods the blockchain Id set during instantiation will be ignored.

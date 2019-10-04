@@ -7,15 +7,26 @@ Wrapper for [Amberdata.io](http://amberdata.io)'s [REST API](docs.amberdata.io)
 
 
 ## Table of Contents
+- [API Key](#obtaining-an-api-key)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Building](#building)
 - [Testing](#testing)
-- [API Key](#obtaining-an-api-key)
 - [Commands](#commands)
 - [Community](#community)
 - [Resources](#resources)
 - [Licensing](#licensing)
+
+## The API Key
+Visit [Amberdata.io](https://amberdata.io/pricing) and select the developer plan to get started!
+
+Once you've got your key, place it in a file named `.env` &mdash; see [env.example](./env.example) for reference.
+
+Then in you code you can use it like so: 
+
+```javascript
+const web3Data = new Web3Data(process.env.API_KEY)
+```
 
 ## Installation
 Using npm:
@@ -73,11 +84,6 @@ Runs tests using live responses from our endpoints and records them in your [fix
 ```bash
 npm run test-record
 ```
-
-## Obtaining an API key
-Visit [Amberdata.io](https://amberdata.io/pricing) and select the developer plan to get started!
-
-Once you have you're key place it in a file named `.env` &mdash; see [env.example](./env.example) for reference.
 
 ## Commands
 ```bash

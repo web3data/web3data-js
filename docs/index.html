@@ -20,7 +20,7 @@
   <div id="app"></div>
   <script>
     window.$docsify = {
-      name: '<img src="https://web3data.org/static/web3data_logo_bug_color_v1.svg" alt="W3D Logo" class="sidebar-logo">',
+      name: '<img src="assets/web3data-js-logo.png" alt="W3D Logo" class="sidebar-logo">',
       repo: 'https://github.com/web3data/web3data-js',
       themeColor: '#269883',
       loadSidebar: true,
@@ -38,6 +38,20 @@
   </script>
   <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
   <script src="//unpkg.com/docsify-copy-code"></script>
+  <script src="https://embed.runkit.com"></script>
+  <script>
+    window.onload = function() {
+      (function(){
+        const runkitElements = document.querySelectorAll('.runkit-element');
+        console.log(`->> `, runkitElements)
+        runkitElements.forEach(function(element){
+          const source = element.innerHTML.replace(/&amp;/g, '&').replace(/&gt;/g, '>');
+          element.innerHTML = '';
+          RunKit.createNotebook({element, source});
+        });
+      })();
+    };
+  </script>
 
 </body>
 </html>
