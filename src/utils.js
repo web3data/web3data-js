@@ -2,14 +2,16 @@ const crypto = require('crypto')
 const {ETH_METHODS} = require('./constants')
 /**
  * Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
- * the appropriate parameter(s) where applicable.
- * @param {object} web3data instance on which to call .rawQuery()
- * @param {string} subendpoint The sub-endpoint
- * @param {string} endpoint The endpoint
- * @param {string} hash The address hash
- * @param {string} pathParam The path parameter
- * @param {object} filterOptions The filters associated with a given endpoint
- * @return returns a Promise of the rawQuery request from web3data
+the appropriate parameter(s) where applicable.
+ *
+ * @param web3data - Instance on which to call .rawQuery().
+ * @param subendpoint - The sub-endpoint.
+ * @param endpoint - The endpoint.
+ * @param hash - The address hash.
+ * @param pathParam - The path parameter.
+ * @param filterOptions - The filters associated with a given endpoint.
+ * @returns returns a Promise of the rawQuery request from web3data
+ * @example
  */
 const get = (
   web3data,
@@ -83,8 +85,10 @@ const uuid = data =>
 
 /**
  * Creates an object containing Ethereum based methods.
- * @param web3data { object } the web3data instance
+ *
+ * @param web3data - { object } The web3data instance.
  * @returns methods { object } an object containing Ethereum based methods.
+ * @example
  */
 const ethFactory = function(web3data) {
   const methods = {}
@@ -104,8 +108,10 @@ const ethFactory = function(web3data) {
 
 /**
  * Creates a string in json rpc format.
- * @param {object} options - The json rpc options.
- * @return {string} The json rpc formatted string.
+ *
+ * @param options - The json rpc options.
+ * @returns The json rpc formatted string.
+ * @example
  */
 const formatJsonRpc = options => {
   if (!options) return ''
