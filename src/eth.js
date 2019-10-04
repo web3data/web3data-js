@@ -22,9 +22,11 @@ class Eth {
 
   /**
    * Returns the balance of the account in wei or null if the account doesn't
-   * exist.
-   * @param {String} hash - the address of the account
-   * @return {Promise<*>} - the balance or null if it doesn't exist
+exist.
+   *
+   * @param hash - The address of the account.
+   * @returns - The balance or null if it doesn't exist.
+   * @example
    */
   async getBalance(hash) {
     let balance
