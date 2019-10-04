@@ -3,7 +3,7 @@
 [![Try web3data-js on RunKit](https://badge.runkitcdn.com/web3data-js.svg)](https://npm.runkit.com/web3data-js)
 
 # Web3data.js Javascript API
-Wrapper for [Amberdata.io](http://amberdata.io)'s [REST API](docs.amberdata.io)
+Wrapper for [Amberdata.io](http://amberdata.io)'s [REST API](http://docs.amberdata.io/reference)
 
 
 ## Table of Contents
@@ -22,7 +22,7 @@ Visit [Amberdata.io](https://amberdata.io/pricing) and select the developer plan
 
 Once you've got your key, place it in a file named `.env` &mdash; see [env.example](./env.example) for reference.
 
-Then in you code you can use it like so: 
+Then in you code you can use it like so:
 
 ```javascript
 const web3Data = new Web3Data(process.env.API_KEY)
