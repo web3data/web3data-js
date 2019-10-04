@@ -18,13 +18,19 @@ const Eth = require('./eth')
 const Btc = require('./btc')
 const WebSocketClient = require('./websocket')
 
+/**
+ * Contains common methods used in.
+ */
 class Web3DataFactory {
   /**
-   * Creates a Web3Data instance
-   * @param {string} apiKey  The Amberdata api key needed to access data
-   * @param {object} options  Contains additional configuration options:
-   *  - blockchainId: specifies the blockchain to get data from
-   *  - baseUrl: the base url of API calls
+   * Creates a Web3Data instance.
+   *
+   * @param apiKey - The Amberdata api key needed to access data.
+   * @param {object} options Contains additional configuration options:
+   * @param blockchainId: specifies the blockchain to get data from
+   * @param - baseUrl: the base url of API calls
+   * @param - websocketUrl: the websocket url to use
+   * @example
    */
   constructor(apiKey, options = {}) {
     throwIf(
@@ -64,9 +70,11 @@ class Web3DataFactory {
 
   /**
    * Appends the API base url with the endpoint  url. Then sends an
-   * http request to the Amberdata API endpoint.
-   * @param {string} url - The endpoint url with any query/path params if set
-   * @return {*} the axios request object
+http request to the Amberdata API endpoint.
+   *
+   * @param url - The endpoint url with any query/path params if set.
+   * @returns The axios request object.
+   * @example
    */
   rawQuery(url) {
     return axios
@@ -78,9 +86,11 @@ class Web3DataFactory {
 
   /**
    * Method used to interact with web3api json rpc endpoints.
-   * @param {string} method - the json rpc method to call
-   * @param { Array|String } params - the parameters to the json rpc call
-   * @return {Promise<AxiosResponse<T>>} returns the json rpc result
+   *
+   * @param method - The json rpc method to call.
+   * @param params - The parameters to the json rpc call.
+   * @returns Returns the json rpc result.
+   * @example
    */
   rpc(method, params = []) {
     throwIf(!method, ERROR_RPC_NO_METHOD)

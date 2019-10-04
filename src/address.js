@@ -6,12 +6,34 @@ const {
 
 const {is, get, throwIf, onFulfilled, onError} = require('./utils')
 
+/**
+ * Contains methods pertaining to the `/address` endpoint of Amberdata's API.
+ */
 class Address {
+  /**
+   * Creates an instance of Address.
+   *
+   * @param web3data
+   * @example
+   */
   constructor(web3data) {
     this.web3data = web3data
   }
 
-  getAllAddresses(filterOptions) {
+  /**
+   * Returns every address that has been seen on the network.
+   *
+   * @param filterOptions - The filters associated with the request.
+   * @param [filterOptions.hash] - Filter by a specific address.
+   * @param [filterOptions.size] - The size of the response. <b>Default:</b> `100`.
+   * @returns Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on return.
+   * @public
+   * @example web3data.address.getAllAddresses({
+   * size: 100,
+   *
+   * })
+   */
+  getAllAddresses(filterOptions = {}) {
     return get(this.web3data, {endpoint: ENDPOINT, filterOptions}).then(
       response =>
         response.error ? throwIf(true, response.message) : response.payload,
@@ -59,9 +81,11 @@ class Address {
 
   /**
    * Retrieves the functions (aka internal messages) where this address is either the originator or a recipient.
-   * @param {String} hash - the address of the account.
-   * @param {Object} filterOptions - the filter options associated with the request.
-   * @return {*} the balance data of the account or if no address is found.
+   *
+   * @param hash - The address of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns The balance data of the account or if no address is found.
+   * @example
    */
   getInternalMessages(hash, filterOptions = {}) {
     return this.getFunctions(hash, filterOptions)
@@ -69,9 +93,11 @@ class Address {
 
   /**
    * Retrieves the functions (aka internal messages) where this address is either the originator or a recipient.
-   * @param {String} hash - the address of the account.
-   * @param {Object} filterOptions - the filter options associated with the request.
-   * @return {*} the balance data of the account or if no address is found.
+   *
+   * @param hash - The address of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns The balance data of the account or if no address is found.
+   * @example
    */
   getFunctions(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
@@ -85,9 +111,12 @@ class Address {
 
   /**
    * Retrieves the logs for the transactions where this address is either the originator or a recipient.
-   * @param {String} hash - the address of the account
-   * @param {Object} filterOptions - the filter options associated with the request
-   * @return {Promise<Object>} the object containing the array of logs
+   *
+   * @param hash - The address of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns Promise object containing the array of logs.
+   * @public
+   * @example web3data.getLogs('0x...')
    */
   getLogs(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
@@ -101,9 +130,11 @@ class Address {
 
   /**
    * Retrieves the transactions where this address was either the originator or a recipient.
-   * @param {String} hash - the address of the account
-   * @param {Object} filterOptions - the filter options associated with the request
-   * @return {Promise<Object>} the object containing the array of transaction objects
+   *
+   * @param hash - The address of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns The object containing the array of transaction objects.
+   * @example
    */
   getTransactions(hash, filterOptions = {}) {
     throwIf(!hash, NO_ADDRESS)
@@ -117,9 +148,11 @@ class Address {
 
   /**
    * Retrieves pending transactions the specified address is involved in.
-   * @param {String} hash - the address of the account
-   * @param {Object} filterOptions - the filter options associated with the request
-   * @return {Promise<Object>} the array of pending transactions
+   *
+   * @param hash - The address of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns The array of pending transactions.
+   * @example
    */
   getPendingTransactions(hash, filterOptions = {}) {
     throwIf(!hash, NO_ADDRESS)
@@ -133,10 +166,12 @@ class Address {
 
   /**
    * Retrieves the latest or historical balance data of the given address depending upon
-   * Returns null if no address is found.
-   * @param {String} hash - the address of the account
-   * @param {Object} filterOptions - the filter options associated with the request
-   * @return {*} the balance data of the account or if no address is found.
+Returns null if no address is found.
+   *
+   * @param hash - the address of the account
+   * @param filterOptions - the filter options associated with the request
+   * @returns the balance data of the account or if no address is found.
+   * @example
    */
   getBalance(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
@@ -147,9 +182,11 @@ class Address {
 
   /**
    * Retrieves the latest balance data of the given address. Returns null if no address is found.
-   * @param {String} hash - the address of the account
-   * @param {Object} filterOptions - the filter options associated with the request
-   * @return {*} the balance data of the account or if no address is found.
+   *
+   * @param hash - The address of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns The balance data of the account or if no address is found.
+   * @example
    */
   getLatestBalance(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
@@ -176,9 +213,11 @@ class Address {
 
   /**
    * Retrieves the historical balance data of the given address. Returns null if no address is found.
-   * @param {String} hash - the address of the account
-   * @param {Object} filterOptions - the filter options associated with the request
-   * @return {*} the historical balance data of the account or if no address is found.
+   *
+   * @param hash - The address of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns The historical balance data of the account or if no address is found.
+   * @example
    */
   getHistoricalBalance(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
@@ -205,9 +244,11 @@ class Address {
 
   /**
    * Retrieves the latest account and token balances for the specified address(es).
-   * @param {Array|String} hashes - the array or string containing the address(es) of the account
-   * @param {Object} filterOptions - the filter options associated with the request
-   * @return {Promise<Object>} the balance data of the account(s)
+   *
+   * @param hashes - The array or string containing the address(es) of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns The balance data of the account(s).
+   * @example
    */
   getMultipleBalances(hashes, filterOptions = {}) {
     return Array.isArray(hashes)
@@ -217,9 +258,11 @@ class Address {
 
   /**
    * Retrieves the latest account and token balances for the specified address.
-   * @param {String} hash - the address of the account
-   * @param {Object} filterOptions - the filter options associated with the request
-   * @return {Promise<Object>} the balance data of the account
+   *
+   * @param hash - The address of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns The balance data of the account.
+   * @example
    */
   getBalances(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
@@ -233,9 +276,11 @@ class Address {
 
   /**
    * Retrieves the latest account and token balances for the specified addresses.
-   * @param {Array|String} hashes - the array containing the address(es) of the account.
-   * @param {Object} filterOptions - the filter options associated with the request.
-   * @return {Promise<Object>} the balance data of the account(s).
+   *
+   * @param hashes - The array containing the address(es) of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns The balance data of the account(s).
+   * @example
    */
   getBalancesBatch(hashes, filterOptions = {}) {
     throwIf(!Array.isArray(hashes), 'Must be array of valid address hashes')
@@ -250,9 +295,11 @@ class Address {
 
   /**
    * Retrieves the balance data of the given address. Returns null if no address is found.
-   * @param {String} hash - the address of the account.
-   * @param {Object} filterOptions - the filter options associated with the request.
-   * @return {Promise<Object>} the token balance data of the account.
+   *
+   * @param hash - The address of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns The token balance data of the account.
+   * @example
    */
   getTokens(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
@@ -266,9 +313,11 @@ class Address {
 
   /**
    * Retrieves all token transfers involving the specified address.
-   * @param {String} hash - the address of the account
-   * @param {Object} filterOptions - the filter options associated with the request
-   * @return {Promise<Object>} the object containing the array of token transfer objects.
+   *
+   * @param hash - The address of the account.
+   * @param filterOptions - The filter options associated with the request.
+   * @returns The object containing the array of token transfer objects.
+   * @example
    */
   getTokenTransfers(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)

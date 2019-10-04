@@ -4,8 +4,11 @@ const {is, uuid} = require('./utils')
 
 /**
  * Creates a string in json rpc format.
- * @param {object} options - The json rpc options.
- * @return {string} The json rpc formatted string.
+ *
+ * @param options - The json rpc options.
+ * @returns The json rpc formatted string.
+ * @private
+ * @example
  */
 const formatJsonRpc = options => {
   if (!options) return ''
@@ -31,8 +34,11 @@ const RESPONSE_TYPE = {
 
 /**
  * Returns enum corresponding to the response type.
- * @param {object} message - The response message from the server.
- * @return {number} The response type (see constants above).
+ *
+ * @param message - The response message from the server.
+ * @returns The response type (see constants above).
+ * @private
+ * @example
  */
 const responseType = message => {
   if (message.params) {
@@ -53,9 +59,17 @@ const NO_DATA_TIMEOUT = 180000 * 10 // 30 minutes, give bitcoin some breathing r
 const NO_RESPONSE_TIMEOUT = 5000 // 5 seconds
 
 /**
- * Wrapper for Web3data websockets
+ * Wrapper for Web3data websockets.
  */
 class WebSocketClient {
+  /**
+   * Instantiates the WebSocketClient.
+   *
+   * @param apiKey
+   * @param options
+   * @returns
+   * @example
+   */
   constructor(apiKey, options) {
     this.socket = null
     this.baseWsUrl =
@@ -89,7 +103,9 @@ class WebSocketClient {
 
   /**
    * Connects to the websocket server and inits listeners.
-   * @param {function} callBack - The method to call once connection process is complete.
+   *
+   * @param callBack - The method to call once connection process is complete.
+   * @example
    */
   connect(callBack) {
     // Check if connected already, if so skip
@@ -151,8 +167,10 @@ class WebSocketClient {
   }
 
   /**
-   * Destroys WebSocket i.e. disconnects client and drops reference.
-   * @param {function} callBack -The callback function that executes on close.
+   * Destroys WebSocket i.e. Disconnects client and drops reference.
+   *
+   * @param callBack -The callback function that executes on close.
+   * @example
    */
   disconnect(callBack = null) {
     if (this.socket && this.socket.readyState === 1) {
@@ -168,11 +186,13 @@ class WebSocketClient {
 
   /**
    * Creates a new event listener for the specified event. Registers event and callback function.
-   * @param {object} An object containing the event name and filters
+   *
+   * @param An - Object containing the event name and filters.
    * @config {string} eventName - The event for which to listen.
    * @config {object} filters - The extra arguments associated with the subscription.
-   * @param {function} callback - The callback function that executes when the
+   * @param callback - The callback function that executes when the
    * specified event is received by the websocket data listener.
+   * @example
    */
   on({eventName, filters}, callback) {
     if (!callback) console.warn('no callback provided')
@@ -194,11 +214,13 @@ class WebSocketClient {
 
   /**
    * Subscribes to the first occurrence of an event then unsubscribes.
-   * @param {object} An object containing the event name and filters
+   *
+   * @param An - Object containing the event name and filters.
    * @config {string} eventName - The event for which to listen.
    * @config {object} filters - The extra arguments associated with the subscription.
-   * @param {function} callback - The callback function that executes when the
+   * @param callback - The callback function that executes when the
    * specified event is received by the websocket data listener.
+   * @example
    */
   once({eventName, filters}, callback) {
     this.on({eventName, filters}, data => {
@@ -212,10 +234,12 @@ class WebSocketClient {
 
   /**
    * Destroys a single event listener. De-registers event and callback function.
-   * @param {object} An object containing the event name and filters
+   *
+   * @param An - Object containing the event name and filters.
    * @config {string} eventName - The event to de-register.
    * @config {object} filters - The extra arguments associated with the subscription.
-   * @param {function} callback - The callback function to execute once unsubscribe is complete.
+   * @param callback - The callback function to execute once unsubscribe is complete.
+   * @example
    */
   off({eventName, filters}, callback) {
     if (!callback) console.warn('no callback provided')
@@ -237,11 +261,13 @@ class WebSocketClient {
 
   /**
    * Initiates a reconnect given the following conditions:
-   * 1. Initial connection doesnt respond within 5 seconds.
-   * 2. Connection doesn't get any event within 3 minutes,
-   *    and has at least 1 successful subscription.
-   * 3. We got a socket error of any kind.
+1. Initial connection doesnt respond within 5 seconds.
+2. Connection doesn't get any event within 3 minutes,
+and has at least 1 successful subscription.
+3. We got a socket error of any kind, see above.
+   *
    * @private
+   * @example
    */
   _reconnect() {
     if (this.socket.readyState === 1) {
@@ -258,7 +284,9 @@ class WebSocketClient {
 
   /**
    * Loops through each registry item and sends subscription message.
+   *
    * @private
+   * @example
    */
   _refreshSubscriptions() {
     if (!this.registry) return
@@ -271,7 +299,9 @@ class WebSocketClient {
 
   /**
    * Sets up the on message listener.
+   *
    * @private
+   * @example
    */
   _listen() {
     this.socket.addEventListener('message', message => {
@@ -302,9 +332,12 @@ class WebSocketClient {
 
   /**
    * Handles subscription responses. Registers the server's
-   * given subscription Id.
-   * @param {object} data - The parsed json data sent from the server.
+given subscription Id.
+   *
+   * @param data - The parsed json data sent from the server.
    * @private
+   * @ignore
+   * @example
    */
   _subHandler(data) {
     const id = data && data.id ? data.id : ''
@@ -316,8 +349,10 @@ class WebSocketClient {
 
   /**
    * Handles data responses. Calls registered callbacks.
-   * @param {object} data - The parsed json data sent from the server.
+   *
+   * @param data - The parsed json data sent from the server.
    * @private
+   * @example
    */
   _dataHandler(data) {
     this.dataReceived = true
@@ -343,8 +378,10 @@ class WebSocketClient {
 
   /**
    * Handles the unsubscription response. Calls the unsubscribe call back registered in the off method then de-registers the event.
-   * @param {object} data - The parsed json data sent from the server.
+   *
+   * @param data - The parsed json data sent from the server.
    * @private
+   * @example
    */
   _unsubHandler(data) {
     const id = data && data.id ? data.id : ''
@@ -363,9 +400,11 @@ class WebSocketClient {
 
   /**
    * Sends subscription message to the websocket connection.
-   * @param {string} eventName - The name of the event to subscribe to.
-   * @param {object} filters - The extra arguments associated with the subscription.
+   *
+   * @param eventName - The name of the event to subscribe to.
+   * @param filters - The extra arguments associated with the subscription.
    * @private
+   * @example
    */
   _subscribe(eventName, filters) {
     const params = is.notUndefined(filters) ? [filters] : []
@@ -376,10 +415,12 @@ class WebSocketClient {
 
   /**
    * Sends unsubscription message to the websocket connection.
-   * @param {string} eventName - The name of the event to unsubscribe from.
-   * @param {object} filters - The extra arguments associated with the subscription.
-   * @param {*} id - The derived uuid.
+   *
+   * @param eventName - The name of the event to unsubscribe from.
+   * @param filters - The extra arguments associated with the subscription.
+   * @param id - The derived uuid.
    * @private
+   * @example
    */
   _unsubscribe(eventName, filters, id) {
     const jsonRpcMessage = formatJsonRpc({
