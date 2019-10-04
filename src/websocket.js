@@ -109,7 +109,8 @@ class WebSocketClient {
    */
   connect(callBack) {
     // Check if connected already, if so skip
-    if (!is.null(this.socket)) return
+    if (this.socket && this.socket.readyState === 1) return
+
     const apiKeyParam = this.apiKey ? `?x-api-key=${this.apiKey}` : ''
     const blockchainId = this.blockchainId
       ? `&x-amberdata-blockchain-id=${this.blockchainId}`
@@ -269,7 +270,7 @@ and has at least 1 successful subscription.
    * @example
    */
   _reconnect() {
-    if (this.connected) {
+    if (this.socket.readyState === 1) {
       this.disconnect()
     }
 
