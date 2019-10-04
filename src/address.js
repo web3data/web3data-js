@@ -22,7 +22,6 @@ class Address {
 
   /**
    * Returns every address that has been seen on the network.
-   *
    * @param filterOptions - The filters associated with the request.
    * @param [filterOptions.hash] - Filter by a specific address.
    * @param [filterOptions.size] - The size of the response. <b>Default:</b> `100`.
