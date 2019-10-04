@@ -93,7 +93,8 @@ class WebSocketClient {
    */
   connect(callBack) {
     // Check if connected already, if so skip
-    if (!is.null(this.socket)) return
+    if (this.socket && this.socket.readyState === 1) return
+
     const apiKeyParam = this.apiKey ? `?x-api-key=${this.apiKey}` : ''
     const blockchainId = this.blockchainId
       ? `&x-amberdata-blockchain-id=${this.blockchainId}`
@@ -239,11 +240,11 @@ class WebSocketClient {
    * 1. Initial connection doesnt respond within 5 seconds.
    * 2. Connection doesn't get any event within 3 minutes,
    *    and has at least 1 successful subscription.
-   * 3. We got a socket error of any kind, see above.
+   * 3. We got a socket error of any kind.
    * @private
    */
   _reconnect() {
-    if (this.connected) {
+    if (this.socket.readyState === 1) {
       this.disconnect()
     }
 
