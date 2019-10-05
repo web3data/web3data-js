@@ -121,20 +121,23 @@ const ethFactory = function(web3data) {
 }
 
 /**
+ * Appends blockchain specific methods to an instance of Web3Data under it's
+correct namespacing.
  *
- * @param _this
+ * @param _this - Instance of Web3Data to append methods.
  * @param includeMethods
  * @private
- * @return {*}
+ * @returns
+ * @example
  */
 const methodFactory = (_this, includeMethods) => {
-
   for (const namespace of Object.keys(includeMethods)) {
     getMethods(Object.getPrototypeOf(_this.web3data[namespace])).map(method => {
       if (includeMethods[namespace].includes(method)) {
         _this[namespace] = _this[namespace] ? _this[namespace] : {}
         _this[namespace][method] = _this.web3data[namespace][method].bind(_this)
       }
+
       return null
     })
   }

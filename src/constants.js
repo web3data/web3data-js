@@ -80,11 +80,7 @@ module.exports.BTC_METHODS = {
     'getTransactionFromBlock',
     'getMetrics'
   ],
-  transaction: [
-    'getTransactions',
-    'getTransaction',
-    'getPendingTransactions'
-  ]
+  transaction: ['getTransactions', 'getTransaction', 'getPendingTransactions']
 }
 
 /* HTTP Response codes */

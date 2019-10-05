@@ -1,8 +1,12 @@
-const {BLOCKCHAIN_ID_BITCOIN: BLOCKCHAIN_ID, BTC_METHODS: METHODS} = require('./constants')
+const {
+  BLOCKCHAIN_ID_BITCOIN: BLOCKCHAIN_ID,
+  BTC_METHODS: METHODS
+} = require('./constants')
 const {methodFactory} = require('./utils')
 
 /**
  * Class for all Bitcoin based methods.
+ *
  * @private
  */
 class Btc {
