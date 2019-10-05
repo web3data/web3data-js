@@ -58,5 +58,34 @@ module.exports.ETH_METHODS = {
   getEtherPrice: 'market'
 }
 
+module.exports.BTC_METHODS = {
+  address: [
+    'getAllAddresses',
+    'getInformation',
+    'getMetadata',
+    'getTransactions',
+    'getPendingTransactions',
+    'getBalance',
+    'getLatestBalance',
+    'getHistoricalBalance',
+    'getMultipleBalances',
+    'getBalancesBatch',
+    'getMetrics'
+  ],
+  block: [
+    'getBlocks',
+    'getBlock',
+    'getBlockNumber',
+    'getTransactions',
+    'getTransactionFromBlock',
+    'getMetrics'
+  ],
+  transaction: [
+    'getTransactions',
+    'getTransaction',
+    'getPendingTransactions'
+  ]
+}
+
 /* HTTP Response codes */
 module.exports.HTTP_CODE_NOT_FOUND = 404

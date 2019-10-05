@@ -3,6 +3,7 @@ const {BLOCKCHAIN_ID_ETHEREUM_MAINNET: BLOCKCHAIN_ID} = require('./constants')
 
 /**
  * Class for all Ethereum based methods.
+ * @private
  */
 class Eth {
   constructor(Web3data, apiKey, options) {

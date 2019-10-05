@@ -10,7 +10,7 @@ the appropriate parameter(s) where applicable.
  * @param hash - The address hash.
  * @param pathParam - The path parameter.
  * @param filterOptions - The filters associated with a given endpoint.
- * @returns returns a Promise of the rawQuery request from web3data
+ * @returns Returns a Promise of the rawQuery request from web3data.
  * @example
  */
 const get = (
@@ -84,10 +84,24 @@ const uuid = data =>
     .digest('base64')
 
 /**
+ * Returns an array of methods defined on the object.
+ *
+ * @param obj - The object from which get methods.
+ * @returns An array of method names.
+ * @private
+ * @example
+ */
+const getMethods = obj =>
+  Object.getOwnPropertyNames(obj).filter(
+    item => typeof obj[item] === 'function' && item !== 'constructor'
+  )
+
+/**
  * Creates an object containing Ethereum based methods.
  *
  * @param web3data - { object } The web3data instance.
  * @returns methods { object } an object containing Ethereum based methods.
+ * @private
  * @example
  */
 const ethFactory = function(web3data) {
@@ -107,11 +121,35 @@ const ethFactory = function(web3data) {
 }
 
 /**
+ *
+ * @param _this
+ * @param includeMethods
+ * @private
+ * @return {*}
+ */
+const methodFactory = (_this, includeMethods) => {
+
+  for (const namespace of Object.keys(includeMethods)) {
+    getMethods(Object.getPrototypeOf(_this.web3data[namespace])).map(method => {
+      if (includeMethods[namespace].includes(method)) {
+        _this[namespace] = _this[namespace] ? _this[namespace] : {}
+        _this[namespace][method] = _this.web3data[namespace][method].bind(_this)
+      }
+      return null
+    })
+  }
+
+  return _this
+}
+
+/**
  * Creates a string in json rpc format.
  *
  * @param options - The json rpc options.
  * @returns The json rpc formatted string.
+ * @private
  * @example
+ *
  */
 const formatJsonRpc = options => {
   if (!options) return ''
@@ -137,8 +175,10 @@ module.exports = {
   rejectPromiseIf,
   uuid,
   ethFactory,
+  methodFactory,
   throwNow,
   onFulfilled,
   onError,
-  formatJsonRpc
+  formatJsonRpc,
+  getMethods
 }
