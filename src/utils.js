@@ -130,15 +130,18 @@ correct namespacing.
  * @example
  */
 const methodFactory = (_this, includeMethods) => {
-
   console.log(_this.prototype)
   Object.keys(includeMethods).forEach(namespace => {
-    getMethods(Object.getPrototypeOf(_this.web3data[namespace])).forEach(method => {
-      if (includeMethods[namespace].includes(method)) {
-        _this[namespace] = _this[namespace] ? _this[namespace] : {}
-        _this[namespace][method] = _this.web3data[namespace][method].bind(_this)
+    getMethods(Object.getPrototypeOf(_this.web3data[namespace])).forEach(
+      method => {
+        if (includeMethods[namespace].includes(method)) {
+          _this[namespace] = _this[namespace] ? _this[namespace] : {}
+          _this[namespace][method] = _this.web3data[namespace][method].bind(
+            _this
+          )
+        }
       }
-    })
+    )
   })
   return _this
 }
