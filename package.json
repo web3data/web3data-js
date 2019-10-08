@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rm dist/web3data.min.js; parcel build index.js --target browser --out-dir dist --out-file web3data.min.js",
+    "gendocs": "doxdox 'src/**/*.js' --layout markdown --output docs/api.md",
     "lint": "xo",
     "lintfix": "xo --fix",
     "test": "xo --quiet && cross-env  nyc -s ava",
@@ -48,6 +49,8 @@
     "cross-env": "^5.2.0",
     "dotenv": "^8.0.0",
     "doxdox": "^3.0.0",
+    "doxdox-parser-dox": "github:taylorjdawson/doxdox-parser-dox",
+    "doxdox-plugin-markdown": "github:taylorjdawson/doxdox-plugin-markdown",
     "eslint-plugin-jsdoc": "^15.9.8",
     "get-port": "^5.0.0",
     "jsdoc-to-markdown": "^5.0.1",

@@ -1,7 +1,6 @@
 const {
   ERROR_MESSAGE_ADDRESS_NO_ADDRESS: NO_ADDRESS,
-  ADDRESSES_ENDPOINT: ENDPOINT,
-  HTTP_CODE_NOT_FOUND: NOT_FOUND
+  ADDRESSES_ENDPOINT: ENDPOINT
 } = require('./constants')
 
 const {is, get, throwIf, onFulfilled, onError} = require('./utils')
@@ -34,9 +33,8 @@ class Address {
    */
   getAllAddresses(filterOptions = {}) {
     return get(this.web3data, {endpoint: ENDPOINT, filterOptions}).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
+      onFulfilled,
+      onError
     )
   }
 
@@ -47,11 +45,7 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'information',
       filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+    }).then(onFulfilled, onError)
   }
 
   getMetadata(hash, filterOptions) {
@@ -71,11 +65,7 @@ class Address {
       endpoint: ENDPOINT,
       subendpoint: 'adoption',
       filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+    }).then(onFulfilled, onError)
   }
 
   /**
@@ -175,8 +165,12 @@ Returns null if no address is found.
   getBalance(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
     return filterOptions.startDate || filterOptions.endDate
-      ? this.getHistoricalBalance(hash, filterOptions).then(data => data)
-      : this.getLatestBalance(hash, filterOptions).then(data => data)
+      ? this.web3data.address
+          .getHistoricalBalance(hash, filterOptions)
+          .then(data => data)
+      : this.web3data.address
+          .getLatestBalance(hash, filterOptions)
+          .then(data => data)
   }
 
   /**
@@ -194,20 +188,7 @@ Returns null if no address is found.
       endpoint: ENDPOINT,
       subendpoint: 'account-balances/latest',
       filterOptions
-    })
-      .then(
-        /* If response has an error throw, if the address is not found return null, otherwise return the data */
-        response =>
-          throwIf(response.error, response.message) ||
-          response.status === NOT_FOUND
-            ? null
-            : response.payload
-      )
-      .catch(error =>
-        error.response
-          ? throwIf(true, error.response.data.message)
-          : 'Error with request'
-      )
+    }).then(onFulfilled, onError)
   }
 
   /**
@@ -225,20 +206,7 @@ Returns null if no address is found.
       endpoint: ENDPOINT,
       subendpoint: 'account-balances/historical',
       filterOptions
-    })
-      .then(
-        /* If response has an error throw, if the address is not found return null, otherwise return the data */
-        response =>
-          throwIf(response.error, response.message) ||
-          response.status === NOT_FOUND
-            ? null
-            : response.payload
-      )
-      .catch(error =>
-        error.response
-          ? throwIf(true, error.response.data.message)
-          : 'Error with request'
-      )
+    }).then(onFulfilled, onError)
   }
 
   /**
@@ -251,8 +219,8 @@ Returns null if no address is found.
    */
   getMultipleBalances(hashes, filterOptions = {}) {
     return Array.isArray(hashes)
-      ? this.getBalancesBatch(hashes, filterOptions)
-      : this.getBalances(hashes, filterOptions)
+      ? this.web3data.address.getBalancesBatch(hashes, filterOptions)
+      : this.web3data.address.getBalances(hashes, filterOptions)
   }
 
   /**
@@ -335,11 +303,7 @@ Returns null if no address is found.
       endpoint: ENDPOINT,
       subendpoint: 'token-balances',
       filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+    }).then(onFulfilled, onError)
   }
 
   getUsage(hash, filterOptions) {
@@ -349,11 +313,7 @@ Returns null if no address is found.
       endpoint: ENDPOINT,
       subendpoint: 'usage',
       filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+    }).then(onFulfilled, onError)
   }
 
   // TODO: Needs tests
