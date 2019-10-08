@@ -35,13 +35,13 @@ class Block {
   }
 
   async getBlockNumber() {
-    const block = await this.getBlock('latest')
+    const block = await this.web3data.block.getBlock('latest')
     throwIf(block | !block.number, 'Failed to retrieve block number.')
     return parseInt(block.number, 10)
   }
 
   async getBlockTransactionCount(id) {
-    const block = await this.getBlock(id)
+    const block = await this.web3data.block.getBlock(id)
     throwIf(
       !block || (!block.predictions && !block.numTransactions),
       'Failed to retrieve block transaction count.'
@@ -67,7 +67,7 @@ class Block {
   }
 
   async getTransactionFromBlock(id, index) {
-    const transactions = await this.getTransactions(id)
+    const transactions = await this.web3data.block.getTransactions(id)
     return new Promise((resolve, reject) => {
       if (!transactions) {
         reject(new Error(`Failed to retrieve transaction.`))
@@ -80,7 +80,9 @@ class Block {
   }
 
   async getUncle(id, index) {
-    const block = await this.getBlock(id, {validationMethod: 'full'})
+    const block = await this.web3data.block.getBlock(id, {
+      validationMethod: 'full'
+    })
     return new Promise((resolve, reject) => {
       if (
         !block ||

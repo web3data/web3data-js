@@ -87,7 +87,7 @@ class Address {
    * @example
    */
   getInternalMessages(hash, filterOptions = {}) {
-    return this.getFunctions(hash, filterOptions)
+    return this.web3data.address.getFunctions(hash, filterOptions)
   }
 
   /**

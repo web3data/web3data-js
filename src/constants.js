@@ -1,5 +1,5 @@
 module.exports.DEFAULT_WEBSOCKET_URL = 'wss://ws.web3api.io'
-module.exports.DEFAULT_BASE_URL = 'https://web3api.io/api/v1'
+module.exports.DEFAULT_BASE_URL = 'https://web3api.io/api/v2'
 module.exports.DEFAULT_RPC_URL = 'https://rpc.web3api.io'
 
 module.exports.API_KEY_HEADER = 'x-api-key'
@@ -8,6 +8,11 @@ module.exports.BLOCKCHAIN_ID_HEADER = 'x-amberdata-blockchain-id'
 module.exports.BLOCKCHAIN_ID_ETHEREUM_MAINNET = '1c9c969065fcd1cf'
 module.exports.BLOCKCHAIN_ID_ETHEREUM_RINKEBY = '1b3f7a72b3e99c13'
 module.exports.BLOCKCHAIN_ID_BITCOIN = '408fa195a34b533de9ad9889f076045e'
+module.exports.BLOCKCHAIN_ID_BITCOIN_CASH = '43b45e71cc0615b491cb699e7071fc06'
+module.exports.BLOCKCHAIN_ID_BITCOIN_SV = 'a818635d36dbe125e26167c4438e2217'
+module.exports.BLOCKCHAIN_ID_LITECOIN = 'f94be61fd9f4fa684f992ddfd4e92272'
+module.exports.BLOCKCHAIN_ID_RIPPLE = '2b8a5d8975e8c2a2ed92450450979a3c'
+module.exports.BLOCKCHAIN_ID_ZCASH = 'b7d4f994f33c709be4ce6cbae31d7b8e'
 
 /* Endpoints */
 module.exports.ADDRESSES_ENDPOINT = '/addresses'
