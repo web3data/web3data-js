@@ -143,4 +143,3 @@ test('Web3data.eth successfully calls getBalance returns valid response', async 
         let addressTransactions = await t.context.web3data.address.getAllAddresses(filterOpts);
         t.is(addressTransactions.records.length, PAGE_SIZE)
     });
-

@@ -68,6 +68,8 @@
         <option value="getVwap">VWAP/TWAP</option>
         <option value="getTickers">Tickers</option>
         <option value="getTrades">Trades</option>
+        <option value="getBlockNumber">Block Latest</option>
+        <option value="getTransaction">Single Transaction</option>
       </select>
     </div>
     <div id='input'>
@@ -78,6 +80,11 @@
     <div id='input'>
       <button onClick="runMethod()" id="goBtn">Method</button>
       <button onClick="runExample()" id="goBtn">Connect to WS</button>
+      &middot;
+      &middot;
+      &middot;
+      &middot;
+      <button onClick="runBlockchain('btc')" id="goBtn">Blockchain Method</button>
     </div>
     <div id="output">
       <p>Results<p>
@@ -127,6 +134,26 @@
 
       if (web3data[parentMethod] && web3data[parentMethod][childMethod]) {
         web3data[parentMethod][childMethod](params, queryObj).then(setResult, (err) => {
+          console.log('err', err)
+        })
+      }
+    }
+
+    // run specific blockchain things
+    const activeBlockchain = 'btc'
+    function runBlockchain(namespace) {
+      namespace = namespace || activeBlockchain
+      const apiKey = document.querySelector('#apikey-input').value
+      const params = document.querySelector('#params-input').value
+      const query = document.querySelector('#query-input').value
+      const queryObj = query ? JSON.parse(query) : {}
+      const parentMethod = document.querySelector('#parent_method').value
+      const childMethod = document.querySelector('#child_method').value
+      const web3data = new Web3Data(apiKey)
+
+      if (!web3data[namespace]) return
+      if (web3data[namespace][parentMethod] && web3data[namespace][parentMethod][childMethod]) {
+        web3data[namespace][parentMethod][childMethod](params, queryObj).then(setResult, (err) => {
           console.log('err', err)
         })
       }
