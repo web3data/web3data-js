@@ -1,6 +1,6 @@
 {
   "name": "web3data-js",
-  "version": "0.5.6",
+  "version": "0.5.7",
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,10 @@
     "clean-recs": "rm -r test/recordings",
     "example": "superstatic --port 8000"
   },
+  "pre-commit": [
+    "lint",
+    "build"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/web3data/web3data-js.git"
