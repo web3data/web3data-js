@@ -11,20 +11,30 @@ class Market {
     this.web3data = web3data
   }
 
+  /**
+   * Gets the current price of ether in USD.
+   * @return {Promise<String>} Returns the price of ether price in USD.
+   * @public
+   * @example
+   * const etherPrice = web3data.market.getEtherPrice()
+   */
   async getEtherPrice() {
-    const response = await get(this.web3data, {
+    return await get(this.web3data, {
       endpoint: ENDPOINT + '/prices/eth/latest'
-    })
-    throwIf(
-      !response || response.status !== 200 || !response.payload,
-      'Failed to retrieve Ether price.'
-    )
-    return response.payload
+    }).then( response => response.payload['eth_usd'].price , onError)
   }
 
-  // TODO: Needs tests
-  // Returns supported details for each of our market endpoint data features
-  // TODO: finish
+  /**
+   * Retrieves the top ranked assets by a specific metric.
+   * @param filterOptions See [docs](https://docs.amberdata.io/reference#market-rankings) for complete list of filters.
+   * @return {Promise<Object>} The market rankings data and total number of records
+   * @public
+   * @example
+   * const etherPrice = web3data.market.getRankings({
+   *   type: "erc721",
+   *   sortType: "uniqueAddresses"
+   * })
+   */
   getRankings(filterOptions) {
     return get(this.web3data, {
       endpoint: ENDPOINT,
@@ -33,15 +43,15 @@ class Market {
     }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
-  // Returns supported details for each of our market endpoint data features
-  /*
-  //       pairs
-  //       exchanges
-  //       ohlcv/information
-  //       prices/pairs
-  //       tickers/information
-  //     */
+  /**
+   *
+   * @param {(string|array)}features - The features for which to get supported details. Features: `pairs`, `exchanges`, `ohlcv`, `prices`, `tickers`.
+   * @param {Object} [filterOptions] - The filter options
+   * @param {string} [filterOptions.exchange] filter by exchange
+   * @param {string} [filterOptions.pair filter] by specific pairs
+   * @return {Promise<Object>}
+   * @example
+   */
   getFeatures(features = FEATURES, filterOptions = {}) {
     // Force feature to be array but allows non-array input
     features = Array.isArray(features) ? features : [features]
@@ -86,8 +96,12 @@ class Market {
     )
   }
 
-  // TODO: Needs tests
-  // Returns supported details for each of our market endpoint data features
+  /**
+   * Retrieves the latest open-high-low-close for the specified pair.
+   * @param {string} pair
+   * @param {object} filterOptions
+   * @return {Q.Promise<any> | Q.Promise<T> | * | PromiseLike<T> | Promise<T>}
+   */
   getOhlcv(pair, filterOptions = {}) {
     throwIf(is.undefined(pair), NO_MARKET_PAIR)
     const subendpoint =
