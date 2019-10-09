@@ -52,7 +52,7 @@ test.skip('Successfully gets market features - all', async t => {
   //t.regex(rankings.data[0].changeInPriceDaily, /\d+\.?\d*/)
 })
 
-test.only('Successfully gets ohlcv (latest)', async t => {
+test('Successfully gets ohlcv (latest)', async t => {
   const PAIR = 'eth_btc'
   const ohlcv = await t.context.web3data.market.getOhlcv(PAIR)
   t.regex(Object.values(ohlcv)[0].open.toString(), /\d+\.?\d*/)
@@ -60,11 +60,12 @@ test.only('Successfully gets ohlcv (latest)', async t => {
 
 test.only('Successfully gets ohlcv (latest) - with filters', async t => {
   const PAIR = 'eth_btc'
-  const ohlcv = await t.context.web3data.market.getOhlcv(PAIR, {})
+  const ohlcv = await t.context.web3data.market.getOhlcv(PAIR, {exchange: 'bitfinex'})
+  console.log(ohlcv)
   t.regex(Object.values(ohlcv)[0].open.toString(), /\d+\.?\d*/)
 })
 
-test.only('throws exception when calling getOhlcv without pair param', async t => {
+test('throws exception when calling getOhlcv without pair param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getOhlcv()
   }, { instanceOf: Error, message: NO_PAIR})

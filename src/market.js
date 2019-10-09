@@ -98,9 +98,9 @@ class Market {
 
   /**
    * Retrieves the latest open-high-low-close for the specified pair.
-   * @param {string} pair
-   * @param {object} filterOptions
-   * @return {Q.Promise<any> | Q.Promise<T> | * | PromiseLike<T> | Promise<T>}
+   * @param {string} pair -
+   * @param {object} filterOptions -
+   * @return {Promise<object>}
    */
   getOhlcv(pair, filterOptions = {}) {
     throwIf(is.undefined(pair), NO_MARKET_PAIR)
