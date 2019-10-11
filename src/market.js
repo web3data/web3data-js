@@ -6,7 +6,15 @@ const {
   ERROR_MESSAGE_MARKET_NO_FEATURE: NO_FEATURE
 } = require('./constants')
 
+/**
+ * Contains methods pertaining to the `/market` endpoint of Amberdata's API.
+ */
 class Market {
+
+  /**
+   * Creates an instance of the Market class.
+   * @param {Web3Data} web3data - The web3data instance
+   */
   constructor(web3data) {
     this.web3data = web3data
   }
@@ -26,11 +34,11 @@ class Market {
 
   /**
    * Retrieves the top ranked assets by a specific metric.
-   * @param filterOptions See [docs](https://docs.amberdata.io/reference#market-rankings) for complete list of filters.
-   * @return {Promise<Object>} The market rankings data and total number of records
+   * @param filterOptions - See [docs](https://docs.amberdata.io/reference#market-rankings) for complete list of filters.
+   * @return {Promise<Object>} The market rankings data and total number of records.
    * @public
    * @example
-   * const etherPrice = web3data.market.getRankings({
+   * const rankings = web3data.market.getRankings({
    *   type: "erc721",
    *   sortType: "uniqueAddresses"
    * })
@@ -44,13 +52,19 @@ class Market {
   }
 
   /**
-   *
-   * @param {(string|array)}features - The features for which to get supported details. Features: `pairs`, `exchanges`, `ohlcv`, `prices`, `tickers`.
+   * Retrieves the list of supported details by feature.
+   * @param {(string|array)} features - The features for which to get supported details. Features: `pairs`, `exchanges`, `ohlcv`, `prices`, `tickers`.
    * @param {Object} [filterOptions] - The filter options
-   * @param {string} [filterOptions.exchange] filter by exchange
+   * @param {string} [filterOptions.exchange] - filter by exchange
    * @param {string} [filterOptions.pair filter] by specific pairs
-   * @return {Promise<Object>}
+   * @return {Promise<Object>} The list of supported details by feature
    * @example
+   * // Single feature, filter by exchange
+   * await web3data.market.getFeatures('pairs', {exchange: 'gdax'})
+   *
+   * // Multiple features, filter by pair
+   * await web3data.market.getFeatures(['exchanges', 'tickers'], {pair: 'btc_usd'})
+   *
    */
   getFeatures(features = FEATURES, filterOptions = {}) {
     // Force feature to be array but allows non-array input
@@ -98,14 +112,19 @@ class Market {
 
   /**
    * Retrieves the latest open-high-low-close for the specified pair.
-   * @param {string} pair -
-   * @param {object} filterOptions -
-   * @return {Promise<object>}
+   * @param {string} pair - The market pair for which to retrieve open-high-low-close.
+   * @param {object} [filterOptions] - See [docs](https://docs.amberdata.io/reference#get-historical-ohlc) for complete list of filters.
+   * @return {Promise<object>} The ohlcv data.
+   * @public
+   * @example
+   * const latestOhlcv = await web3data.market.getOhlcv('eth_btc', {exchange: 'bitfinex'})
+   * const histOhlcv = await web3data.market.getOhlcv('btc_usd', {startDate: Date.now() - 604800000})
    */
   getOhlcv(pair, filterOptions = {}) {
     throwIf(is.undefined(pair), NO_MARKET_PAIR)
     const subendpoint =
       filterOptions.startDate || filterOptions.endDate ? 'historical' : 'latest'
+    console.log(filterOptions)
     return get(this.web3data, {
       pathParam: pair,
       endpoint: `${ENDPOINT}/ohlcv`,
@@ -114,9 +133,16 @@ class Market {
     }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
-  // Returns supported details for each of our market endpoint data features
-  getOrders(pair, filterOptions) {
+  /**
+   * Retrieves the order book data for the specified pair.
+   * @param {string} pair - The market pair for which to retrieve order book data.
+   * @param {object} [filterOptions] - See [docs](https://docs.amberdata.io/reference#get-market-orders) for complete list of filters.
+   * @return {Promise<object>}
+   * @public
+   * @example
+   * const orders = await web3data.market.getOrders('eth_usd', ['bitfinex', 'bitstamp'], {timeFormat: 'iso'})
+   */
+  getOrders(pair, filterOptions = {}) {
     throwIf(is.undefined(pair), NO_MARKET_PAIR)
     return get(this.web3data, {
       pathParam: pair,
@@ -125,9 +151,17 @@ class Market {
     }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
-  // Returns supported details for each of our market endpoint data features
-  getBbos(pair, filterOptions) {
+  /**
+   * Retrieves the latest best bid and offer information for the specified pair and exchange (if specified).
+   * @param {string} pair - The market pair for which to retrieve the latest best bid and offer data.
+   * @param {Object} [filterOptions] - The filter options
+   * @param {(string|array)} [filterOptions.exchange] - Only return data for the given exchanges (comma separated)
+   * @param {(string|array)} [filterOptions.pair] - Only return data for the given pairs (comma separated)
+   * @return {Promise<object>}
+   * @public
+   * @example
+   */
+  getBbos(pair, filterOptions = {}) {
     throwIf(is.undefined(pair), NO_MARKET_PAIR)
     return get(this.web3data, {
       pathParam: pair,
@@ -137,9 +171,13 @@ class Market {
     }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
-  // Returns supported details for each of our market endpoint data features
-  getPrices(base, filterOptions) {
+  /**
+   *
+   * @param {string} base -
+   * @param {object} [filterOptions] -
+   * @return {Promise<object>}
+   */
+  getPrices(base, filterOptions = {}) {
     throwIf(is.undefined(base), NO_MARKET_PAIR)
     const subendpoint =
       filterOptions.startDate || filterOptions.endDate ? 'historical' : 'latest'
@@ -153,7 +191,7 @@ class Market {
 
   // TODO: Needs tests
   // Returns supported details for each of our market endpoint data features
-  getTokenPrices(hash, filterOptions) {
+  getTokenPrices(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_MARKET_PAIR)
     const subendpoint =
       filterOptions.startDate || filterOptions.endDate ? 'historical' : 'latest'

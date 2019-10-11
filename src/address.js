@@ -13,8 +13,7 @@ class Address {
   /**
    * Creates an instance of Address.
    *
-   * @param web3data
-   * @example
+   * @param {Web3Data} web3data - The web3data instance
    */
   constructor(web3data) {
     this.web3data = web3data
