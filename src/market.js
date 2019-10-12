@@ -141,6 +141,7 @@ class Market {
    * @public
    * @example
    * const orders = await web3data.market.getOrders('eth_usd', ['bitfinex', 'bitstamp'], {timeFormat: 'iso'})
+   * TODO: Add required param exchange
    */
   getOrders(pair, filterOptions = {}) {
     throwIf(is.undefined(pair), NO_MARKET_PAIR)
@@ -152,21 +153,29 @@ class Market {
   }
 
   /**
-   * Retrieves the latest best bid and offer information for the specified pair and exchange (if specified).
+   * Retrieves the latest or historical best bid and offer data for the specified pair and exchange (if specified).
    * @param {string} pair - The market pair for which to retrieve the latest best bid and offer data.
-   * @param {Object} [filterOptions] - The filter options
+   * @param {object} [filterOptions] - The filter options
    * @param {(string|array)} [filterOptions.exchange] - Only return data for the given exchanges (comma separated)
    * @param {(string|array)} [filterOptions.pair] - Only return data for the given pairs (comma separated)
-   * @return {Promise<object>}
+   * @param {(number|string)} [filterOptions.startDate] - Only return data for the given pairs (comma separated)
+   * @param {(number|string)} [filterOptions.endDate] - Only return data for the given pairs (comma separated)
+   * @return {Promise<object>} the latest or historical best bid and offer data
    * @public
    * @example
+   * // Latest
+   * const bbos = await web3data.market.getBbos(PAIR, {startDate: Date.now() - 604800000})
+   * // Historical
+   * const bbos = await web3data.market.getBbos(PAIR, {startDate: Date.now() - 604800000})
    */
   getBbos(pair, filterOptions = {}) {
     throwIf(is.undefined(pair), NO_MARKET_PAIR)
+    const subendpoint =
+      filterOptions.startDate || filterOptions.endDate ? 'bbo/historical' : 'bbo'
     return get(this.web3data, {
       pathParam: pair,
       endpoint: `${ENDPOINT}/orders`,
-      subendpoint: 'bbo',
+      subendpoint,
       filterOptions
     }).then(onFulfilled, onError)
   }
