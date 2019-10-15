@@ -288,10 +288,10 @@ class Market {
 
   /**
    * Retrieves the address on the blockchain (if available) of the specified asset.
-   * @param {(string|array)} assets - The asset(s) to get the address of.
-   * @returns {Promise<object>} The address(es) of the asset(s).
-   * @example
-   * const batTokenAddress = web3data.market.getAssetAddresses('bat')
+   *
+   * @param assets - The asset(s) to get the address of.
+   * @returns The address(es) of the asset(s).
+   * @example const batTokenAddress = web3data.market.getAssetAddresses('bat')
    * const assetAddresses = web3data.market.getAssetAddresses(['bat', 'rep'])
    */
   getAssetAddresses(assets = 'all') {
