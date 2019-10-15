@@ -306,8 +306,12 @@ test('Successfully gets single asset address', async t => {
   t.regex(batTokenAddress.bat, /^0x[a-fA-F0-9]{40}$/g)
 })
 
+<<<<<<< HEAD
 
 test.only('Successfully gets multiple asset addresses', async t => {
+=======
+test('Successfully gets multiple asset addresses', async t => {
+>>>>>>> run linter
   const assetAddresses = await t.context.web3data.market.getAssetAddresses(['bat', 'rep'])
   t.true(assetAddresses.hasProp('bat'))
   t.true(assetAddresses.hasProp('rep'))
