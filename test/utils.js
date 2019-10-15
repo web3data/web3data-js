@@ -40,3 +40,10 @@ export const setUpPolly = (recordingName) => {
     });
     return polly
 }
+
+export const isISOFormat = (dateString) => dateString.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/)
+export const hasProp = ( () => Object.prototype.hasProp =
+  function (prop) {
+      return typeof this === 'object' ? Object.hasOwnProperty.call(this, prop) : null
+  }) ()
+export const values = ( () => Object.prototype.values = function () { return typeof this === 'object' ? Object.values(this) : null }) ()
