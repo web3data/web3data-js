@@ -119,8 +119,10 @@ test('web3data.eth successfully calls method getUncle', async t => {
 })
 
 test('Web3data.eth successfully calls getEtherPrice returns valid response', async t => {
-    let response = await t.context.web3data.eth.getEtherPrice();
-    t.true(response.hasOwnProperty('eth_btc'))
+    const etherPrice = await t.context.web3data.eth.getEtherPrice();
+
+    // test for decimal string
+    t.regex(etherPrice, /\d+\.?\d*/)
 })
 
 test('Web3data.eth successfully calls getBalance returns valid response', async t => {
