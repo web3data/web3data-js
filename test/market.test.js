@@ -135,7 +135,7 @@ test.skip('Successfully gets orders - with filters', async t => {
 })
 
 test.skip('Successfully gets historical orders', async t => {
-  const orders = await t.context.web3data.market.getOrders(PAIR) // {startDate:  Math.round((Date.now() - 86400000))}
+  const orders = await t.context.web3data.market.getOrders(PAIR, {startDate:  Math.round((Date.now() - 86400000))})
   t.true(orders.hasProp('metadata'))
   t.regex(Object.values(orders.data)[0].toString(), /\d+\.?\d*/)
 })
@@ -148,13 +148,14 @@ test('throws exception when calling getOrders without pair param', async t => {
 
 /*********** Test getBbos() ***********/
 // TODO: Pending API bug fix
-test.skip('Pending API bug fix ---- Successfully gets latest bos', async t => {
+test.skip('Successfully gets latest bos', async t => {
   const bbos = await t.context.web3data.market.getBbos(PAIR)
   const exchangePairBbo = Object.values(Object.values(bbos))[0]
 
   t.true(exchangePairBbo.hasProp('price'))
 })
-test('Pending API bug fix ---- Successfully gets historical bbos', async t => {
+// TODO: Pending API bug fix
+test.skip('Successfully gets historical bbos', async t => {
   const bbos = await t.context.web3data.market.getBbos(PAIR, {startDate:  Date.now() - 86400000})
 
   // Check existence of historical data properties
