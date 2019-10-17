@@ -4,22 +4,19 @@
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "scripts": {
-    "build": "rm dist/web3data.min.js; parcel build index.js --target browser --out-dir dist --out-file web3data.min.js",
-    "gendocs": "doxdox 'src/**/*.js' --layout markdown --output docs/api.md",
+    "build": "rimraf dist/web3data.min.js && parcel build index.js --target browser --out-dir dist --out-file web3data.min.js",
+    "docs:serve": "docsify serve ./docs",
+    "docs:gen": "doxdox 'src/**/*.js' --layout markdown --output docs/api.md",
     "lint": "xo",
-    "lintfix": "xo --fix",
-    "test": "xo --quiet && cross-env  nyc -s ava",
-    "test-record": "cross-env  nyc -s ava",
-    "test-live": "nyc -s ava",
-    "test-fast": "cross-env nyc -s ava --fail-fast",
-    "test-verbose": "cross-env nyc ava --verbose",
-    "clean-recs": "rm -r test/recordings",
+    "lint:fix": "xo --fix",
+    "test": "xo --quiet && cross-env nyc -s ava",
+    "test:record": "cross-env  nyc -s ava",
+    "test:live": "nyc -s ava",
+    "test:fast": "cross-env nyc -s ava --fail-fast",
+    "test:verbose": "cross-env nyc ava --verbose",
+    "clean-recs": "rimraf test/recordings",
     "example": "superstatic --port 8000"
   },
-  "pre-commit": [
-    "lint",
-    "build"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/web3data/web3data-js.git"
@@ -53,11 +50,13 @@
     "doxdox-plugin-markdown": "github:taylorjdawson/doxdox-plugin-markdown",
     "eslint-plugin-jsdoc": "^15.9.8",
     "get-port": "^5.0.0",
+    "husky": "^3.0.9",
     "jsdoc-to-markdown": "^5.0.1",
     "lodash": "^4.17.14",
     "nyc": "^14.1.1",
     "parcel": "^1.12.3",
     "prettier": "^1.18.2",
+    "rimraf": "^3.0.0",
     "superstatic": "^6.0.4",
     "xo": "^0.24.0"
   },
@@ -69,6 +68,11 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test && npm run build && npm run docs:gen"
+    }
   },
   "xo": {
     "semicolon": false,

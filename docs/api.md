@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.5*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.8*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
@@ -8,7 +8,7 @@
 
 #### new Address() 
 
-Contains methods pertaining to the `/address` endpoints of Amberdata's API.
+Contains methods pertaining to the `/address` endpoint of Amberdata's API.
 
 
 
@@ -22,9 +22,9 @@ Contains methods pertaining to the `/address` endpoints of Amberdata's API.
 
 
 
-#### Address.getAllAddresses(filterOptions) 
+#### Address.constructor(web3data) 
 
-Returns every Ethereum address that has been seen on the network.
+Creates an instance of Address.
 
 
 
@@ -33,8 +33,7 @@ Returns every Ethereum address that has been seen on the network.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| filterOptions | `Object`  | The filters associated with the request | &nbsp; |
-| filterOptions.size | `string`  | The size of the response. Default: <b>100</b> | *Optional* |
+| web3data |  |  | &nbsp; |
 
 
 
@@ -42,9 +41,39 @@ Returns every Ethereum address that has been seen on the network.
 ##### Examples
 
 ```javascript
-web3data.getAllAddresses({
-  size: 100,
 
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Address.getAllAddresses(filterOptions) 
+
+Returns every address that has been seen on the network.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  | - The filters associated with the request. | &nbsp; |
+| filterOptions.hash |  | - Filter by a specific address. | &nbsp; |
+| filterOptions.size |  | - The size of the response. <b>Default:</b> `100`. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+web3data.address.getAllAddresses({ size: 100,
 })
 ```
 
@@ -52,7 +81,7 @@ web3data.getAllAddresses({
 ##### Returns
 
 
-- `Object`  Promise containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on return
+-  Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on return.
 
 
 
@@ -67,16 +96,23 @@ Retrieves the functions (aka internal messages) where this address is either the
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `String`  | - the address of the account. | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request. | &nbsp; |
+| hash |  | - The address of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
 
 
--  the balance data of the account or if no address is found.
+-  The balance data of the account or if no address is found.
 
 
 
@@ -91,16 +127,23 @@ Retrieves the functions (aka internal messages) where this address is either the
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `String`  | - the address of the account. | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request. | &nbsp; |
+| hash |  | - The address of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
 
 
--  the balance data of the account or if no address is found.
+-  The balance data of the account or if no address is found.
 
 
 
@@ -115,8 +158,8 @@ Retrieves the logs for the transactions where this address is either the origina
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `String`  | - the address of the account | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request | &nbsp; |
+| hash |  | - The address of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
 
@@ -131,7 +174,7 @@ web3data.getLogs('0x...')
 ##### Returns
 
 
-- `Promise`  Promise object containing the array of logs
+-  Promise object containing the array of logs.
 
 
 
@@ -146,16 +189,23 @@ Retrieves the transactions where this address was either the originator or a rec
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `String`  | - the address of the account | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request | &nbsp; |
+| hash |  | - The address of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
 
 
-- `Promise.<Object>`  the object containing the array of transaction objects
+-  The object containing the array of transaction objects.
 
 
 
@@ -170,16 +220,23 @@ Retrieves pending transactions the specified address is involved in.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `String`  | - the address of the account | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request | &nbsp; |
+| hash |  | - The address of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
 
 
-- `Promise.<Object>`  the array of pending transactions
+-  The array of pending transactions.
 
 
 
@@ -195,10 +252,17 @@ Returns null if no address is found.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `String`  | - the address of the account | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request | &nbsp; |
+| hash |  | - the address of the account | &nbsp; |
+| filterOptions |  | - the filter options associated with the request | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
@@ -219,16 +283,23 @@ Retrieves the latest balance data of the given address. Returns null if no addre
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `String`  | - the address of the account | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request | &nbsp; |
+| hash |  | - The address of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
 
 
--  the balance data of the account or if no address is found.
+-  The balance data of the account or if no address is found.
 
 
 
@@ -243,16 +314,23 @@ Retrieves the historical balance data of the given address. Returns null if no a
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `String`  | - the address of the account | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request | &nbsp; |
+| hash |  | - The address of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
 
 
--  the historical balance data of the account or if no address is found.
+-  The historical balance data of the account or if no address is found.
 
 
 
@@ -267,16 +345,23 @@ Retrieves the latest account and token balances for the specified address(es).
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hashes | `Array` `String`  | - the array or string containing the address(es) of the account | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request | &nbsp; |
+| hashes |  | - The array or string containing the address(es) of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
 
 
-- `Promise.<Object>`  the balance data of the account(s)
+-  The balance data of the account(s).
 
 
 
@@ -291,16 +376,23 @@ Retrieves the latest account and token balances for the specified address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `String`  | - the address of the account | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request | &nbsp; |
+| hash |  | - The address of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
 
 
-- `Promise.<Object>`  the balance data of the account
+-  The balance data of the account.
 
 
 
@@ -315,16 +407,23 @@ Retrieves the latest account and token balances for the specified addresses.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hashes | `Array` `String`  | - the array containing the address(es) of the account. | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request. | &nbsp; |
+| hashes |  | - The array containing the address(es) of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
 
 
-- `Promise.<Object>`  the balance data of the account(s).
+-  The balance data of the account(s).
 
 
 
@@ -339,16 +438,23 @@ Retrieves the balance data of the given address. Returns null if no address is f
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `String`  | - the address of the account. | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request. | &nbsp; |
+| hash |  | - The address of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
 
 
-- `Promise.<Object>`  the token balance data of the account.
+-  The token balance data of the account.
 
 
 
@@ -363,26 +469,33 @@ Retrieves all token transfers involving the specified address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `String`  | - the address of the account | &nbsp; |
-| filterOptions | `Object`  | - the filter options associated with the request | &nbsp; |
+| hash |  | - The address of the account. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
 
 
-- `Promise.<Object>`  the object containing the array of token transfer objects.
+-  The object containing the array of token transfer objects.
 
 
 
 
-### src/btc.js
+### src/web3data.js
 
 
-#### new Btc() 
+#### new Web3DataFactory() 
 
-Class for all Bitcoin based methods.
+Contains common methods used in.
 
 
 
@@ -396,13 +509,106 @@ Class for all Bitcoin based methods.
 
 
 
+#### Web3DataFactory.constructor(apiKey, options, blockchainId:, -, -) 
 
-### src/eth.js
+Creates a Web3Data instance.
 
 
-#### new Eth() 
 
-Class for all Ethereum based methods.
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| apiKey |  | - The Amberdata api key needed to access data. | &nbsp; |
+| options | `object`  | Contains additional configuration options: | &nbsp; |
+| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
+| - |  | baseUrl: the base url of API calls | &nbsp; |
+| - |  | websocketUrl: the websocket url to use | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Web3DataFactory.rawQuery(url) 
+
+Appends the API base url with the endpoint  url. Then sends an
+http request to the Amberdata API endpoint.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| url |  | - The endpoint url with any query/path params if set. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The axios request object.
+
+
+
+#### Web3DataFactory.rpc(method, params) 
+
+Method used to interact with web3api json rpc endpoints.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| method |  | - The json rpc method to call. | &nbsp; |
+| params |  | - The parameters to the json rpc call. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns the json rpc result.
+
+
+
+#### new Web3Data() 
+
+Class Web3data contains methods for hitting Amberdata's
+API endpoints.
 
 
 
@@ -432,136 +638,27 @@ the appropriate parameter(s) where applicable.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| web3data | `object`  | instance on which to call .rawQuery() | &nbsp; |
-| subendpoint | `string`  | The sub-endpoint | &nbsp; |
-| endpoint | `string`  | The endpoint | &nbsp; |
-| hash | `string`  | The address hash | &nbsp; |
-| pathParam | `string`  | The path parameter | &nbsp; |
-| filterOptions | `object`  | The filters associated with a given endpoint | &nbsp; |
+| web3data |  | - Instance on which to call .rawQuery(). | &nbsp; |
+| subendpoint |  | - The sub-endpoint. | &nbsp; |
+| endpoint |  | - The endpoint. | &nbsp; |
+| hash |  | - The address hash. | &nbsp; |
+| pathParam |  | - The path parameter. | &nbsp; |
+| filterOptions |  | - The filters associated with a given endpoint. | &nbsp; |
 
 
 
 
-##### Returns
+##### Examples
 
+```javascript
 
--  returns a Promise of the rawQuery request from web3data
-
-
-
-#### ethFactory(web3data) 
-
-Creates an object containing Ethereum based methods.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  | { object } the web3data instance | &nbsp; |
-
-
+```
 
 
 ##### Returns
 
 
--  methods { object } an object containing Ethereum based methods.
-
-
-
-
-### src/web3data.js
-
-
-#### constructor(apiKey, options) 
-
-Creates a Web3Data instance
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| apiKey | `string`  | The Amberdata api key needed to access data | &nbsp; |
-| options | `object`  | Contains additional configuration options:  - blockchainId: specifies the blockchain to get data from<br> - baseUrl: the base url of API calls<br> - websocketUrl: the websocket url to use | &nbsp; |
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### rawQuery(url) 
-
-Appends the API base url with the endpoint  url. Then sends an
-http request to the Amberdata API endpoint.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| url | `string`  | - The endpoint url with any query/path params if set | &nbsp; |
-
-
-
-
-##### Returns
-
-
--  the axios request object
-
-
-
-#### rpc(method, params) 
-
-Method used to interact with web3api json rpc endpoints.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| method | `string`  | - the json rpc method to call | &nbsp; |
-| params | `array` `string`  | - the parameters to the json rpc call | &nbsp; |
-
-
-
-
-##### Returns
-
-
-- `Promise.<AxiosResponse.<T>>`  returns the json rpc result
-
-
-
-#### new Web3Data() 
-
-Class Web3data contains methods for hitting Amberdata's
-API endpoints.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
+-  Returns a Promise of the rawQuery request from web3data.
 
 
 
@@ -571,7 +668,7 @@ API endpoints.
 
 #### new WebSocketClient() 
 
-Wrapper for Web3data websockets
+Wrapper for Web3data websockets.
 
 
 
@@ -602,10 +699,17 @@ Instantiates the WebSocketClient.
 
 
 
+##### Examples
+
+```javascript
+
+```
+
+
 ##### Returns
 
 
-- `WebSocketClient`  
+-  
 
 
 
@@ -620,9 +724,16 @@ Connects to the websocket server and inits listeners.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| callBack | `function`  | - The method to call once connection process is complete. | &nbsp; |
+| callBack |  | - The method to call once connection process is complete. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
@@ -634,7 +745,7 @@ Connects to the websocket server and inits listeners.
 
 #### WebSocketClient.disconnect(callBack) 
 
-Destroys WebSocket i.e. disconnects client and drops reference.
+Destroys WebSocket i.e. Disconnects client and drops reference.
 
 
 
@@ -643,9 +754,16 @@ Destroys WebSocket i.e. disconnects client and drops reference.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| callBack | `function`  | -The callback function that executes on close. | &nbsp; |
+| callBack |  | -The callback function that executes on close. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
@@ -666,10 +784,17 @@ Creates a new event listener for the specified event. Registers event and callba
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| An | `object`  | object containing the event name and filters | &nbsp; |
-| callback | `function`  | - The callback function that executes when the specified event is received by the websocket data listener. | &nbsp; |
+| An |  | - Object containing the event name and filters. | &nbsp; |
+| callback |  | - The callback function that executes when the specified event is received by the websocket data listener. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
@@ -690,10 +815,17 @@ Subscribes to the first occurrence of an event then unsubscribes.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| An | `object`  | object containing the event name and filters | &nbsp; |
-| callback | `function`  | - The callback function that executes when the specified event is received by the websocket data listener. | &nbsp; |
+| An |  | - Object containing the event name and filters. | &nbsp; |
+| callback |  | - The callback function that executes when the specified event is received by the websocket data listener. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
@@ -714,10 +846,17 @@ Destroys a single event listener. De-registers event and callback function.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| An | `object`  | object containing the event name and filters | &nbsp; |
-| callback | `function`  | - The callback function to execute once unsubscribe is complete. | &nbsp; |
+| An |  | - Object containing the event name and filters. | &nbsp; |
+| callback |  | - The callback function to execute once unsubscribe is complete. | &nbsp; |
 
 
+
+
+##### Examples
+
+```javascript
+
+```
 
 
 ##### Returns
