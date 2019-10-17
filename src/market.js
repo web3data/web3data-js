@@ -157,8 +157,8 @@ class Market {
   /**
    * Retrieves order book update events.
    *
-   * @param pair - The market pair for which to retrieve the historical best bid and offer data.
-   * @param [filterOptions] - See [docs](https://docs.amberdata.io/reference#order-book-updates) for complete list of filters.
+   * @param {string} pair - The market pair for which to retrieve the historical best bid and offer data.
+   * @param {object} [filterOptions] - See [docs](https://docs.amberdata.io/reference#order-book-updates) for complete list of filters.
    * @returns The order book update data.
    * @example const orderBooks = await web3data.market.getOrderBooks('btc_usd')
    */
