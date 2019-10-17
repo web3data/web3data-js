@@ -4,13 +4,12 @@ import {
 } from "../src/constants";
 
 import {
-    getNewWeb3DataInstance,
     MOCK_RAW_TXN_DATA,
     MOCK_CALL_DATA,
     MOCK_EXEC_DATA,
 } from './constants'
 
-import {setUpPolly} from "./utils";
+import {setUpPolly, getNewWeb3DataInstance} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *

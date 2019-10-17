@@ -3,14 +3,12 @@ import test from 'ava'
 import {API_KEY_HEADER, DEFAULT_BASE_URL, BLOCKCHAIN_ID_HEADER} from "../src/constants";
 
 import {
-    getNewWeb3DataInstance,
     TOKEN_ADDRESS,
     BLOCKCHAIN_ID,
-    API_KEY,
     BLOCK_NUMBER,
     TXN_HASH, ADDRESS
 } from './constants'
-import {setUpPolly} from "./utils";
+import {setUpPolly,  getNewWeb3DataInstance, getApiKey} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
@@ -33,7 +31,7 @@ test.beforeEach(t => {
 
 /*********** Test Web3Data ***********/
 test('Web3data should have the apikey in headers', t => {
-    t.is(t.context.web3data.headers[API_KEY_HEADER], API_KEY)
+    t.is(t.context.web3data.headers[API_KEY_HEADER], getApiKey())
 });
 
 test('Throws exception when no api key is supplied', t => {

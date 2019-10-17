@@ -1,17 +1,14 @@
 import test from "ava";
 import WebSocket from 'ws'
-import {API_KEY} from './constants'
-import Web3Data from '../src/web3data'
 import capcon from 'capture-console'
 import getPort from 'get-port'
+import {getNewWeb3DataInstance} from "./utils";
 import dotenv from 'dotenv'
 
 dotenv.config()
 
 //TODO: Move constants and methods to separate file
-
 const MOCK_WS_URL = `ws://localhost:`
-
 const SUBSCRIPTION_ID = '242d29d5c0ec9268f51a39aba4ed6a36c757c03c183633568edb0531658a9799'
 
 /* Regex matches the following string  as long as id contains 1 > characters */
@@ -68,7 +65,7 @@ const subResponse = (id) => formatJsonRpc({
 test.beforeEach(async t => {
     const PORT = await getPort()
     const config = {websocketUrl: MOCK_WS_URL + PORT }
-    t.context.w3d = new Web3Data(API_KEY, config)
+    t.context.w3d = getNewWeb3DataInstance(config) // new Web3Data(API_KEY, config)
     t.context.wss = new WebSocket.Server({ port: PORT });
 })
 

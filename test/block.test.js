@@ -1,9 +1,7 @@
 import test from "ava"
 import {ERROR_MESSAGE_BLOCK_NO_ID as NO_BLOCK_ID} from "../src/constants";
-import { getNewWeb3DataInstance } from './constants'
-import _ from 'lodash'
 
-import {setUpPolly} from "./utils";
+import {setUpPolly, getNewWeb3DataInstance} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
@@ -72,7 +70,7 @@ const returnsBlockObjectFilters = async (t, { method, params = {} }) => {
     const {id, timeFormat, validationMethod} = params
     const block = await t.context.web3data.block[method](id, {timeFormat, validationMethod})
     t.is(parseInt(block.number), params.id)
-    t.true(_.has(block, 'validation'))
+    t.true(block.hasProp('validation'))
     t.is(typeof block, 'object')
 }
 returnsBlockObjectFilters.title = (providedTitle = '', input) => `Successfully calls ${input.method} with filters returns valid block object`
@@ -87,14 +85,14 @@ returnsUncleObject.title = (providedTitle = '', input) => `Successfully calls ${
 const returnsTxnObjects = async (t, { method, params = {}}) => {
     const transactions = await t.context.web3data.block[method](params.id)
     t.true(transactions.length > 0)
-    t.true(_.has(transactions[0], 'blockNumber'))
+    t.true(transactions[0].hasProp('blockNumber'))
     t.is(parseInt(transactions[0].blockNumber), params.id)
 }
 returnsTxnObjects.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns array of valid txn objects`
 
 const returnsTxnObject = async (t, { method, params = {} }) => {
     const transaction = await t.context.web3data.block[method](params.id, params.index)
-    t.true(_.has(transaction, 'hash'))
+    t.true(transaction.hasProp('hash'))
     t.is(parseInt(transaction.blockNumber), params.id)
     t.is(parseInt(transaction.index), params.index)
 }

@@ -1,6 +1,6 @@
 import test from "ava";
-import { getNewWeb3DataInstance, ADDRESS, TOKEN_ADDRESS } from './constants'
-import {setUpPolly} from "./utils";
+import { ADDRESS, TOKEN_ADDRESS } from './constants'
+import {setUpPolly, getNewWeb3DataInstance} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *

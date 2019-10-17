@@ -1,8 +1,8 @@
 import test from "ava"
-import { getNewWeb3DataInstance, TOKEN_ADDRESS, ADDRESS } from './constants'
+import { TOKEN_ADDRESS, ADDRESS } from './constants'
 import { ERROR_MESSAGE_TOKEN_NO_ADDRESS as NO_ADDRESS } from '../src/constants'
 import { ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS as NO_HOLDER_ADDRESS } from '../src/constants'
-import {setUpPolly} from "./utils";
+import {setUpPolly, getNewWeb3DataInstance} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *

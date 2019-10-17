@@ -26,26 +26,4 @@ export const MOCK_EXEC_DATA = [{
     "data":"0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
 }]
 
-/**
- * Tries to obtain an API key from the environment variable.
- * If none is found, user is warned and dummy key is set.
- * */
-let getApiKey = () => {
-    let API_KEY
-    if(process.env.API_KEY) {
-        API_KEY = process.env.API_KEY
-    } else {
-        console.warn("Must set API_KEY value in .env file, \n\
-  Create an account on amberdata.io to obtain one")
 
-        API_KEY = 'API_KEY'
-
-    }
-    return API_KEY
-}
-
-/**
- *  Returns a new Web3Data instance with API Key Set
- *  */
-export const getNewWeb3DataInstance = (config) => new Web3Data(getApiKey(), config)
-export const API_KEY = getApiKey()
