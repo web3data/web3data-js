@@ -138,15 +138,21 @@ class Market {
   /**
    * Retrieves the order book data for the specified pair.
    *
-   * @param pair - The market pair for which to retrieve order book data.
-   * @param [filterOptions] - See [docs](https://docs.amberdata.io/reference#get-market-orders) for complete list of filters.
-   * @returns
+   * @param {string} pair - The market pair for which to retrieve order book data.
+   * @param {(string|array)} exchange - The exchange(s) for which to retrieve order book data.
+   * @param {object} [filterOptions] - See [docs](https://docs.amberdata.io/reference#get-market-orders) for complete list of filters.
+   * @param {string} [filterOptions] timestamp - The timestamp at which to return the order book information.
+   * @param {string} [filterOptions] timeFormat - The timestamp format to use for the timestamps: milliseconds/ms or iso/iso8611.
+   * @returns {Promise<object>} the latest order book data for the specified pair/exchange(s)
    * @public
-   * @example const orders = await web3data.market.getOrders('eth_usd', ['bitfinex', 'bitstamp'], {timeFormat: 'iso'})
-   * TODO: Add required param exchange
+   * @example
+   * const orders = await web3data.market.getOrders('eth_usd', ['bitfinex', 'bitstamp'], {timeFormat: 'iso'})
    */
-  getOrders(pair, filterOptions = {}) {
+  getOrders(pair, exchange, filterOptions = {}) {
     throwIf(is.undefined(pair), NO_MARKET_PAIR)
+    exchange = Array.isArray(exchange) ? exchange : [exchange]
+    exchange.forEach(exchange => throwIf(is.undefined(exchange), 'No exchange specified'))
+    filterOptions.exchange = exchange
     return get(this.web3data, {
       pathParam: pair,
       endpoint: `${ENDPOINT}/orders`,

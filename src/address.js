@@ -244,14 +244,17 @@ Returns null if no address is found.
   /**
    * Retrieves the latest account and token balances for the specified addresses.
    *
-   * @param hashes - The array containing the address(es) of the account.
-   * @param filterOptions - The filter options associated with the request.
-   * @returns The balance data of the account(s).
+   * @param {(string|array)} hashes - The array containing the address(es) of the account.
+   * @param {object} filterOptions - The filter options associated with the request.
+   * @returns {Promise<object>} The balance data of the account(s).
    * @example
+   * const await getBalancesBatch(['0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be', '0x06012c8cf97bead5deae237070f9587f8e7a266d'], {
+   *   includePrice: true
+   * })
    */
   getBalancesBatch(hashes, filterOptions = {}) {
     throwIf(!Array.isArray(hashes), 'Must be array of valid address hashes')
-    hashes.map(hash => throwIf(is.notHash(hash), NO_ADDRESS))
+    hashes.forEach(hash => throwIf(is.notHash(hash), NO_ADDRESS))
     filterOptions.addresses = hashes
     return get(this.web3data, {
       endpoint: ENDPOINT,
