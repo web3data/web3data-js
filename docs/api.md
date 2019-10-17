@@ -490,6 +490,46 @@ Retrieves all token transfers involving the specified address.
 
 
 
+### src/utils.js
+
+
+#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions) 
+
+Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
+the appropriate parameter(s) where applicable.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  | - Instance on which to call .rawQuery(). | &nbsp; |
+| subendpoint |  | - The sub-endpoint. | &nbsp; |
+| endpoint |  | - The endpoint. | &nbsp; |
+| hash |  | - The address hash. | &nbsp; |
+| pathParam |  | - The path parameter. | &nbsp; |
+| filterOptions |  | - The filters associated with a given endpoint. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns a Promise of the rawQuery request from web3data.
+
+
+
+
 ### src/web3data.js
 
 
@@ -619,46 +659,6 @@ API endpoints.
 
 
 - `Void`
-
-
-
-
-### src/utils.js
-
-
-#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions) 
-
-Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
-the appropriate parameter(s) where applicable.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  | - Instance on which to call .rawQuery(). | &nbsp; |
-| subendpoint |  | - The sub-endpoint. | &nbsp; |
-| endpoint |  | - The endpoint. | &nbsp; |
-| hash |  | - The address hash. | &nbsp; |
-| pathParam |  | - The path parameter. | &nbsp; |
-| filterOptions |  | - The filters associated with a given endpoint. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns a Promise of the rawQuery request from web3data.
 
 
 

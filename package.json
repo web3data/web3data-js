@@ -71,7 +71,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test && npm run build && npm run docs:gen"
+      "pre-commit": "npm test && npm run build && npm run docs:gen && git add dist/ docs/"
     }
   },
   "xo": {
