@@ -266,7 +266,7 @@ test('Successfully gets latest market tickers - with filters', async t => {
 })
 
 test('Successfully gets historical market tickers', async t => {
-  const tickers = await t.context.web3data.market.getTickers('eth_btc', {startDate: 1571011200, endDate: 1571097600})
+  const tickers = await t.context.web3data.market.getTickers('eth_btc', {startDate: DATE_2019_10_14, endDate: DATE_2019_10_15})
   t.true(tickers.hasProp('metadata'))
   t.true(tickers.hasProp('data'))
   t.true(tickers.metadata.columns.includes('bid'))
@@ -306,12 +306,7 @@ test('Successfully gets single asset address', async t => {
   t.regex(batTokenAddress.bat, /^0x[a-fA-F0-9]{40}$/g)
 })
 
-<<<<<<< HEAD
-
-test.only('Successfully gets multiple asset addresses', async t => {
-=======
 test('Successfully gets multiple asset addresses', async t => {
->>>>>>> run linter
   const assetAddresses = await t.context.web3data.market.getAssetAddresses(['bat', 'rep'])
   t.true(assetAddresses.hasProp('bat'))
   t.true(assetAddresses.hasProp('rep'))
