@@ -27,7 +27,7 @@ class Eth {
 exist.
    *
    * @param hash - The address of the account.
-   * @returns - The balance or null if it doesn't exist.
+   * @returns Promise<object> - The balance or null if it doesn't exist.
    * @example
    */
   async getBalance(hash) {

@@ -1,8 +1,10 @@
-const path = require('path');
-
+import Web3Data from "../src/web3data";
+import path from 'path';
 import { Polly } from '@pollyjs/core';
 import NodeHttpAdapter from '@pollyjs/adapter-node-http';
 import FSPersister from '@pollyjs/persister-fs';
+import dotenv from 'dotenv'
+dotenv.config()
 
 export const setUpPolly = (recordingName) => {
     Polly.register(FSPersister);
@@ -40,3 +42,33 @@ export const setUpPolly = (recordingName) => {
     });
     return polly
 }
+
+export const isISOFormat = (dateString) => dateString.match(/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z/)
+export const hasProp = ( () => Object.prototype.hasProp =
+  function (prop) {
+      return typeof this === 'object' ? Object.hasOwnProperty.call(this, prop) : null
+  }) ()
+export const values = ( () => Object.prototype.values = function () { return typeof this === 'object' ? Object.values(this) : null }) ()
+
+/**
+ * Tries to obtain an API key from the environment variable.
+ * If none is found, user is warned and dummy key is set.
+ * */
+export const getApiKey = () => {
+    let API_KEY
+    if(process.env.API_KEY) {
+        API_KEY = process.env.API_KEY
+    } else {
+        console.warn("Must set API_KEY value in .env file, \n\
+  Create an account on amberdata.io to obtain one")
+
+        API_KEY = 'API_KEY'
+
+    }
+    return API_KEY
+}
+
+/**
+ *  Returns a new Web3Data instance with API Key Set
+ *  */
+export const getNewWeb3DataInstance = (config) => new Web3Data(getApiKey(), config)
