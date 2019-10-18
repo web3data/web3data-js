@@ -12,7 +12,7 @@ class Address {
   /**
    * Creates an instance of Address.
    *
-   * @param web3data
+   * @param web3data - The web3data instance.
    * @example
    */
   constructor(web3data) {

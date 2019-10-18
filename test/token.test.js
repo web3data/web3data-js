@@ -1,8 +1,8 @@
 import test from "ava"
-import { getNewWeb3DataInstance, TOKEN_ADDRESS, ADDRESS } from './constants'
+import { TOKEN_ADDRESS, ADDRESS } from './constants'
 import { ERROR_MESSAGE_TOKEN_NO_ADDRESS as NO_ADDRESS } from '../src/constants'
 import { ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS as NO_HOLDER_ADDRESS } from '../src/constants'
-import {setUpPolly} from "./utils";
+import {setUpPolly, getNewWeb3DataInstance} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
@@ -82,7 +82,7 @@ returnsObjectWithField.title = (providedTitle = '', input) => `Successfully call
 test([rejectsPromise], {method: 'getHolders' }, NO_ADDRESS)
 
 test('Successfully gets address Token Holders Historical', async t => {
-    const filters = {holderAddresses: ADDRESS}
+    const filters = {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022'}
     const holdersHistorical = await t.context.web3data.token.getHoldersHistorical(TOKEN_ADDRESS, filters);
     t.true({}.hasOwnProperty.call(holdersHistorical.data[0], 'timestamp'))
 });

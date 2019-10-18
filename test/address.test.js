@@ -1,7 +1,7 @@
 import test, {only} from "ava"
-import { getNewWeb3DataInstance, ADDRESS } from './constants'
+import {ADDRESS } from './constants'
 import {ERROR_MESSAGE_ADDRESS_NO_ADDRESS as NO_ADDRESS} from "../src/constants";
-import {setUpPolly, hasProp} from "./utils";
+import {setUpPolly, hasProp, getNewWeb3DataInstance} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
