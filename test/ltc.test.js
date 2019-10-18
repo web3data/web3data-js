@@ -1,10 +1,5 @@
 import test from 'ava'
-
-import {
-  getNewWeb3DataInstance
-} from './constants'
-
-import {setUpPolly} from "./utils";
+import {setUpPolly, getNewWeb3DataInstance} from "./utils";
 import { LTC_METHODS as METHODS } from "../src/constants";
 
 /***********************************
