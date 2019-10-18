@@ -198,8 +198,8 @@ test('Successfully gets historical market prices', async t => {
   t.true(Array.isArray(prices.eth_btc))
   t.true(prices.values()[0][0].hasProp('price'))
 
-  // TODO: Bug prices are null -- Test there is a price property that has a float value
-  //t.regex(prices.values()[0][0].price.toString(), /\d+\.?\d*/)
+  // Test there is a price property that has a float value
+  t.regex(prices.values()[0][0].price.toString(), /\d+\.?\d*/)
 })
 
 test('throws exception when calling getPrices without base param', async t => {
