@@ -199,7 +199,7 @@ test('Successfully gets historical market prices', async t => {
   t.true(prices.values()[0][0].hasProp('price'))
 
   // Test there is a price property that has a float value
-  //t.regex(prices.values()[0][0].price.toString(), /\d+\.?\d*/)
+  t.regex(prices.values()[0][0].price.toString(), /\d+\.?\d*/)
 })
 
 test('throws exception when calling getPrices without base param', async t => {
@@ -318,5 +318,20 @@ test('Successfully gets order book updates - with filters', async t => {
 test('throws exception when calling getOrderBooks without pair param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getOrderBooks()
-  }, { instanceOf: Error, message: NO_PAIR})
+  }, { instanceOf: Error, message: NO_PAIR })
+})
+/*********** Test getAssetAddresses() ***********/
+test('Successfully gets single asset address', async t => {
+  const batTokenAddress = await t.context.web3data.market.getAssetAddresses('bat')
+  t.true(batTokenAddress.hasProp('bat'))
+  t.regex(batTokenAddress.bat, /^0x[a-fA-F0-9]{40}$/g)
+})
+
+test('Successfully gets multiple asset addresses', async t => {
+  const assetAddresses = await t.context.web3data.market.getAssetAddresses(['bat', 'rep'])
+  t.true(assetAddresses.hasProp('bat'))
+  t.true(assetAddresses.hasProp('rep'))
+  t.is(assetAddresses.values().length, 2)
+  t.regex(assetAddresses.bat, /^0x[a-fA-F0-9]{40}$/g)
+  t.regex(assetAddresses.rep, /^0x[a-fA-F0-9]{40}$/g)
 })
