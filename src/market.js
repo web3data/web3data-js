@@ -73,10 +73,7 @@ class Market {
     // Iterate through each feature and if all is valid return array of promises
     features = features.map(feature => {
       // Check each feature that it is valid
-      throwIf(
-        is.undefined(feature) || FEATURES.indexOf(feature) < 0,
-        NO_FEATURE
-      )
+      throwIf(is.undefined(feature) || !FEATURES.includes(feature), NO_FEATURE)
 
       // Append necessary url paths
       switch (feature) {
@@ -306,10 +303,10 @@ class Market {
 
   /**
    * Retrieves the address on the blockchain (if available) of the specified asset.
-   * @param {(string|array)} assets - The asset(s) to get the address of.
-   * @returns {Promise<object>} The address(es) of the asset(s).
-   * @example
-   * const batTokenAddress = web3data.market.getAssetAddresses('bat')
+   *
+   * @param assets - The asset(s) to get the address of.
+   * @returns The address(es) of the asset(s).
+   * @example const batTokenAddress = web3data.market.getAssetAddresses('bat')
    * const assetAddresses = web3data.market.getAssetAddresses(['bat', 'rep'])
    */
   getAssetAddresses(assets = 'all') {
