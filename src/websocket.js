@@ -309,7 +309,7 @@ and has at least 1 successful subscription.
       try {
         data = JSON.parse(message.data)
       } catch (error) {
-        console.error('error parsing json request')
+        console.error('error parsing json request -', error)
         return
       }
 
