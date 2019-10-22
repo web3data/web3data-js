@@ -19,7 +19,7 @@ const get = (
     endpoint = '',
     subendpoint = '',
     hash = '',
-    pathParam: pathParam = '',
+    pathParam = '',
     filterOptions = {}
   }
 ) => {

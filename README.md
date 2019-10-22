@@ -88,14 +88,16 @@ npm run test-record
 ## Commands
 ```bash
 npm run build # Build for browser and output as `dist/web3data.min.js`
+npm run docs:serve # Serves the documentation locally
+npm run docs:gen # Generates the documentation and ouputs markdown
 npm run lint # run linter
-npm run lintfix # fix linting errors
+npm run lint:fix # fix linting errors
 npm run test # runs all tests in playback mode
-npm run test-record # run tests in record mode
-npm run test-live # run tests hitting live endpoints
-npm run test-fast # run tests but stop when one fails
-npm run test-verbose # run tests with verbose output
-npm run clean-fix # deletes the fixtures
+npm run test:record # run tests in record mode
+npm run test:live # run tests hitting live endpoints
+npm run test:fast # run tests but stop when one fails
+npm run test:verbose # run tests with verbose output
+npm run clean-recs # removes all recordings
 npm run example # runs the example - see web3data-js in action!
 ```
 
