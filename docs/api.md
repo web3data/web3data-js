@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.8*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.11*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
@@ -33,7 +33,7 @@ Creates an instance of Address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| web3data |  |  | &nbsp; |
+| web3data |  | - The web3data instance. | &nbsp; |
 
 
 
@@ -490,13 +490,28 @@ Retrieves all token transfers involving the specified address.
 
 
 
-### src/utils.js
+### src/market.js
 
 
-#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions) 
+#### new Market() 
 
-Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
-the appropriate parameter(s) where applicable.
+Contains methods pertaining to the `/market` endpoint of Amberdata's API.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Market.constructor(web3data) 
+
+Creates an instance of the Market class.
 
 
 
@@ -505,12 +520,7 @@ the appropriate parameter(s) where applicable.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| web3data |  | - Instance on which to call .rawQuery(). | &nbsp; |
-| subendpoint |  | - The sub-endpoint. | &nbsp; |
-| endpoint |  | - The endpoint. | &nbsp; |
-| hash |  | - The address hash. | &nbsp; |
-| pathParam |  | - The path parameter. | &nbsp; |
-| filterOptions |  | - The filters associated with a given endpoint. | &nbsp; |
+| web3data |  | - The web3data instance. | &nbsp; |
 
 
 
@@ -525,7 +535,341 @@ the appropriate parameter(s) where applicable.
 ##### Returns
 
 
--  Returns a Promise of the rawQuery request from web3data.
+- `Void`
+
+
+
+#### getRankings(filterOptions) 
+
+Retrieves the top ranked assets by a specific metric.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  | - See [docs](https://docs.amberdata.io/reference#market-rankings) for complete list of filters. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const rankings = web3data.market.getRankings({ type: "erc721",
+sortType: "uniqueAddresses"
+})
+```
+
+
+##### Returns
+
+
+-  The market rankings data and total number of records.
+
+
+
+#### getFeatures(features, filterOptions) 
+
+Retrieves the list of supported details by feature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| features |  | - The features for which to get supported details. Features: `pairs`, `exchanges`, `ohlcv`, `prices`, `tickers`. | &nbsp; |
+| filterOptions |  | - The filter options. | &nbsp; |
+| filterOptions.exchange |  | - Filter by exchange. | &nbsp; |
+| filterOptions.pair |  | filter] - By specific pairs. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+// Single feature, filter by exchange await web3data.market.getFeatures('pairs', {exchange: 'gdax'})
+
+// Multiple features, filter by pair
+await web3data.market.getFeatures(['exchanges', 'tickers'], {pair: 'btc_usd'})
+```
+
+
+##### Returns
+
+
+-  The list of supported details by feature.
+
+
+
+#### getOhlcv(pair, filterOptions) 
+
+Retrieves the latest open-high-low-close for the specified pair.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| pair |  | - The market pair for which to retrieve open-high-low-close. | &nbsp; |
+| filterOptions |  | - See [docs](https://docs.amberdata.io/reference#get-historical-ohlc) for complete list of filters. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+// Latest const latestOhlcv = await web3data.market.getOhlcv('eth_btc', {exchange: 'bitfinex'})
+
+// Historical (1 day ago)
+const histOhlcv = await web3data.market.getOhlcv('btc_usd', {startDate: Math.round((Date.now() - 86400000) /1000)})
+```
+
+
+##### Returns
+
+
+-  The ohlcv data.
+
+
+
+#### getOrders(pair, filterOptions) 
+
+Retrieves the order book data for the specified pair.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| pair |  | - The market pair for which to retrieve order book data. | &nbsp; |
+| filterOptions |  | - See [docs](https://docs.amberdata.io/reference#get-market-orders) for complete list of filters. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const orders = await web3data.market.getOrders('eth_usd', ['bitfinex', 'bitstamp'], {timeFormat: 'iso'}) TODO: Add required param exchange
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+#### getBbos(pair, filterOptions) 
+
+Retrieves the latest or historical best bid and offer data for the specified pair and exchange (if specified).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| pair |  | - The market pair for which to retrieve the latest best bid and offer data. | &nbsp; |
+| filterOptions |  | - The filter options See [docs](https://docs.amberdata.io/reference#get-market-orders-best-bid-offer) for more details. | &nbsp; |
+| filterOptions.exchange |  | - Only return data for the given exchanges (comma separated). | &nbsp; |
+| filterOptions.pair |  | - Only return data for the given pairs (comma separated). | &nbsp; |
+| filterOptions.startDate |  | - Filter by pairs after this date. | &nbsp; |
+| filterOptions.endDate |  | - Filter by pairs before this date. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+// Latest const latestBbos = await web3data.market.getBbos('eth_btc')
+
+// Historical (1 day ago)
+const histBbos = await web3data.market.getBbos('eth_btc', {startDate: Math.round((Date.now() - 86400000) /1000)})
+```
+
+
+##### Returns
+
+
+-  The latest or historical best bid and offer data indexed by exchange.
+
+
+
+#### getPrices(base, filterOptions) 
+
+Retrieves the historical prices for the specified asset.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| base |  | - The base of a pair to retrieve the price. Example: If pair is "eth_usd", then base is "eth". | &nbsp; |
+| filterOptions |  | - The filter options. See [docs](https://docs.amberdata.io/reference#market-prices-latest) for more details. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+// Latest const latestPrices = await web3data.market.getPrices('eth')
+
+// Historical (1 day ago)
+const histPrices = await web3data.market.getPrices('eth', {startDate:  Math.round((Date.now() - 86400000) /1000)})
+```
+
+
+##### Returns
+
+
+-  The latest or historical market prices indexed by pair.
+
+
+
+#### getVwap(base, filterOptions) 
+
+Retrieves the latest VWAP & TWAP price for the specified base.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| base |  | - The base of a pair to retrieve the price. Example: If pair is "eth_usd", then base is "eth". | &nbsp; |
+| filterOptions |  | - The filter options. See [docs](https://docs.amberdata.io/reference#get-current-vwaptwap-price) for more details. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const wapData = await web3data.market.getVwap('eth', {quote: 'usd'})
+```
+
+
+##### Returns
+
+
+-  The latest VWAP & TWAP pricing data.
+
+
+
+#### getTickers(pair, filterOptions) 
+
+Retrieves the latest or historical market tickers.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| pair |  | - The market pair for which to retrieve market tickers. | &nbsp; |
+| filterOptions |  | - The filter options. See [docs](https://docs.amberdata.io/reference#get-current-vwaptwap-price) for more details. | &nbsp; |
+| filterOptions.exchange |  | - Only return data for the given exchanges (comma separated). | &nbsp; |
+| filterOptions.startDate |  | - Filter by ticker pairs after this date. | &nbsp; |
+| filterOptions.endDate |  | - Filter by ticker pairs before this date. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+//Latest const latestTickers = await web3data.market.getTickers('eth_btc')
+
+//Historical
+const histTickers = await web3data.market.getTickers('eth_btc', {startDate:  Date.now() - 86400000})
+```
+
+
+##### Returns
+
+
+-  The latest or historical market ticker data.
+
+
+
+#### getTrades(pair, filterOptions) 
+
+Retrieves the historical (time series) trade data for the specified pair.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| pair |  | - The market pair for which to retrieve market trades. | &nbsp; |
+| filterOptions |  | - The filter options. See [docs](https://docs.amberdata.io/reference#market-trades) for more details. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const trades = web3data.market.getTrades('eth_usd', {exchange: 'bitstamp'})
+```
+
+
+##### Returns
+
+
+-  The historical (time series) trade data.
+
+
+
+#### getAssetAddresses(assets) 
+
+Retrieves the address on the blockchain (if available) of the specified asset.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| assets |  | - The asset(s) to get the address of. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddresses = web3data.market.getAssetAddresses(['bat', 'rep'])
+```
+
+
+##### Returns
+
+
+-  The address(es) of the asset(s).
 
 
 
@@ -659,6 +1003,46 @@ API endpoints.
 
 
 - `Void`
+
+
+
+
+### src/utils.js
+
+
+#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions) 
+
+Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
+the appropriate parameter(s) where applicable.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  | - Instance on which to call .rawQuery(). | &nbsp; |
+| subendpoint |  | - The sub-endpoint. | &nbsp; |
+| endpoint |  | - The endpoint. | &nbsp; |
+| hash |  | - The address hash. | &nbsp; |
+| pathParam |  | - The path parameter. | &nbsp; |
+| filterOptions |  | - The filters associated with a given endpoint. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns a Promise of the rawQuery request from web3data.
 
 
 
