@@ -84,7 +84,7 @@
       &middot;
       &middot;
       &middot;
-      <button onClick="runBlockchain('btc')" id="goBtn">Blockchain Method</button>
+      <button onClick="runBlockchain('bch')" id="goBtn">Blockchain Method</button>
     </div>
     <div id="output">
       <p>Results<p>
@@ -112,7 +112,7 @@
         console.log('block', data)
         setResult(data)
       })
-      web3data.on({eventName: 'block', filters: { number: 595931 }}, data => {
+      web3data.on({eventName: 'block', filters: { number: 605859 }}, data => {
         console.log('block NUMBER', data)
         setResult(data)
       })
