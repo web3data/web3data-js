@@ -28,3 +28,21 @@ test('Check the btc namespace contains all defined methods', t => {
     }
   }
 })
+
+// NOTE: Added here since these are derivatives of bitcoin
+test('Check the bch namespace contains all defined methods', t => {
+  for(const namespace of Object.keys(METHODS)) {
+    for (const method of METHODS[namespace]) {
+      t.truthy(t.context.web3data.bch[namespace][method])
+    }
+  }
+})
+
+// NOTE: Added here since these are derivatives of bitcoin
+test('Check the bsv namespace contains all defined methods', t => {
+  for(const namespace of Object.keys(METHODS)) {
+    for (const method of METHODS[namespace]) {
+      t.truthy(t.context.web3data.bsv[namespace][method])
+    }
+  }
+})
