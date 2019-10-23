@@ -729,6 +729,40 @@ const orders = await web3data.market.getOrders('eth_usd', ['bitfinex', 'bitstamp
 
 
 
+#### getOrderBooks(pair[, filterOptions])
+
+
+Retrieves order book update events.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| pair | `string`  |  The market pair for which to retrieve the historical best bid and offer data. | &nbsp; |
+| filterOptions | `object`  |  See [docs](https://docs.amberdata.io/reference#orderbookupdates) for complete list of filters. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+const orderBooks = await web3data.market.getOrderBooks('btc_usd')
+```
+
+
+##### Returns
+
+
+-  The order book update data.
+
+
+
+
+
 #### getBbos(pair, filterOptions)
 
 
