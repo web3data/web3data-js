@@ -122,29 +122,40 @@ test('throws exception when calling getOhlcv without pair param', async t => {
 })
 
 /*********** Test getOrders() ***********/
-test.skip('Successfully gets latest orders', async t => {
-  const orders = await t.context.web3data.market.getOrders('eth_btc')
-  console.log(`orders`, orders)
+test('Successfully gets latest orders', async t => {
+  const orders = await t.context.web3data.market.getOrders('eth_btc', 'gdx')
   t.true(orders.hasProp('metadata'))
-  t.regex(Object.values(orders.data)[0].toString(), /\d+\.?\d*/)
+  t.true(orders.hasProp('data'))
+  t.true(orders.data.hasProp('ask'))
 })
 
-test.skip('Successfully gets orders - with filters', async t => {
-  const orders = await t.context.web3data.market.getOrders('eth_btc') // {startDate:  Math.round((Date.now() - 86400000) /1000)}
+test('Successfully gets latest orders - multi-exchange', async t => {
+  const orders = await t.context.web3data.market.getOrders('eth_btc', ['gdx', 'bitstamp'])
   t.true(orders.hasProp('metadata'))
-  t.regex(orders.data.values()[0].toString(), /\d+\.?\d*/)
+  t.true(orders.hasProp('data'))
+  t.true(orders.data.hasProp('ask'))
 })
 
-test.skip('Successfully gets historical orders', async t => {
-  const orders = await t.context.web3data.market.getOrders('eth_btc', {startDate: DATE_2019_10_14, endDate: DATE_2019_10_15})
+test('Successfully gets orders - with filters', async t => {
+  const orders = await t.context.web3data.market.getOrders('eth_btc', 'gdx', {
+    timeFormat: 'iso'
+  })
   t.true(orders.hasProp('metadata'))
-  t.regex(Object.values(orders.data)[0].toString(), /\d+\.?\d*/)
+  t.true(orders.hasProp('data'))
+  t.true(orders.data.hasProp('ask'))
+  t.true(isISOFormat(orders.metadata.requestedTimestamp))
 })
 
 test('throws exception when calling getOrders without pair param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getOrders()
   }, { instanceOf: Error, message: NO_PAIR})
+})
+
+test('throws exception when calling getOrders without exchange param', async t => {
+  await t.throwsAsync(async () => {
+    await t.context.web3data.market.getOrders('eth_btc')
+  }, { instanceOf: Error, message: 'No exchange specified'})
 })
 
 /*********** Test getBbos() ***********/
