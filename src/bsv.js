@@ -1,15 +1,15 @@
 const {
-  BLOCKCHAIN_ID_LITECOIN: BLOCKCHAIN_ID,
-  LTC_METHODS: METHODS
+  BLOCKCHAIN_ID_BITCOIN_SV: BLOCKCHAIN_ID,
+  BTC_METHODS: METHODS
 } = require('./constants')
 const {methodFactory} = require('./utils')
 
 /**
- * Class for all Litecoin based methods.
+ * Class for all Bitcoin SV based methods.
  *
  * @private
  */
-class Ltc {
+class Bsv {
   constructor(Web3data, apiKey, options) {
     options.blockchainId = BLOCKCHAIN_ID
     this.web3data = new Web3data(apiKey, options)
@@ -22,4 +22,4 @@ class Ltc {
   }
 }
 
-module.exports = Ltc
+module.exports = Bsv

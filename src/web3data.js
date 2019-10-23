@@ -16,6 +16,8 @@ const Signature = require('./signature')
 const Market = require('./market')
 const Eth = require('./eth')
 const Btc = require('./btc')
+const Bch = require('./bch')
+const Bsv = require('./bsv')
 const Ltc = require('./ltc')
 const WebSocketClient = require('./websocket')
 
@@ -118,6 +120,8 @@ class Web3Data extends Web3DataFactory {
     /* Instantiates a new Web3data.js instance with blockchain specific methods */
     this.eth = new Eth(Web3DataFactory, apiKey, options)
     this.btc = new Btc(Web3DataFactory, apiKey, options)
+    this.bch = new Bch(Web3DataFactory, apiKey, options)
+    this.bsv = new Bsv(Web3DataFactory, apiKey, options)
     this.ltc = new Ltc(Web3DataFactory, apiKey, options)
 
     this.websocket = null
