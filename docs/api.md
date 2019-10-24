@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.13*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.14*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
@@ -729,7 +729,7 @@ const orders = await web3data.market.getOrders('eth_usd', ['bitfinex', 'bitstamp
 
 
 
-#### getOrderBooks(pair[, filterOptions])
+#### getOrderBooks(pair, filterOptions)
 
 
 Retrieves order book update events.
@@ -741,8 +741,8 @@ Retrieves order book update events.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| pair | `string`  |  The market pair for which to retrieve the historical best bid and offer data. | &nbsp; |
-| filterOptions | `object`  |  See [docs](https://docs.amberdata.io/reference#orderbookupdates) for complete list of filters. | *Optional* |
+| pair |  |  The market pair for which to retrieve the historical best bid and offer data. | &nbsp; |
+| filterOptions |  |  See [docs](https://docs.amberdata.io/reference#orderbookupdates) for complete list of filters. | &nbsp; |
 
 
 

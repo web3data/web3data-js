@@ -83,7 +83,7 @@ const returnsUncleObject = async (t, { method, params = {} }) => {
 returnsUncleObject.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns valid uncle object`
 
 const returnsTxnObjects = async (t, { method, params = {}}) => {
-    const transactions = await t.context.web3data.block[method](params.id)
+    const {records: transactions } = await t.context.web3data.block[method](params.id)
     t.true(transactions.length > 0)
     t.true(transactions[0].hasProp('blockNumber'))
     t.is(parseInt(transactions[0].blockNumber), params.id)

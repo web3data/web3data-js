@@ -18,20 +18,13 @@ class Block {
     }).then(onFulfilled, onError)
   }
 
-  async getBlock(id, filterOptions) {
-    if (is.undefined(id)) return Promise.reject(new Error(NO_BLOCK_ID))
-    const response = await get(this.web3data, {
+  getBlock(id, filterOptions) {
+    throwIf(is.undefined(id), NO_BLOCK_ID)
+    return get(this.web3data, {
       pathParam: id,
       endpoint: ENDPOINT,
       filterOptions
-    })
-    return new Promise((resolve, reject) => {
-      if (!response || response.status !== 200 || !response.payload) {
-        reject(new Error(`error with request`))
-      } else {
-        resolve(response.payload)
-      }
-    })
+    }).then(onFulfilled, onError)
   }
 
   async getBlockNumber() {
@@ -49,34 +42,22 @@ class Block {
     return block.predictions ? null : parseInt(block.numTransactions, 10)
   }
 
-  async getTransactions(id, filterOptions) {
-    const response = await get(this.web3data, {
+  getTransactions(id, filterOptions) {
+    throwIf(is.undefined(id), NO_BLOCK_ID)
+    return get(this.web3data, {
       pathParam: id,
       endpoint: ENDPOINT,
       subendpoint: 'transactions',
       filterOptions
-    })
-    throwIf(
-      !response ||
-        response.status !== 200 ||
-        !response.payload ||
-        !response.payload.records,
-      'Failed to retrieve transactions.'
-    )
-    return response.payload.records
+    }).then(onFulfilled, onError)
   }
 
-  async getTransactionFromBlock(id, index) {
-    const transactions = await this.web3data.block.getTransactions(id)
-    return new Promise((resolve, reject) => {
-      if (!transactions) {
-        reject(new Error(`Failed to retrieve transaction.`))
-      } else if (index < transactions.length && index > -1) {
-        resolve(transactions[index])
-      } else {
-        resolve(null)
-      }
-    })
+  getTransactionFromBlock(id, index) {
+    throwIf(is.undefined(id), NO_BLOCK_ID)
+    return this.web3data.block.getTransactions(id).then(({records: txns}) => {
+      throwIf(!txns, 'Failed to retrieve transaction.')
+      return index < txns.length && index > -1 ? txns[index] : null
+    }, onError)
   }
 
   async getUncle(id, index) {
