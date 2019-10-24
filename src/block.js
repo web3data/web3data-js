@@ -40,6 +40,7 @@ class Block {
         !block || (!block.predictions && !block.numTransactions),
         'Failed to retrieve block transaction count.'
       )
+      // If 'predictions' field exists then it's a future block thus has no txns
       return block.predictions ? null : parseInt(block.numTransactions, 10)
     })
   }
@@ -58,6 +59,8 @@ class Block {
     throwIf(is.undefined(id), NO_BLOCK_ID)
     return this.web3data.block.getTransactions(id).then(({records: txns}) => {
       throwIf(!txns, 'Failed to retrieve transaction.')
+
+      // Check that 'index' is within valid range
       return index < txns.length && index > -1 ? txns[index] : null
     })
   }
@@ -75,6 +78,10 @@ class Block {
             (!block.predictions && !block.numTransactions && !block.validation),
           'Failed to retrieve uncle.'
         )
+        // Check that it's...
+        // a not a future block
+        // and that the block has uncles
+        // and 'index' is within the valid range
         return !block.predictions &&
           block.validation.uncles &&
           index < block.validation.uncles.length &&
@@ -85,22 +92,18 @@ class Block {
   }
 
   getTokenTransfers(id, filterOptions) {
-    if (is.undefined(id)) return Promise.reject(new Error(NO_BLOCK_ID))
+    throwIf(is.undefined(id), NO_BLOCK_ID)
     return get(this.web3data, {
       pathParam: id,
       endpoint: ENDPOINT,
       subendpoint: 'token-transfers',
       filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+    }).then(onFulfilled, onError)
   }
 
   // TODO: Needs tests
   getLogs(id, filterOptions) {
-    throwIf(is.notHash(id), NO_BLOCK_ID)
+    throwIf(is.undefined(id), NO_BLOCK_ID)
     return get(this.web3data, {
       id,
       endpoint: ENDPOINT,
@@ -111,7 +114,7 @@ class Block {
 
   // TODO: Needs tests
   getFunctions(id, filterOptions) {
-    throwIf(is.notHash(id), NO_BLOCK_ID)
+    throwIf(is.undefined(id), NO_BLOCK_ID)
     return get(this.web3data, {
       id,
       endpoint: ENDPOINT,
