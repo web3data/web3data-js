@@ -108,8 +108,7 @@ class Block {
       endpoint: ENDPOINT,
       subendpoint: 'logs',
       filterOptions
-    })
-      .then(onFulfilled, onError)
+    }).then(onFulfilled, onError)
   }
 
   getFunctions(id, filterOptions) {
