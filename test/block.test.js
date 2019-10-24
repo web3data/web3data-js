@@ -19,19 +19,6 @@ test.beforeEach(t => {
 })
 
 /**
- * Test that method is called and returns successfully, i.e. a status of 200
- * @param t the test object
- * @param endpoint
- * @param method
- * @param params
- */
-const statusSuccess = async (t, { method, params = {} }) => {
-    const response = await t.context.web3data.block[method](params.id)
-    t.is(response.status, 200)
-}
-statusSuccess.title = (providedTitle = '', input) =>  `Successfully calls ${input.method} and returns status of 200`
-
-/**
  * Test that method rejects the promise the proper params are not provided
  * @param t the test object
  * @param endpoint
@@ -98,7 +85,7 @@ const returnsTxnObject = async (t, { method, params = {} }) => {
 }
 returnsTxnObject.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns valid txn object`
 
-// test([statusSuccess, rejectsPromise],  {method: 'getTokenTransfers'}, NO_NUMBER)
+
 test([returnsBlockObject, returnsBlockObjectFilters], {method: 'getBlock', params: {id: 7000000, timeFormat: 'ms', validationMethod: 'full'}})
 test([returnsNumber], {method: 'getBlockNumber'})
 test([returnsNumber, returnsNull, rejectsPromise], {method: 'getBlockTransactionCount', params: {id: 7000000}}, NO_BLOCK_ID)
@@ -107,12 +94,46 @@ test([returnsTxnObjects], {method: 'getTransactions', params: {id: 8102326}}, NO
 test([returnsTxnObject, returnsNull], {method: 'getTransactionFromBlock', params: {id: 7000000, index: 0}}, NO_BLOCK_ID)
 
 /*********** Test getTokenTransfers() ***********/
+test(rejectsPromise, {method: 'getTokenTransfers'}, NO_BLOCK_ID)
 test('Successfully gets block token transfers', async t => {
     const response = await t.context.web3data.block.getTokenTransfers(7000000)
-    t.truthy(response.metadata)
+    t.true(response.hasProp('metadata'))
 })
-test('throws exception when calling getTokenTransfers without block id', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.block.getTokenTransfers()
-    }, { instanceOf: Error, message: NO_BLOCK_ID })
+test('Successfully gets block token transfers - with filters', async t => {
+    const FROM = 1
+    const TETHER_ADDRESS = '0xdac17f958d2ee523a2206206994597c13d831ec7'
+    const {data: transfers} = await t.context.web3data.block.getTokenTransfers(8805274, {
+        tokenAddress: '0xdac17f958d2ee523a2206206994597c13d831ec7'
+    })
+    t.is(transfers[0][FROM], TETHER_ADDRESS)
+})
+
+/*********** Test getLogs() ***********/
+test(rejectsPromise, {method: 'getLogs'}, NO_BLOCK_ID)
+test('Successfully gets block logs', async t => {
+    const {records: logs} = await t.context.web3data.block.getLogs(8805274)
+    t.true(logs[0].hasProp('logIndex'))
+})
+test('Successfully gets block logs - with filters', async t => {
+    const {records: logs} = await t.context.web3data.block.getLogs(8805274, {validationMethod: 'full'})
+    t.true(logs[0].hasProp('logIndex'))
+    t.true(logs[0].hasProp('validation'))
+})
+
+/*********** Test getFunctions() ***********/
+test(rejectsPromise, {method: 'getFunctions'}, NO_BLOCK_ID)
+test('Successfully gets block functions', async t => {
+    const {records: functions} = await t.context.web3data.block.getFunctions(8805274)
+    t.true(functions[0].hasProp('messageIndex'))
+})
+test('Successfully gets block functions - with filters', async t => {
+    const {records: functions} = await t.context.web3data.block.getFunctions(8805274, {validationMethod: 'full'})
+    t.true(functions[0].hasProp('messageIndex'))
+    t.true(functions[0].hasProp('validation'))
+})
+
+/*********** Test getMetrics() ***********/
+test('Successfully gets block metrics', async t => {
+    const metrics = await t.context.web3data.block.getMetrics(8805274)
+    t.true(metrics.hasProp('issuanceTotal'))
 })

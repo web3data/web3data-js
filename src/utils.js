@@ -54,7 +54,7 @@ const throwNow = message => throwIf(true, message)
 
 const onFulfilled = response =>
   response.error ? throwNow(response.message) : response.payload
-const onError = error => throwNow(error.response.data.message)
+const onError = ({response: {data}}) => throwNow(data.message || data.description)
 
 const rejectPromiseIf = (condition, message) => {
   if (condition) return Promise.reject(new Error(message))
