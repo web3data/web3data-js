@@ -27,19 +27,21 @@ class Block {
     }).then(onFulfilled, onError)
   }
 
-  async getBlockNumber() {
-    const block = await this.web3data.block.getBlock('latest')
-    throwIf(block | !block.number, 'Failed to retrieve block number.')
-    return parseInt(block.number, 10)
+  getBlockNumber() {
+    return this.web3data.block.getBlock('latest').then(block => {
+      throwIf(block | !block.number, 'Failed to retrieve block number.')
+      return parseInt(block.number, 10)
+    })
   }
 
-  async getBlockTransactionCount(id) {
-    const block = await this.web3data.block.getBlock(id)
-    throwIf(
-      !block || (!block.predictions && !block.numTransactions),
-      'Failed to retrieve block transaction count.'
-    )
-    return block.predictions ? null : parseInt(block.numTransactions, 10)
+  getBlockTransactionCount(id) {
+    return this.web3data.block.getBlock(id).then(block => {
+      throwIf(
+        !block || (!block.predictions && !block.numTransactions),
+        'Failed to retrieve block transaction count.'
+      )
+      return block.predictions ? null : parseInt(block.numTransactions, 10)
+    })
   }
 
   getTransactions(id, filterOptions) {
@@ -57,27 +59,29 @@ class Block {
     return this.web3data.block.getTransactions(id).then(({records: txns}) => {
       throwIf(!txns, 'Failed to retrieve transaction.')
       return index < txns.length && index > -1 ? txns[index] : null
-    }, onError)
+    })
   }
 
-  async getUncle(id, index) {
-    const block = await this.web3data.block.getBlock(id, {
-      validationMethod: 'full'
-    })
-    return new Promise((resolve, reject) => {
-      if (
-        !block ||
-        (!block.predictions && !block.numTransactions && !block.validation)
-      ) {
-        reject(new Error(`Failed to retrieve uncle.`))
-      } else if (block.predictions || !block.validation.uncles) {
-        resolve(null)
-      } else if (index < block.validation.uncles.length && index > -1) {
-        resolve(block.validation.uncles[index])
-      } else {
-        resolve(null)
-      }
-    })
+  getUncle(id, index) {
+    throwIf(is.undefined(id), NO_BLOCK_ID)
+    throwIf(is.undefined(index), "Missing required param 'index'")
+    return this.web3data.block
+      .getBlock(id, {
+        validationMethod: 'full'
+      })
+      .then(block => {
+        throwIf(
+          !block ||
+            (!block.predictions && !block.numTransactions && !block.validation),
+          'Failed to retrieve uncle.'
+        )
+        return !block.predictions &&
+          block.validation.uncles &&
+          index < block.validation.uncles.length &&
+          index > -1
+          ? block.validation.uncles[index]
+          : null
+      })
   }
 
   getTokenTransfers(id, filterOptions) {

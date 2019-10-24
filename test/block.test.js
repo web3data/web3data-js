@@ -54,7 +54,7 @@ const returnsNumber = async (t, { method, params = {} }) => {
 returnsNumber.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns number value`
 
 const returnsNull = async (t, { method, params = {} }) => {
-    const response = await t.context.web3data.block[method](999999999)
+    const response = await t.context.web3data.block[method](999999999, 0)
     t.is(response, null)
 }
 returnsNull.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns null value`
