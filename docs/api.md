@@ -729,7 +729,7 @@ const orders = await web3data.market.getOrders('eth_usd', ['bitfinex', 'bitstamp
 
 
 
-#### getOrderBooks(pair[, filterOptions])
+#### getOrderBooks(pair, filterOptions)
 
 
 Retrieves order book update events.
@@ -741,8 +741,8 @@ Retrieves order book update events.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| pair | `string`  |  The market pair for which to retrieve the historical best bid and offer data. | &nbsp; |
-| filterOptions | `object`  |  See [docs](https://docs.amberdata.io/reference#orderbookupdates) for complete list of filters. | *Optional* |
+| pair |  |  The market pair for which to retrieve the historical best bid and offer data. | &nbsp; |
+| filterOptions |  |  See [docs](https://docs.amberdata.io/reference#orderbookupdates) for complete list of filters. | &nbsp; |
 
 
 
@@ -982,6 +982,49 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
+### src/utils.js
+
+
+
+#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)
+
+
+Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
+the appropriate parameter(s) where applicable.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  |  Instance on which to call .rawQuery(). | &nbsp; |
+| subendpoint |  |  The subendpoint. | &nbsp; |
+| endpoint |  |  The endpoint. | &nbsp; |
+| hash |  |  The address hash. | &nbsp; |
+| pathParam |  |  The path parameter. | &nbsp; |
+| filterOptions |  |  The filters associated with a given endpoint. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns a Promise of the rawQuery request from web3data.
+
+
+
+
+
 ### src/web3data.js
 
 
@@ -1113,49 +1156,6 @@ API endpoints.
 
 
 
-
-
-
-
-
-### src/utils.js
-
-
-
-#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)
-
-
-Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
-the appropriate parameter(s) where applicable.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  |  Instance on which to call .rawQuery(). | &nbsp; |
-| subendpoint |  |  The subendpoint. | &nbsp; |
-| endpoint |  |  The endpoint. | &nbsp; |
-| hash |  |  The address hash. | &nbsp; |
-| pathParam |  |  The path parameter. | &nbsp; |
-| filterOptions |  |  The filters associated with a given endpoint. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns a Promise of the rawQuery request from web3data.
 
 
 
