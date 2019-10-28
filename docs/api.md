@@ -982,6 +982,91 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
+### src/transaction.js
+
+
+
+#### Class: Transaction
+
+
+Contains methods pertaining to the `/address` endpoint of Amberdata's API.
+See [documentation](https://docs.amberdata.io/reference#get-all-transactions) details about our transaction endpoints.
+
+
+
+
+
+
+
+
+
+#### constructor(web3data)
+
+
+Creates an instance of Transaction. Meant to be used in conjunction with the Web3Data class.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  |  The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### getTransactions(filterOptions)
+
+
+Retrieves all transactions matching the specified filters.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| filterOptions.status |  |  Filter by the status of the transactions to retrieve (all, completed, failed, pending). | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const transactions = await web3data.transaction.getTransactions()
+```
+
+
+##### Returns
+
+
+-  - All transactions matched by the specified filters.
+
+
+
+
+
 ### src/utils.js
 
 

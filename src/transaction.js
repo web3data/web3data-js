@@ -5,12 +5,30 @@ const {
 
 const {is, get, onFulfilled, onError, throwIf} = require('./utils')
 
+/**
+ * Contains methods pertaining to the `/address` endpoint of Amberdata's API.
+ * See [documentation](https://docs.amberdata.io/reference#get-all-transactions) details about our transaction endpoints.
+ */
 class Transaction {
+  /**
+   * Creates an instance of Transaction. Meant to be used in conjunction with the Web3Data class.
+   *
+   * @param web3data - The web3data instance.
+   * @example
+   */
   constructor(web3data) {
     this.web3data = web3data
   }
 
-  getTransactions(filterOptions) {
+  /**
+   * Retrieves all transactions matching the specified filters.
+   *
+   * @param [filterOptions] - The filter options associated with the request.
+   * @param [filterOptions.status] - Filter by the status of the transactions to retrieve (all, completed, failed, pending).
+   * @returns - All transactions matched by the specified filters.
+   * @example const transactions = await web3data.transaction.getTransactions()
+   */
+  getTransactions(filterOptions = {}) {
     return get(this.web3data, {
       endpoint: ENDPOINT,
       filterOptions
