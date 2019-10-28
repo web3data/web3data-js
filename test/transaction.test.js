@@ -121,7 +121,7 @@ test('Successfully calls getVolume', async t => {
     t.true(volume.hasProp('data'))
 })
 
-test.only('Successfully calls getVolume - with filters', async t => {
+test('Successfully calls getVolume - with filters', async t => {
     const volume = await t.context.web3data.transaction.getVolume({timeFormat: 'iso'})
     t.true(volume.hasProp('metadata'))
     t.true(volume.hasProp('data'))
