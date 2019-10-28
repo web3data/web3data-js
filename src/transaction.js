@@ -46,6 +46,14 @@ class Transaction {
     }).then(onFulfilled, onError)
   }
 
+  getGasPercentiles(filterOptions) {
+    return get(this.web3data, {
+      endpoint: ENDPOINT,
+      subendpoint: 'gas/percentiles',
+      filterOptions
+    }).then(onFulfilled, onError)
+  }
+
   getGasPrice() {
     return this.getGasPrediction().then(gasPrediction => {
       throwIf(

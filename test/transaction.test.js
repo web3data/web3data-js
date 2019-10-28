@@ -108,6 +108,17 @@ test('Successfully calls getGasPrediction', async t => {
     t.true(gasPrediction.hasProp('average'))
 })
 
+/*********** Test getGasPercentiles() ***********/
+test('Successfully calls getGasPercentiles', async t => {
+    const gasPercentiles = await t.context.web3data.transaction.getGasPercentiles()
+    t.true(gasPercentiles.hasProp('percentile_000'))
+})
+
+test('Successfully calls getGasPercentiles - with filters', async t => {
+    const gasPercentiles = await t.context.web3data.transaction.getGasPercentiles({numBlocks: 100})
+    t.true(gasPercentiles.hasProp('percentile_000'))
+})
+
 /*********** Test getGasPrice() ***********/
 test('Successfully calls getGasPrice', async t => {
     const gasPrice = await t.context.web3data.transaction.getGasPrice()
