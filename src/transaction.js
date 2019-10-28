@@ -56,7 +56,6 @@ class Transaction {
     })
   }
 
-  // TODO: Needs tests
   getVolume(filterOptions) {
     return get(this.web3data, {
       endpoint: ENDPOINT,
@@ -65,7 +64,6 @@ class Transaction {
     }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
   getMetrics(filterOptions) {
     return get(this.web3data, {
       endpoint: ENDPOINT,
