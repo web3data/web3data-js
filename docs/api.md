@@ -982,6 +982,36 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
+### src/transaction.js
+
+
+
+#### getAll(filterOptions)
+
+
+See 'getTransactions' for details
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  |  | &nbsp; |
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
 ### src/utils.js
 
 
@@ -1020,6 +1050,142 @@ the appropriate parameter(s) where applicable.
 
 
 -  Returns a Promise of the rawQuery request from web3data.
+
+
+
+
+
+### src/web3data.js
+
+
+
+#### Class: Web3DataFactory
+
+
+Contains common methods used in.
+
+
+
+
+
+
+
+
+
+#### constructor(apiKey, options, blockchainId:, -, -)
+
+
+Creates a Web3Data instance.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| apiKey |  |  The Amberdata api key needed to access data. | &nbsp; |
+| options | `object`  | Contains additional configuration options: | &nbsp; |
+| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
+| - |  | baseUrl: the base url of API calls | &nbsp; |
+| - |  | websocketUrl: the websocket url to use | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### rawQuery(url)
+
+
+Appends the API base url with the endpoint  url. Then sends an
+http request to the Amberdata API endpoint.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| url |  |  The endpoint url with any query/path params if set. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The axios request object.
+
+
+
+
+
+#### rpc(method, params)
+
+
+Method used to interact with web3api json rpc endpoints.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| method |  |  The json rpc method to call. | &nbsp; |
+| params |  |  The parameters to the json rpc call. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns the json rpc result.
+
+
+
+
+
+#### Class: Web3Data
+
+
+Class Web3data contains methods for hitting Amberdata's
+API endpoints.
+
+
+
+
 
 
 
@@ -1233,172 +1399,6 @@ Destroys a single event listener. De-registers event and callback function.
 ```javascript
 
 ```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-
-### src/web3data.js
-
-
-
-#### Class: Web3DataFactory
-
-
-Contains common methods used in.
-
-
-
-
-
-
-
-
-
-#### constructor(apiKey, options, blockchainId:, -, -)
-
-
-Creates a Web3Data instance.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| apiKey |  |  The Amberdata api key needed to access data. | &nbsp; |
-| options | `object`  | Contains additional configuration options: | &nbsp; |
-| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
-| - |  | baseUrl: the base url of API calls | &nbsp; |
-| - |  | websocketUrl: the websocket url to use | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-
-#### rawQuery(url)
-
-
-Appends the API base url with the endpoint  url. Then sends an
-http request to the Amberdata API endpoint.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| url |  |  The endpoint url with any query/path params if set. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The axios request object.
-
-
-
-
-
-#### rpc(method, params)
-
-
-Method used to interact with web3api json rpc endpoints.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| method |  |  The json rpc method to call. | &nbsp; |
-| params |  |  The parameters to the json rpc call. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns the json rpc result.
-
-
-
-
-
-#### Class: Web3Data
-
-
-Class Web3data contains methods for hitting Amberdata's
-API endpoints.
-
-
-
-
-
-
-
-
-
-### src/transaction.js
-
-
-
-#### getAll(filterOptions)
-
-
-See 'getTransactions' for details
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| filterOptions |  |  | &nbsp; |
-
-
 
 
 ##### Returns
