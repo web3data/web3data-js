@@ -14,6 +14,26 @@
     .app-sub-sidebar li:before {
       display: none;
     }
+    summary {
+      outline: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none
+    }
+
+    summary:after {
+      content: "➕";
+      color: #222222;
+      font-size: 10px;
+      font-weight: 800;
+      margin-left: 2px;
+      width: 30px;
+    }
+
+    details[open] > summary:after {
+      content: "➖";
+    }
   </style>
 </head>
 <body>
