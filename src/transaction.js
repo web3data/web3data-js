@@ -17,6 +17,14 @@ class Transaction {
     }).then(onFulfilled, onError)
   }
 
+  /**
+   * See 'getTransactions' for details
+   * @param filterOptions
+   */
+  getAll(filterOptions) {
+    return this.getTransactions(filterOptions)
+  }
+
   getTransaction(hash, filterOptions) {
     throwIf(is.notHash(hash), NO_HASH)
     return get(this.web3data, {
