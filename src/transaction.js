@@ -84,6 +84,7 @@ class Transaction {
    *
    * @returns The latest gas predictions for the transactions.
    * @example
+   * const gasPredictions = await web3data.transaction.getGasPrediction()
    */
   getGasPrediction() {
     return get(this.web3data, {
@@ -99,6 +100,7 @@ class Transaction {
    * @param [filterOptions.numBlocks] - Number of past blocks on which to base the percentiles.
    * @returns The latest gas price percentiles for the transactions.
    * @example
+   * const gasPercentiles = await web3data.transaction.getGasPercentiles()
    */
   getGasPercentiles(filterOptions = {}) {
     return get(this.web3data, {
@@ -113,6 +115,7 @@ class Transaction {
    *
    * @returns The latest gas price.
    * @example
+   * const gasPrice = await web3data.transaction.getGasPrice()
    */
   getGasPrice() {
     return this.getGasPrediction().then(gasPrediction => {
@@ -130,6 +133,7 @@ class Transaction {
    * @param [filterOptions] - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#get-historical-transaction-volume) for more details.
    * @returns The historical (time series) volume of transactions.
    * @example
+   * const volume = await web3data.transaction.getVolume()
    */
   getVolume(filterOptions = {}) {
     return get(this.web3data, {
@@ -144,6 +148,8 @@ class Transaction {
    *
    * @returns Metrics for recent confirmed transactions.
    * @example
+   * const metrics = await web3data.transaction.getMetrics()
+   *
    */
   getMetrics(filterOptions = {}) {
     return get(this.web3data, {

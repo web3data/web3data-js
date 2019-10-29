@@ -1147,7 +1147,7 @@ Retrieves the latest gas predictions for the transactions.
 ##### Examples
 
 ```javascript
-
+const gasPredictions = await web3data.transaction.getGasPrediction()
 ```
 
 
@@ -1181,7 +1181,7 @@ Retrieves the latest gas price percentiles for the transactions.
 ##### Examples
 
 ```javascript
-
+const gasPercentiles = await web3data.transaction.getGasPercentiles()
 ```
 
 
@@ -1207,7 +1207,7 @@ Retrieves the latest average gas price. Uses `getGasPrediction` under the hood.
 ##### Examples
 
 ```javascript
-
+const gasPrice = await web3data.transaction.getGasPrice()
 ```
 
 
@@ -1240,7 +1240,7 @@ Retrieves the historical (time series) volume of transactions.
 ##### Examples
 
 ```javascript
-
+const volume = await web3data.transaction.getVolume()
 ```
 
 
@@ -1266,7 +1266,7 @@ Get metrics for recent confirmed transactions for a given blockchain. Default me
 ##### Examples
 
 ```javascript
-
+const metrics = await web3data.transaction.getMetrics()
 ```
 
 
