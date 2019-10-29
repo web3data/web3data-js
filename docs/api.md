@@ -533,6 +533,44 @@ Retrieves all token transfers involving the specified address.
 
 
 
+### src/block.js
+
+
+
+#### getBlock(id, filterOptions)
+
+
+Retrieves the blocks specified by its id (number or hash).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  |  The number or hash of the block for which to retrieve block information. | &nbsp; |
+| filterOptions |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+
+
 ### src/market.js
 
 
@@ -729,7 +767,7 @@ const orders = await web3data.market.getOrders('eth_usd', ['bitfinex', 'bitstamp
 
 
 
-#### getOrderBooks(pair[, filterOptions])
+#### getOrderBooks(pair, filterOptions)
 
 
 Retrieves order book update events.
@@ -741,8 +779,8 @@ Retrieves order book update events.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| pair | `string`  |  The market pair for which to retrieve the historical best bid and offer data. | &nbsp; |
-| filterOptions | `object`  |  See [docs](https://docs.amberdata.io/reference#orderbookupdates) for complete list of filters. | *Optional* |
+| pair |  |  The market pair for which to retrieve the historical best bid and offer data. | &nbsp; |
+| filterOptions |  |  See [docs](https://docs.amberdata.io/reference#orderbookupdates) for complete list of filters. | &nbsp; |
 
 
 
