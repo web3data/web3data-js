@@ -109,29 +109,26 @@ class Block {
     }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
   getLogs(id, filterOptions) {
     throwIf(is.undefined(id), NO_BLOCK_ID)
     return get(this.web3data, {
-      id,
+      pathParam: id,
       endpoint: ENDPOINT,
       subendpoint: 'logs',
       filterOptions
     }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
   getFunctions(id, filterOptions) {
     throwIf(is.undefined(id), NO_BLOCK_ID)
     return get(this.web3data, {
-      id,
+      pathParam: id,
       endpoint: ENDPOINT,
       subendpoint: 'functions',
       filterOptions
     }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
   getMetrics(filterOptions) {
     return get(this.web3data, {
       endpoint: ENDPOINT,
