@@ -18,6 +18,14 @@ class Block {
     }).then(onFulfilled, onError)
   }
 
+  /**
+   * Retrieves the blocks specified by its id (number or hash).
+   *
+   * @param id - The number or hash of the block for which to retrieve block information.
+   * @param [filterOptions] -
+   * @returns
+   * @example
+   */
   getBlock(id, filterOptions) {
     throwIf(is.undefined(id), NO_BLOCK_ID)
     return get(this.web3data, {
