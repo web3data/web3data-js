@@ -60,9 +60,11 @@ const throwNow = message => throwIf(true, message)
  * @private
  * @example
  */
-const onFulfilled = response => {
+const onFulfilled = function(response) {
   throwIf(response.error, response.message)
-  return this && this.formatter ? this.formatter(response) : response.payload
+  return this && this.formatter
+    ? this.formatter(response.payload)
+    : response.payload
 }
 
 const onError = ({response: {data}}) =>
@@ -179,6 +181,12 @@ const formatJsonRpc = options => {
   })
 }
 
+const defaultFormatter = (response, field) => {
+  return response[field] ? response[field] : null
+}
+
+const recordsFormatter = response => defaultFormatter(response, 'records')
+
 module.exports = {
   buildFilterUrl,
   is,
@@ -192,5 +200,6 @@ module.exports = {
   onFulfilled,
   onError,
   formatJsonRpc,
-  getMethods
+  getMethods,
+  recordsFormatter
 }

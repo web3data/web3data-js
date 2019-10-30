@@ -102,7 +102,7 @@ test('web3data.eth successfully calls method getTransaction', async t => {
 })
 
 test('web3data.eth successfully calls method getTransactions', async t => {
-    const {records: txns} = await t.context.web3data.eth.getTransactions(BLOCK_NUMBER)
+    const txns = await t.context.web3data.eth.getTransactions(BLOCK_NUMBER)
     t.true(txns.length > 0)
 })
 

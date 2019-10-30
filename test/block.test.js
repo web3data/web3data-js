@@ -89,7 +89,7 @@ returnsUncleObject.title = (providedTitle = '', input) =>
   `Successfully calls ${input.method} and returns valid uncle object`
 
 const returnsTxnObjects = async (t, {method, params = {}}) => {
-    const {records: transactions} = await t.context.web3data.block[method](
+    const transactions = await t.context.web3data.block[method](
       params.id
     )
     t.true(transactions.length > 0)
@@ -141,15 +141,11 @@ test(
 
 /** ********* Test getBlocks() ***********/
 test('Successfully gets blocks', async t => {
-    const {
-        records: [block]
-    } = await t.context.web3data.block.getBlocks()
+    const [block]  = await t.context.web3data.block.getBlocks()
     t.true(block.hasProp('number'))
 })
 test('Successfully gets blocks - with filters', async t => {
-    const {
-        records: [block]
-    } = await t.context.web3data.block.getBlocks({validationMethod: 'full'})
+    const [block] = await t.context.web3data.block.getBlocks({validationMethod: 'full'})
     t.true(block.hasProp('validation'))
 })
 
@@ -173,15 +169,11 @@ test('Successfully gets block token transfers - with filters', async t => {
 /** ********* Test getLogs() ***********/
 test(rejectsPromise, {method: 'getLogs'}, NO_BLOCK_ID)
 test('Successfully gets block logs', async t => {
-    const {
-        records: [log]
-    } = await t.context.web3data.block.getLogs(8805274)
+    const [log] = await t.context.web3data.block.getLogs(8805274)
     t.true(log.hasProp('logIndex'))
 })
 test('Successfully gets block logs - with filters', async t => {
-    const {
-        records: [log]
-    } = await t.context.web3data.block.getLogs(8805274, {
+    const [log] = await t.context.web3data.block.getLogs(8805274, {
         validationMethod: 'full'
     })
     t.true(log.hasProp('logIndex'))
@@ -191,15 +183,11 @@ test('Successfully gets block logs - with filters', async t => {
 /** ********* Test getFunctions() ***********/
 test(rejectsPromise, {method: 'getFunctions'}, NO_BLOCK_ID)
 test('Successfully gets block functions', async t => {
-    const {
-        records: [internalMessage]
-    } = await t.context.web3data.block.getFunctions(8805274)
+    const [internalMessage] = await t.context.web3data.block.getFunctions(8805274)
     t.true(internalMessage.hasProp('messageIndex'))
 })
 test('Successfully gets block functions - with filters', async t => {
-    const {
-        records: [internalMessage]
-    } = await t.context.web3data.block.getFunctions(8805274, {
+    const [internalMessage] = await t.context.web3data.block.getFunctions(8805274, {
         validationMethod: 'full'
     })
     t.true(internalMessage.hasProp('messageIndex'))

@@ -3,7 +3,14 @@ const {
   ERROR_MESSAGE_BLOCK_NO_ID: NO_BLOCK_ID
 } = require('./constants')
 
-const {is, get, throwIf, onFulfilled, onError} = require('./utils')
+const {
+  is,
+  get,
+  throwIf,
+  onFulfilled,
+  onError,
+  recordsFormatter
+} = require('./utils')
 
 class Block {
   constructor(web3data) {
@@ -15,7 +22,7 @@ class Block {
     return get(this.web3data, {
       endpoint: ENDPOINT,
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 
   /**
@@ -60,12 +67,12 @@ class Block {
       endpoint: ENDPOINT,
       subendpoint: 'transactions',
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 
   getTransactionFromBlock(id, index) {
     throwIf(is.undefined(id), NO_BLOCK_ID)
-    return this.web3data.block.getTransactions(id).then(({records: txns}) => {
+    return this.web3data.block.getTransactions(id).then(txns => {
       throwIf(!txns, 'Failed to retrieve transaction.')
 
       // Check that 'index' is within valid range
@@ -116,7 +123,7 @@ class Block {
       endpoint: ENDPOINT,
       subendpoint: 'logs',
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 
   getFunctions(id, filterOptions) {
@@ -126,7 +133,7 @@ class Block {
       endpoint: ENDPOINT,
       subendpoint: 'functions',
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 
   getMetrics(filterOptions) {
