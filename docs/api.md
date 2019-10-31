@@ -635,6 +635,32 @@ const usage = await web3data.address.getUsage(ADDRESS)
 
 
 
+#### getMetrics()
+
+
+Get metrics for all addresses that have exist publicly for a given blockchain. Default metrics are for Ethereum over a 24h period.
+
+
+
+
+
+
+##### Examples
+
+```javascript
+const metrics = await web3data.address.getMetrics(ADDRESS)
+```
+
+
+##### Returns
+
+
+-  The address metrics.
+
+
+
+
+
 ### src/block.js
 
 

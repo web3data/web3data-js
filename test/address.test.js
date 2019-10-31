@@ -411,3 +411,9 @@ test('Successfully gets historical address balance + paginates properly', async 
     const balance = await t.context.web3data.address.getBalance(ADDRESS, {startDate: 1506184430, page: 0, size: SIZE})
     t.is(balance.data.length, SIZE)
 })
+
+/*********** Test getMetrics() ***********/
+test('Successfully calls getMetrics()', async t => {
+    const metrics = await t.context.web3data.address.getMetrics(ADDRESS)
+    t.true(metrics.hasProp('activeTotal'))
+})

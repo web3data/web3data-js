@@ -354,12 +354,17 @@ Returns null if no address is found.
     }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
-  getMetrics(filterOptions) {
+  /**
+   * Get metrics for all addresses that have exist publicly for a given blockchain. Default metrics are for Ethereum over a 24h period.
+   *
+   * @returns The address metrics.
+   * @example
+   * const metrics = await web3data.address.getMetrics(ADDRESS)
+   */
+  getMetrics() {
     return get(this.web3data, {
       endpoint: ENDPOINT,
-      subendpoint: 'metrics/latest',
-      filterOptions
+      subendpoint: 'metrics/latest'
     }).then(onFulfilled, onError)
   }
 }
