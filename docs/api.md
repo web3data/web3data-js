@@ -533,6 +533,44 @@ Retrieves all token transfers involving the specified address.
 
 
 
+### src/block.js
+
+
+
+#### getBlock(id, filterOptions)
+
+
+Retrieves the blocks specified by its id (number or hash).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  |  The number or hash of the block for which to retrieve block information. | &nbsp; |
+| filterOptions |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+
+
 ### src/market.js
 
 

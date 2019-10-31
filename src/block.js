@@ -18,20 +18,21 @@ class Block {
     }).then(onFulfilled, onError)
   }
 
-  async getBlock(id, filterOptions) {
-    if (is.undefined(id)) return Promise.reject(new Error(NO_BLOCK_ID))
-    const response = await get(this.web3data, {
+  /**
+   * Retrieves the blocks specified by its id (number or hash).
+   *
+   * @param id - The number or hash of the block for which to retrieve block information.
+   * @param [filterOptions] -
+   * @returns
+   * @example
+   */
+  getBlock(id, filterOptions) {
+    throwIf(is.undefined(id), NO_BLOCK_ID)
+    return get(this.web3data, {
       pathParam: id,
       endpoint: ENDPOINT,
       filterOptions
-    })
-    return new Promise((resolve, reject) => {
-      if (!response || response.status !== 200 || !response.payload) {
-        reject(new Error(`error with request`))
-      } else {
-        resolve(response.payload)
-      }
-    })
+    }).then(onFulfilled, onError)
   }
 
   async getBlockNumber() {
