@@ -77,8 +77,17 @@ class Address {
     }).then(onFulfilled, onError)
   }
 
+  /**
+   * Retrieves the historical adoption for the specified address.
+   *
+   * @param hash - The address.
+   * @param [filterOptions] - The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#get-address-adoption) for details.
+   * @returns The historical adoption data for the specified address.
+   * @example
+   * const adoption = await web3data.address.getAdoption('')
+   */
   getAdoption(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    throwIf(is.notHash(hash), NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,

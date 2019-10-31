@@ -1,7 +1,12 @@
 import test, {only} from "ava"
 import {ADDRESS } from './constants'
 import {ERROR_MESSAGE_ADDRESS_NO_ADDRESS as NO_ADDRESS} from "../src/constants";
-import {setUpPolly, hasProp, getNewWeb3DataInstance} from "./utils";
+import {
+    setUpPolly,
+    hasProp,
+    getNewWeb3DataInstance,
+    isISOFormat
+} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
@@ -88,10 +93,19 @@ test('Successfully gets address metadata - with filters', async t => {
 })
 
 /*********** Test getAdoption() ***********/
-test('Successfully gets address adoption', async t => {
-    const response = await t.context.web3data.address.getAdoption(ADDRESS)
-    t.true({}.hasOwnProperty.call(response, 'metadata'))
+test.only('Successfully calls getAdoption()', async t => {
+    const adoption = await t.context.web3data.address.getAdoption(ADDRESS)
+    t.true(adoption.hasProp('metadata'))
+    t.true(adoption.metadata.hasProp('columns'))
 })
+
+test.only('Successfully calls getAdoption() - with filters', async t => {
+    const adoption = await t.context.web3data.address.getAdoption(ADDRESS, {timeFormat: 'iso'})
+    t.true(adoption.hasProp('metadata'))
+    t.true(adoption.metadata.hasProp('columns'))
+    t.true(isISOFormat(adoption.metadata.startDate))
+})
+
 test('throws exception when calling getAdoption without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getAdoption()
