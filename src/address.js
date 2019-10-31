@@ -3,7 +3,14 @@ const {
   ADDRESSES_ENDPOINT: ENDPOINT
 } = require('./constants')
 
-const {is, get, throwIf, onFulfilled, onError} = require('./utils')
+const {
+  is,
+  get,
+  throwIf,
+  onFulfilled,
+  onError,
+  recordsFormatter
+} = require('./utils')
 
 /**
  * Contains methods pertaining to the `/address` endpoint of Amberdata's API.
@@ -20,20 +27,32 @@ class Address {
   }
 
   /**
-   * Returns every address that has been seen on the network.
+   * Alias of getAll().
    *
-   * @param filterOptions - The filters associated with the request.
-   * @param [filterOptions.hash] - Filter by a specific address.
-   * @param [filterOptions.size] - The size of the response. <b>Default:</b> `100`.
-   * @returns Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on return.
-   * @public
+   * @param [filterOptions] - The filters associated with the request.
    * @example web3data.address.getAllAddresses({
    * size: 100,
    * })
    */
   getAllAddresses(filterOptions = {}) {
+    return this.getAll(filterOptions)
+  }
+
+  /**
+   * Returns every address that has been seen on the network.
+   *
+   * @param filterOptions - The filters associated with the request.
+   * @param [filterOptions.hash] - Filter by a specific address.
+   * @param [filterOptions.size] - The size of the response. <b>Default:</b> `100`.
+   * @returns Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on response.
+   * @public
+   * @example web3data.address.getAll({
+   * size: 100,
+   * })
+   */
+  getAll(filterOptions = {}) {
     return get(this.web3data, {endpoint: ENDPOINT, filterOptions}).then(
-      onFulfilled,
+      onFulfilled.bind({formatter: recordsFormatter}),
       onError
     )
   }

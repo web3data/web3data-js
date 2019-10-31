@@ -22,11 +22,30 @@ test.beforeEach(t => {
  * -------- Test address -------- *
  **********************************/
 
+/*********** Test getAll() ***********/
+test('Successfully calls getAll()', async t => {
+    const [addresses] = await t.context.web3data.address.getAll()
+    t.true(addresses.hasProp('firstBlockNumber'))
+})
+
+test('Successfully calls getAll() - with filters', async t => {
+    const [addresses] = await t.context.web3data.address.getAll({type: 'CONTRACT'})
+    t.true(addresses.hasProp('type'))
+    t.is(addresses.type.toUpperCase(), 'CONTRACT')
+    t.true(addresses.creator !== null)
+})
+
 /*********** Test getAllAddresses() ***********/
-test('Successfully gets all addresses', async t => {
-    let addresses = await t.context.web3data.address.getAllAddresses()
-    t.true({}.hasOwnProperty.call(addresses, 'records'))
-    t.true({}.hasOwnProperty.call(addresses, 'totalRecords'))
+test('Successfully calls getAllAddresses()', async t => {
+    const [addresses] = await t.context.web3data.address.getAllAddresses()
+    t.true(addresses.hasProp('firstBlockNumber'))
+})
+
+test('Successfully calls getAllAddresses() - with filters', async t => {
+    const [addresses] = await t.context.web3data.address.getAllAddresses({type: 'CONTRACT'})
+    t.true(addresses.hasProp('type'))
+    t.is(addresses.type.toUpperCase(), 'CONTRACT')
+    t.true(addresses.creator !== null)
 })
 
 /*********** Test getInformation() ***********/
