@@ -84,7 +84,7 @@ class Address {
    * @param [filterOptions] - The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#get-address-adoption) for details.
    * @returns The historical adoption data for the specified address.
    * @example
-   * const adoption = await web3data.address.getAdoption('')
+   * const adoption = await web3data.address.getAdoption('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getAdoption(hash, filterOptions) {
     throwIf(is.notHash(hash), NO_ADDRESS)
@@ -336,8 +336,16 @@ Returns null if no address is found.
     }).then(onFulfilled, onError)
   }
 
+  /**
+   * Retrieves the historical usage for the specified address.
+   *
+   * @param hash - The address.
+   * @param [filterOptions] - The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#get-address-usage) for details.
+   * @returns The usage statistics for the specified address.
+   * @example const usage = await web3data.address.getUsage(ADDRESS)
+   */
   getUsage(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    throwIf(is.notHash(hash), NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,

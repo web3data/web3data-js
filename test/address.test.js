@@ -93,13 +93,13 @@ test('Successfully gets address metadata - with filters', async t => {
 })
 
 /*********** Test getAdoption() ***********/
-test.only('Successfully calls getAdoption()', async t => {
+test('Successfully calls getAdoption()', async t => {
     const adoption = await t.context.web3data.address.getAdoption(ADDRESS)
     t.true(adoption.hasProp('metadata'))
     t.true(adoption.metadata.hasProp('columns'))
 })
 
-test.only('Successfully calls getAdoption() - with filters', async t => {
+test('Successfully calls getAdoption() - with filters', async t => {
     const adoption = await t.context.web3data.address.getAdoption(ADDRESS, {timeFormat: 'iso'})
     t.true(adoption.hasProp('metadata'))
     t.true(adoption.metadata.hasProp('columns'))
@@ -270,9 +270,15 @@ test('throws exception when calling getTokenBalances without hash', async t => {
 })
 
 /*********** Test getUsage() ***********/
-test('Successfully gets address usage', async t => {
-    const response = await t.context.web3data.address.getUsage(ADDRESS)
-    t.true({}.hasOwnProperty.call(response, 'metadata'))
+test('Successfully calls getUsage()', async t => {
+    const usage = await t.context.web3data.address.getUsage(ADDRESS)
+    t.true(usage.hasProp('metadata'))
+})
+
+test('Successfully calls getUsage() - with filters', async t => {
+    const usage = await t.context.web3data.address.getUsage(ADDRESS, {timeFormat: 'iso'})
+    t.true(usage.hasProp('metadata'))
+    t.true(isISOFormat(usage.metadata.startDate))
 })
 
 test('throws exception when calling getUsage without hash', async t => {

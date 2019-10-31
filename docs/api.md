@@ -144,7 +144,7 @@ Retrieves the historical adoption for the specified address.
 ##### Examples
 
 ```javascript
-const adoption = await web3data.address.getAdoption('')
+const adoption = await web3data.address.getAdoption('0x06012c8cf97bead5deae237070f9587f8e7a266d')
 ```
 
 
@@ -596,6 +596,40 @@ Retrieves all token transfers involving the specified address.
 
 
 -  The object containing the array of token transfer objects.
+
+
+
+
+
+#### getUsage(hash, filterOptions)
+
+
+Retrieves the historical usage for the specified address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address. | &nbsp; |
+| filterOptions |  |  The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#getaddressusage) for details. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const usage = await web3data.address.getUsage(ADDRESS)
+```
+
+
+##### Returns
+
+
+-  The usage statistics for the specified address.
 
 
 
