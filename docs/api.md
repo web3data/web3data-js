@@ -641,7 +641,7 @@ Retrieves all the detailed information for the specified contract (ABI, bytecode
 ##### Examples
 
 ```javascript
-
+const details = await web3data.contract.getDetails('0x06012c8cf97bead5deae237070f9587f8e7a266d')
 ```
 
 
@@ -649,6 +649,39 @@ Retrieves all the detailed information for the specified contract (ABI, bytecode
 
 
 -  The detailed information for the specified contract.
+
+
+
+
+
+#### getAbi(hash)
+
+
+Retrieves the contract's abi.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The contract address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const abi = await web3data.contract.getAbi('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+-  The abi of the contract.
 
 
 

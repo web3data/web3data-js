@@ -54,9 +54,9 @@ test('throws exception when calling getAudit without hash', async t => {
 });
 
 /*********** Test getAbi() ***********/
-test('Successfully gets contract abi', async t => {
-    let response = await t.context.web3data.contract.getAbi(TOKEN_ADDRESS);
-    t.is(response.status, 200)
+test('Successfully calls getAbi()', async t => {
+    const abi = await t.context.web3data.contract.getAbi(TOKEN_ADDRESS);
+    t.true(Array.isArray(abi))
 });
 test('throws exception when calling getAbi without hash', async t => {
     await t.throwsAsync(async () => {

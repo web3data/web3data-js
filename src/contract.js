@@ -23,7 +23,7 @@ class Contract {
    *
    * @param hash - The address.
    * @returns The detailed information for the specified contract.
-   * @example
+   * @example const details = await web3data.contract.getDetails('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getDetails(hash) {
     throwIf(is.notHash(hash), NO_ADDRESS)
@@ -53,14 +53,17 @@ class Contract {
     })
   }
 
-  getAbi(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
-    return get(this.web3data, {
-      pathParam: hash,
-      endpoint: ENDPOINT,
-      subendpoint: 'abi',
-      filterOptions
-    })
+  /**
+   * Retrieves the contract's abi.
+   *
+   * @param hash - The contract address.
+   * @returns The abi of the contract.
+   * @example
+   * const abi = await web3data.contract.getAbi('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+   */
+  getAbi(hash) {
+    throwIf(is.notHash(hash), NO_ADDRESS)
+    return this.getDetails(hash).then(({abi}) => abi)
   }
 
   getSourceCode(hash, filterOptions) {
