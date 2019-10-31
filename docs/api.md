@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.14*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.15*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
