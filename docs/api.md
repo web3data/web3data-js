@@ -571,6 +571,89 @@ Retrieves the blocks specified by its id (number or hash).
 
 
 
+### src/contract.js
+
+
+
+#### Class: Contract
+
+
+Contains methods pertaining to the `/contract` endpoint of Amberdata's API.
+
+
+
+
+
+
+
+
+
+#### constructor(web3data)
+
+
+Creates an instance of Contract.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  |  The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### getDetails(hash)
+
+
+Retrieves all the detailed information for the specified contract (ABI, bytecode, sourcecode...).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The detailed information for the specified contract.
+
+
+
+
+
 ### src/market.js
 
 

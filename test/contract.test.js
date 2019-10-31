@@ -21,15 +21,15 @@ test.beforeEach(t => {
  **********************************/
 
 /*********** Test getDetails() ***********/
-test('Successfully gets contract details', async t => {
-    let response = await t.context.web3data.contract.getDetails(TOKEN_ADDRESS);
-    t.is(response.status, 200)
-});
+test('Successfully calls getDetails()', async t => {
+    const details = await t.context.web3data.contract.getDetails(TOKEN_ADDRESS)
+    t.true(details.hasProp('abi'))
+})
 test('throws exception when calling getDetails without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.contract.getDetails()
-    }, { instanceOf: Error, message: 'No contract address supplied' });
-});
+    }, { instanceOf: Error, message: 'No contract address supplied' })
+})
 
 /*********** Test getFunctions() ***********/
 test('Successfully gets contract functions', async t => {
