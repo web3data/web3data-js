@@ -56,6 +56,40 @@ Creates an instance of Address.
 #### getAllAddresses(filterOptions)
 
 
+Alias of getAll().
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  |  The filters associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+web3data.address.getAllAddresses({ size: 100,
+})
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### getAll(filterOptions)
+
+
 Returns every address that has been seen on the network.
 
 
@@ -75,7 +109,7 @@ Returns every address that has been seen on the network.
 ##### Examples
 
 ```javascript
-web3data.address.getAllAddresses({ size: 100,
+web3data.address.getAll({ size: 100,
 })
 ```
 
@@ -83,7 +117,41 @@ web3data.address.getAllAddresses({ size: 100,
 ##### Returns
 
 
--  Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on return.
+-  Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on response.
+
+
+
+
+
+#### getAdoption(hash, filterOptions)
+
+
+Retrieves the historical adoption for the specified address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address. | &nbsp; |
+| filterOptions |  |  The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#getaddressadoption) for details. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const adoption = await web3data.address.getAdoption('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+-  The historical adoption data for the specified address.
 
 
 
@@ -528,6 +596,66 @@ Retrieves all token transfers involving the specified address.
 
 
 -  The object containing the array of token transfer objects.
+
+
+
+
+
+#### getUsage(hash, filterOptions)
+
+
+Retrieves the historical usage for the specified address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address. | &nbsp; |
+| filterOptions |  |  The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#getaddressusage) for details. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const usage = await web3data.address.getUsage(ADDRESS)
+```
+
+
+##### Returns
+
+
+-  The usage statistics for the specified address.
+
+
+
+
+
+#### getMetrics()
+
+
+Get metrics for all addresses that have exist publicly for a given blockchain. Default metrics are for Ethereum over a 24h period.
+
+
+
+
+
+
+##### Examples
+
+```javascript
+const metrics = await web3data.address.getMetrics(ADDRESS)
+```
+
+
+##### Returns
+
+
+-  The address metrics.
 
 
 
