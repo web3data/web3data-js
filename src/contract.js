@@ -33,24 +33,36 @@ class Contract {
     }).then(onFulfilled, onError)
   }
 
-  getFunctions(hash, filterOptions) {
+  /**
+   * Retrieves the functions of the specified contract (if available). If not available on chain, the byte code is decompiled and a list of functions is extracted from it.
+   *
+   * @param hash - The contract address.
+   * @returns The functions or decompiled functions of the specified contract.
+   * @example
+   */
+  getFunctions(hash) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
     return get(this.web3data, {
       pathParam: hash,
       endpoint: ENDPOINT,
-      subendpoint: 'functions',
-      filterOptions
-    })
+      subendpoint: 'functions'
+    }).then(onFulfilled, onError)
   }
 
-  getAudit(hash, filterOptions) {
+  /**
+   * Retrieves the vulnerabilities audit for the specified contract (if available).
+   *
+   * @param hash - The contract address.
+   * @returns The vulnerabilities audit for the specified contract.
+   * @example const audit = await web3data.contract.getAudit('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+   */
+  getSecurityAudit(hash) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
     return get(this.web3data, {
       pathParam: hash,
       endpoint: ENDPOINT,
-      subendpoint: 'audit',
-      filterOptions
-    })
+      subendpoint: 'audit'
+    }).then(onFulfilled, onError)
   }
 
   /**
@@ -68,8 +80,8 @@ class Contract {
   /**
    * Retrieves the contract's source code.
    *
-   * @param {string} hash - The contract address.
-   * @returns {Promise<object>} The source of the contract.
+   * @param hash - The contract address.
+   * @returns The source of the contract.
    * @example const source = await web3data.contract.getSourceCode('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getSourceCode(hash) {
@@ -83,10 +95,10 @@ class Contract {
 
   /**
    * Returns the contract's bytecode.
-   * @param {string} hash  - The contract address.
-   * @return {Promise<object>} the contract's bytecode.
-   * @example
-   * const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+   *
+   * @param hash - The contract address.
+   * @returns The contract's bytecode.
+   * @example const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getCode(hash) {
     return this.getDetails(hash).then(details => details.bytecode || '0x')

@@ -3,6 +3,44 @@
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
 
+### src/block.js
+
+
+
+#### getBlock(id, filterOptions)
+
+
+Retrieves the blocks specified by its id (number or hash).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  |  The number or hash of the block for which to retrieve block information. | &nbsp; |
+| filterOptions |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+
+
 ### src/address.js
 
 
@@ -661,44 +699,6 @@ const metrics = await web3data.address.getMetrics(ADDRESS)
 
 
 
-### src/block.js
-
-
-
-#### getBlock(id, filterOptions)
-
-
-Retrieves the blocks specified by its id (number or hash).
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| id |  |  The number or hash of the block for which to retrieve block information. | &nbsp; |
-| filterOptions |  |  | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  
-
-
-
-
-
 ### src/contract.js
 
 
@@ -782,6 +782,72 @@ const details = await web3data.contract.getDetails('0x06012c8cf97bead5deae237070
 
 
 
+#### getFunctions(hash)
+
+
+Retrieves the functions of the specified contract (if available). If not available on chain, the byte code is decompiled and a list of functions is extracted from it.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The contract address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The functions or decompiled functions of the specified contract.
+
+
+
+
+
+#### getSecurityAudit(hash)
+
+
+Retrieves the vulnerabilities audit for the specified contract (if available).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The contract address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const audit = await web3data.contract.getAudit('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+-  The vulnerabilities audit for the specified contract.
+
+
+
+
+
 #### getAbi(hash)
 
 
@@ -827,7 +893,7 @@ Retrieves the contract's source code.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `string`  |  The contract address. | &nbsp; |
+| hash |  |  The contract address. | &nbsp; |
 
 
 
@@ -842,7 +908,7 @@ const source = await web3data.contract.getSourceCode('0x06012c8cf97bead5deae2370
 ##### Returns
 
 
-- `Promise.<object>`  The source of the contract.
+-  The source of the contract.
 
 
 
@@ -860,7 +926,7 @@ Returns the contract's bytecode.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `string`  |  The contract address. | &nbsp; |
+| hash |  |  The contract address. | &nbsp; |
 
 
 
@@ -875,7 +941,7 @@ const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f
 ##### Returns
 
 
-- `Promise.<object>`  the contract's bytecode.
+-  The contract's bytecode.
 
 
 
@@ -1736,6 +1802,142 @@ Generates a uuid see [this gist]() for more details.
 
 
 
+### src/web3data.js
+
+
+
+#### Class: Web3DataFactory
+
+
+Contains common methods used in.
+
+
+
+
+
+
+
+
+
+#### constructor(apiKey, options, blockchainId:, -, -)
+
+
+Creates a Web3Data instance.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| apiKey |  |  The Amberdata api key needed to access data. | &nbsp; |
+| options | `object`  | Contains additional configuration options: | &nbsp; |
+| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
+| - |  | baseUrl: the base url of API calls | &nbsp; |
+| - |  | websocketUrl: the websocket url to use | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### rawQuery(url)
+
+
+Appends the API base url with the endpoint  url. Then sends an
+http request to the Amberdata API endpoint.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| url |  |  The endpoint url with any query/path params if set. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The axios request object.
+
+
+
+
+
+#### rpc(method, params)
+
+
+Method used to interact with web3api json rpc endpoints.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| method |  |  The json rpc method to call. | &nbsp; |
+| params |  |  The parameters to the json rpc call. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns the json rpc result.
+
+
+
+
+
+#### Class: Web3Data
+
+
+Class Web3data contains methods for hitting Amberdata's
+API endpoints.
+
+
+
+
+
+
+
+
+
 ### src/websocket.js
 
 
@@ -1950,142 +2152,6 @@ Destroys a single event listener. De-registers event and callback function.
 
 
 - `Void`
-
-
-
-
-
-### src/web3data.js
-
-
-
-#### Class: Web3DataFactory
-
-
-Contains common methods used in.
-
-
-
-
-
-
-
-
-
-#### constructor(apiKey, options, blockchainId:, -, -)
-
-
-Creates a Web3Data instance.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| apiKey |  |  The Amberdata api key needed to access data. | &nbsp; |
-| options | `object`  | Contains additional configuration options: | &nbsp; |
-| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
-| - |  | baseUrl: the base url of API calls | &nbsp; |
-| - |  | websocketUrl: the websocket url to use | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-
-#### rawQuery(url)
-
-
-Appends the API base url with the endpoint  url. Then sends an
-http request to the Amberdata API endpoint.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| url |  |  The endpoint url with any query/path params if set. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The axios request object.
-
-
-
-
-
-#### rpc(method, params)
-
-
-Method used to interact with web3api json rpc endpoints.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| method |  |  The json rpc method to call. | &nbsp; |
-| params |  |  The parameters to the json rpc call. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns the json rpc result.
-
-
-
-
-
-#### Class: Web3Data
-
-
-Class Web3data contains methods for hitting Amberdata's
-API endpoints.
-
-
-
-
 
 
 
