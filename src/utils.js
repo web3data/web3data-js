@@ -13,6 +13,7 @@ the appropriate parameter(s) where applicable.
  * @param filterOptions - The filters associated with a given endpoint.
  * @returns Returns a Promise of the rawQuery request from web3data.
  * @example
+ * @private
  */
 const get = (
   web3data,
@@ -95,6 +96,7 @@ is.notInObject = (object, property) => !is.inObject(object, property)
  *
  * @param data
  * @example
+ * @private
  */
 const uuid = data =>
   _uuid(JSON.stringify(data), 'ccfeca02-f0e9-4433-a740-b830cceb3d2d')
