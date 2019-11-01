@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.14*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.15*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
@@ -1058,6 +1058,39 @@ the appropriate parameter(s) where applicable.
 
 
 -  Returns a Promise of the rawQuery request from web3data.
+
+
+
+
+
+#### uuid(data)
+
+
+Generates a uuid see [this gist]() for more details.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| data |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
 
 
 
