@@ -68,8 +68,8 @@ class Contract {
   /**
    * Retrieves the contract's source code.
    *
-   * @param hash - The contract address.
-   * @returns The source of the contract.
+   * @param {string} hash - The contract address.
+   * @returns {Promise<object>} The source of the contract.
    * @example const source = await web3data.contract.getSourceCode('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getSourceCode(hash) {
@@ -81,6 +81,13 @@ class Contract {
     }).then(onFulfilled, onError)
   }
 
+  /**
+   * Returns the contract's bytecode.
+   * @param {string} hash  - The contract address.
+   * @return {Promise<object>} the contract's bytecode.
+   * @example
+   * const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+   */
   getCode(hash) {
     return this.getDetails(hash).then(details => details.bytecode || '0x')
   }
