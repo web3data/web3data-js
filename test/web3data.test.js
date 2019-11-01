@@ -107,7 +107,7 @@ test('web3data.eth successfully calls method getTransactions', async t => {
 })
 
 test('web3data.eth successfully calls method getPendingTransactions', async t => {
-    const pendTxns = await t.context.web3data.eth.getPendingTransactions()
+    const pendTxns  = await t.context.web3data.eth.getPendingTransactions()
     t.true(pendTxns.length > 0)
 })
 
