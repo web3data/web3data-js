@@ -1297,218 +1297,6 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
-### src/utils.js
-
-
-
-#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)
-
-
-Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
-the appropriate parameter(s) where applicable.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  |  Instance on which to call .rawQuery(). | &nbsp; |
-| subendpoint |  |  The subendpoint. | &nbsp; |
-| endpoint |  |  The endpoint. | &nbsp; |
-| hash |  |  The address hash. | &nbsp; |
-| pathParam |  |  The path parameter. | &nbsp; |
-| filterOptions |  |  The filters associated with a given endpoint. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns a Promise of the rawQuery request from web3data.
-
-
-
-
-
-#### uuid(data)
-
-
-Generates a uuid see [this gist]() for more details.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| data |  |  | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-
-### src/web3data.js
-
-
-
-#### Class: Web3DataFactory
-
-
-Contains common methods used in.
-
-
-
-
-
-
-
-
-
-#### constructor(apiKey, options, blockchainId:, -, -)
-
-
-Creates a Web3Data instance.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| apiKey |  |  The Amberdata api key needed to access data. | &nbsp; |
-| options | `object`  | Contains additional configuration options: | &nbsp; |
-| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
-| - |  | baseUrl: the base url of API calls | &nbsp; |
-| - |  | websocketUrl: the websocket url to use | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-
-#### rawQuery(url)
-
-
-Appends the API base url with the endpoint  url. Then sends an
-http request to the Amberdata API endpoint.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| url |  |  The endpoint url with any query/path params if set. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The axios request object.
-
-
-
-
-
-#### rpc(method, params)
-
-
-Method used to interact with web3api json rpc endpoints.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| method |  |  The json rpc method to call. | &nbsp; |
-| params |  |  The parameters to the json rpc call. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns the json rpc result.
-
-
-
-
-
-#### Class: Web3Data
-
-
-Class Web3data contains methods for hitting Amberdata's
-API endpoints.
-
-
-
-
-
-
-
-
-
 ### src/transaction.js
 
 
@@ -1834,6 +1622,129 @@ const metrics = await web3data.transaction.getMetrics()
 
 
 -  Metrics for recent confirmed transactions.
+
+
+
+
+
+### src/web3data.js
+
+
+
+#### constructor(apiKey, options, blockchainId:, -, -)
+
+
+Creates a Web3Data instance.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| apiKey |  |  The Amberdata api key needed to access data. | &nbsp; |
+| options | `object`  | Contains additional configuration options: | &nbsp; |
+| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
+| - |  | baseUrl: the base url of API calls | &nbsp; |
+| - |  | websocketUrl: the websocket url to use | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### rawQuery(url)
+
+
+Appends the API base url with the endpoint  url. Then sends an
+http request to the Amberdata API endpoint.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| url |  |  The endpoint url with any query/path params if set. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The axios request object.
+
+
+
+
+
+#### rpc(method, params)
+
+
+Method used to interact with web3api json rpc endpoints.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| method |  |  The json rpc method to call. | &nbsp; |
+| params |  |  The parameters to the json rpc call. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns the json rpc result.
+
+
+
+
+
+#### Class: Web3Data
+
+
+Class Web3data contains methods for hitting Amberdata's
+API endpoints.
+
+
+
+
 
 
 
