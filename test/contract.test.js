@@ -21,15 +21,15 @@ test.beforeEach(t => {
  **********************************/
 
 /*********** Test getDetails() ***********/
-test('Successfully gets contract details', async t => {
-    let response = await t.context.web3data.contract.getDetails(TOKEN_ADDRESS);
-    t.is(response.status, 200)
-});
+test('Successfully calls getDetails()', async t => {
+    const details = await t.context.web3data.contract.getDetails(TOKEN_ADDRESS)
+    t.true(details.hasProp('abi'))
+})
 test('throws exception when calling getDetails without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.contract.getDetails()
-    }, { instanceOf: Error, message: 'No contract address supplied' });
-});
+    }, { instanceOf: Error, message: 'No contract address supplied' })
+})
 
 /*********** Test getFunctions() ***********/
 test('Successfully gets contract functions', async t => {
@@ -54,9 +54,9 @@ test('throws exception when calling getAudit without hash', async t => {
 });
 
 /*********** Test getAbi() ***********/
-test('Successfully gets contract abi', async t => {
-    let response = await t.context.web3data.contract.getAbi(TOKEN_ADDRESS);
-    t.is(response.status, 200)
+test('Successfully calls getAbi()', async t => {
+    const abi = await t.context.web3data.contract.getAbi(TOKEN_ADDRESS);
+    t.true(Array.isArray(abi))
 });
 test('throws exception when calling getAbi without hash', async t => {
     await t.throwsAsync(async () => {
@@ -65,11 +65,11 @@ test('throws exception when calling getAbi without hash', async t => {
 });
 
 /*********** Test getSourceCode() ***********/
-test.skip('Successfully gets contract source code', async t => {
-    let response = await t.context.web3data.contract.getSourceCode(TOKEN_ADDRESS);
-    t.is(response.status, 200)
+test.only('Successfully gets contract source code', async t => {
+    const source = await t.context.web3data.contract.getSourceCode(TOKEN_ADDRESS);
+    t.is(typeof source, 'string')
 });
-test.skip('throws exception when calling getSourceCode without hash', async t => {
+test('throws exception when calling getSourceCode without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.contract.getSourceCode()
     }, { instanceOf: Error, message: 'No contract address supplied' });

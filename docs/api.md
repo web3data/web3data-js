@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.15*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.16*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
@@ -694,6 +694,155 @@ Retrieves the blocks specified by its id (number or hash).
 
 
 -  
+
+
+
+
+
+### src/contract.js
+
+
+
+#### Class: Contract
+
+
+Contains methods pertaining to the `/contract` endpoint of Amberdata's API.
+
+
+
+
+
+
+
+
+
+#### constructor(web3data)
+
+
+Creates an instance of Contract.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  |  The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### getDetails(hash)
+
+
+Retrieves all the detailed information for the specified contract (ABI, bytecode, sourcecode...).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const details = await web3data.contract.getDetails('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+-  The detailed information for the specified contract.
+
+
+
+
+
+#### getAbi(hash)
+
+
+Retrieves the contract's abi.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The contract address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const abi = await web3data.contract.getAbi('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+-  The abi of the contract.
+
+
+
+
+
+#### getSourceCode(hash)
+
+
+Retrieves the contract's source code.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The contract address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const source = await web3data.contract.getSourceCode('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+-  The source of the contract.
 
 
 
