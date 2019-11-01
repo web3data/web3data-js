@@ -687,6 +687,39 @@ const abi = await web3data.contract.getAbi('0x06012c8cf97bead5deae237070f9587f8e
 
 
 
+#### getSourceCode(hash)
+
+
+Retrieves the contract's source code.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The contract address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const source = await web3data.contract.getSourceCode('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+-  The source of the contract.
+
+
+
+
+
 ### src/market.js
 
 
@@ -1136,82 +1169,6 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
-### src/utils.js
-
-
-
-#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)
-
-
-Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
-the appropriate parameter(s) where applicable.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  |  Instance on which to call .rawQuery(). | &nbsp; |
-| subendpoint |  |  The subendpoint. | &nbsp; |
-| endpoint |  |  The endpoint. | &nbsp; |
-| hash |  |  The address hash. | &nbsp; |
-| pathParam |  |  The path parameter. | &nbsp; |
-| filterOptions |  |  The filters associated with a given endpoint. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns a Promise of the rawQuery request from web3data.
-
-
-
-
-
-#### uuid(data)
-
-
-Generates a uuid see [this gist]() for more details.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| data |  |  | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-
 ### src/web3data.js
 
 
@@ -1343,6 +1300,82 @@ API endpoints.
 
 
 
+
+
+
+
+
+### src/utils.js
+
+
+
+#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)
+
+
+Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
+the appropriate parameter(s) where applicable.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  |  Instance on which to call .rawQuery(). | &nbsp; |
+| subendpoint |  |  The subendpoint. | &nbsp; |
+| endpoint |  |  The endpoint. | &nbsp; |
+| hash |  |  The address hash. | &nbsp; |
+| pathParam |  |  The path parameter. | &nbsp; |
+| filterOptions |  |  The filters associated with a given endpoint. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns a Promise of the rawQuery request from web3data.
+
+
+
+
+
+#### uuid(data)
+
+
+Generates a uuid see [this gist]() for more details.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| data |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
 
 
 
