@@ -52,14 +52,14 @@ const returnsTxnObject = async (t, { method, params = {} }) => {
 returnsTxnObject.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns valid txn object`
 
 const returnsTxnObjects = async (t, { method }) => {
-    const { records: transactions } = await t.context.web3data.transaction[method]()
+    const transactions = await t.context.web3data.transaction[method]()
     t.true(transactions[0].hasProp('hash'))
     t.true(transactions.length > 0)
 }
 returnsTxnObjects.title = (providedTitle = '', input) => `Successfully calls ${input.method} and returns array of valid txn objects`
 
 const returnsPendingTxnObjects = async (t, { method }) => {
-    const { records: [pendingTxn]} = await t.context.web3data.transaction[method]()
+    const [pendingTxn] = await t.context.web3data.transaction[method]()
 
     t.is(pendingTxn.statusResult.name, 'pending')
 }
@@ -73,11 +73,11 @@ test([returnsTxnObjects, returnsPendingTxnObjects], {method:'getPendingTransacti
 
 /*********** Test getTransactions() ***********/
 test('Successfully calls getTransactions', async t => {
-    const {records: [txn]} = await t.context.web3data.transaction.getTransactions()
+    const [txn] = await t.context.web3data.transaction.getTransactions()
     t.true(txn.hasProp('hash'))
 })
 test('Successfully calls getTransactions - with filters', async t => {
-    const {records: [pendingTxn]} = await t.context.web3data.transaction.getTransactions({status: 'pending'})
+    const [pendingTxn] = await t.context.web3data.transaction.getTransactions({status: 'pending'})
     t.true(pendingTxn.hasProp('statusResult'))
     t.true(pendingTxn.statusResult.hasProp('name'))
     t.is(pendingTxn.statusResult.name, 'pending')
@@ -85,11 +85,11 @@ test('Successfully calls getTransactions - with filters', async t => {
 
 /*********** Test getAll() ***********/
 test('Successfully calls getAll', async t => {
-    const {records: [txn]} = await t.context.web3data.transaction.getAll()
+    const [txn] = await t.context.web3data.transaction.getAll()
     t.true(txn.hasProp('hash'))
 })
 test('Successfully calls getAll - with filters', async t => {
-    const {records: [pendingTxn]} = await t.context.web3data.transaction.getAll({status: 'pending'})
+    const [pendingTxn] = await t.context.web3data.transaction.getAll({status: 'pending'})
     t.true(pendingTxn.hasProp('statusResult'))
     t.true(pendingTxn.statusResult.hasProp('name'))
     t.is(pendingTxn.statusResult.name, 'pending')
@@ -108,7 +108,7 @@ test('Successfully calls getTransaction - with filters', async t => {
 
 /*********** Test getPendingTransactions() ***********/
 test('Successfully calls getPendingTransactions', async t => {
-    const {records: [pendingTxn]} = await t.context.web3data.transaction.getPendingTransactions()
+    const [pendingTxn] = await t.context.web3data.transaction.getPendingTransactions()
     t.true(pendingTxn.hasProp('statusResult'))
     t.true(pendingTxn.statusResult.hasProp('name'))
     t.is(pendingTxn.statusResult.name, 'pending')
@@ -118,6 +118,17 @@ test('Successfully calls getPendingTransactions', async t => {
 test('Successfully calls getGasPrediction', async t => {
     const gasPrediction = await t.context.web3data.transaction.getGasPrediction()
     t.true(gasPrediction.hasProp('average'))
+})
+
+/*********** Test getGasPercentiles() ***********/
+test('Successfully calls getGasPercentiles', async t => {
+    const gasPercentiles = await t.context.web3data.transaction.getGasPercentiles()
+    t.true(gasPercentiles.hasProp('percentile_000'))
+})
+
+test('Successfully calls getGasPercentiles - with filters', async t => {
+    const gasPercentiles = await t.context.web3data.transaction.getGasPercentiles({numBlocks: 100})
+    t.true(gasPercentiles.hasProp('percentile_000'))
 })
 
 /*********** Test getGasPrice() ***********/

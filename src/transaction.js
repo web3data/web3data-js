@@ -3,7 +3,14 @@ const {
   ERROR_MESSAGE_TRANSACTION_NO_HASH: NO_HASH
 } = require('./constants')
 
-const {is, get, onFulfilled, onError, throwIf} = require('./utils')
+const {
+  is,
+  get,
+  onFulfilled,
+  onError,
+  throwIf,
+  recordsFormatter
+} = require('./utils')
 
 class Transaction {
   constructor(web3data) {
@@ -14,12 +21,14 @@ class Transaction {
     return get(this.web3data, {
       endpoint: ENDPOINT,
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 
   /**
-   * See 'getTransactions' for details
+   * See 'getTransactions' for details.
+   *
    * @param filterOptions
+   * @example
    */
   getAll(filterOptions) {
     return this.getTransactions(filterOptions)
@@ -51,6 +60,14 @@ class Transaction {
     return get(this.web3data, {
       endpoint: ENDPOINT,
       subendpoint: 'gas/predictions'
+    }).then(onFulfilled, onError)
+  }
+
+  getGasPercentiles(filterOptions) {
+    return get(this.web3data, {
+      endpoint: ENDPOINT,
+      subendpoint: 'gas/percentiles',
+      filterOptions
     }).then(onFulfilled, onError)
   }
 

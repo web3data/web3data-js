@@ -1,5 +1,6 @@
-const crypto = require('crypto')
+const _uuid = require('uuid/v5')
 const {ETH_METHODS} = require('./constants')
+
 /**
  * Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
 the appropriate parameter(s) where applicable.
@@ -52,16 +53,29 @@ const throwIf = (bool, message) => {
 
 const throwNow = message => throwIf(true, message)
 
-const onFulfilled = response =>
-  response.error ? throwNow(response.message) : response.payload
-const onError = error => throwNow(error.response.data.message)
+/**
+ * Handler for all request responses.
+ *
+ * @param response - The Axios response object.
+ * @returns The data from the response.
+ * @private
+ * @example
+ */
+const onFulfilled = function(response) {
+  throwIf(response.error, response.message)
+  return this && this.formatter
+    ? this.formatter(response.payload)
+    : response.payload
+}
+
+const onError = ({response: {data}}) =>
+  throwNow(data.message || data.description)
 
 const rejectPromiseIf = (condition, message) => {
   if (condition) return Promise.reject(new Error(message))
 }
 
 const is = () => {}
-
 is.string = value => typeof value === 'string'
 is.bool = value => typeof value === 'boolean'
 is.emptyString = value => is.string(value) && value.length === 0
@@ -70,18 +84,20 @@ is.inObject = (object, property) =>
   Object.prototype.hasOwnProperty.call(object, property)
 is.undefined = value => typeof value === 'undefined'
 is.null = value => value === null
-
 is.notHash = hash => is.undefined(hash) || is.emptyString(hash)
 is.notUndefined = value => !is.undefined(value)
 is.nonEmptyObject = object => !is.emptyObject(object)
 is.nonEmptyString = value => !is.emptyString(value)
 is.notInObject = (object, property) => !is.inObject(object, property)
 
+/**
+ * Generates a uuid see [this gist]() for more details.
+ *
+ * @param data
+ * @example
+ */
 const uuid = data =>
-  crypto
-    .createHash('sha1')
-    .update(JSON.stringify(data))
-    .digest('base64')
+  _uuid(JSON.stringify(data), 'ccfeca02-f0e9-4433-a740-b830cceb3d2d')
 
 /**
  * Returns an array of methods defined on the object.
@@ -170,6 +186,12 @@ const formatJsonRpc = options => {
   })
 }
 
+const defaultFormatter = (response, field) => {
+  return response[field] ? response[field] : null
+}
+
+const recordsFormatter = response => defaultFormatter(response, 'records')
+
 module.exports = {
   buildFilterUrl,
   is,
@@ -183,5 +205,6 @@ module.exports = {
   onFulfilled,
   onError,
   formatJsonRpc,
-  getMethods
+  getMethods,
+  recordsFormatter
 }
