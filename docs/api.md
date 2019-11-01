@@ -1020,6 +1020,303 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
+### src/transaction.js
+
+
+
+#### Class: Transaction
+
+
+Contains methods pertaining to the `/address` endpoint of Amberdata's API.
+See [documentation](https://docs.amberdata.io/reference#get-all-transactions) details about our transaction endpoints.
+
+
+
+
+
+
+
+
+
+#### constructor(web3data)
+
+
+Creates an instance of Transaction. Meant to be used in conjunction with the Web3Data class.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  |  The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### getTransactions(filterOptions)
+
+
+Retrieves all transactions matching the specified filters.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| filterOptions.status |  |  Filter by the status of the transactions to retrieve (all, completed, failed, pending). | &nbsp; |
+| filterOptions.includePrice |  |  Indicates whether or not to include price data with the results. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const transactions = await web3data.transaction.getTransactions() 
+// Include pricing data with transactions
+const transactions = await web3data.transaction.getTransactions({
+includePrice: true
+})
+```
+
+
+##### Returns
+
+
+-  All transactions matched by the specified filters.
+
+
+
+
+
+#### getTransaction(hash, filterOptions)
+
+
+Retrieves the transaction data for the specified hash.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The transaction hash. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#gettransaction) for more details. | &nbsp; |
+| filterOptions.validationMethod&#x3D;none |  |  The validation method to be added to the response: `none`, `basic`, `full`. | &nbsp; |
+| filterOptions.includePrice&#x3D;true |  |  Indicates whether or not to include price data with the results. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const transaction = await web3data.transaction.getTransaction('0xd0a5a0912fdf87993b3cebd696f1ee667a8fbbe8fc890a22dcbdf114f36de4cf')
+```
+
+
+##### Returns
+
+
+-  The data for the specified transaction hash.
+
+
+
+
+
+#### getPendingTransactions()
+
+
+Retrieves all pending transaction.
+
+
+
+
+
+
+##### Examples
+
+```javascript
+const pendingTransactions = await web3data.transaction.getPendingTransactions()
+```
+
+
+##### Returns
+
+
+-  The pending transactions.
+
+
+
+
+
+#### getGasPrediction()
+
+
+Retrieves the latest gas predictions for the transactions.
+
+
+
+
+
+
+##### Examples
+
+```javascript
+const gasPredictions = await web3data.transaction.getGasPrediction()
+```
+
+
+##### Returns
+
+
+-  The latest gas predictions for the transactions.
+
+
+
+
+
+#### getGasPercentiles(filterOptions)
+
+
+Retrieves the latest gas price percentiles for the transactions.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| filterOptions.numBlocks |  |  Number of past blocks on which to base the percentiles. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const gasPercentiles = await web3data.transaction.getGasPercentiles()
+```
+
+
+##### Returns
+
+
+-  The latest gas price percentiles for the transactions.
+
+
+
+
+
+#### getGasPrice()
+
+
+Retrieves the latest average gas price. Uses `getGasPrediction` under the hood.
+
+
+
+
+
+
+##### Examples
+
+```javascript
+const gasPrice = await web3data.transaction.getGasPrice()
+```
+
+
+##### Returns
+
+
+-  The latest gas price.
+
+
+
+
+
+#### getVolume(filterOptions)
+
+
+Retrieves the historical (time series) volume of transactions.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#gethistoricaltransactionvolume) for more details. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const volume = await web3data.transaction.getVolume()
+```
+
+
+##### Returns
+
+
+-  The historical (time series) volume of transactions.
+
+
+
+
+
+#### getMetrics()
+
+
+Get metrics for recent confirmed transactions for a given blockchain. Default metrics are over a 24h period.
+
+
+
+
+
+
+##### Examples
+
+```javascript
+const metrics = await web3data.transaction.getMetrics()
+```
+
+
+##### Returns
+
+
+-  Metrics for recent confirmed transactions.
+
+
+
+
+
 ### src/utils.js
 
 
