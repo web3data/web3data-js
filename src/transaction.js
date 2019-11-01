@@ -3,7 +3,14 @@ const {
   ERROR_MESSAGE_TRANSACTION_NO_HASH: NO_HASH
 } = require('./constants')
 
-const {is, get, onFulfilled, onError, throwIf} = require('./utils')
+const {
+  is,
+  get,
+  onFulfilled,
+  onError,
+  throwIf,
+  recordsFormatter
+} = require('./utils')
 
 class Transaction {
   constructor(web3data) {
@@ -14,7 +21,7 @@ class Transaction {
     return get(this.web3data, {
       endpoint: ENDPOINT,
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 
   getTransaction(hash, filterOptions) {
