@@ -336,7 +336,6 @@ given subscription Id.
    *
    * @param data - The parsed json data sent from the server.
    * @private
-   * @ignore
    * @example
    */
   _subHandler(data) {
