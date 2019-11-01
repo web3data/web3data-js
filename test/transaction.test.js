@@ -83,6 +83,18 @@ test('Successfully calls getTransactions - with filters', async t => {
     t.is(pendingTxn.statusResult.name, 'pending')
 })
 
+/*********** Test getAll() ***********/
+test('Successfully calls getAll', async t => {
+    const [txn] = await t.context.web3data.transaction.getAll()
+    t.true(txn.hasProp('hash'))
+})
+test('Successfully calls getAll - with filters', async t => {
+    const [pendingTxn] = await t.context.web3data.transaction.getAll({status: 'pending'})
+    t.true(pendingTxn.hasProp('statusResult'))
+    t.true(pendingTxn.statusResult.hasProp('name'))
+    t.is(pendingTxn.statusResult.name, 'pending')
+})
+
 /*********** Test getTransaction() ***********/
 test(rejectsPromise, {method: 'getTransaction'}, NO_HASH)
 test('Successfully calls getTransaction', async t => {

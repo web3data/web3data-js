@@ -49,6 +49,16 @@ class Transaction {
   }
 
   /**
+   * See 'getTransactions' for details.
+   *
+   * @param filterOptions
+   * @example
+   */
+  getAll(filterOptions) {
+    return this.getTransactions(filterOptions)
+  }
+
+  /**
    * Retrieves the transaction data for the specified hash.
    *
    * @param hash - The transaction hash.
