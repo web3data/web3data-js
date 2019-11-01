@@ -4,6 +4,7 @@ import json from 'rollup-plugin-json'
 import builtins from 'rollup-plugin-node-builtins'
 import globals from 'rollup-plugin-node-globals'
 import filesize from 'rollup-plugin-filesize'
+import {terser} from 'rollup-plugin-terser'
 
 // eslint-disable-next-line import/extensions
 import pkg from './package.json'
@@ -13,6 +14,7 @@ export default {
   output: {
     name: 'web3data',
     file: pkg.browser,
+    compact: true,
     format: 'umd',
     globals: {
       crypto: 'crypto'
@@ -29,6 +31,7 @@ export default {
     json(),
     builtins({crypto: false, https: false}),
     globals(),
-    filesize()
+    filesize(),
+    terser()
   ]
 }

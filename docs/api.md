@@ -3,574 +3,6 @@
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
 
-### src/address.js
-
-
-
-#### Class: Address
-
-
-Contains methods pertaining to the `/address` endpoint of Amberdata's API.
-
-
-
-
-
-
-
-
-
-#### constructor(web3data)
-
-
-Creates an instance of Address.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  |  The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-
-#### getAllAddresses(filterOptions)
-
-
-Returns every address that has been seen on the network.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| filterOptions |  |  The filters associated with the request. | &nbsp; |
-| filterOptions.hash |  |  Filter by a specific address. | &nbsp; |
-| filterOptions.size |  |  The size of the response. <b>Default:</b> `100`. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-web3data.address.getAllAddresses({ size: 100,
-})
-```
-
-
-##### Returns
-
-
--  Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on return.
-
-
-
-
-
-#### getInternalMessages(hash, filterOptions)
-
-
-Retrieves the functions (aka internal messages) where this address is either the originator or a recipient.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The balance data of the account or if no address is found.
-
-
-
-
-
-#### getFunctions(hash, filterOptions)
-
-
-Retrieves the functions (aka internal messages) where this address is either the originator or a recipient.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The balance data of the account or if no address is found.
-
-
-
-
-
-#### getLogs(hash, filterOptions)
-
-
-Retrieves the logs for the transactions where this address is either the originator or a recipient.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-web3data.getLogs('0x...')
-```
-
-
-##### Returns
-
-
--  Promise object containing the array of logs.
-
-
-
-
-
-#### getTransactions(hash, filterOptions)
-
-
-Retrieves the transactions where this address was either the originator or a recipient.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The object containing the array of transaction objects.
-
-
-
-
-
-#### getPendingTransactions(hash, filterOptions)
-
-
-Retrieves pending transactions the specified address is involved in.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The array of pending transactions.
-
-
-
-
-
-#### getBalance(hash, filterOptions)
-
-
-Retrieves the latest or historical balance data of the given address depending upon
-Returns null if no address is found.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  the address of the account | &nbsp; |
-| filterOptions |  |  the filter options associated with the request | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  the balance data of the account or if no address is found.
-
-
-
-
-
-#### getLatestBalance(hash, filterOptions)
-
-
-Retrieves the latest balance data of the given address. Returns null if no address is found.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The balance data of the account or if no address is found.
-
-
-
-
-
-#### getHistoricalBalance(hash, filterOptions)
-
-
-Retrieves the historical balance data of the given address. Returns null if no address is found.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The historical balance data of the account or if no address is found.
-
-
-
-
-
-#### getMultipleBalances(hashes, filterOptions)
-
-
-Retrieves the latest account and token balances for the specified address(es).
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hashes |  |  The array or string containing the address(es) of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The balance data of the account(s).
-
-
-
-
-
-#### getBalances(hash, filterOptions)
-
-
-Retrieves the latest account and token balances for the specified address.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The balance data of the account.
-
-
-
-
-
-#### getBalancesBatch(hashes, filterOptions)
-
-
-Retrieves the latest account and token balances for the specified addresses.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hashes |  |  The array containing the address(es) of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const await getBalancesBatch(['0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be', '0x06012c8cf97bead5deae237070f9587f8e7a266d'], { includePrice: true
-})
-```
-
-
-##### Returns
-
-
--  The balance data of the account(s).
-
-
-
-
-
-#### getTokens(hash, filterOptions)
-
-
-Retrieves the balance data of the given address. Returns null if no address is found.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The token balance data of the account.
-
-
-
-
-
-#### getTokenTransfers(hash, filterOptions)
-
-
-Retrieves all token transfers involving the specified address.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The object containing the array of token transfer objects.
-
-
-
-
-
-### src/block.js
-
-
-
-#### getBlock(id, filterOptions)
-
-
-Retrieves the blocks specified by its id (number or hash).
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| id |  |  The number or hash of the block for which to retrieve block information. | &nbsp; |
-| filterOptions |  |  | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  
-
-
-
-
-
 ### src/contract.js
 
 
@@ -1169,6 +601,574 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
+### src/address.js
+
+
+
+#### Class: Address
+
+
+Contains methods pertaining to the `/address` endpoint of Amberdata's API.
+
+
+
+
+
+
+
+
+
+#### constructor(web3data)
+
+
+Creates an instance of Address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  |  The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### getAllAddresses(filterOptions)
+
+
+Returns every address that has been seen on the network.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  |  The filters associated with the request. | &nbsp; |
+| filterOptions.hash |  |  Filter by a specific address. | &nbsp; |
+| filterOptions.size |  |  The size of the response. <b>Default:</b> `100`. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+web3data.address.getAllAddresses({ size: 100,
+})
+```
+
+
+##### Returns
+
+
+-  Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on return.
+
+
+
+
+
+#### getInternalMessages(hash, filterOptions)
+
+
+Retrieves the functions (aka internal messages) where this address is either the originator or a recipient.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The balance data of the account or if no address is found.
+
+
+
+
+
+#### getFunctions(hash, filterOptions)
+
+
+Retrieves the functions (aka internal messages) where this address is either the originator or a recipient.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The balance data of the account or if no address is found.
+
+
+
+
+
+#### getLogs(hash, filterOptions)
+
+
+Retrieves the logs for the transactions where this address is either the originator or a recipient.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+web3data.getLogs('0x...')
+```
+
+
+##### Returns
+
+
+-  Promise object containing the array of logs.
+
+
+
+
+
+#### getTransactions(hash, filterOptions)
+
+
+Retrieves the transactions where this address was either the originator or a recipient.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The object containing the array of transaction objects.
+
+
+
+
+
+#### getPendingTransactions(hash, filterOptions)
+
+
+Retrieves pending transactions the specified address is involved in.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The array of pending transactions.
+
+
+
+
+
+#### getBalance(hash, filterOptions)
+
+
+Retrieves the latest or historical balance data of the given address depending upon
+Returns null if no address is found.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  the address of the account | &nbsp; |
+| filterOptions |  |  the filter options associated with the request | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  the balance data of the account or if no address is found.
+
+
+
+
+
+#### getLatestBalance(hash, filterOptions)
+
+
+Retrieves the latest balance data of the given address. Returns null if no address is found.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The balance data of the account or if no address is found.
+
+
+
+
+
+#### getHistoricalBalance(hash, filterOptions)
+
+
+Retrieves the historical balance data of the given address. Returns null if no address is found.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The historical balance data of the account or if no address is found.
+
+
+
+
+
+#### getMultipleBalances(hashes, filterOptions)
+
+
+Retrieves the latest account and token balances for the specified address(es).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hashes |  |  The array or string containing the address(es) of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The balance data of the account(s).
+
+
+
+
+
+#### getBalances(hash, filterOptions)
+
+
+Retrieves the latest account and token balances for the specified address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The balance data of the account.
+
+
+
+
+
+#### getBalancesBatch(hashes, filterOptions)
+
+
+Retrieves the latest account and token balances for the specified addresses.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hashes |  |  The array containing the address(es) of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const await getBalancesBatch(['0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be', '0x06012c8cf97bead5deae237070f9587f8e7a266d'], { includePrice: true
+})
+```
+
+
+##### Returns
+
+
+-  The balance data of the account(s).
+
+
+
+
+
+#### getTokens(hash, filterOptions)
+
+
+Retrieves the balance data of the given address. Returns null if no address is found.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The token balance data of the account.
+
+
+
+
+
+#### getTokenTransfers(hash, filterOptions)
+
+
+Retrieves all token transfers involving the specified address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the account. | &nbsp; |
+| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The object containing the array of token transfer objects.
+
+
+
+
+
+### src/block.js
+
+
+
+#### getBlock(id, filterOptions)
+
+
+Retrieves the blocks specified by its id (number or hash).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  |  The number or hash of the block for which to retrieve block information. | &nbsp; |
+| filterOptions |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+
+
 ### src/web3data.js
 
 
@@ -1300,82 +1300,6 @@ API endpoints.
 
 
 
-
-
-
-
-
-### src/utils.js
-
-
-
-#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)
-
-
-Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
-the appropriate parameter(s) where applicable.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  |  Instance on which to call .rawQuery(). | &nbsp; |
-| subendpoint |  |  The subendpoint. | &nbsp; |
-| endpoint |  |  The endpoint. | &nbsp; |
-| hash |  |  The address hash. | &nbsp; |
-| pathParam |  |  The path parameter. | &nbsp; |
-| filterOptions |  |  The filters associated with a given endpoint. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns a Promise of the rawQuery request from web3data.
-
-
-
-
-
-#### uuid(data)
-
-
-Generates a uuid see [this gist]() for more details.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| data |  |  | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
 
 
 
@@ -1580,6 +1504,82 @@ Destroys a single event listener. De-registers event and callback function.
 | ---- | ---- | ----------- | -------- |
 | An |  |  Object containing the event name and filters. | &nbsp; |
 | callback |  |  The callback function to execute once unsubscribe is complete. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+### src/utils.js
+
+
+
+#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)
+
+
+Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
+the appropriate parameter(s) where applicable.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  |  Instance on which to call .rawQuery(). | &nbsp; |
+| subendpoint |  |  The subendpoint. | &nbsp; |
+| endpoint |  |  The endpoint. | &nbsp; |
+| hash |  |  The address hash. | &nbsp; |
+| pathParam |  |  The path parameter. | &nbsp; |
+| filterOptions |  |  The filters associated with a given endpoint. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns a Promise of the rawQuery request from web3data.
+
+
+
+
+
+#### uuid(data)
+
+
+Generates a uuid see [this gist]() for more details.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| data |  |  | &nbsp; |
 
 
 
