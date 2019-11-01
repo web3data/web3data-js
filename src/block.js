@@ -3,7 +3,14 @@ const {
   ERROR_MESSAGE_BLOCK_NO_ID: NO_BLOCK_ID
 } = require('./constants')
 
-const {is, get, throwIf, onFulfilled, onError} = require('./utils')
+const {
+  is,
+  get,
+  throwIf,
+  onFulfilled,
+  onError,
+  recordsFormatter
+} = require('./utils')
 
 class Block {
   constructor(web3data) {
@@ -15,127 +22,120 @@ class Block {
     return get(this.web3data, {
       endpoint: ENDPOINT,
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 
-  async getBlock(id, filterOptions) {
-    if (is.undefined(id)) return Promise.reject(new Error(NO_BLOCK_ID))
-    const response = await get(this.web3data, {
+  /**
+   * Retrieves the blocks specified by its id (number or hash).
+   *
+   * @param id - The number or hash of the block for which to retrieve block information.
+   * @param [filterOptions] -
+   * @returns
+   * @example
+   */
+  getBlock(id, filterOptions) {
+    throwIf(is.undefined(id), NO_BLOCK_ID)
+    return get(this.web3data, {
       pathParam: id,
       endpoint: ENDPOINT,
       filterOptions
+    }).then(onFulfilled, onError)
+  }
+
+  getBlockNumber() {
+    return this.web3data.block.getBlock('latest').then(block => {
+      throwIf(block | !block.number, 'Failed to retrieve block number.')
+      return parseInt(block.number, 10)
     })
-    return new Promise((resolve, reject) => {
-      if (!response || response.status !== 200 || !response.payload) {
-        reject(new Error(`error with request`))
-      } else {
-        resolve(response.payload)
-      }
+  }
+
+  getBlockTransactionCount(id) {
+    return this.web3data.block.getBlock(id).then(block => {
+      throwIf(
+        !block || (!block.predictions && !block.numTransactions),
+        'Failed to retrieve block transaction count.'
+      )
+      // If 'predictions' field exists then it's a future block thus has no txns
+      return block.predictions ? null : parseInt(block.numTransactions, 10)
     })
   }
 
-  async getBlockNumber() {
-    const block = await this.web3data.block.getBlock('latest')
-    throwIf(block | !block.number, 'Failed to retrieve block number.')
-    return parseInt(block.number, 10)
-  }
-
-  async getBlockTransactionCount(id) {
-    const block = await this.web3data.block.getBlock(id)
-    throwIf(
-      !block || (!block.predictions && !block.numTransactions),
-      'Failed to retrieve block transaction count.'
-    )
-    return block.predictions ? null : parseInt(block.numTransactions, 10)
-  }
-
-  async getTransactions(id, filterOptions) {
-    const response = await get(this.web3data, {
+  getTransactions(id, filterOptions) {
+    throwIf(is.undefined(id), NO_BLOCK_ID)
+    return get(this.web3data, {
       pathParam: id,
       endpoint: ENDPOINT,
       subendpoint: 'transactions',
       filterOptions
-    })
-    throwIf(
-      !response ||
-        response.status !== 200 ||
-        !response.payload ||
-        !response.payload.records,
-      'Failed to retrieve transactions.'
-    )
-    return response.payload.records
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 
-  async getTransactionFromBlock(id, index) {
-    const transactions = await this.web3data.block.getTransactions(id)
-    return new Promise((resolve, reject) => {
-      if (!transactions) {
-        reject(new Error(`Failed to retrieve transaction.`))
-      } else if (index < transactions.length && index > -1) {
-        resolve(transactions[index])
-      } else {
-        resolve(null)
-      }
+  getTransactionFromBlock(id, index) {
+    throwIf(is.undefined(id), NO_BLOCK_ID)
+    return this.web3data.block.getTransactions(id).then(txns => {
+      throwIf(!txns, 'Failed to retrieve transaction.')
+
+      // Check that 'index' is within valid range
+      return index < txns.length && index > -1 ? txns[index] : null
     })
   }
 
-  async getUncle(id, index) {
-    const block = await this.web3data.block.getBlock(id, {
-      validationMethod: 'full'
-    })
-    return new Promise((resolve, reject) => {
-      if (
-        !block ||
-        (!block.predictions && !block.numTransactions && !block.validation)
-      ) {
-        reject(new Error(`Failed to retrieve uncle.`))
-      } else if (block.predictions || !block.validation.uncles) {
-        resolve(null)
-      } else if (index < block.validation.uncles.length && index > -1) {
-        resolve(block.validation.uncles[index])
-      } else {
-        resolve(null)
-      }
-    })
+  getUncle(id, index) {
+    throwIf(is.undefined(id), NO_BLOCK_ID)
+    throwIf(is.undefined(index), "Missing required param 'index'")
+    return this.web3data.block
+      .getBlock(id, {
+        validationMethod: 'full'
+      })
+      .then(block => {
+        throwIf(
+          !block ||
+            (!block.predictions && !block.numTransactions && !block.validation),
+          'Failed to retrieve uncle.'
+        )
+        // Check that it's...
+        // a not a future block
+        // and that the block has uncles
+        // and 'index' is within the valid range
+        return !block.predictions &&
+          block.validation.uncles &&
+          index < block.validation.uncles.length &&
+          index > -1
+          ? block.validation.uncles[index]
+          : null
+      })
   }
 
   getTokenTransfers(id, filterOptions) {
-    if (is.undefined(id)) return Promise.reject(new Error(NO_BLOCK_ID))
+    throwIf(is.undefined(id), NO_BLOCK_ID)
     return get(this.web3data, {
       pathParam: id,
       endpoint: ENDPOINT,
       subendpoint: 'token-transfers',
       filterOptions
-    }).then(
-      response =>
-        response.error ? throwIf(true, response.message) : response.payload,
-      error => throwIf(true, error.response.data.message)
-    )
+    }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
   getLogs(id, filterOptions) {
-    throwIf(is.notHash(id), NO_BLOCK_ID)
+    throwIf(is.undefined(id), NO_BLOCK_ID)
     return get(this.web3data, {
-      id,
+      pathParam: id,
       endpoint: ENDPOINT,
       subendpoint: 'logs',
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 
-  // TODO: Needs tests
   getFunctions(id, filterOptions) {
-    throwIf(is.notHash(id), NO_BLOCK_ID)
+    throwIf(is.undefined(id), NO_BLOCK_ID)
     return get(this.web3data, {
-      id,
+      pathParam: id,
       endpoint: ENDPOINT,
       subendpoint: 'functions',
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 
-  // TODO: Needs tests
   getMetrics(filterOptions) {
     return get(this.web3data, {
       endpoint: ENDPOINT,

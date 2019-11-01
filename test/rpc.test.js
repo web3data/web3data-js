@@ -98,7 +98,7 @@ test.skip('Successfully calls eth_sendRawTransaction', async t => {
     t.is(rpcResp.error.message, 'nonce too low')
 })
 
-test.only(returnsResultAsHex, {blockchain: 'eth', method: 'eth_call', params: MOCK_CALL_DATA})
+test(returnsResultAsHex, {blockchain: 'eth', method: 'eth_call', params: MOCK_CALL_DATA})
 test(returnsResultAsHex, {blockchain: 'eth', method: 'eth_estimateGas', params: MOCK_EXEC_DATA})
 test(returnsResultAsHex, {blockchain: 'eth', method: 'eth_gasPrice'})
 test(returnsResultAsHex, {blockchain: 'eth', method: 'eth_getBalance', params: ["0xc94770007dda54cF92009BFF0dE90c06F603a09f", "latest"]})

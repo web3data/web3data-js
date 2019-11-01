@@ -1,10 +1,11 @@
 {
   "name": "web3data-js",
-  "version": "0.5.14",
+  "version": "0.5.15",
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
+  "browser": "dist/web3data.min.js",
   "scripts": {
-    "build": "rimraf dist/web3data.min.js && parcel build index.js --target browser --out-dir dist --out-file web3data.min.js",
+    "build": "rimraf dist/web3data.min.js && rollup -c",
     "docs:serve": "docsify serve ./docs",
     "docs:gen": "doxdox 'src/**/*.js' --layout markdown --output docs/api.md",
     "lint": "xo",
@@ -57,13 +58,20 @@
     "parcel": "^1.12.3",
     "prettier": "^1.18.2",
     "rimraf": "^3.0.0",
+    "rollup": "^1.26.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-globals": "^1.4.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-filesize": "^6.2.1",
     "superstatic": "^6.0.4",
     "xo": "^0.24.0"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "isomorphic-ws": "^4.0.1",
-    "jsdoc": "^3.6.3",
+    "uuid": "^3.3.3",
     "ws": "^7.1.0"
   },
   "publishConfig": {
