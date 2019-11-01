@@ -1238,6 +1238,39 @@ includePrice: true
 
 
 
+#### getAll(filterOptions)
+
+
+See 'getTransactions' for details.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
 #### getTransaction(hash, filterOptions)
 
 
