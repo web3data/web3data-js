@@ -1,7 +1,12 @@
 import test, {only} from "ava"
 import {ADDRESS } from './constants'
 import {ERROR_MESSAGE_ADDRESS_NO_ADDRESS as NO_ADDRESS} from "../src/constants";
-import {setUpPolly, hasProp, getNewWeb3DataInstance} from "./utils";
+import {
+    setUpPolly,
+    hasProp,
+    getNewWeb3DataInstance,
+    isISOFormat
+} from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
@@ -22,11 +27,30 @@ test.beforeEach(t => {
  * -------- Test address -------- *
  **********************************/
 
+/*********** Test getAll() ***********/
+test('Successfully calls getAll()', async t => {
+    const [addresses] = await t.context.web3data.address.getAll()
+    t.true(addresses.hasProp('firstBlockNumber'))
+})
+
+test('Successfully calls getAll() - with filters', async t => {
+    const [addresses] = await t.context.web3data.address.getAll({type: 'CONTRACT'})
+    t.true(addresses.hasProp('type'))
+    t.is(addresses.type.toUpperCase(), 'CONTRACT')
+    t.true(addresses.creator !== null)
+})
+
 /*********** Test getAllAddresses() ***********/
-test('Successfully gets all addresses', async t => {
-    let addresses = await t.context.web3data.address.getAllAddresses()
-    t.true({}.hasOwnProperty.call(addresses, 'records'))
-    t.true({}.hasOwnProperty.call(addresses, 'totalRecords'))
+test('Successfully calls getAllAddresses()', async t => {
+    const [addresses] = await t.context.web3data.address.getAllAddresses()
+    t.true(addresses.hasProp('firstBlockNumber'))
+})
+
+test('Successfully calls getAllAddresses() - with filters', async t => {
+    const [addresses] = await t.context.web3data.address.getAllAddresses({type: 'CONTRACT'})
+    t.true(addresses.hasProp('type'))
+    t.is(addresses.type.toUpperCase(), 'CONTRACT')
+    t.true(addresses.creator !== null)
 })
 
 /*********** Test getInformation() ***********/
@@ -69,10 +93,19 @@ test('Successfully gets address metadata - with filters', async t => {
 })
 
 /*********** Test getAdoption() ***********/
-test('Successfully gets address adoption', async t => {
-    const response = await t.context.web3data.address.getAdoption(ADDRESS)
-    t.true({}.hasOwnProperty.call(response, 'metadata'))
+test('Successfully calls getAdoption()', async t => {
+    const adoption = await t.context.web3data.address.getAdoption(ADDRESS)
+    t.true(adoption.hasProp('metadata'))
+    t.true(adoption.metadata.hasProp('columns'))
 })
+
+test('Successfully calls getAdoption() - with filters', async t => {
+    const adoption = await t.context.web3data.address.getAdoption(ADDRESS, {timeFormat: 'iso'})
+    t.true(adoption.hasProp('metadata'))
+    t.true(adoption.metadata.hasProp('columns'))
+    t.true(isISOFormat(adoption.metadata.startDate))
+})
+
 test('throws exception when calling getAdoption without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.address.getAdoption()
@@ -237,9 +270,15 @@ test('throws exception when calling getTokenBalances without hash', async t => {
 })
 
 /*********** Test getUsage() ***********/
-test('Successfully gets address usage', async t => {
-    const response = await t.context.web3data.address.getUsage(ADDRESS)
-    t.true({}.hasOwnProperty.call(response, 'metadata'))
+test('Successfully calls getUsage()', async t => {
+    const usage = await t.context.web3data.address.getUsage(ADDRESS)
+    t.true(usage.hasProp('metadata'))
+})
+
+test('Successfully calls getUsage() - with filters', async t => {
+    const usage = await t.context.web3data.address.getUsage(ADDRESS, {timeFormat: 'iso'})
+    t.true(usage.hasProp('metadata'))
+    t.true(isISOFormat(usage.metadata.startDate))
 })
 
 test('throws exception when calling getUsage without hash', async t => {
@@ -371,4 +410,10 @@ test('Successfully gets historical address balance + paginates properly', async 
     const SIZE = 5
     const balance = await t.context.web3data.address.getBalance(ADDRESS, {startDate: 1506184430, page: 0, size: SIZE})
     t.is(balance.data.length, SIZE)
+})
+
+/*********** Test getMetrics() ***********/
+test('Successfully calls getMetrics()', async t => {
+    const metrics = await t.context.web3data.address.getMetrics(ADDRESS)
+    t.true(metrics.hasProp('activeTotal'))
 })

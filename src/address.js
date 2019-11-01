@@ -3,7 +3,14 @@ const {
   ADDRESSES_ENDPOINT: ENDPOINT
 } = require('./constants')
 
-const {is, get, throwIf, onFulfilled, onError} = require('./utils')
+const {
+  is,
+  get,
+  throwIf,
+  onFulfilled,
+  onError,
+  recordsFormatter
+} = require('./utils')
 
 /**
  * Contains methods pertaining to the `/address` endpoint of Amberdata's API.
@@ -20,20 +27,32 @@ class Address {
   }
 
   /**
-   * Returns every address that has been seen on the network.
+   * Alias of getAll().
    *
-   * @param filterOptions - The filters associated with the request.
-   * @param [filterOptions.hash] - Filter by a specific address.
-   * @param [filterOptions.size] - The size of the response. <b>Default:</b> `100`.
-   * @returns Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on return.
-   * @public
+   * @param [filterOptions] - The filters associated with the request.
    * @example web3data.address.getAllAddresses({
    * size: 100,
    * })
    */
   getAllAddresses(filterOptions = {}) {
+    return this.getAll(filterOptions)
+  }
+
+  /**
+   * Returns every address that has been seen on the network.
+   *
+   * @param filterOptions - The filters associated with the request.
+   * @param [filterOptions.hash] - Filter by a specific address.
+   * @param [filterOptions.size] - The size of the response. <b>Default:</b> `100`.
+   * @returns Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on response.
+   * @public
+   * @example web3data.address.getAll({
+   * size: 100,
+   * })
+   */
+  getAll(filterOptions = {}) {
     return get(this.web3data, {endpoint: ENDPOINT, filterOptions}).then(
-      onFulfilled,
+      onFulfilled.bind({formatter: recordsFormatter}),
       onError
     )
   }
@@ -58,8 +77,17 @@ class Address {
     }).then(onFulfilled, onError)
   }
 
+  /**
+   * Retrieves the historical adoption for the specified address.
+   *
+   * @param hash - The address.
+   * @param [filterOptions] - The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#get-address-adoption) for details.
+   * @returns The historical adoption data for the specified address.
+   * @example
+   * const adoption = await web3data.address.getAdoption('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+   */
   getAdoption(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    throwIf(is.notHash(hash), NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
@@ -308,8 +336,16 @@ Returns null if no address is found.
     }).then(onFulfilled, onError)
   }
 
+  /**
+   * Retrieves the historical usage for the specified address.
+   *
+   * @param hash - The address.
+   * @param [filterOptions] - The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#get-address-usage) for details.
+   * @returns The usage statistics for the specified address.
+   * @example const usage = await web3data.address.getUsage(ADDRESS)
+   */
   getUsage(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    throwIf(is.notHash(hash), NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
@@ -318,12 +354,17 @@ Returns null if no address is found.
     }).then(onFulfilled, onError)
   }
 
-  // TODO: Needs tests
-  getMetrics(filterOptions) {
+  /**
+   * Get metrics for all addresses that have exist publicly for a given blockchain. Default metrics are for Ethereum over a 24h period.
+   *
+   * @returns The address metrics.
+   * @example
+   * const metrics = await web3data.address.getMetrics(ADDRESS)
+   */
+  getMetrics() {
     return get(this.web3data, {
       endpoint: ENDPOINT,
-      subendpoint: 'metrics/latest',
-      filterOptions
+      subendpoint: 'metrics/latest'
     }).then(onFulfilled, onError)
   }
 }
