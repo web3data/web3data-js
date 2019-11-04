@@ -3,44 +3,6 @@
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
 
-### src/block.js
-
-
-
-#### getBlock(id, filterOptions)
-
-
-Retrieves the blocks specified by its id (number or hash).
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| id |  |  The number or hash of the block for which to retrieve block information. | &nbsp; |
-| filterOptions |  |  | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  
-
-
-
-
-
 ### src/address.js
 
 
@@ -699,6 +661,44 @@ const metrics = await web3data.address.getMetrics(ADDRESS)
 
 
 
+### src/block.js
+
+
+
+#### getBlock(id, filterOptions)
+
+
+Retrieves the blocks specified by its id (number or hash).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  |  The number or hash of the block for which to retrieve block information. | &nbsp; |
+| filterOptions |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+
+
 ### src/contract.js
 
 
@@ -728,7 +728,7 @@ Creates an instance of Contract.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| web3data |  |  The web3data instance. | &nbsp; |
+| web3data | `Web3Data`  |  The web3data instance. | &nbsp; |
 
 
 
@@ -761,7 +761,7 @@ Retrieves all the detailed information for the specified contract (ABI, bytecode
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address. | &nbsp; |
+| hash | `string`  |  The address. | &nbsp; |
 
 
 
@@ -776,7 +776,7 @@ const details = await web3data.contract.getDetails('0x06012c8cf97bead5deae237070
 ##### Returns
 
 
--  The detailed information for the specified contract.
+- `Promise.<object>`  The detailed information for the specified contract.
 
 
 
@@ -794,7 +794,7 @@ Retrieves the functions of the specified contract (if available). If not availab
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The contract address. | &nbsp; |
+| hash | `string`  |  The contract address. | &nbsp; |
 
 
 
@@ -809,7 +809,7 @@ Retrieves the functions of the specified contract (if available). If not availab
 ##### Returns
 
 
--  The functions or decompiled functions of the specified contract.
+- `Promise.<object>`  The functions or decompiled functions of the specified contract.
 
 
 
@@ -827,7 +827,7 @@ Retrieves the vulnerabilities audit for the specified contract (if available).
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The contract address. | &nbsp; |
+| hash | `string`  |  The contract address. | &nbsp; |
 
 
 
@@ -842,7 +842,7 @@ const audit = await web3data.contract.getAudit('0x06012c8cf97bead5deae237070f958
 ##### Returns
 
 
--  The vulnerabilities audit for the specified contract.
+- `Promise.<object>`  The vulnerabilities audit for the specified contract.
 
 
 
@@ -860,7 +860,7 @@ Retrieves the contract's abi.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The contract address. | &nbsp; |
+| hash | `string`  |  The contract address. | &nbsp; |
 
 
 
@@ -875,7 +875,7 @@ const abi = await web3data.contract.getAbi('0x06012c8cf97bead5deae237070f9587f8e
 ##### Returns
 
 
--  The abi of the contract.
+- `Promise.<array>`  The abi of the contract.
 
 
 
@@ -893,7 +893,7 @@ Retrieves the contract's source code.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The contract address. | &nbsp; |
+| hash | `string`  |  The contract address. | &nbsp; |
 
 
 
@@ -908,7 +908,7 @@ const source = await web3data.contract.getSourceCode('0x06012c8cf97bead5deae2370
 ##### Returns
 
 
--  The source of the contract.
+- `Promise.<string>`  The source of the contract.
 
 
 
@@ -926,7 +926,7 @@ Returns the contract's bytecode.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The contract address. | &nbsp; |
+| hash | `string`  |  The contract address. | &nbsp; |
 
 
 
@@ -941,7 +941,7 @@ const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f
 ##### Returns
 
 
--  The contract's bytecode.
+- `Promise.<string>`  The contract's bytecode.
 
 
 

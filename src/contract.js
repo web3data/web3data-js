@@ -11,7 +11,7 @@ class Contract {
   /**
    * Creates an instance of Contract.
    *
-   * @param web3data - The web3data instance.
+   * @param {Web3Data} web3data - The web3data instance.
    * @example
    */
   constructor(web3data) {
@@ -21,8 +21,8 @@ class Contract {
   /**
    * Retrieves all the detailed information for the specified contract (ABI, bytecode, sourcecode...).
    *
-   * @param hash - The address.
-   * @returns The detailed information for the specified contract.
+   * @param {string} hash - The address.
+   * @returns {Promise<object>} The detailed information for the specified contract.
    * @example const details = await web3data.contract.getDetails('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getDetails(hash) {
@@ -36,8 +36,8 @@ class Contract {
   /**
    * Retrieves the functions of the specified contract (if available). If not available on chain, the byte code is decompiled and a list of functions is extracted from it.
    *
-   * @param hash - The contract address.
-   * @returns The functions or decompiled functions of the specified contract.
+   * @param {string} hash - The contract address.
+   * @returns {Promise<object>} The functions or decompiled functions of the specified contract.
    * @example
    */
   getFunctions(hash) {
@@ -52,8 +52,8 @@ class Contract {
   /**
    * Retrieves the vulnerabilities audit for the specified contract (if available).
    *
-   * @param hash - The contract address.
-   * @returns The vulnerabilities audit for the specified contract.
+   * @param {string} hash - The contract address.
+   * @returns {Promise<object>} The vulnerabilities audit for the specified contract.
    * @example const audit = await web3data.contract.getAudit('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getSecurityAudit(hash) {
@@ -68,8 +68,8 @@ class Contract {
   /**
    * Retrieves the contract's abi.
    *
-   * @param hash - The contract address.
-   * @returns The abi of the contract.
+   * @param {string} hash - The contract address.
+   * @returns {Promise<array>} The abi of the contract.
    * @example const abi = await web3data.contract.getAbi('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getAbi(hash) {
@@ -80,8 +80,8 @@ class Contract {
   /**
    * Retrieves the contract's source code.
    *
-   * @param hash - The contract address.
-   * @returns The source of the contract.
+   * @param {string} hash - The contract address.
+   * @returns {Promise<string>} The source of the contract.
    * @example const source = await web3data.contract.getSourceCode('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getSourceCode(hash) {
@@ -96,8 +96,8 @@ class Contract {
   /**
    * Returns the contract's bytecode.
    *
-   * @param hash - The contract address.
-   * @returns The contract's bytecode.
+   * @param {string} hash - The contract address.
+   * @returns {Promise<string>} The contract's bytecode.
    * @example const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getCode(hash) {
