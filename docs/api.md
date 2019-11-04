@@ -1396,6 +1396,89 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
+### src/signature.js
+
+
+
+#### Class: Signature
+
+
+Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
+
+
+
+
+
+
+
+
+
+#### constructor(web3data)
+
+
+Creates an instance of Signature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  |  The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### getSignature(hash)
+
+
+Retrieves detailed information about the specified signature hash.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The (keccak 256) of the signature. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
+```
+
+
+##### Returns
+
+
+-  Information pertaining to the specified signature hash.
+
+
+
+
+
 ### src/token.js
 
 
@@ -1446,7 +1529,7 @@ Creates an instance of Token.
 
 
 
-#### getRankings([filterOptions])
+#### getRankings(filterOptions)
 
 
 Retrieves the top ranked tokens by a specific metric.
@@ -1458,7 +1541,7 @@ Retrieves the top ranked tokens by a specific metric.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| filterOptions | `object`  |  The filters associated with the request. See [docs](https://docs.amberdata.io/reference#gettokenrankings) for more details. | *Optional* |
+| filterOptions |  |  The filters associated with the request. See [docs](https://docs.amberdata.io/reference#gettokenrankings) for more details. | &nbsp; |
 
 
 
@@ -1473,7 +1556,211 @@ const rankings = await web3data.token.getRankings()
 ##### Returns
 
 
-- `Promise.<object>`  The token rankings.
+-  The token rankings.
+
+
+
+
+
+#### getVolume(hash, filterOptions)
+
+
+Retrieves the historical volume of token transfers for the specified address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the token contract. | &nbsp; |
+| filterOptions |  |  The filters associated with the request. See [docs](https://docs.amberdata.io/reference#gettokenvolume) for more details. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Promise.<object>`  The historical volume of token transfers. const tokenVolume = await web3data.token.getVolume('0x06012c8cf97bead5deae237070f9587f8e7a266d').
+
+
+
+
+
+#### getVelocity(hash, filterOptions)
+
+
+
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address of the token contract. | &nbsp; |
+| filterOptions |  |  The filters associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+
+
+#### getHolders(hash, filterOptions)
+
+
+
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address for which to retrieve token holders. | &nbsp; |
+| filterOptions |  |  The filters associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+
+
+#### getHoldersHistorical(hash, filterOptions)
+
+
+
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address for which to retrieve token holders. | &nbsp; |
+| filterOptions |  |  The filters associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+
+
+#### getSupplies(hash, filterOptions)
+
+
+
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address for which to retrieve token supplies. | &nbsp; |
+| filterOptions |  |  The filters associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+
+
+#### getTransfers(hash, filterOptions)
+
+
+
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The address for which to retrieve token holders. | &nbsp; |
+| filterOptions |  |  The filters associated with the request. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
 
 
 
@@ -1804,89 +2091,6 @@ const metrics = await web3data.transaction.getMetrics()
 
 
 -  Metrics for recent confirmed transactions.
-
-
-
-
-
-### src/signature.js
-
-
-
-#### Class: Signature
-
-
-Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
-
-
-
-
-
-
-
-
-
-#### constructor(web3data)
-
-
-Creates an instance of Signature.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  |  The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-
-#### getSignature(hash)
-
-
-Retrieves detailed information about the specified signature hash.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The (keccak 256) of the signature. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
-```
-
-
-##### Returns
-
-
--  Information pertaining to the specified signature hash.
 
 
 

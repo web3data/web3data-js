@@ -2,7 +2,7 @@ import test from "ava"
 import { TOKEN_ADDRESS, ADDRESS } from './constants'
 import { ERROR_MESSAGE_TOKEN_NO_ADDRESS as NO_ADDRESS } from '../src/constants'
 import { ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS as NO_HOLDER_ADDRESS } from '../src/constants'
-import {setUpPolly, getNewWeb3DataInstance} from "./utils";
+import { setUpPolly, getNewWeb3DataInstance, isISOFormat } from "./utils";
 
 /**********************************
  * -------- Tests Setup ---------- *
@@ -92,7 +92,6 @@ test('Rejects promise if no holder address supplied', async t => {
     }, { instanceOf: Error, message: NO_HOLDER_ADDRESS })
 });
 
-test([rejectsPromise], {method: 'getVolume'}, NO_ADDRESS)
 test([rejectsPromise], {method: 'getVelocity'}, NO_ADDRESS)
 test([rejectsPromise], {method: 'getSupplies'}, NO_ADDRESS)
 test([rejectsPromise], {method: 'getTransfers'}, NO_ADDRESS)
@@ -108,3 +107,19 @@ test('Successfully calls getRankings() - with filters', async t => {
     t.true(rankings.hasProp('data'))
     t.is(rankings.metadata.totalRecords, 0)
 });
+
+/*********** Test getVolume() ***********/
+test([rejectsPromise], {method: 'getVolume'}, NO_ADDRESS)
+test('Successfully calls getVolume()', async t => {
+    const volume = await t.context.web3data.token.getVolume(TOKEN_ADDRESS);
+    t.true(volume.hasProp('metadata'))
+    t.true(volume.metadata.hasProp('columns'))
+    t.is(volume.metadata.columns[1], 'volume')
+})
+test('Successfully calls getVolume() - with filters', async t => {
+    const volume = await t.context.web3data.token.getVolume(TOKEN_ADDRESS, {timeFormat: 'iso'});
+    t.true(volume.hasProp('metadata'))
+    t.true(volume.metadata.hasProp('columns'))
+    t.is(volume.metadata.columns[1], 'volume')
+    t.true(isISOFormat(volume.metadata.startDate))
+})

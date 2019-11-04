@@ -1,4 +1,4 @@
-const {is, get, onFulfilled, onError} = require('./utils')
+const {is, get, onFulfilled, onError, throwIf} = require('./utils')
 const {
   ERROR_MESSAGE_TOKEN_NO_ADDRESS: NO_ADDRESS,
   ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS: NO_HOLDER_ADDRESS,
@@ -21,10 +21,10 @@ class Token {
 
   /**
    * Retrieves the top ranked tokens by a specific metric.
-   * @param {object} [filterOptions] - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-rankings) for more details.
-   * @return {Promise<object>} The token rankings.
-   * @example
-   * const rankings = await web3data.token.getRankings()
+   *
+   * @param [filterOptions] - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-rankings) for more details.
+   * @returns The token rankings.
+   * @example const rankings = await web3data.token.getRankings()
    */
   getRankings(filterOptions = {}) {
     return get(this.web3data, {
@@ -34,8 +34,17 @@ class Token {
     }).then(onFulfilled, onError)
   }
 
-  getVolume(hash, filterOptions) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+  /**
+   * Retrieves the historical volume of token transfers for the specified address.
+   *
+   * @param hash - The address of the token contract.
+   * @param [filterOptions] - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-volume) for more details.
+   * @returns {Promise<object>} The historical volume of token transfers.
+   * const tokenVolume = await web3data.token.getVolume('0x06012c8cf97bead5deae237070f9587f8e7a266d').
+   * @example
+   */
+  getVolume(hash, filterOptions = {}) {
+    throwIf(is.notHash(hash), NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
@@ -44,7 +53,13 @@ class Token {
     }).then(onFulfilled, onError)
   }
 
-  getVelocity(hash, filterOptions) {
+  /**
+   * @param hash - The address of the token contract.
+   * @param [filterOptions] - The filters associated with the request.
+   * @returns
+   * @example
+   */
+  getVelocity(hash, filterOptions = {}) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
     return get(this.web3data, {
       hash,
@@ -54,7 +69,13 @@ class Token {
     }).then(onFulfilled, onError)
   }
 
-  getHolders(hash, filterOptions) {
+  /**
+   * @param hash - The address for which to retrieve token holders.
+   * @param [filterOptions] - The filters associated with the request.
+   * @returns
+   * @example
+   */
+  getHolders(hash, filterOptions = {}) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
     return get(this.web3data, {
       hash,
@@ -64,6 +85,12 @@ class Token {
     }).then(onFulfilled, onError)
   }
 
+  /**
+   * @param hash - The address for which to retrieve token holders.
+   * @param [filterOptions] - The filters associated with the request.
+   * @returns
+   * @example
+   */
   getHoldersHistorical(hash, filterOptions = {}) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
     if (is.notInObject(filterOptions, 'holderAddresses'))
@@ -76,7 +103,13 @@ class Token {
     }).then(onFulfilled, onError)
   }
 
-  getSupplies(hash, filterOptions) {
+  /**
+   * @param hash - The address for which to retrieve token supplies.
+   * @param [filterOptions] - The filters associated with the request.
+   * @returns
+   * @example
+   */
+  getSupplies(hash, filterOptions = {}) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
     return get(this.web3data, {
       hash,
@@ -86,7 +119,13 @@ class Token {
     }).then(onFulfilled, onError)
   }
 
-  getTransfers(hash, filterOptions) {
+  /**
+   * @param hash - The address for which to retrieve token holders.
+   * @param [filterOptions] - The filters associated with the request.
+   * @returns
+   * @example
+   */
+  getTransfers(hash, filterOptions = {}) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
     return get(this.web3data, {
       hash,
