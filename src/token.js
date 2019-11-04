@@ -1,4 +1,11 @@
-const {is, get, onFulfilled, onError, throwIf} = require('./utils')
+const {
+  is,
+  get,
+  onFulfilled,
+  onError,
+  throwIf,
+  recordsFormatter
+} = require('./utils')
 const {
   ERROR_MESSAGE_TOKEN_NO_ADDRESS: NO_ADDRESS,
   ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS: NO_HOLDER_ADDRESS,
@@ -136,10 +143,13 @@ class Token {
   }
 
   /**
-   * @param {string} hash - The address for which to retrieve token holders.
+   * Retrieves all token transfers involving the specified address.
+   *
+   * @param {string} hash - The address for which to retrieve token transfers.
    * @param {object} [filterOptions] - The filters associated with the request.
-   * @returns {Promise<object>}
+   * @returns {Promise<Array>} All token transfers involving the specified address.
    * @example
+   * const transfers = await web3data.token.getTransfers('0x06012c8cf97bead5deae237070f9587f8e7a266d', {validationMethod: 'full'})
    */
   getTransfers(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
@@ -148,7 +158,7 @@ class Token {
       endpoint: ENDPOINT,
       subendpoint: 'transfers',
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 }
 

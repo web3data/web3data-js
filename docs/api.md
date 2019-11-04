@@ -1740,7 +1740,7 @@ const historicalSupplies = await t.context.web3data.token.getSupplies('0x06012c8
 #### getTransfers(hash[, filterOptions])
 
 
-
+Retrieves all token transfers involving the specified address.
 
 
 
@@ -1749,7 +1749,7 @@ const historicalSupplies = await t.context.web3data.token.getSupplies('0x06012c8
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `string`  |  The address for which to retrieve token holders. | &nbsp; |
+| hash | `string`  |  The address for which to retrieve token transfers. | &nbsp; |
 | filterOptions | `object`  |  The filters associated with the request. | *Optional* |
 
 
@@ -1758,90 +1758,14 @@ const historicalSupplies = await t.context.web3data.token.getSupplies('0x06012c8
 ##### Examples
 
 ```javascript
-
+const transfers = await web3data.token.getTransfers('0x06012c8cf97bead5deae237070f9587f8e7a266d', {validationMethod: 'full'})
 ```
 
 
 ##### Returns
 
 
-- `Promise.<object>`  
-
-
-
-
-
-### src/utils.js
-
-
-
-#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)
-
-
-Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
-the appropriate parameter(s) where applicable.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  |  Instance on which to call .rawQuery(). | &nbsp; |
-| subendpoint |  |  The subendpoint. | &nbsp; |
-| endpoint |  |  The endpoint. | &nbsp; |
-| hash |  |  The address hash. | &nbsp; |
-| pathParam |  |  The path parameter. | &nbsp; |
-| filterOptions |  |  The filters associated with a given endpoint. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns a Promise of the rawQuery request from web3data.
-
-
-
-
-
-#### uuid(data)
-
-
-Generates a uuid see [this gist]() for more details.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| data |  |  | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
+- `Promise.<Array>`  All token transfers involving the specified address.
 
 
 
@@ -2172,6 +2096,82 @@ const metrics = await web3data.transaction.getMetrics()
 
 
 -  Metrics for recent confirmed transactions.
+
+
+
+
+
+### src/utils.js
+
+
+
+#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)
+
+
+Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
+the appropriate parameter(s) where applicable.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  |  Instance on which to call .rawQuery(). | &nbsp; |
+| subendpoint |  |  The subendpoint. | &nbsp; |
+| endpoint |  |  The endpoint. | &nbsp; |
+| hash |  |  The address hash. | &nbsp; |
+| pathParam |  |  The path parameter. | &nbsp; |
+| filterOptions |  |  The filters associated with a given endpoint. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns a Promise of the rawQuery request from web3data.
+
+
+
+
+
+#### uuid(data)
+
+
+Generates a uuid see [this gist]() for more details.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| data |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
 
 
 

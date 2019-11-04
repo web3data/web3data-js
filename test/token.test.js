@@ -92,10 +92,6 @@ test('Rejects promise if no holder address supplied', async t => {
     }, { instanceOf: Error, message: NO_HOLDER_ADDRESS })
 });
 
-
-
-test([rejectsPromise], {method: 'getTransfers'}, NO_ADDRESS)
-
 /*********** Test getRankings() ***********/
 test('Successfully calls getRankings()', async t => {
     const {data: [rank1]} = await t.context.web3data.token.getRankings();
@@ -160,3 +156,15 @@ test('Successfully calls getSupplies() - historical with filters', async t => {
     t.is(supplies.metadata.columns[3], 'totalSupply')
     t.true(isISOFormat(supplies.metadata.startDate))
 })
+
+/*********** Test getTransfers() ***********/
+test([rejectsPromise], {method: 'getTransfers'}, NO_ADDRESS)
+test('Successfully calls getTransfers()', async t => {
+    const [transfer] = await t.context.web3data.token.getTransfers(TOKEN_ADDRESS);
+    t.true(transfer.hasProp('transactionHash'))
+})
+test('Successfully calls getTransfers() - with filters', async t => {
+    const [transfer] = await t.context.web3data.token.getTransfers(TOKEN_ADDRESS, {validationMethod: 'full'});
+    t.true(transfer.hasProp('validation'))
+})
+
