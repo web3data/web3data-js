@@ -1,8 +1,8 @@
 import test from "ava"
-import {ERROR_MESSAGE_SIGNATURE_NO_HASH as NO_HASH, ADDRESS} from "../src/constants";
+import {ERROR_MESSAGE_SIGNATURE_NO_HASH as NO_HASH} from "../src/constants";
 import {setUpPolly, getNewWeb3DataInstance} from "./utils";
 
-/**********************************
+/**********************************gs
  * -------- Tests Setup ---------- *
  **********************************/
 test.before(t => {
@@ -25,8 +25,8 @@ test.beforeEach(t => {
  * @return {Promise<void>}
  */
 let statusSuccess = async (t, { method, params = {} }) => {
-    let response = await t.context.web3data.signature[method]('0xe2f0a05a')
-    t.is(response.status, 200)
+    const [signatureDetails] = await t.context.web3data.signature[method]('0xe2f0a05a')
+    t.true(signatureDetails.hasProp('textSignature'))
 }
 statusSuccess.title = (providedTitle = '', input) =>  `Successfully calls ${input.method} and returns status of 200`
 
@@ -46,4 +46,4 @@ let rejectsPromise = async (t, { method, params = {} }, errorMessage) => {
 }
 rejectsPromise.title = (providedTitle = '', input) => `throws exception when calling ${input} without hash`
 
-test([statusSuccess, rejectsPromise], {method: 'get4Byte'}, NO_HASH)
+test([statusSuccess, rejectsPromise], {method: 'getSignature'}, NO_HASH)
