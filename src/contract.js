@@ -38,7 +38,7 @@ class Contract {
    *
    * @param {string} hash - The contract address.
    * @returns {Promise<object>} The functions or decompiled functions of the specified contract.
-   * @example
+   * @example const functions = await web3data.contract.getFunctions('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getFunctions(hash) {
     if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
