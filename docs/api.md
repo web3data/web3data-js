@@ -1396,14 +1396,14 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
-### src/signature.js
+### src/token.js
 
 
 
-#### Class: Signature
+#### Class: Token
 
 
-Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
+Contains methods pertaining to the `/tokens` endpoint of Amberdata's API.
 
 
 
@@ -1416,7 +1416,7 @@ Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
 #### constructor(web3data)
 
 
-Creates an instance of Signature.
+Creates an instance of Token.
 
 
 
@@ -1446,10 +1446,10 @@ Creates an instance of Signature.
 
 
 
-#### getSignature(hash)
+#### getRankings([filterOptions])
 
 
-Retrieves detailed information about the specified signature hash.
+Retrieves the top ranked tokens by a specific metric.
 
 
 
@@ -1458,7 +1458,7 @@ Retrieves detailed information about the specified signature hash.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The (keccak 256) of the signature. | &nbsp; |
+| filterOptions | `object`  |  The filters associated with the request. See [docs](https://docs.amberdata.io/reference#gettokenrankings) for more details. | *Optional* |
 
 
 
@@ -1466,14 +1466,14 @@ Retrieves detailed information about the specified signature hash.
 ##### Examples
 
 ```javascript
-const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
+const rankings = await web3data.token.getRankings()
 ```
 
 
 ##### Returns
 
 
--  Information pertaining to the specified signature hash.
+- `Promise.<object>`  The token rankings.
 
 
 
@@ -1804,6 +1804,89 @@ const metrics = await web3data.transaction.getMetrics()
 
 
 -  Metrics for recent confirmed transactions.
+
+
+
+
+
+### src/signature.js
+
+
+
+#### Class: Signature
+
+
+Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
+
+
+
+
+
+
+
+
+
+#### constructor(web3data)
+
+
+Creates an instance of Signature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  |  The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### getSignature(hash)
+
+
+Retrieves detailed information about the specified signature hash.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The (keccak 256) of the signature. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
+```
+
+
+##### Returns
+
+
+-  Information pertaining to the specified signature hash.
 
 
 

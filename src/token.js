@@ -5,13 +5,28 @@ const {
   TOKENS_ENDPOINT: ENDPOINT
 } = require('./constants')
 
+/**
+ * Contains methods pertaining to the `/tokens` endpoint of Amberdata's API.
+ */
 class Token {
+  /**
+   * Creates an instance of Token.
+   *
+   * @param web3data - The web3data instance.
+   * @example
+   */
   constructor(web3data) {
     this.web3data = web3data
   }
 
-  // TODO: Needs tests
-  getRankings(filterOptions) {
+  /**
+   * Retrieves the top ranked tokens by a specific metric.
+   * @param {object} [filterOptions] - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-rankings) for more details.
+   * @return {Promise<object>} The token rankings.
+   * @example
+   * const rankings = await web3data.token.getRankings()
+   */
+  getRankings(filterOptions = {}) {
     return get(this.web3data, {
       endpoint: ENDPOINT,
       subendpoint: 'rankings',

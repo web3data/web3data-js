@@ -37,7 +37,7 @@ statusSuccess.title = (providedTitle = '', input) =>  `Successfully calls ${inpu
  * @param input the test input in the case the name of the method
  * @param errorMessage
  */
-let rejectsPromise = async (t, { method, params = {} }, errorMessage) => {
+const rejectsPromise = async (t, { method, params = {} }, errorMessage) => {
         await t.throwsAsync(async () => {
         await t.context.web3data.token[method]()
     }, { instanceOf: Error, message: errorMessage })
@@ -45,14 +45,6 @@ let rejectsPromise = async (t, { method, params = {} }, errorMessage) => {
 
 /* Dynamically creates title based on input */
 rejectsPromise.title = (providedTitle = '', input) => `throws exception when calling ${input.method} without hash`
-
-let _rejectsPromise = async (t, promise, errorMessage) => {
-    await t.throwsAsync(async () => {
-        await promise
-    }, { instanceOf: Error, message: errorMessage })
-}
-
-_rejectsPromise.title = (providedTitle = '', input) => `Rejects promise if ${input.prototype.name} is called without hash`
 
 /**
  * Checks that the response contains the specified field
@@ -104,3 +96,15 @@ test([rejectsPromise], {method: 'getVolume'}, NO_ADDRESS)
 test([rejectsPromise], {method: 'getVelocity'}, NO_ADDRESS)
 test([rejectsPromise], {method: 'getSupplies'}, NO_ADDRESS)
 test([rejectsPromise], {method: 'getTransfers'}, NO_ADDRESS)
+
+/*********** Test getRankings() ***********/
+test('Successfully calls getRankings()', async t => {
+    const {data: [rank1]} = await t.context.web3data.token.getRankings();
+    t.true(rank1.hasProp('rank'))
+    t.is(rank1.rank, '1')
+});
+test('Successfully calls getRankings() - with filters', async t => {
+    const rankings = await t.context.web3data.token.getRankings({type: 'erc777'});
+    t.true(rankings.hasProp('data'))
+    t.is(rankings.metadata.totalRecords, 0)
+});
