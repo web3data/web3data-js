@@ -1633,7 +1633,7 @@ const velocity = await web3data.token.getVelocity('0x06012c8cf97bead5deae237070f
 #### getHolders(hash[, filterOptions])
 
 
-
+Retrieves the latest or historical token holders for the specified address.
 
 
 
@@ -1643,7 +1643,8 @@ const velocity = await web3data.token.getVelocity('0x06012c8cf97bead5deae237070f
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
 | hash | `string`  |  The address for which to retrieve token holders. | &nbsp; |
-| filterOptions | `object`  |  The filters associated with the request. | *Optional* |
+| filterOptions | `object`  |  The filters associated with the request. See [docs](https://docs.amberdata.io/reference#gettokenvelocity) for more details. | *Optional* |
+| filterOptions.holderAddresses | `object`  |  The address for which to retrieve token holders. | *Optional* |
 
 
 
@@ -1652,13 +1653,18 @@ const velocity = await web3data.token.getVelocity('0x06012c8cf97bead5deae237070f
 
 ```javascript
 
+// Latest
+const latestHodlers =  await web3data.token.getHolders('0x06012c8cf97bead5deae237070f9587f8e7a266d');
+
+// Historical
+const historicalHodlers =  await web3data.token.getHolders('0x06012c8cf97bead5deae237070f9587f8e7a266d', {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022'});
 ```
 
 
 ##### Returns
 
 
-- `Promise.<object>`  
+- `Promise.<object>`  The latest or historical token holders for the specified address.
 
 
 
@@ -1667,7 +1673,7 @@ const velocity = await web3data.token.getVelocity('0x06012c8cf97bead5deae237070f
 #### getHoldersHistorical(hash[, filterOptions])
 
 
-
+Retrieves the historical (time series) token holders for the specified token address. If the `holderAddresses` filter is present it will return historical data.
 
 
 
@@ -1685,14 +1691,14 @@ const velocity = await web3data.token.getVelocity('0x06012c8cf97bead5deae237070f
 ##### Examples
 
 ```javascript
-
+const historicalHolders = getHoldersHistorical('0x06012c8cf97bead5deae237070f9587f8e7a266d', {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022'})
 ```
 
 
 ##### Returns
 
 
-- `Promise.<object>`  
+- `Promise.<object>`  The historical (time series) token holders for the specified token address.
 
 
 

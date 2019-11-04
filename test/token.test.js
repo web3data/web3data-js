@@ -71,27 +71,6 @@ returnsObjectWithField.title = (providedTitle = '', input) => `Successfully call
  * -------- Test Tokens -------- *
  **********************************/
 
-test([rejectsPromise], {method: 'getHolders' }, NO_ADDRESS)
-
-test('Successfully gets address Token Holders Historical', async t => {
-    const filters = {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022'}
-    const holdersHistorical = await t.context.web3data.token.getHoldersHistorical(TOKEN_ADDRESS, filters);
-    t.true({}.hasOwnProperty.call(holdersHistorical.data[0], 'timestamp'))
-});
-
-test('Rejects promise if no token address supplied', async t => {
-    let filters = {holderAddresses: ADDRESS}
-    await t.throwsAsync(async () => {
-        await t.context.web3data.token.getHoldersHistorical('',filters);
-    }, { instanceOf: Error, message: NO_ADDRESS })
-});
-
-test('Rejects promise if no holder address supplied', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.token.getHoldersHistorical(TOKEN_ADDRESS);
-    }, { instanceOf: Error, message: NO_HOLDER_ADDRESS })
-});
-
 /*********** Test getRankings() ***********/
 test('Successfully calls getRankings()', async t => {
     const {data: [rank1]} = await t.context.web3data.token.getRankings();
@@ -136,6 +115,35 @@ test('Successfully calls getVelocity() - with filters', async t => {
     t.is(volume.metadata.columns[1], 'velocity')
     t.true(isISOFormat(volume.metadata.startDate))
 })
+
+/*********** Test getHolders() ***********/
+test([rejectsPromise], {method: 'getHolders' }, NO_ADDRESS)
+
+test('Successfully calls getHolders() - latest', async t => {
+    const [holder] = await t.context.web3data.token.getHolders(TOKEN_ADDRESS);
+    t.true(holder.hasProp('holderAddress'))
+})
+
+test('Successfully calls getHolders() - latest with filters', async t => {
+    const [holder] = await t.context.web3data.token.getHolders(TOKEN_ADDRESS, {includePrice: true});
+    t.true(holder.hasProp('price'))
+})
+
+
+test('Successfully calls getHolders() - historical', async t => {
+    const holders = await t.context.web3data.token.getHolders(TOKEN_ADDRESS, {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022'});
+    t.true(holders.hasProp('metadata'))
+    t.true(holders.metadata.hasProp('columns'))
+    t.is(holders.metadata.columns[0], 'holder*')
+})
+test('Successfully calls getHolders() - historical with filters', async t => {
+    const holders = await t.context.web3data.token.getHolders(TOKEN_ADDRESS, {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022', includePrice: true, timeFormat: 'iso'});
+    t.true(holders.hasProp('metadata'))
+    t.true(holders.metadata.hasProp('columns'))
+    t.is(holders.metadata.columns[0], 'holder*')
+    t.true(isISOFormat(holders.data[0].timestamp))
+})
+
 
 /*********** Test getSupplies() ***********/
 test([rejectsPromise], {method: 'getSupplies'}, NO_ADDRESS)

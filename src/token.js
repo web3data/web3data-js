@@ -81,37 +81,51 @@ class Token {
   }
 
   /**
+   * Retrieves the latest or historical token holders for the specified address.
+   *
    * @param {string} hash - The address for which to retrieve token holders.
-   * @param {object} [filterOptions] - The filters associated with the request.
-   * @returns {Promise<object>}
+   * @param {object} [filterOptions] - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-velocity) for more details.
+   * @param {object} [filterOptions.holderAddresses] - The address for which to retrieve token holders.
+   * @returns {Promise<object>} The latest or historical token holders for the specified address.
    * @example
+   *
+   * // Latest
+   * const latestHodlers =  await web3data.token.getHolders('0x06012c8cf97bead5deae237070f9587f8e7a266d');
+   *
+   * // Historical
+   * const historicalHodlers =  await web3data.token.getHolders('0x06012c8cf97bead5deae237070f9587f8e7a266d', {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022'});
    */
   getHolders(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
+    let subendpoint = 'holders/latest'
+    let formatter = {formatter: recordsFormatter}
+
+    // If this parameter is present then we want historical data
+    if (filterOptions.holderAddresses) {
+      subendpoint = 'holders/historical'
+      formatter = {}
+    }
+
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
-      subendpoint: 'holders/latest',
+      subendpoint,
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind(formatter), onError)
   }
 
   /**
+   * Retrieves the historical (time series) token holders for the specified token address. If the `holderAddresses` filter is present it will return historical data.
+   *
    * @param {string} hash - The address for which to retrieve token holders.
    * @param {object} [filterOptions] - The filters associated with the request.
-   * @returns {Promise<object>}
+   * @returns {Promise<object>} The historical (time series) token holders for the specified token address.
    * @example
+   * const historicalHolders = getHoldersHistorical('0x06012c8cf97bead5deae237070f9587f8e7a266d', {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022'})
    */
-  getHoldersHistorical(hash, filterOptions = {}) {
-    throwIf(is.notHash(hash), NO_ADDRESS)
+  getHoldersHistorical(hash, filterOptions) {
     throwIf(is.notInObject(filterOptions, 'holderAddresses'), NO_HOLDER_ADDRESS)
-
-    return get(this.web3data, {
-      hash,
-      endpoint: ENDPOINT,
-      subendpoint: 'holders/historical',
-      filterOptions
-    }).then(onFulfilled, onError)
+    return this.getHolders(hash, filterOptions)
   }
 
   /**
