@@ -19,10 +19,12 @@ const Btc = require('./btc')
 const Bch = require('./bch')
 const Bsv = require('./bsv')
 const Ltc = require('./ltc')
+const Zec = require('./zec')
 const WebSocketClient = require('./websocket')
 
 /**
  * Contains common methods used in.
+ * @private
  */
 class Web3DataFactory {
   /**
@@ -125,6 +127,7 @@ class Web3Data extends Web3DataFactory {
     this.bch = new Bch(Web3DataFactory, apiKey, options)
     this.bsv = new Bsv(Web3DataFactory, apiKey, options)
     this.ltc = new Ltc(Web3DataFactory, apiKey, options)
+    this.zec = new Zec(Web3DataFactory, apiKey, options)
 
     this.websocket = null
   }
