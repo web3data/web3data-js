@@ -1458,7 +1458,7 @@ Retrieves detailed information about the specified signature hash.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The (keccak 256) of the signature. | &nbsp; |
+| hash | `string`  |  The (keccak 256) of the signature. | &nbsp; |
 
 
 
@@ -1473,7 +1473,7 @@ const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
 ##### Returns
 
 
--  Information pertaining to the specified signature hash.
+- `Promise.<array>`  Information pertaining to the specified signature hash.
 
 
 
