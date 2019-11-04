@@ -32,7 +32,7 @@ Creates an instance of Address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| web3data |  |  The web3data instance. | &nbsp; |
+| web3data | `object`  |  The web3data instance. | &nbsp; |
 
 
 
@@ -40,7 +40,7 @@ Creates an instance of Address.
 ##### Examples
 
 ```javascript
-
+const address = new Address(new Web3Data('API_KEY'))
 ```
 
 
@@ -53,7 +53,7 @@ Creates an instance of Address.
 
 
 
-#### getAllAddresses(filterOptions)
+#### getAllAddresses([filterOptions])
 
 
 Alias of getAll().
@@ -65,7 +65,7 @@ Alias of getAll().
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| filterOptions |  |  The filters associated with the request. | &nbsp; |
+| filterOptions | `object`  |  The filters associated with the request. | *Optional* |
 
 
 
@@ -73,7 +73,8 @@ Alias of getAll().
 ##### Examples
 
 ```javascript
-web3data.address.getAllAddresses({ size: 100,
+const addresses = web3data.address.getAllAddresses({
+size: 100,
 })
 ```
 
@@ -81,13 +82,13 @@ web3data.address.getAllAddresses({ size: 100,
 ##### Returns
 
 
-- `Void`
+- `Promise.<Array>`  Containing an object with an array of objects containing.
 
 
 
 
 
-#### getAll(filterOptions)
+#### getAll([filterOptions])
 
 
 Returns every address that has been seen on the network.
@@ -99,9 +100,9 @@ Returns every address that has been seen on the network.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| filterOptions |  |  The filters associated with the request. | &nbsp; |
-| filterOptions.hash |  |  Filter by a specific address. | &nbsp; |
-| filterOptions.size |  |  The size of the response. <b>Default:</b> `100`. | &nbsp; |
+| filterOptions | `object`  |  The filters associated with the request. | *Optional* |
+| filterOptions.hash | `string`  |  Filter by a specific address. | *Optional* |
+| filterOptions.size | `number`  |  The size of the response. <b>Default:</b> `100`. | *Optional* |
 
 
 
@@ -109,7 +110,8 @@ Returns every address that has been seen on the network.
 ##### Examples
 
 ```javascript
-web3data.address.getAll({ size: 100,
+const addresses = await web3data.address.getAll({
+size: 100,
 })
 ```
 
@@ -117,13 +119,81 @@ web3data.address.getAll({ size: 100,
 ##### Returns
 
 
--  Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on response.
+- `Promise.<Array>`  Containing an object with an array of objects containing. See [API docs](https://docs.amberdata.io/reference#get-all-addresses) for details on response.
 
 
 
 
 
-#### getAdoption(hash, filterOptions)
+#### getInformation(hash[, filterOptions])
+
+
+Retrieves information about the specified address: network(s) and blockchain(s) this address exist within.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#getaccountinformation) for more details. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+const info = await web3data.address.getInfo('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+- `Promise.<object>`  The information about the specified address.
+
+
+
+
+
+#### getMetadata(hash[, filterOptions])
+
+
+Retrieves statistics about the specified address: balances, holdings, etc.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+const metadata = await web3data.address.getMetadata('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+- `Promise.<Array>`  The statistics about the specified address.
+
+
+
+
+
+#### getAdoption(hash[, filterOptions])
 
 
 Retrieves the historical adoption for the specified address.
@@ -135,8 +205,8 @@ Retrieves the historical adoption for the specified address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address. | &nbsp; |
-| filterOptions |  |  The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#getaddressadoption) for details. | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#getaddressadoption) for details. | *Optional* |
 
 
 
@@ -151,47 +221,13 @@ const adoption = await web3data.address.getAdoption('0x06012c8cf97bead5deae23707
 ##### Returns
 
 
--  The historical adoption data for the specified address.
+- `Promise.<object>`  The historical adoption data for the specified address.
 
 
 
 
 
-#### getInternalMessages(hash, filterOptions)
-
-
-Retrieves the functions (aka internal messages) where this address is either the originator or a recipient.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The balance data of the account or if no address is found.
-
-
-
-
-
-#### getFunctions(hash, filterOptions)
+#### getInternalMessages(hash[, filterOptions])
 
 
 Retrieves the functions (aka internal messages) where this address is either the originator or a recipient.
@@ -203,8 +239,8 @@ Retrieves the functions (aka internal messages) where this address is either the
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. | *Optional* |
 
 
 
@@ -212,20 +248,54 @@ Retrieves the functions (aka internal messages) where this address is either the
 ##### Examples
 
 ```javascript
-
+const internalMessages = await web3data.address.getInternalMessages('0x06012c8cf97bead5deae237070f9587f8e7a266d')
 ```
 
 
 ##### Returns
 
 
--  The balance data of the account or if no address is found.
+- `Promise.<object>`  The balance data of the account or if no address is found.
 
 
 
 
 
-#### getLogs(hash, filterOptions)
+#### getFunctions(hash[, filterOptions])
+
+
+Retrieves the functions (aka internal messages) where this address is either the originator or a recipient.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+const functions = await web3data.address.getFunctions('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+-  {Promise<object>}The balance data of the account or if no address is found.
+
+
+
+
+
+#### getLogs(hash[, filterOptions])
 
 
 Retrieves the logs for the transactions where this address is either the originator or a recipient.
@@ -237,8 +307,8 @@ Retrieves the logs for the transactions where this address is either the origina
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. | *Optional* |
 
 
 
@@ -246,20 +316,20 @@ Retrieves the logs for the transactions where this address is either the origina
 ##### Examples
 
 ```javascript
-web3data.getLogs('0x...')
+const logs = await web3data.address.getLogs('0x...')
 ```
 
 
 ##### Returns
 
 
--  Promise object containing the array of logs.
+-  {Promise<object>}Promise object containing the array of logs.
 
 
 
 
 
-#### getTransactions(hash, filterOptions)
+#### getTransactions(hash[, filterOptions])
 
 
 Retrieves the transactions where this address was either the originator or a recipient.
@@ -271,8 +341,8 @@ Retrieves the transactions where this address was either the originator or a rec
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#getaddresstransactions) for more details. | *Optional* |
 
 
 
@@ -280,20 +350,20 @@ Retrieves the transactions where this address was either the originator or a rec
 ##### Examples
 
 ```javascript
-
+const transactions = await web3data.address.getTransactions('0x06012c8cf97bead5deae237070f9587f8e7a266d')
 ```
 
 
 ##### Returns
 
 
--  The object containing the array of transaction objects.
+- `Promise.<object>`  The object containing the array of transaction objects.
 
 
 
 
 
-#### getPendingTransactions(hash, filterOptions)
+#### getPendingTransactions(hash[, filterOptions])
 
 
 Retrieves pending transactions the specified address is involved in.
@@ -305,8 +375,8 @@ Retrieves pending transactions the specified address is involved in.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#addresspendingtransactions) for more details. | *Optional* |
 
 
 
@@ -314,23 +384,23 @@ Retrieves pending transactions the specified address is involved in.
 ##### Examples
 
 ```javascript
-
+const pendingTransactions = await web3data.address.getPendingTransactions('0x06012c8cf97bead5deae237070f9587f8e7a266d')
 ```
 
 
 ##### Returns
 
 
--  The array of pending transactions.
+- `Promise.<object>`  The array of pending transactions.
 
 
 
 
 
-#### getBalance(hash, filterOptions)
+#### getBalance(hash[, filterOptions])
 
 
-Retrieves the latest or historical balance data of the given address depending upon
+Retrieves the latest or historical balance data of the given address depending upon the specified filter options.
 Returns null if no address is found.
 
 
@@ -340,8 +410,8 @@ Returns null if no address is found.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  the address of the account | &nbsp; |
-| filterOptions |  |  the filter options associated with the request | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#getcurrentaccountbalance) for more details. | *Optional* |
 
 
 
@@ -349,20 +419,20 @@ Returns null if no address is found.
 ##### Examples
 
 ```javascript
-
+const balance = await web3data.address.getBalance('0x06012c8cf97bead5deae237070f9587f8e7a266d')
 ```
 
 
 ##### Returns
 
 
--  the balance data of the account or if no address is found.
+- `Promise.<object>`  The balance data of the account or if no address is found.
 
 
 
 
 
-#### getLatestBalance(hash, filterOptions)
+#### getLatestBalance(hash[, filterOptions])
 
 
 Retrieves the latest balance data of the given address. Returns null if no address is found.
@@ -374,8 +444,8 @@ Retrieves the latest balance data of the given address. Returns null if no addre
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#getcurrentaccountbalance) for more details. | *Optional* |
 
 
 
@@ -383,20 +453,20 @@ Retrieves the latest balance data of the given address. Returns null if no addre
 ##### Examples
 
 ```javascript
-
+const latestBalance = await web3data.address.getLatestBalance('0x06012c8cf97bead5deae237070f9587f8e7a266d')
 ```
 
 
 ##### Returns
 
 
--  The balance data of the account or if no address is found.
+- `Promise.<object>`  The balance data of the account or if no address is found.
 
 
 
 
 
-#### getHistoricalBalance(hash, filterOptions)
+#### getHistoricalBalance(hash[, filterOptions])
 
 
 Retrieves the historical balance data of the given address. Returns null if no address is found.
@@ -408,8 +478,8 @@ Retrieves the historical balance data of the given address. Returns null if no a
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#gethistoricalaccountbalance) for more details. | *Optional* |
 
 
 
@@ -417,20 +487,20 @@ Retrieves the historical balance data of the given address. Returns null if no a
 ##### Examples
 
 ```javascript
-
+const historicalBalance = await web3data.address.getHistoricalBalance('0x06012c8cf97bead5deae237070f9587f8e7a266d')
 ```
 
 
 ##### Returns
 
 
--  The historical balance data of the account or if no address is found.
+- `Promise.<object>`  The historical balance data of the account or if no address is found.
 
 
 
 
 
-#### getMultipleBalances(hashes, filterOptions)
+#### getMultipleBalances(hashes[, filterOptions])
 
 
 Retrieves the latest account and token balances for the specified address(es).
@@ -442,8 +512,8 @@ Retrieves the latest account and token balances for the specified address(es).
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hashes |  |  The array or string containing the address(es) of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| hashes | `Array`  |  The array or string containing the address(es) of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#accountbalances) for more details. | *Optional* |
 
 
 
@@ -451,20 +521,20 @@ Retrieves the latest account and token balances for the specified address(es).
 ##### Examples
 
 ```javascript
-
+const balances = await web3data.address.getMultipleBalances(['0x06012c8cf97bead5deae237070f9587f8e7a266d', '0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be'])
 ```
 
 
 ##### Returns
 
 
--  The balance data of the account(s).
+- `Promise.<object>`  The balance data of the account(s).
 
 
 
 
 
-#### getBalances(hash, filterOptions)
+#### getBalances(hash[, filterOptions])
 
 
 Retrieves the latest account and token balances for the specified address.
@@ -476,8 +546,8 @@ Retrieves the latest account and token balances for the specified address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#accountbalances) for more details. | *Optional* |
 
 
 
@@ -485,20 +555,20 @@ Retrieves the latest account and token balances for the specified address.
 ##### Examples
 
 ```javascript
-
+const balances = await web3data.address.getBalances('0x06012c8cf97bead5deae237070f9587f8e7a266d')
 ```
 
 
 ##### Returns
 
 
--  The balance data of the account.
+- `Promise.<object>`  The balance data of the account.
 
 
 
 
 
-#### getBalancesBatch(hashes, filterOptions)
+#### getBalancesBatch(hashes[, filterOptions])
 
 
 Retrieves the latest account and token balances for the specified addresses.
@@ -510,8 +580,8 @@ Retrieves the latest account and token balances for the specified addresses.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hashes |  |  The array containing the address(es) of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| hashes | `string`  |  The array containing the address(es) of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#accountbalancesbatch) for more details. | *Optional* |
 
 
 
@@ -519,7 +589,7 @@ Retrieves the latest account and token balances for the specified addresses.
 ##### Examples
 
 ```javascript
-const await getBalancesBatch(['0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be', '0x06012c8cf97bead5deae237070f9587f8e7a266d'], { includePrice: true
+const balanceBatch = await web3data.addresses.getBalancesBatch(['0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be', '0x06012c8cf97bead5deae237070f9587f8e7a266d'], { includePrice: true
 })
 ```
 
@@ -527,13 +597,13 @@ const await getBalancesBatch(['0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be', '0x0
 ##### Returns
 
 
--  The balance data of the account(s).
+- `Promise.<object>`  The balance data of the account(s).
 
 
 
 
 
-#### getTokens(hash, filterOptions)
+#### getTokens(hash[, filterOptions])
 
 
 Retrieves the balance data of the given address. Returns null if no address is found.
@@ -545,8 +615,8 @@ Retrieves the balance data of the given address. Returns null if no address is f
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#addresstokens) for more details. | *Optional* |
 
 
 
@@ -554,20 +624,20 @@ Retrieves the balance data of the given address. Returns null if no address is f
 ##### Examples
 
 ```javascript
-
+const tokens = await web3data.addresses.getTokens('0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be')
 ```
 
 
 ##### Returns
 
 
--  The token balance data of the account.
+- `Promise.<Array>`  The token balance data of the account.
 
 
 
 
 
-#### getTokenTransfers(hash, filterOptions)
+#### getTokenTransfers(hash[, filterOptions])
 
 
 Retrieves all token transfers involving the specified address.
@@ -579,8 +649,8 @@ Retrieves all token transfers involving the specified address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the account. | &nbsp; |
-| filterOptions |  |  The filter options associated with the request. | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. | *Optional* |
 
 
 
@@ -588,20 +658,54 @@ Retrieves all token transfers involving the specified address.
 ##### Examples
 
 ```javascript
-
+const tokenTransfers = await web3data.addresses.getTokenTransfers('0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be')
 ```
 
 
 ##### Returns
 
 
--  The object containing the array of token transfer objects.
+- `Promise.<Array>`  The object containing the array of token transfer objects.
 
 
 
 
 
-#### getUsage(hash, filterOptions)
+#### getTokenBalances(hash[, filterOptions])
+
+
+Retrieves the historical (time series) token balances for the specified address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filter options associated with the request. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+const tokenBalances = await web3data.addresses.getTokenBalances('0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be')
+```
+
+
+##### Returns
+
+
+- `Promise.<Array>`  The historical (time series) token balances for the specified address.
+
+
+
+
+
+#### getUsage(hash[, filterOptions])
 
 
 Retrieves the historical usage for the specified address.
@@ -613,8 +717,8 @@ Retrieves the historical usage for the specified address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address. | &nbsp; |
-| filterOptions |  |  The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#getaddressusage) for details. | &nbsp; |
+| hash | `string`  |  The address of the account. | &nbsp; |
+| filterOptions | `object`  |  The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#getaddressusage) for details. | *Optional* |
 
 
 
@@ -622,14 +726,14 @@ Retrieves the historical usage for the specified address.
 ##### Examples
 
 ```javascript
-const usage = await web3data.address.getUsage(ADDRESS)
+const usage = await web3data.address.getUsage('0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be')
 ```
 
 
 ##### Returns
 
 
--  The usage statistics for the specified address.
+- `Promise.<object>`  The usage statistics for the specified address.
 
 
 
@@ -648,14 +752,14 @@ Get metrics for all addresses that have exist publicly for a given blockchain. D
 ##### Examples
 
 ```javascript
-const metrics = await web3data.address.getMetrics(ADDRESS)
+const metrics = await web3data.address.getMetrics('0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be')
 ```
 
 
 ##### Returns
 
 
--  The address metrics.
+- `Promise.<object>`  The address metrics.
 
 
 
