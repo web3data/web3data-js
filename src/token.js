@@ -54,13 +54,16 @@ class Token {
   }
 
   /**
-   * @param hash - The address of the token contract.
-   * @param [filterOptions] - The filters associated with the request.
-   * @returns
+   * Retrieves the historical velocity for the specified address.
+   * @param {string} hash - The address of the token contract.
+   * @param {object} [filterOptions] - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-velocity) for more details.
+   * @returns {Promise<object>} The historical velocity.
    * @example
+   * const velocity = await web3data.token.getVelocity('0x06012c8cf97bead5deae237070f9587f8e7a266d');
+   *
    */
   getVelocity(hash, filterOptions = {}) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    throwIf(is.notHash(hash), NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
@@ -76,7 +79,7 @@ class Token {
    * @example
    */
   getHolders(hash, filterOptions = {}) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    throwIf(is.notHash(hash), NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
@@ -86,15 +89,16 @@ class Token {
   }
 
   /**
-   * @param hash - The address for which to retrieve token holders.
-   * @param [filterOptions] - The filters associated with the request.
+   *
+   * @param {string} hash - The address for which to retrieve token holders.
+   * @param {object} [filterOptions] - The filters associated with the request.
    * @returns
    * @example
    */
   getHoldersHistorical(hash, filterOptions = {}) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
-    if (is.notInObject(filterOptions, 'holderAddresses'))
-      return Promise.reject(new Error(NO_HOLDER_ADDRESS))
+    throwIf(is.notHash(hash), NO_ADDRESS)
+    throwIf(is.notInObject(filterOptions, 'holderAddresses'), NO_HOLDER_ADDRESS)
+
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,

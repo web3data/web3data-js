@@ -1596,10 +1596,10 @@ Retrieves the historical volume of token transfers for the specified address.
 
 
 
-#### getVelocity(hash, filterOptions)
+#### getVelocity(hash[, filterOptions])
 
 
-
+Retrieves the historical velocity for the specified address.
 
 
 
@@ -1608,8 +1608,8 @@ Retrieves the historical volume of token transfers for the specified address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address of the token contract. | &nbsp; |
-| filterOptions |  |  The filters associated with the request. | &nbsp; |
+| hash | `string`  |  The address of the token contract. | &nbsp; |
+| filterOptions | `object`  |  The filters associated with the request. See [docs](https://docs.amberdata.io/reference#gettokenvelocity) for more details. | *Optional* |
 
 
 
@@ -1617,14 +1617,14 @@ Retrieves the historical volume of token transfers for the specified address.
 ##### Examples
 
 ```javascript
-
+const velocity = await web3data.token.getVelocity('0x06012c8cf97bead5deae237070f9587f8e7a266d');
 ```
 
 
 ##### Returns
 
 
--  
+- `Promise.<object>`  The historical velocity.
 
 
 
@@ -1664,7 +1664,7 @@ Retrieves the historical volume of token transfers for the specified address.
 
 
 
-#### getHoldersHistorical(hash, filterOptions)
+#### getHoldersHistorical(hash[, filterOptions])
 
 
 
@@ -1676,8 +1676,8 @@ Retrieves the historical volume of token transfers for the specified address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address for which to retrieve token holders. | &nbsp; |
-| filterOptions |  |  The filters associated with the request. | &nbsp; |
+| hash | `string`  |  The address for which to retrieve token holders. | &nbsp; |
+| filterOptions | `object`  |  The filters associated with the request. | *Optional* |
 
 
 

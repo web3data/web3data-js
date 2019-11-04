@@ -92,7 +92,7 @@ test('Rejects promise if no holder address supplied', async t => {
     }, { instanceOf: Error, message: NO_HOLDER_ADDRESS })
 });
 
-test([rejectsPromise], {method: 'getVelocity'}, NO_ADDRESS)
+
 test([rejectsPromise], {method: 'getSupplies'}, NO_ADDRESS)
 test([rejectsPromise], {method: 'getTransfers'}, NO_ADDRESS)
 
@@ -121,5 +121,21 @@ test('Successfully calls getVolume() - with filters', async t => {
     t.true(volume.hasProp('metadata'))
     t.true(volume.metadata.hasProp('columns'))
     t.is(volume.metadata.columns[1], 'volume')
+    t.true(isISOFormat(volume.metadata.startDate))
+})
+/*********** Test getVelocity() ***********/
+test([rejectsPromise], {method: 'getVelocity'}, NO_ADDRESS)
+test('Successfully calls getVelocity()', async t => {
+    const volume = await t.context.web3data.token.getVelocity(TOKEN_ADDRESS);
+    t.true(volume.hasProp('metadata'))
+    t.true(volume.metadata.hasProp('columns'))
+    t.is(volume.metadata.columns[1], 'velocity')
+})
+
+test('Successfully calls getVelocity() - with filters', async t => {
+    const volume = await t.context.web3data.token.getVelocity(TOKEN_ADDRESS, {timeFormat: 'iso'});
+    t.true(volume.hasProp('metadata'))
+    t.true(volume.metadata.hasProp('columns'))
+    t.is(volume.metadata.columns[1], 'velocity')
     t.true(isISOFormat(volume.metadata.startDate))
 })
