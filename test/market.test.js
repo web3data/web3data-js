@@ -1,7 +1,6 @@
 import test from 'ava'
 import {
-  ADDRESS,
-  TOKEN_ADDRESS
+  TOKEN_ADDRESS, DATES
 } from "./constants";
 import { setUpPolly, isISOFormat, getNewWeb3DataInstance } from "./utils";
 import { ERROR_MESSAGE_MARKET_NO_PAIR as NO_PAIR,  MARKET_FEATURES} from "../src/constants";
@@ -21,8 +20,7 @@ test.beforeEach(t => {
   t.context.web3data = getNewWeb3DataInstance()
 });
 
-const DATE_2019_10_14 = 1571011200
-const DATE_2019_10_15 = 1571097600
+
 
 /*********************************
  * ----------- Tests ----------- *
@@ -110,7 +108,7 @@ test('Successfully gets latest ohlcv - with filters', async t => {
 })
 
 test('Successfully gets historical ohlcv', async t => {
-  const ohlcv = await t.context.web3data.market.getOhlcv('eth_btc', {startDate: DATE_2019_10_14, endDate: DATE_2019_10_15})
+  const ohlcv = await t.context.web3data.market.getOhlcv('eth_btc', {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]})
   t.true(ohlcv.hasProp('metadata'))
   t.regex(Object.values(ohlcv.data)[0].toString(), /\d+\.?\d*/)
 })
@@ -168,7 +166,7 @@ test.skip('Successfully gets latest bos', async t => {
 })
 // TODO: Pending API bug fix
 test.skip('Successfully gets historical bbos', async t => {
-  const bbos = await t.context.web3data.market.getBbos('eth_btc', {startDate: DATE_2019_10_14, endDate: DATE_2019_10_15})
+  const bbos = await t.context.web3data.market.getBbos('eth_btc', {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]})
 
   // Check existence of historical data properties
   t.true(bbos.hasProp('metadata'))
@@ -204,7 +202,7 @@ test('Successfully gets latest market prices - with filters', async t => {
 })
 
 test('Successfully gets historical market prices', async t => {
-  const prices = await t.context.web3data.market.getPrices(BASE, {startDate: DATE_2019_10_14, endDate: DATE_2019_10_15})
+  const prices = await t.context.web3data.market.getPrices(BASE, {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]})
   t.true(prices.hasProp('eth_btc'))
   t.true(Array.isArray(prices.eth_btc))
   t.true(prices.values()[0][0].hasProp('price'))
@@ -227,7 +225,7 @@ test('Successfully gets current token price', async t => {
 })
 
 test('Successfully gets historical token price', async t => {
-  const tokenPrices = await t.context.web3data.market.getTokenPrices(TOKEN_ADDRESS, {startDate: DATE_2019_10_14, endDate: DATE_2019_10_15})
+  const tokenPrices = await t.context.web3data.market.getTokenPrices(TOKEN_ADDRESS, {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]})
   t.true(tokenPrices.hasProp('metadata'))
   t.true(tokenPrices.hasProp('data'))
   t.true(tokenPrices.metadata.columns.includes('priceUSD'))
@@ -277,7 +275,7 @@ test('Successfully gets latest market tickers - with filters', async t => {
 })
 
 test('Successfully gets historical market tickers', async t => {
-  const tickers = await t.context.web3data.market.getTickers('eth_btc', {startDate: DATE_2019_10_14, endDate: DATE_2019_10_15})
+  const tickers = await t.context.web3data.market.getTickers('eth_btc', {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]})
   t.true(tickers.hasProp('metadata'))
   t.true(tickers.hasProp('data'))
   t.true(tickers.metadata.columns.includes('bid'))

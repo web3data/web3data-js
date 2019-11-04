@@ -12,8 +12,9 @@ class Token {
   /**
    * Creates an instance of Token.
    *
-   * @param web3data - The web3data instance.
+   * @param {Web3Data} web3data - The web3data instance.
    * @example
+   * const token = new Token(new Web3data('API_KEY'))
    */
   constructor(web3data) {
     this.web3data = web3data
@@ -22,9 +23,10 @@ class Token {
   /**
    * Retrieves the top ranked tokens by a specific metric.
    *
-   * @param [filterOptions] - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-rankings) for more details.
-   * @returns The token rankings.
-   * @example const rankings = await web3data.token.getRankings()
+   * @param {object} [filterOptions] - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-rankings) for more details.
+   * @returns {Promise<object>} The token rankings.
+   * @example
+   * const rankings = await web3data.token.getRankings()
    */
   getRankings(filterOptions = {}) {
     return get(this.web3data, {
@@ -37,8 +39,8 @@ class Token {
   /**
    * Retrieves the historical volume of token transfers for the specified address.
    *
-   * @param hash - The address of the token contract.
-   * @param [filterOptions] - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-volume) for more details.
+   * @param {string} hash - The address of the token contract.
+   * @param {object} [filterOptions]  - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-volume) for more details.
    * @returns {Promise<object>} The historical volume of token transfers.
    * const tokenVolume = await web3data.token.getVolume('0x06012c8cf97bead5deae237070f9587f8e7a266d').
    * @example
@@ -55,12 +57,11 @@ class Token {
 
   /**
    * Retrieves the historical velocity for the specified address.
+   *
    * @param {string} hash - The address of the token contract.
    * @param {object} [filterOptions] - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-velocity) for more details.
    * @returns {Promise<object>} The historical velocity.
-   * @example
-   * const velocity = await web3data.token.getVelocity('0x06012c8cf97bead5deae237070f9587f8e7a266d');
-   *
+   * @example const velocity = await web3data.token.getVelocity('0x06012c8cf97bead5deae237070f9587f8e7a266d');
    */
   getVelocity(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
@@ -73,9 +74,9 @@ class Token {
   }
 
   /**
-   * @param hash - The address for which to retrieve token holders.
-   * @param [filterOptions] - The filters associated with the request.
-   * @returns
+   * @param {string} hash - The address for which to retrieve token holders.
+   * @param {object} [filterOptions] - The filters associated with the request.
+   * @returns {Promise<object>}
    * @example
    */
   getHolders(hash, filterOptions = {}) {
@@ -89,10 +90,9 @@ class Token {
   }
 
   /**
-   *
    * @param {string} hash - The address for which to retrieve token holders.
    * @param {object} [filterOptions] - The filters associated with the request.
-   * @returns
+   * @returns {Promise<object>}
    * @example
    */
   getHoldersHistorical(hash, filterOptions = {}) {
@@ -108,29 +108,41 @@ class Token {
   }
 
   /**
-   * @param hash - The address for which to retrieve token supplies.
-   * @param [filterOptions] - The filters associated with the request.
-   * @returns
+   * Retrieves the latest or historical token supplies (and derivatives) for the specified address. Use the `startDate` or `endDate` filters to get historical data.
+   *
+   * @param {string} hash - The address for which to retrieve token supplies.
+   * @param {object} [filterOptions] - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-supply-latest) for more details.
+   * @param {number} [filterOptions.startDate] - Filter by token prices after this date - The interval can not exceed 6 months (d), or 30 days (h).
+   * @param {number} [filterOptions.endDate] - Filter by token prices before this date - The interval can not exceed 6 months (d), or 30 days (h).
+   * @returns {Promise<object>} The latest or historical token supplies.
    * @example
+   * // Latest
+   * const latestSupplies = await web3data.token.getSupplies('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+   * // Historical
+   * const historicalSupplies = await t.context.web3data.token.getSupplies('0x06012c8cf97bead5deae237070f9587f8e7a266d', {startDate: 1571011200, endDate: 1571097600, timeFormat: 'iso'})
    */
   getSupplies(hash, filterOptions = {}) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    throwIf(is.notHash(hash), NO_ADDRESS)
+    const subendpoint =
+      filterOptions.startDate || filterOptions.endDate
+        ? 'supplies/historical'
+        : 'supplies/latest'
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,
-      subendpoint: 'supplies/latest',
+      subendpoint,
       filterOptions
     }).then(onFulfilled, onError)
   }
 
   /**
-   * @param hash - The address for which to retrieve token holders.
-   * @param [filterOptions] - The filters associated with the request.
-   * @returns
+   * @param {string} hash - The address for which to retrieve token holders.
+   * @param {object} [filterOptions] - The filters associated with the request.
+   * @returns {Promise<object>}
    * @example
    */
   getTransfers(hash, filterOptions = {}) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
+    throwIf(is.notHash(hash), NO_ADDRESS)
     return get(this.web3data, {
       hash,
       endpoint: ENDPOINT,

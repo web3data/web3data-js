@@ -26,4 +26,11 @@ export const MOCK_EXEC_DATA = [{
     "data":"0xd46e8dd67c5d32be8d46e8dd67c5d32be8058bb8eb970870f072445675058bb8eb970870f072445675"
 }]
 
+export const DATE_2019_10_14 = 1571011200
+export const DATE_2019_10_15 = 1571097600
+export const DATES = {
+    "2019-10-14": 1571011200,
+    "2019-10-15": 1571097600
+}
+
 

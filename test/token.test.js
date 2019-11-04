@@ -1,5 +1,5 @@
 import test from "ava"
-import { TOKEN_ADDRESS, ADDRESS } from './constants'
+import { TOKEN_ADDRESS, ADDRESS, DATES } from './constants'
 import { ERROR_MESSAGE_TOKEN_NO_ADDRESS as NO_ADDRESS } from '../src/constants'
 import { ERROR_MESSAGE_TOKEN_NO_HOLDER_ADDRESS as NO_HOLDER_ADDRESS } from '../src/constants'
 import { setUpPolly, getNewWeb3DataInstance, isISOFormat } from "./utils";
@@ -93,7 +93,7 @@ test('Rejects promise if no holder address supplied', async t => {
 });
 
 
-test([rejectsPromise], {method: 'getSupplies'}, NO_ADDRESS)
+
 test([rejectsPromise], {method: 'getTransfers'}, NO_ADDRESS)
 
 /*********** Test getRankings() ***********/
@@ -123,6 +123,7 @@ test('Successfully calls getVolume() - with filters', async t => {
     t.is(volume.metadata.columns[1], 'volume')
     t.true(isISOFormat(volume.metadata.startDate))
 })
+
 /*********** Test getVelocity() ***********/
 test([rejectsPromise], {method: 'getVelocity'}, NO_ADDRESS)
 test('Successfully calls getVelocity()', async t => {
@@ -138,4 +139,24 @@ test('Successfully calls getVelocity() - with filters', async t => {
     t.true(volume.metadata.hasProp('columns'))
     t.is(volume.metadata.columns[1], 'velocity')
     t.true(isISOFormat(volume.metadata.startDate))
+})
+
+/*********** Test getSupplies() ***********/
+test([rejectsPromise], {method: 'getSupplies'}, NO_ADDRESS)
+test('Successfully calls getSupplies() - latest', async t => {
+    const supplies = await t.context.web3data.token.getSupplies(TOKEN_ADDRESS);
+    t.true(supplies.hasProp('totalSupply'))
+})
+test('Successfully calls getSupplies() - historical', async t => {
+    const supplies = await t.context.web3data.token.getSupplies(TOKEN_ADDRESS, {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]});
+    t.true(supplies.hasProp('metadata'))
+    t.true(supplies.metadata.hasProp('columns'))
+    t.is(supplies.metadata.columns[3], 'totalSupply')
+})
+test('Successfully calls getSupplies() - historical with filters', async t => {
+    const supplies = await t.context.web3data.token.getSupplies(TOKEN_ADDRESS, {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"], timeFormat: 'iso'});
+    t.true(supplies.hasProp('metadata'))
+    t.true(supplies.metadata.hasProp('columns'))
+    t.is(supplies.metadata.columns[3], 'totalSupply')
+    t.true(isISOFormat(supplies.metadata.startDate))
 })
