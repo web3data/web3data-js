@@ -68,7 +68,7 @@ class Address {
    * @param {object} [filterOptions] - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#get-account-information) for more details.
    * @returns {Promise<object>} The information about the specified address.
    * @example
-   * const info = await web3data.address.getInfo('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+   * const info = await web3data.address.getInformation('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getInformation(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)

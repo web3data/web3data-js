@@ -44,12 +44,12 @@ test('throws exception when calling getFunctions without hash', async t => {
 
 /*********** Test getSecurityAudit() ***********/
 test('Successfully calls getSecurityAudit', async t => {
-    const audit = await t.context.web3data.contract.getAudit(TOKEN_ADDRESS);
+    const audit = await t.context.web3data.contract.getSecurityAudit(TOKEN_ADDRESS);
     t.true(audit.hasProp('issues'))
 });
 test('throws exception when calling getAudit without hash', async t => {
     await t.throwsAsync(async () => {
-        await t.context.web3data.contract.getAudit()
+        await t.context.web3data.contract.getSecurityAudit()
     }, { instanceOf: Error, message: 'No contract address supplied' });
 });
 
