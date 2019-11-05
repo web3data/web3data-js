@@ -2,7 +2,7 @@ import test from "ava"
 import {ERROR_MESSAGE_SIGNATURE_NO_HASH as NO_HASH} from "../src/constants";
 import {setUpPolly, getNewWeb3DataInstance} from "./utils";
 
-/**********************************gs
+/**********************************
  * -------- Tests Setup ---------- *
  **********************************/
 test.before(t => {
