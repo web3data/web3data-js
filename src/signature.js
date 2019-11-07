@@ -11,18 +11,29 @@ class Signature {
   /**
    * Creates an instance of Signature.
    *
-   * @param web3data - The web3data instance.
-   * @example
+   * @param {object} web3data - The web3data instance.
+   * @example new Signature(new Web3Data('API_KEY'))
    */
   constructor(web3data) {
     this.web3data = web3data
   }
 
   /**
+   * Alias for getSignature.
+   *
+   * @param {string} hash - The (keccak 256) of the signature.
+   * @returns {Promise<Array>} Information pertaining to the specified signature hash.
+   * @example const signatureDetails = await web3data.signature.getAudit('0xe2f0a05a')
+   */
+  getAudit(hash) {
+    return this.getSignature(hash)
+  }
+
+  /**
    * Retrieves detailed information about the specified signature hash.
    *
    * @param {string} hash - The (keccak 256) of the signature.
-   * @returns {Promise<array>} Information pertaining to the specified signature hash.
+   * @returns {Promise<Array>} Information pertaining to the specified signature hash.
    * @example const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
    */
   getSignature(hash) {

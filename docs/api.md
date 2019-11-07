@@ -1425,7 +1425,7 @@ Creates an instance of Signature.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| web3data |  |  The web3data instance. | &nbsp; |
+| web3data | `object`  |  The web3data instance. | &nbsp; |
 
 
 
@@ -1433,7 +1433,7 @@ Creates an instance of Signature.
 ##### Examples
 
 ```javascript
-
+new Signature(new Web3Data('API_KEY'))
 ```
 
 
@@ -1441,6 +1441,39 @@ Creates an instance of Signature.
 
 
 - `Void`
+
+
+
+
+
+#### getAudit(hash)
+
+
+Alias for getSignature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  |  The (keccak 256) of the signature. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getAudit('0xe2f0a05a')
+```
+
+
+##### Returns
+
+
+- `Promise.<Array>`  Information pertaining to the specified signature hash.
 
 
 
@@ -1473,7 +1506,7 @@ const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
 ##### Returns
 
 
-- `Promise.<array>`  Information pertaining to the specified signature hash.
+- `Promise.<Array>`  Information pertaining to the specified signature hash.
 
 
 
