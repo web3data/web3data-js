@@ -214,110 +214,27 @@ Returns null if no address is found.
    *
    * @param {string} hash - The address of the account.
    * @param {object} [filterOptions] - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#get-current-account-balance) for more details.
+   * @param {object} [filterOptions.includeTokens=false] - Return the token balances that the address is holding.
    * @returns {Promise<object>} The balance data of the account or if no address is found.
    * @example
    * const balance = await web3data.address.getBalance('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getBalance(hash, filterOptions = {}) {
     throwIf(is.notHash(hash), NO_ADDRESS)
-    return filterOptions.startDate || filterOptions.endDate
-      ? this.web3data.address
-          .getHistoricalBalance(hash, filterOptions)
-          .then(data => data)
-      : this.web3data.address
-          .getLatestBalance(hash, filterOptions)
-          .then(data => data)
-  }
+    let subendpoint = 'information'
 
-  /**
-   * Retrieves the latest balance data of the given address. Returns null if no address is found.
-   *
-   * @param {string} hash - The address of the account.
-   * @param {object} [filterOptions] - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#get-current-account-balance) for more details.
-   * @returns {Promise<object>} The balance data of the account or if no address is found.
-   * @example
-   * const latestBalance = await web3data.address.getLatestBalance('0x06012c8cf97bead5deae237070f9587f8e7a266d')
-   */
-  getLatestBalance(hash, filterOptions = {}) {
-    throwIf(is.notHash(hash), NO_ADDRESS)
+    if (Array.isArray(hash)) {
+      subendpoint = 'balances'
+      filterOptions.addresses = hash
+    } else if (filterOptions.includeTokens) subendpoint = 'balances'
+    else if (filterOptions.startDate || filterOptions.endDate)
+      subendpoint = 'account-balances/historical'
+
     return get(this.web3data, {
-      hash,
+      // Include 'hash' only if filterOptions.addresses not defined
+      ...(filterOptions.addresses ? {} : {hash}),
       endpoint: ENDPOINT,
-      subendpoint: 'account-balances/latest',
-      filterOptions
-    }).then(onFulfilled, onError)
-  }
-
-  /**
-   * Retrieves the historical balance data of the given address. Returns null if no address is found.
-   *
-   * @param {string} hash - The address of the account.
-   * @param {object} [filterOptions] - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#get-historical-account-balance) for more details.
-   * @returns {Promise<object>} The historical balance data of the account or if no address is found.
-   * @example
-   * const historicalBalance = await web3data.address.getHistoricalBalance('0x06012c8cf97bead5deae237070f9587f8e7a266d')
-   */
-  getHistoricalBalance(hash, filterOptions = {}) {
-    throwIf(is.notHash(hash), NO_ADDRESS)
-    return get(this.web3data, {
-      hash,
-      endpoint: ENDPOINT,
-      subendpoint: 'account-balances/historical',
-      filterOptions
-    }).then(onFulfilled, onError)
-  }
-
-  /**
-   * Retrieves the latest account and token balances for the specified address(es).
-   *
-   * @param {Array} hashes - The array or string containing the address(es) of the account.
-   * @param {object} [filterOptions] - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#account-balances) for more details.
-   * @returns {Promise<object>} The balance data of the account(s).
-   * @example
-   * const balances = await web3data.address.getMultipleBalances(['0x06012c8cf97bead5deae237070f9587f8e7a266d', '0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be'])
-   */
-  getMultipleBalances(hashes, filterOptions = {}) {
-    return Array.isArray(hashes)
-      ? this.web3data.address.getBalancesBatch(hashes, filterOptions)
-      : this.web3data.address.getBalances(hashes, filterOptions)
-  }
-
-  /**
-   * Retrieves the latest account and token balances for the specified address.
-   *
-   * @param {string} hash - The address of the account.
-   * @param {object} [filterOptions] - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#account-balances) for more details.
-   * @returns {Promise<object>} The balance data of the account.
-   * @example
-   * const balances = await web3data.address.getBalances('0x06012c8cf97bead5deae237070f9587f8e7a266d')
-   */
-  getBalances(hash, filterOptions = {}) {
-    throwIf(is.notHash(hash), NO_ADDRESS)
-    return get(this.web3data, {
-      hash,
-      endpoint: ENDPOINT,
-      subendpoint: 'balances',
-      filterOptions
-    }).then(onFulfilled, onError)
-  }
-
-  /**
-   * Retrieves the latest account and token balances for the specified addresses.
-   *
-   * @param {string} hashes - The array containing the address(es) of the account.
-   * @param {object} [filterOptions] - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#account-balances-batch) for more details.
-   * @returns {Promise<object>} The balance data of the account(s).
-   * @example const balanceBatch = await web3data.addresses.getBalancesBatch(['0x3f5ce5fbfe3e9af3971dd833d26ba9b5c936f0be', '0x06012c8cf97bead5deae237070f9587f8e7a266d'], {
-   * includePrice: true
-   * })
-   */
-  getBalancesBatch(hashes, filterOptions = {}) {
-    throwIf(!Array.isArray(hashes), 'Must be array of valid address hashes')
-    hashes.forEach(hash => throwIf(is.notHash(hash), NO_ADDRESS))
-    filterOptions.addresses = hashes
-    return get(this.web3data, {
-      endpoint: ENDPOINT,
-      subendpoint: 'balances',
+      subendpoint,
       filterOptions
     }).then(onFulfilled, onError)
   }

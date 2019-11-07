@@ -125,8 +125,9 @@ test('Web3data.eth successfully calls getEtherPrice returns valid response', asy
 
 test('Web3data.eth successfully calls getBalance returns valid response', async t => {
     let balance = await t.context.web3data.eth.getBalance(ADDRESS);
+    t.true(balance.hasProp('balanceIn'))
     /* Regex matches a string that is numerical */
-    t.regex(balance.toString(), /[0-9]/g)
+    t.regex(balance.balance.toString(), /[0-9]/g)
 })
 
 /**********************************

@@ -60,7 +60,8 @@ module.exports.ETH_METHODS = {
   getTransactions: 'block',
   getTransaction: 'transaction',
   getPendingTransactions: 'transaction',
-  getEtherPrice: 'market'
+  getEtherPrice: 'market',
+  getBalance: 'address'
 }
 
 module.exports.BTC_METHODS = {
@@ -71,10 +72,6 @@ module.exports.BTC_METHODS = {
     'getTransactions',
     'getPendingTransactions',
     'getBalance',
-    'getLatestBalance',
-    'getHistoricalBalance',
-    'getMultipleBalances',
-    'getBalancesBatch',
     'getMetrics'
   ],
   block: [
@@ -96,10 +93,6 @@ module.exports.LTC_METHODS = {
     'getTransactions',
     'getPendingTransactions',
     'getBalance',
-    'getLatestBalance',
-    'getHistoricalBalance',
-    'getMultipleBalances',
-    'getBalancesBatch',
     'getMetrics'
   ],
   block: [

@@ -1,4 +1,4 @@
-const {throwIf, ethFactory} = require('./utils')
+const {ethFactory} = require('./utils')
 const {BLOCKCHAIN_ID_ETHEREUM_MAINNET: BLOCKCHAIN_ID} = require('./constants')
 
 /**
@@ -20,25 +20,6 @@ class Eth {
         this[method] = methods[method]
       }
     }
-  }
-
-  /**
-   * Returns the balance of the account in wei or null if the account doesn't
-exist.
-   *
-   * @param hash - The address of the account.
-   * @returns Promise<object> - The balance or null if it doesn't exist.
-   * @example
-   */
-  async getBalance(hash) {
-    let balance
-    try {
-      balance = await this.web3data.address.getBalance(hash)
-    } catch (error) {
-      throwIf(true, error.message)
-    }
-
-    return balance && balance.value ? balance.value : null
   }
 
   /* See Web3Data class for details on rpc method */

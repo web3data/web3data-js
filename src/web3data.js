@@ -24,6 +24,7 @@ const WebSocketClient = require('./websocket')
 
 /**
  * Contains common methods used in.
+ *
  * @private
  */
 class Web3DataFactory {

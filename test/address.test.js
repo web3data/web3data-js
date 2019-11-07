@@ -1,5 +1,5 @@
 import test, {only} from "ava"
-import {ADDRESS } from './constants'
+import { ADDRESS, DATES } from "./constants";
 import {ERROR_MESSAGE_ADDRESS_NO_ADDRESS as NO_ADDRESS} from "../src/constants";
 import {
     setUpPolly,
@@ -274,96 +274,6 @@ test('throws exception when calling getUsage without hash', async t => {
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
 
-/*********** Test getBalances() ***********/
-test('throws exception when calling getBalances without hash', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getBalances()
-    }, { instanceOf: Error, message: NO_ADDRESS })
-})
-
-test('Successfully gets address balances - no filters', async t => {
-    const balances = await t.context.web3data.address.getBalances(ADDRESS)
-    t.true(balances.hasProp('balance'))
-    /* Test that balance is numerical */
-    t.regex(balances.balance, /[0-9]/)
-})
-
-test('Successfully gets address balances - with filters', async t => {
-    const balances = await t.context.web3data.address.getBalances(ADDRESS, {includePrice: true})
-    t.true(balances.hasProp('balance'))
-    t.true(balances.hasProp('price'))
-})
-
-/*********** Test getBalancesBatch() ***********/
-test('throws exception when calling getBalancesBatch without array of hashes', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getBalancesBatch()
-    }, { instanceOf: Error, message: 'Must be array of valid address hashes' })
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getBalancesBatch(ADDRESS)
-    }, { instanceOf: Error, message: 'Must be array of valid address hashes' })
-})
-
-test('throws exception when calling getBalancesBatch with array of empty string', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getBalancesBatch([''])
-    }, { instanceOf: Error, message: NO_ADDRESS})
-})
-
-test('Successfully gets address batch balances - no filters', async t => {
-    const balances = await t.context.web3data.address.getBalancesBatch([ADDRESS, '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'])
-
-    t.true(balances.hasProp(ADDRESS))
-
-    /* Test that balance is numerical */
-    t.regex(balances[ADDRESS].balance, /[0-9]/)
-})
-
-test('Successfully gets address batch balances - with filters', async t => {
-    const balances = await t.context.web3data.address.getBalancesBatch(
-        [ADDRESS, '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'],
-        {includePrice: true})
-    t.true(balances.hasProp(ADDRESS))
-    t.true(balances[ADDRESS].hasProp('price'))
-})
-
-/*********** Test getMultipleBalances() ***********/
-test('throws exception when calling getBalancesBatch without hash or array of hashes', async t => {
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getMultipleBalances()
-    }, { instanceOf: Error, message: NO_ADDRESS })
-    await t.throwsAsync(async () => {
-        await t.context.web3data.address.getMultipleBalances([''])
-    }, { instanceOf: Error, message: NO_ADDRESS })
-})
-
-test('Successfully gets single address multiple balances  - no filters', async t => {
-    const balances = await t.context.web3data.address.getMultipleBalances(ADDRESS)
-    t.true(balances.hasProp('balance'))
-    /* Test that balance is numerical */
-    t.regex(balances.balance, /[0-9]/)
-})
-
-test('Successfully get multiple address balances  - no filters', async t => {
-    const balances = await t.context.web3data.address.getMultipleBalances([ADDRESS, '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'])
-    t.true(balances.hasProp(ADDRESS))
-
-    /* Test that balance is numerical */
-    t.regex(balances[ADDRESS].balance, /[0-9]/)
-})
-
-test('Successfully gets single address multiple balances  - with filters', async t => {
-    const balances = await t.context.web3data.address.getMultipleBalances(ADDRESS, {includePrice: true})
-    t.true(balances.hasProp('balance'))
-    t.true(balances.hasProp('price'))
-})
-
-test('Successfully get multiple address balances  - with filters', async t => {
-    const balances = await t.context.web3data.address.getMultipleBalances([ADDRESS, '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'], {includePrice: true})
-      t.true(balances.hasProp(ADDRESS))
-      t.true(balances[ADDRESS].hasProp('price'))
-})
-
 /*********** Test getBalance() ***********/
 test('throws exception when calling getBalance without hash', async t => {
     await t.throwsAsync(async () => {
@@ -371,34 +281,61 @@ test('throws exception when calling getBalance without hash', async t => {
     }, { instanceOf: Error, message: NO_ADDRESS })
 })
 
-test('Successfully gets address balance (no filters)', async t => {
+test('Successfully gets latest address balance (no filters)', async t => {
     const balance = await t.context.web3data.address.getBalance(ADDRESS)
+    t.true(balance.hasProp('balanceIn'))
     /* Test that balance is numerical */
-    t.regex(balance.value, /[0-9]/)
+    t.regex(balance.balanceIn, /[0-9]/)
 })
 
-
-test('Successfully gets address balance and include\'s pricing and correct currency', async t => {
+test('Successfully gets latest address balance (with filters)', async t => {
     const balance = await t.context.web3data.address.getBalance(ADDRESS, {includePrice: true, currency: 'btc'})
-    /* Test that balance is numerical */
-    t.regex(balance.value, /[0-9]/)
-    /* Test that price exists */
     t.true(balance.hasProp('price'))
-    /* Test that price is correct currency */
-    t.is(balance.price.value.currency, 'btc')
+    /* Test that balance is numerical */
+    t.is(balance.price.balance.currency, 'btc')
 })
 
-test('Successfully gets historical address balance', async t => {
-    const balance = await t.context.web3data.address.getBalance(ADDRESS, {startDate: 1526184430, endDate: 1556184430})
+test('Successfully gets historical address balance (no filters)', async t => {
+    const histBalance = await t.context.web3data.address.getBalance(ADDRESS, {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]})
+    t.true(histBalance.hasProp('data'))
+    t.true(Array.isArray(histBalance.data))
+})
 
-    /* Note: The data property only present in historical balance */
-    t.true(balance.hasProp('data'))
-    t.true(Array.isArray(balance.data))
+test('Successfully gets historical address balance (with filters)', async t => {
+    const histBalance = await t.context.web3data.address.getBalance(ADDRESS, {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"], includePrice: true})
+    t.true(histBalance.hasProp('data'))
+    t.true(Array.isArray(histBalance.data))
+    t.true(histBalance.metadata.columns.includes('price'))
+})
+
+test('Successfully gets latest address balance + token balances', async t => {
+    const balance = await t.context.web3data.address.getBalance(ADDRESS, {includeTokens: true})
+    t.true(balance.hasProp('tokens'))
+    /* Test that balance is numerical */
+    t.regex(balance.balanceIn, /[0-9]/)
+})
+
+test('Successfully gets latest address balance + token balances for multiple addresses', async t => {
+    const balances = await t.context.web3data.address.getBalance([ADDRESS, '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'])
+    t.true(balances.hasProp(ADDRESS))
+    t.true(balances[ADDRESS].hasProp('tokens'))
+    /* Test that balance is numerical */
+    t.regex(balances[ADDRESS].balance, /[0-9]/)
+})
+
+test('Successfully gets latest address balance + token balances + pricing data for multiple addresses ', async t => {
+    const balances = await t.context.web3data.address.getBalance([ADDRESS, '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'], {includeTokens: true, includePrice: true})
+    t.true(balances.hasProp(ADDRESS))
+    t.true(balances[ADDRESS].hasProp('price'))
+    t.true(balances[ADDRESS].hasProp('tokens'))
+
+    /* Test that balance is numerical */
+    t.regex(balances[ADDRESS].balance, /[0-9]/)
 })
 
 test('Successfully gets historical address balance + paginates properly', async t => {
     const SIZE = 5
-    const balance = await t.context.web3data.address.getBalance(ADDRESS, {startDate: 1506184430, page: 0, size: SIZE})
+    const balance = await t.context.web3data.address.getBalance(ADDRESS, {startDate: DATES["2019-10-14"], page: 0, size: SIZE})
     t.is(balance.data.length, SIZE)
 })
 
