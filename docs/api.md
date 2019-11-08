@@ -706,7 +706,7 @@ Retrieves the blocks specified by its id (number or hash).
 #### Class: Contract
 
 
-Contains methods pertaining to the `/contract` endpoint of Amberdata's API.
+Contains methods pertaining to the `/contracts` endpoint of Amberdata's API.
 
 
 
@@ -782,6 +782,72 @@ const details = await web3data.contract.getDetails('0x06012c8cf97bead5deae237070
 
 
 
+#### getFunctions(hash)
+
+
+Retrieves the functions of the specified contract (if available). If not available on chain, the byte code is decompiled and a list of functions is extracted from it.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The contract address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const functions = await web3data.contract.getFunctions('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+-  The functions or decompiled functions of the specified contract.
+
+
+
+
+
+#### getSecurityAudit(hash)
+
+
+Retrieves the vulnerabilities audit for the specified contract (if available).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The contract address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const audit = await web3data.contract.getAudit('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+-  The vulnerabilities audit for the specified contract.
+
+
+
+
+
 #### getAbi(hash)
 
 
@@ -843,6 +909,39 @@ const source = await web3data.contract.getSourceCode('0x06012c8cf97bead5deae2370
 
 
 -  The source of the contract.
+
+
+
+
+
+#### getCode(hash)
+
+
+Returns the contract's bytecode.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  |  The contract address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+-  The contract's bytecode.
 
 
 
@@ -1292,6 +1391,122 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 -  The address(es) of the asset(s).
+
+
+
+
+
+### src/signature.js
+
+
+
+#### Class: Signature
+
+
+Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
+
+
+
+
+
+
+
+
+
+#### constructor(web3data)
+
+
+Creates an instance of Signature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data | `object`  |  The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+new Signature(new Web3Data('API_KEY'))
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### getAudit(hash)
+
+
+Alias for getSignature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  |  The (keccak 256) of the signature. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getAudit('0xe2f0a05a')
+```
+
+
+##### Returns
+
+
+- `Promise.<Array>`  Information pertaining to the specified signature hash.
+
+
+
+
+
+#### getSignature(hash)
+
+
+Retrieves detailed information about the specified signature hash.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  |  The (keccak 256) of the signature. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
+```
+
+
+##### Returns
+
+
+- `Promise.<Array>`  Information pertaining to the specified signature hash.
 
 
 
