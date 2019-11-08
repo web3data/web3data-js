@@ -115,6 +115,8 @@ http request to the Amberdata API endpoint.
 /**
  * Class Web3data contains methods for hitting Amberdata's
  * API endpoints.
+ *
+ * @class Web3Data
  * */
 class Web3Data extends Web3DataFactory {
   constructor(apiKey, options = {}) {
