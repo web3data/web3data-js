@@ -19,17 +19,6 @@ class Signature {
   }
 
   /**
-   * Alias for getSignature.
-   *
-   * @param {string} hash - The (keccak 256) of the signature.
-   * @returns {Promise<Array>} Information pertaining to the specified signature hash.
-   * @example const signatureDetails = await web3data.signature.getAudit('0xe2f0a05a')
-   */
-  getAudit(hash) {
-    return this.getSignature(hash)
-  }
-
-  /**
    * Retrieves detailed information about the specified signature hash.
    *
    * @param {string} hash - The (keccak 256) of the signature.

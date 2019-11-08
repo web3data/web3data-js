@@ -32,9 +32,3 @@ test('Successfully calls getSignature', async t => {
     const [signature] = await t.context.web3data.signature.getSignature('0x3d7d3f5a')
     t.true(signature.hasProp('textSignature'))
 })
-
-test([rejectsPromise], 'getAudit', NO_HASH)
-test('Successfully calls getAudit', async t => {
-    const [signature] = await t.context.web3data.signature.getSignature('0x3d7d3f5a')
-    t.true(signature.hasProp('textSignature'))
-})

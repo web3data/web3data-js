@@ -47,9 +47,20 @@ test('Successfully calls getSecurityAudit', async t => {
     const audit = await t.context.web3data.contract.getSecurityAudit(TOKEN_ADDRESS);
     t.true(audit.hasProp('issues'))
 });
-test('throws exception when calling getAudit without hash', async t => {
+test('throws exception when calling getSecurityAudit without hash', async t => {
     await t.throwsAsync(async () => {
         await t.context.web3data.contract.getSecurityAudit()
+    }, { instanceOf: Error, message: 'No contract address supplied' });
+});
+
+/*********** Test getAudit() ***********/
+test('Successfully calls getAudit', async t => {
+    const audit = await t.context.web3data.contract.getAudit(TOKEN_ADDRESS);
+    t.true(audit.hasProp('issues'))
+});
+test('throws exception when calling getAudit without hash', async t => {
+    await t.throwsAsync(async () => {
+        await t.context.web3data.contract.getAudit()
     }, { instanceOf: Error, message: 'No contract address supplied' });
 });
 
