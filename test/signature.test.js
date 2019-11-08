@@ -2,7 +2,7 @@ import test from "ava"
 import {ERROR_MESSAGE_SIGNATURE_NO_HASH as NO_HASH} from "../src/constants";
 import {setUpPolly, getNewWeb3DataInstance} from "./utils";
 
-/**********************************gs
+/**********************************
  * -------- Tests Setup ---------- *
  **********************************/
 test.before(t => {
@@ -18,32 +18,23 @@ test.beforeEach(t => {
 })
 
 /**
- * Test that method is called and returns successfully, i.e. a status of 200
- * @param t the test object
- * @param method
- * @param params
- * @return {Promise<void>}
- */
-let statusSuccess = async (t, { method, params = {} }) => {
-    const [signatureDetails] = await t.context.web3data.signature[method]('0xe2f0a05a')
-    t.true(signatureDetails.hasProp('textSignature'))
-}
-statusSuccess.title = (providedTitle = '', input) =>  `Successfully calls ${input.method} and returns status of 200`
-
-/**
  * Test that method rejects the promise the proper params are not provided
- * @param t the test object
- * @param endpoint
- * @param method
- * @param params
- * @param errorMessage
  */
-let rejectsPromise = async (t, { method, params = {} }, errorMessage) => {
-
+const rejectsPromise = async (t, method, errorMessage) => {
     await t.throwsAsync(async () => {
         await t.context.web3data.signature[method]()
     }, { instanceOf: Error, message: errorMessage })
 }
 rejectsPromise.title = (providedTitle = '', input) => `throws exception when calling ${input} without hash`
 
-test([statusSuccess, rejectsPromise], {method: 'getSignature'}, NO_HASH)
+test(rejectsPromise, 'getSignature', NO_HASH)
+test('Successfully calls getSignature', async t => {
+    const [signature] = await t.context.web3data.signature.getSignature('0x3d7d3f5a')
+    t.true(signature.hasProp('textSignature'))
+})
+
+test([rejectsPromise], 'getAudit', NO_HASH)
+test('Successfully calls getAudit', async t => {
+    const [signature] = await t.context.web3data.signature.getSignature('0x3d7d3f5a')
+    t.true(signature.hasProp('textSignature'))
+})
