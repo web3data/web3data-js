@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.5.18*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.6.18*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
@@ -695,7 +695,7 @@ Retrieves all the detailed information for the specified contract (ABI, bytecode
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The address. | &nbsp; |
+| hash | `string`  |  The address. | &nbsp; |
 
 
 
@@ -710,7 +710,7 @@ const details = await web3data.contract.getDetails('0x06012c8cf97bead5deae237070
 ##### Returns
 
 
--  The detailed information for the specified contract.
+- `Promise.<object>`  The detailed information for the specified contract.
 
 
 
@@ -728,7 +728,7 @@ Retrieves the functions of the specified contract (if available). If not availab
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The contract address. | &nbsp; |
+| hash | `string`  |  The contract address. | &nbsp; |
 
 
 
@@ -743,7 +743,40 @@ const functions = await web3data.contract.getFunctions('0x06012c8cf97bead5deae23
 ##### Returns
 
 
--  The functions or decompiled functions of the specified contract.
+- `Promise.<object>`  The functions or decompiled functions of the specified contract.
+
+
+
+
+
+#### getAudit(hash)
+
+
+Alias for getSecurityAudit.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  |  The contract address. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getAudit('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+```
+
+
+##### Returns
+
+
+- `Promise.<object>`  The vulnerabilities audit for the specified contract.
 
 
 
@@ -761,7 +794,7 @@ Retrieves the vulnerabilities audit for the specified contract (if available).
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The contract address. | &nbsp; |
+| hash | `string`  |  The contract address. | &nbsp; |
 
 
 
@@ -769,14 +802,14 @@ Retrieves the vulnerabilities audit for the specified contract (if available).
 ##### Examples
 
 ```javascript
-const audit = await web3data.contract.getAudit('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+const audit = await web3data.contract.getSecurityAudit('0x06012c8cf97bead5deae237070f9587f8e7a266d')
 ```
 
 
 ##### Returns
 
 
--  The vulnerabilities audit for the specified contract.
+- `Promise.<object>`  The vulnerabilities audit for the specified contract.
 
 
 
@@ -794,7 +827,7 @@ Retrieves the contract's abi.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The contract address. | &nbsp; |
+| hash | `string`  |  The contract address. | &nbsp; |
 
 
 
@@ -809,7 +842,7 @@ const abi = await web3data.contract.getAbi('0x06012c8cf97bead5deae237070f9587f8e
 ##### Returns
 
 
--  The abi of the contract.
+- `Promise.<object>`  The abi of the contract.
 
 
 
@@ -827,7 +860,7 @@ Retrieves the contract's source code.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The contract address. | &nbsp; |
+| hash | `string`  |  The contract address. | &nbsp; |
 
 
 
@@ -842,7 +875,7 @@ const source = await web3data.contract.getSourceCode('0x06012c8cf97bead5deae2370
 ##### Returns
 
 
--  The source of the contract.
+- `Promise.<object>`  The source of the contract.
 
 
 
@@ -860,7 +893,7 @@ Returns the contract's bytecode.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash |  |  The contract address. | &nbsp; |
+| hash | `string`  |  The contract address. | &nbsp; |
 
 
 
@@ -875,7 +908,7 @@ const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f
 ##### Returns
 
 
--  The contract's bytecode.
+- `Promise.<object>`  The contract's bytecode.
 
 
 
@@ -1375,39 +1408,6 @@ new Signature(new Web3Data('API_KEY'))
 
 
 - `Void`
-
-
-
-
-
-#### getAudit(hash)
-
-
-Alias for getSignature.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  |  The (keccak 256) of the signature. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const signatureDetails = await web3data.signature.getAudit('0xe2f0a05a')
-```
-
-
-##### Returns
-
-
-- `Promise.<Array>`  Information pertaining to the specified signature hash.
 
 
 
