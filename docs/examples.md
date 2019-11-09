@@ -4,9 +4,26 @@
 
 Here's a few examples showing how to get basic bits of blockchain & market data with Web3data.
 
+### Address balances
+
 <pre class="runkit-element">
 const Web3Data = require('web3data-js');
 const w3d = new Web3Data('YOUR_API_KEY');
+
+// Get the balance of a single address
+const balance = w3d.address.getBalance('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+
+// Get the balance of a single address including the value in USD
+const balanceAndPrice = w3d.address.getBalance('0x06012c8cf97bead5deae237070f9587f8e7a266d', {includePrice: true})
+
+// Get the balance of an address and include token balances
+const balances = w3d.address.getBalance('0x06012c8cf97bead5deae237070f9587f8e7a266d', {includeTokens: true})
+
+// Get the balance of multiple addresses
+const multipleBalances = w3d.address.getBalance(['0x06012c8cf97bead5deae237070f9587f8e7a266d', '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'])
+
+// Get the balance + token balances + pricing data for multiple addresses
+const multipleBalancesPlus = w3d.address.getBalance(['0x06012c8cf97bead5deae237070f9587f8e7a266d', '0xce9af648a831ddf0cd6d05e3fe5787b3c7987246'], {includeTokens: true, includePrice: true})
 
 </pre>
 
