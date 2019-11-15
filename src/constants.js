@@ -13,6 +13,7 @@ module.exports.BLOCKCHAIN_ID_BITCOIN_SV = 'a818635d36dbe125e26167c4438e2217'
 module.exports.BLOCKCHAIN_ID_LITECOIN = 'f94be61fd9f4fa684f992ddfd4e92272'
 module.exports.BLOCKCHAIN_ID_RIPPLE = '2b8a5d8975e8c2a2ed92450450979a3c'
 module.exports.BLOCKCHAIN_ID_ZCASH = 'b7d4f994f33c709be4ce6cbae31d7b8e'
+module.exports.BLOCKCHAIN_ID_STELLAR = '822e2ebe02f74df8'
 
 /* Endpoints */
 module.exports.ADDRESSES_ENDPOINT = '/addresses'
@@ -104,6 +105,31 @@ module.exports.LTC_METHODS = {
     'getMetrics'
   ],
   transaction: ['getTransactions', 'getTransaction', 'getPendingTransactions']
+}
+
+module.exports.XLM_METHODS = {
+  address: [
+    'getAllAddresses',
+    'getInformation',
+    'getMetadata',
+    'getTransactions',
+    // 'getPendingTransactions',
+    'getBalance',
+    'getMetrics'
+  ],
+  block: [
+    'getBlocks',
+    'getBlock',
+    'getBlockNumber',
+    'getTransactions',
+    'getTransactionFromBlock',
+    'getMetrics'
+  ],
+  transaction: [
+    'getTransactions',
+    'getTransaction'
+    // 'getPendingTransactions'
+  ]
 }
 
 /* HTTP Response codes */

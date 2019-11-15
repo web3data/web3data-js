@@ -84,7 +84,7 @@
       &middot;
       &middot;
       &middot;
-      <button onClick="runBlockchain('bch')" id="goBtn">Blockchain Method</button>
+      <button onClick="runBlockchain('xlm')" id="goBtn">Blockchain Method</button>
     </div>
     <div id="output">
       <p>Results<p>
@@ -108,14 +108,14 @@
         console.log('status ->', status.type)
       })
 
-      web3data.on({eventName: 'block'}, data => {
-        console.log('block', data)
-        setResult(data)
-      })
-      web3data.on({eventName: 'block', filters: { number: 605859 }}, data => {
-        console.log('block NUMBER', data)
-        setResult(data)
-      })
+      // web3data.on({eventName: 'block'}, data => {
+      //   console.log('block', data)
+      //   setResult(data)
+      // })
+      // web3data.on({eventName: 'block', filters: { number: 26811436 }}, data => {
+      //   console.log('block NUMBER', data)
+      //   setResult(data)
+      // })
       web3data.on({eventName: 'transaction'}, data => {
         console.log('transaction', data)
         setResult(data)
@@ -140,7 +140,7 @@
     }
 
     // run specific blockchain things
-    const activeBlockchain = 'btc'
+    const activeBlockchain = 'xlm'
     function runBlockchain(namespace) {
       namespace = namespace || activeBlockchain
       const apiKey = document.querySelector('#apikey-input').value
