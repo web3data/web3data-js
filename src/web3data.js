@@ -19,6 +19,7 @@ const Btc = require('./btc')
 const Bch = require('./bch')
 const Bsv = require('./bsv')
 const Ltc = require('./ltc')
+const Xlm = require('./xlm')
 const Zec = require('./zec')
 const WebSocketClient = require('./websocket')
 
@@ -128,6 +129,7 @@ class Web3Data extends Web3DataFactory {
     this.bch = new Bch(Web3DataFactory, apiKey, options)
     this.bsv = new Bsv(Web3DataFactory, apiKey, options)
     this.ltc = new Ltc(Web3DataFactory, apiKey, options)
+    this.xlm = new Xlm(Web3DataFactory, apiKey, options)
     this.zec = new Zec(Web3DataFactory, apiKey, options)
 
     this.websocket = null

@@ -1,12 +1,12 @@
 import test from 'ava'
 import {setUpPolly, getNewWeb3DataInstance} from "./utils";
-import { BTC_METHODS as METHODS } from "../src/constants";
+import { XLM_METHODS as METHODS } from "../src/constants";
 
 /***********************************
  * -------- Tests Setup ---------- *
  **********************************/
 test.before(t => {
-  t.context.polly = setUpPolly('zec')
+  t.context.polly = setUpPolly('xlm')
 })
 
 test.after(async t => {
@@ -21,10 +21,10 @@ test.beforeEach(t => {
  * ----------- Tests ----------- *
  *********************************/
 
-test('Check the zec namespace contains all defined methods', t => {
+test('Check the xlm namespace contains all defined methods', t => {
   for(const namespace of Object.keys(METHODS)) {
     for (const method of METHODS[namespace]) {
-      t.truthy(t.context.web3data.zec[namespace][method])
+      t.truthy(t.context.web3data.xlm[namespace][method])
     }
   }
 })
