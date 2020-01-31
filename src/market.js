@@ -82,6 +82,7 @@ class Market {
           break
         case 'ohlcv':
         case 'tickers':
+        case 'trades':
           feature += '/information'
           break
         default:

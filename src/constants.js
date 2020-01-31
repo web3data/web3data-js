@@ -29,7 +29,8 @@ module.exports.MARKET_FEATURES = [
   'exchanges',
   'ohlcv',
   'prices',
-  'tickers'
+  'tickers',
+  'trades'
 ]
 
 /* Error messages */
