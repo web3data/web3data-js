@@ -176,5 +176,3 @@ test.skip(returnsResultAsHex, {blockchain: 'btc', method: "createrawtransaction"
 test.skip(returnsResultAsHex, {blockchain: 'btc', method: "sendrawtransaction" })
 test.skip(returnsResultAsHex, {blockchain: 'btc', method: "testmempoolaccept" })
 test.skip(returnsResultAsHex, {blockchain: 'btc', method: "decoderawtransaction" })
-
-
