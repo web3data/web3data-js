@@ -6,7 +6,6 @@ import globals from 'rollup-plugin-node-globals'
 import filesize from 'rollup-plugin-filesize'
 import {terser} from 'rollup-plugin-terser'
 
-// eslint-disable-next-line import/extensions
 import pkg from './package.json'
 
 export default {

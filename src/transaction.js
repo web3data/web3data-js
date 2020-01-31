@@ -166,7 +166,7 @@ class Transaction {
    * @returns Metrics for recent confirmed transactions.
    * @example
    * const metrics = await web3data.transaction.getMetrics()
-   *
+   * @param filterOptions
    */
   getMetrics(filterOptions = {}) {
     return get(this.web3data, {

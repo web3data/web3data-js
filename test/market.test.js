@@ -203,8 +203,8 @@ test('Successfully gets latest market prices - with filters', async t => {
 
 test('Successfully gets historical market prices', async t => {
   const prices = await t.context.web3data.market.getPrices(BASE, {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]})
-  t.true(prices.hasProp('eth_btc'))
-  t.true(Array.isArray(prices.eth_btc))
+  t.true(prices.hasProp('eth_usd'))
+  t.true(Array.isArray(prices.eth_usd))
   t.true(prices.values()[0][0].hasProp('price'))
 
   // Test there is a price property that has a float value
@@ -316,10 +316,11 @@ test('Successfully gets order book updates', async t => {
   t.true(orderBooks.metadata.columns.includes('numOrders'))
 })
 
-test('Successfully gets order book updates - with filters', async t => {
+test.only('Successfully gets order book updates - with filters', async t => {
   const orderBooks = await t.context.web3data.market.getOrderBooks('btc_usd', {exchange: 'gdax'})
   t.true(orderBooks.hasProp('data'))
   t.true(orderBooks.hasProp('metadata'))
+  console.log(orderBooks);
   t.true(orderBooks.metadata.columns.includes('numOrders'))
   t.true(orderBooks.data[0].includes('gdax'))
 })
