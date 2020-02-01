@@ -316,11 +316,10 @@ test('Successfully gets order book updates', async t => {
   t.true(orderBooks.metadata.columns.includes('numOrders'))
 })
 
-test.only('Successfully gets order book updates - with filters', async t => {
+test('Successfully gets order book updates - with filters', async t => {
   const orderBooks = await t.context.web3data.market.getOrderBooks('btc_usd', {exchange: 'gdax'})
   t.true(orderBooks.hasProp('data'))
   t.true(orderBooks.hasProp('metadata'))
-  console.log(orderBooks);
   t.true(orderBooks.metadata.columns.includes('numOrders'))
   t.true(orderBooks.data[0].includes('gdax'))
 })
