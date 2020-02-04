@@ -109,7 +109,10 @@ http request to the Amberdata API endpoint.
           headers: this.headers
         }
       )
-      .then(response => response.data, response => response.response.data)
+      .then(
+        response => response.data,
+        response => response.response.data
+      )
   }
 }
 
