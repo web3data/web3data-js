@@ -178,7 +178,7 @@ test('Successfully gets address transactions - no filters', async t => {
 })
 
 test('Successfully gets address transactions - with filters', async t => {
-    const [transaction] = await t.context.web3data.address.getTransactions(ADDRESS, {includePrice: true, validationMethod: 'full'})
+    const [transaction] = await t.context.web3data.address.getTransactions(ADDRESS, {includePrice: true})
     t.true(transaction.hasProp('price'))
 })
 
