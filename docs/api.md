@@ -914,89 +914,6 @@ const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f
 
 
 
-### src/signature.js
-
-
-
-#### Class: Signature
-
-
-Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
-
-
-
-
-
-
-
-
-
-#### constructor(web3data)
-
-
-Creates an instance of Signature.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data | `object`  |  The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-new Signature(new Web3Data('API_KEY'))
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-
-#### getSignature(hash)
-
-
-Retrieves detailed information about the specified signature hash.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  |  The (keccak 256) of the signature. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
-```
-
-
-##### Returns
-
-
-- `Promise.<Array>`  Information pertaining to the specified signature hash.
-
-
-
-
-
 ### src/market.js
 
 
@@ -1441,6 +1358,89 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 -  The address(es) of the asset(s).
+
+
+
+
+
+### src/signature.js
+
+
+
+#### Class: Signature
+
+
+Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
+
+
+
+
+
+
+
+
+
+#### constructor(web3data)
+
+
+Creates an instance of Signature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data | `object`  |  The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+new Signature(new Web3Data('API_KEY'))
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+
+#### getSignature(hash)
+
+
+Retrieves detailed information about the specified signature hash.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  |  The (keccak 256) of the signature. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
+```
+
+
+##### Returns
+
+
+- `Promise.<Array>`  Information pertaining to the specified signature hash.
 
 
 
