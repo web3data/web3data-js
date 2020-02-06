@@ -70,14 +70,14 @@ test.beforeEach(async t => {
 })
 
 /*********** Test connects to server (no callback) [MOCK] ***********/
-test.cb.skip('Successfully connects to Websocket Server - no callback',  t => {
+test.cb('Successfully connects to Websocket Server - no callback',  t => {
     t.context.wss.on('connection', () => t.end())
     t.context.w3d.connect()
     t.timeout(TEST_TIMEOUT)
 })
 
 /*********** Test connects to server (with callback) [MOCK] ***********/
-test.cb.skip('Successfully connects to Websocket Server - with callback',  t => {
+test.cb('Successfully connects to Websocket Server - with callback',  t => {
     t.plan(2)
     t.context.wss.on('connection', () => {t.pass()})
     t.context.w3d.connect(() => {t.pass(); t.end()})
@@ -85,7 +85,7 @@ test.cb.skip('Successfully connects to Websocket Server - with callback',  t => 
 })
 
 /*********** Test reconnects to server on error (no callback) [MOCK] ***********/
-test.cb.skip('Successfully reconnects to Websocket Server on error 3 times',  t => {
+test.cb('Successfully reconnects to Websocket Server on error 3 times',  t => {
     let reconnects = 0
     t.context.wss.on('connection', ws => {
         if(++reconnects > 3) {
@@ -101,7 +101,7 @@ test.cb.skip('Successfully reconnects to Websocket Server on error 3 times',  t 
 })
 
 /*********** Test disconnect from server (no callback) [MOCK] ***********/
-test.cb.skip('Successfully disconnects from Websocket Server - no callback',  t => {
+test.cb('Successfully disconnects from Websocket Server - no callback',  t => {
     t.context.wss.on('connection', (ws) => {
         ws.on('close', () => t.end())
     });
@@ -112,7 +112,7 @@ test.cb.skip('Successfully disconnects from Websocket Server - no callback',  t 
 })
 
 /*********** Test disconnect from server (with callback) [MOCK] ***********/
-test.cb.skip('Successfully disconnects from Websocket Server - with callback',  t => {
+test.cb('Successfully disconnects from Websocket Server - with callback',  t => {
     t.plan(2)
     t.context.wss.on('connection', (ws) => {
         ws.on('close', () => {t.pass(); t.end()})
@@ -124,7 +124,7 @@ test.cb.skip('Successfully disconnects from Websocket Server - with callback',  
 })
 
 /*********** Test call disconnect before connect errors [LIVE, MOCK] ***********/
-test.cb.skip('disconnect logs error if called before connect',  t => {
+test.cb('disconnect logs error if called before connect',  t => {
     const stderr = capcon.captureStderr(() => {
         t.context.w3d.disconnect()
         t.end()
@@ -134,7 +134,7 @@ test.cb.skip('disconnect logs error if called before connect',  t => {
 })
 
 /*********** Test on method sends sub method - without filters [MOCK] ***********/
-test.cb.skip('Successfully calls on and sends subscription message - without filters',  t => {
+test.cb('Successfully calls on and sends subscription message - without filters',  t => {
     t.context.wss.on('connection', (ws) => {
         ws.on('message', (message) => {
             t.regex(message, SUBSCRIBE_MESSAGE)
@@ -147,7 +147,7 @@ test.cb.skip('Successfully calls on and sends subscription message - without fil
 })
 
 /*********** Test on method sends sub message - with filters [MOCK] ***********/
-test.cb.skip('Successfully calls on and sends subscription message - with filters',  t => {
+test.cb('Successfully calls on and sends subscription message - with filters',  t => {
 
     /* Regex matches the following string  as long as id contains 1 > characters */
     const SUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"subscribe","id":".+","params":\["block",{"number":7280000}\]}/g
@@ -164,7 +164,7 @@ test.cb.skip('Successfully calls on and sends subscription message - with filter
 })
 
 /*********** Test on method errors if no event name [LIVE, MOCK] ***********/
-test.cb.skip('on method errors if called without an event name',  t => {
+test.cb('on method errors if called without an event name',  t => {
     t.context.wss.on('connection', ()=>{})
     const stderr = capcon.captureStderr(() => {
         t.context.w3d.on({}, status => status)
@@ -175,7 +175,7 @@ test.cb.skip('on method errors if called without an event name',  t => {
 })
 
 /*********** Test off method sends unsub message - without filters [MOCK] ***********/
-test.cb.skip('Successfully calls off and sends unsubscription message - without filters',  t => {
+test.cb('Successfully calls off and sends unsubscription message - without filters',  t => {
 
     t.context.wss.on('connection', (ws) => {
         ws.on('message', (message) => {
@@ -198,7 +198,7 @@ test.cb.skip('Successfully calls off and sends unsubscription message - without 
 })
 
 /*********** Test off method sends unsub message - with filters [MOCK] ***********/
-test.cb.skip('Successfully calls off and sends unsubscription message - with filters',  t => {
+test.cb('Successfully calls off and sends unsubscription message - with filters',  t => {
     t.context.wss.on('connection', (ws) => {
         ws.on('message', (message) => {
             const data = JSON.parse(message);
@@ -221,7 +221,7 @@ test.cb.skip('Successfully calls off and sends unsubscription message - with fil
 
 
 /*********** Test off errors if called before on [LIVE, MOCK] ***********/
-test.cb.skip('Calling off before on errors',  t => {
+test.cb('Calling off before on errors',  t => {
     t.context.wss.on('connection', () => {})
     t.context.w3d.connect()
     const stderr = capcon.captureStderr(function scope() {
@@ -255,7 +255,7 @@ test.cb.skip('Successfully handles erroneous server response',  t => {
 })
 
 /*********** Test client receives and outputs data via callback [LIVE, MOCK] ***********/
-test.cb.skip('Successfully subscribes, receives, and outputs data', t => {
+test.cb('Successfully subscribes, receives, and outputs data', t => {
     t.context.wss.on('connection', (ws) => {
         ws.on('message', (message) => {
             const data = JSON.parse(message);
@@ -272,7 +272,7 @@ test.cb.skip('Successfully subscribes, receives, and outputs data', t => {
     t.timeout(TEST_TIMEOUT)
 })
 
-test.cb.skip('Successfully call once, outputs data and unsubscribes', t => {
+test.cb('Successfully call once, outputs data and unsubscribes', t => {
     t.context.wss.on('connection', (ws) => {
         ws.on('message', (message) => {
             const data = JSON.parse(message);
