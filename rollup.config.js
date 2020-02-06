@@ -6,7 +6,7 @@ import globals from 'rollup-plugin-node-globals'
 import filesize from 'rollup-plugin-filesize'
 import {terser} from 'rollup-plugin-terser'
 
-import pkg from './package.json'
+import pkg from './package'
 
 export default {
   input: 'index.js',
