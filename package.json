@@ -10,7 +10,7 @@
     "docs:gen": "doxdox 'src/**/*.js' --layout markdown --output docs/api.md",
     "lint": "xo",
     "lint:fix": "xo --fix",
-    "test": "xo --quiet && cross-env nyc -s ava -- --mode replay",
+    "test": "xo --quiet && nyc -s ava -- --mode replay",
     "test:record": "nyc -s ava -- --mode record",
     "test:live": "nyc -s ava -- --mode passthrough",
     "test:fast": "nyc -s ava --fail-fast",

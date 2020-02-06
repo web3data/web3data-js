@@ -435,7 +435,6 @@ given subscription Id.
     })
 
     if (this.socket.readyState === this.socket.OPEN) {
-      console.log(jsonRpcMessage, 'send unsub')
       this.socket.send(jsonRpcMessage)
     }
   }
