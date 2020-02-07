@@ -35,7 +35,7 @@ test('Web3data should have the apikey in headers', t => {
 });
 
 test('Throws exception when no api key is supplied', t => {
-    const error = t.throws(() => { new Web3Data() }, Error);
+    const error = t.throws(() => { new Web3Data() }, {instanceOf: Error});
     t.is(error.message, "No api key supplied");
 });
 

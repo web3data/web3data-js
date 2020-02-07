@@ -254,9 +254,11 @@ class WebSocketClient {
       return
     }
 
+    this.registry[id].isSubscribed = false
+    this.registry[id].unsubCallback = callback || (() => {})
+
     // Sends the unsubscribe message to the server
     this._unsubscribe(eventName, filters, id)
-    this.registry[id].unsubCallback = callback
   }
 
   /**
@@ -344,6 +346,7 @@ given subscription Id.
     // Map the subscriptionId to the uuid
     this.registrySubIds[data.result] = id
     this.registry[id].subId = data.result
+    this.registry[id].isSubscribed = true
   }
 
   /**
@@ -366,13 +369,15 @@ given subscription Id.
     // Get the uuid
     const id = this.registrySubIds[subId]
 
-    // Fire individual methods if they exist
-    if (this.registry[id] && this.registry[id].callback)
-      this.registry[id].callback(res)
+    // Check to see if we still want to receive these messages
+    if (this.registry[id].isSubscribed) {
+      // Fire individual methods if they exist
+      if (this.registry[id] && this.registry[id].callback)
+        this.registry[id].callback(res)
 
-    // Store latest state for easy retrieval later
-    if (is.notUndefined(this.latestState[id])) this.latestState[id] = res
-    // This.reconnects = 0
+      // Store latest state for easy retrieval later
+      if (is.notUndefined(this.latestState[id])) this.latestState[id] = res
+    }
   }
 
   /**
@@ -384,6 +389,7 @@ given subscription Id.
    */
   _unsubHandler(data) {
     const id = data && data.id ? data.id : ''
+    // Console.log(data, id, this.registry[id])
     const {eventName} = this.registry[id].args
     if (data.result) {
       this.registry[id].unsubCallback(
@@ -428,8 +434,9 @@ given subscription Id.
       params: [this.registry[id].subId]
     })
 
-    if (this.socket.readyState === this.socket.OPEN)
+    if (this.socket.readyState === this.socket.OPEN) {
       this.socket.send(jsonRpcMessage)
+    }
   }
 }
 

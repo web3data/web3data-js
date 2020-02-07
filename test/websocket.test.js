@@ -17,7 +17,7 @@ const UNSUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"unsubscribe","id":".+",
 /* Regex matches the following string  as long as id contains 1 > characters */
 const SUBSCRIBE_MESSAGE = /{"jsonrpc":"2\.0","method":"subscribe","id":".+","params":\[.+\]}/
 
-const TEST_TIMEOUT = 5000
+const TEST_TIMEOUT = 10000
 
 /**
  * Creates a string in json rpc format

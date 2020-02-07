@@ -3,14 +3,41 @@ import path from 'path';
 import { Polly } from '@pollyjs/core';
 import NodeHttpAdapter from '@pollyjs/adapter-node-http';
 import FSPersister from '@pollyjs/persister-fs';
+import { MODES } from '@pollyjs/utils';
 import dotenv from 'dotenv'
 dotenv.config()
+
+const modes = {
+    'record': MODES.RECORD,
+    'replay': MODES.REPLAY,
+    'passthrough': MODES.PASSTHROUGH
+}
+
+const getArgs = () => {
+    const [arg, value] = process.argv.slice(2)
+    return {
+        arg,
+        value
+    }
+}
+
+const getMode = () => {
+    let mode = MODES.REPLAY
+    const args = getArgs()
+    if(args.arg && args.arg.toLocaleLowerCase() === '--mode' && args.value && args.value.toLocaleLowerCase() in modes) {
+        mode = modes[args.value.toLocaleLowerCase()]
+    }
+    return mode
+}
 
 export const setUpPolly = (recordingName) => {
     Polly.register(FSPersister);
     Polly.register(NodeHttpAdapter);
 
+    const mode = getMode()
+    console.log({mode})
     const polly = new Polly(`${recordingName}` , { // _${Date.now()}
+        mode,
         adapters: ['node-http'],
         persister: 'fs',
         persisterOptions: {

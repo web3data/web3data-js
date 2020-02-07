@@ -47,7 +47,7 @@ class Token {
    * Retrieves the historical volume of token transfers for the specified address.
    *
    * @param {string} hash - The address of the token contract.
-   * @param {object} [filterOptions]  - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-volume) for more details.
+   * @param {object} [filterOptions] -  - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-volume) for more details.
    * @returns {Promise<object>} The historical volume of token transfers.
    * const tokenVolume = await web3data.token.getVolume('0x06012c8cf97bead5deae237070f9587f8e7a266d').
    * @example
