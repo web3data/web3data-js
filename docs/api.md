@@ -547,12 +547,12 @@ const metrics = await web3data.address.getMetrics('0x3f5ce5fbfe3e9af3971dd833d26
 
 
 
-### src/bsv.js
+### src/bch.js
 
 
-#### new Bsv()  *private method*
+#### new Bch()  *private method*
 
-Class for all Bitcoin SV based methods.
+Class for all Bitcoin Cash based methods.
 
 
 
@@ -602,12 +602,12 @@ Retrieves the blocks specified by its id (number or hash).
 
 
 
-### src/bch.js
+### src/bsv.js
 
 
-#### new Bch()  *private method*
+#### new Bsv()  *private method*
 
-Class for all Bitcoin Cash based methods.
+Class for all Bitcoin SV based methods.
 
 
 
@@ -1438,6 +1438,196 @@ const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
 
 
 
+### src/utils.js
+
+
+#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)  *private method*
+
+Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
+the appropriate parameter(s) where applicable.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  | - Instance on which to call .rawQuery(). | &nbsp; |
+| subendpoint |  | - The sub-endpoint. | &nbsp; |
+| endpoint |  | - The endpoint. | &nbsp; |
+| hash |  | - The address hash. | &nbsp; |
+| pathParam |  | - The path parameter. | &nbsp; |
+| filterOptions |  | - The filters associated with a given endpoint. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns a Promise of the rawQuery request from web3data.
+
+
+
+#### onFulfilled(response)  *private method*
+
+Handler for all request responses.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| response |  | - The Axios response object. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The data from the response.
+
+
+
+#### uuid(data)  *private method*
+
+Generates a uuid see [this gist]() for more details.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| data |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### getMethods(obj)  *private method*
+
+Returns an array of methods defined on the object.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| obj |  | - The object from which get methods. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  An array of method names.
+
+
+
+#### ethFactory(web3data)  *private method*
+
+Creates an object containing Ethereum based methods.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  | - { object } The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  methods { object } an object containing Ethereum based methods.
+
+
+
+#### formatJsonRpc(options)  *private method*
+
+Creates a string in json rpc format.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| options |  | - The json rpc options. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The json rpc formatted string.
+
+
+
+
 ### src/token.js
 
 
@@ -2025,196 +2215,6 @@ const metrics = await web3data.transaction.getMetrics()
 
 
 
-### src/utils.js
-
-
-#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)  *private method*
-
-Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
-the appropriate parameter(s) where applicable.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  | - Instance on which to call .rawQuery(). | &nbsp; |
-| subendpoint |  | - The sub-endpoint. | &nbsp; |
-| endpoint |  | - The endpoint. | &nbsp; |
-| hash |  | - The address hash. | &nbsp; |
-| pathParam |  | - The path parameter. | &nbsp; |
-| filterOptions |  | - The filters associated with a given endpoint. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns a Promise of the rawQuery request from web3data.
-
-
-
-#### onFulfilled(response)  *private method*
-
-Handler for all request responses.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| response |  | - The Axios response object. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The data from the response.
-
-
-
-#### uuid(data)  *private method*
-
-Generates a uuid see [this gist]() for more details.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| data |  |  | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### getMethods(obj)  *private method*
-
-Returns an array of methods defined on the object.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| obj |  | - The object from which get methods. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  An array of method names.
-
-
-
-#### ethFactory(web3data)  *private method*
-
-Creates an object containing Ethereum based methods.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  | - { object } The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  methods { object } an object containing Ethereum based methods.
-
-
-
-#### formatJsonRpc(options)  *private method*
-
-Creates a string in json rpc format.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| options |  | - The json rpc options. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The json rpc formatted string.
-
-
-
-
 ### src/web3data.js
 
 
@@ -2334,26 +2334,6 @@ Method used to interact with web3api json rpc endpoints.
 
 Class Web3data contains methods for hitting Amberdata's
 API endpoints.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-### src/xlm.js
-
-
-#### new Xlm()  *private method*
-
-Class for all Stellar based methods.
 
 
 
@@ -2849,6 +2829,26 @@ Sends unsubscription message to the websocket connection.
 ```javascript
 
 ```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+### src/xlm.js
+
+
+#### new Xlm()  *private method*
+
+Class for all Stellar based methods.
+
+
+
+
 
 
 ##### Returns
