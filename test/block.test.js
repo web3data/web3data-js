@@ -1,5 +1,6 @@
 import test from 'ava'
 import {ERROR_MESSAGE_BLOCK_NO_ID as NO_BLOCK_ID} from '../src/constants'
+import { DATES } from './constants'
 
 import {setUpPolly, getNewWeb3DataInstance} from './utils'
 
@@ -195,7 +196,13 @@ test('Successfully gets block functions - with filters', async t => {
 })
 
 /** ********* Test getMetrics() ***********/
-test('Successfully gets block metrics', async t => {
-    const metrics = await t.context.web3data.block.getMetrics(8805274)
+test.only('Successfully gets block current metrics', async t => {
+    const metrics = await t.context.web3data.block.getMetrics()
     t.true(metrics.hasProp('issuanceTotal'))
+})
+
+test.only('Successfully gets block historical metrics', async t => {
+    const metrics = await t.context.web3data.block.getMetrics({startDate: 1583625600000, endDate: 1583712000000})
+    t.true(metrics.hasProp('records'))
+    t.true(metrics.records[0].hasProp('issuanceTotal'))
 })
