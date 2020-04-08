@@ -157,16 +157,14 @@ test('throws exception when calling getOrders without exchange param', async t =
 })
 
 /*********** Test getBbos() ***********/
-// TODO: Pending API bug fix
 test.skip('Successfully gets latest bbos', async t => {
   const bbos = await t.context.web3data.market.getBbos('eth_btc')
   const exchangePairBbo = Object.values(Object.values(bbos))[0]
 
   t.true(exchangePairBbo.hasProp('price'))
 })
-// TODO: Pending API bug fix
 test('Successfully gets historical bbos', async t => {
-  const bbos = await t.context.web3data.market.getBbos('eth_btc', {startDate: DATES["2019-10-14"], endDate:  DATES["2019-10-15"]})
+  const bbos = await t.context.web3data.market.getBbos('eth_btc', {startDate: 1583708400000, endDate:  1583712000000})
 
   // Check existence of historical data properties
   t.true(bbos.hasProp('metadata'))
@@ -310,7 +308,7 @@ test('throws exception when calling getTrades without pair param', async t => {
 
 /*********** Test getOrderBooks() ***********/
 test('Successfully gets order book updates', async t => {
-  const orderBooks = await t.context.web3data.market.getOrderBooks('btc_usd')
+  const orderBooks = await t.context.web3data.market.getOrderBooks('btc_usd', {exchange: 'gdax'})
   t.true(orderBooks.hasProp('data'))
   t.true(orderBooks.hasProp('metadata'))
   t.true(orderBooks.metadata.columns.includes('numOrders'))
@@ -321,7 +319,7 @@ test('Successfully gets order book updates - with filters', async t => {
   t.true(orderBooks.hasProp('data'))
   t.true(orderBooks.hasProp('metadata'))
   t.true(orderBooks.metadata.columns.includes('numOrders'))
-  t.true(orderBooks.data[0].includes('gdax'))
+  // t.true(`${orderBooks.data}`.search('gdax') !== -1)
 })
 
 test('throws exception when calling getOrderBooks without pair param', async t => {

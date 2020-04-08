@@ -152,7 +152,12 @@ test('Successfully calls getVolume - with filters', async t => {
 })
 
 /*********** Test getMetrics() ***********/
-test('Successfully calls getMetrics', async t => {
+test.only('Successfully calls getMetrics', async t => {
     const metrics = await t.context.web3data.transaction.getMetrics()
     t.true(metrics.hasProp('feesTotal'))
+})
+
+test.only('Successfully gets block historical metrics', async t => {
+    const metrics = await t.context.web3data.transaction.getMetrics({startDate: 1583625600000, endDate: 1583712000000})
+    t.true(metrics[0].hasProp('feesTotal'))
 })

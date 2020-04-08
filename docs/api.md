@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.7.0*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.7.1*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
@@ -547,6 +547,61 @@ const metrics = await web3data.address.getMetrics('0x3f5ce5fbfe3e9af3971dd833d26
 
 
 
+### src/bch.js
+
+
+#### new Bch()  *private method*
+
+Class for all Bitcoin Cash based methods.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+### src/block.js
+
+
+#### getBlock(id, filterOptions) 
+
+Retrieves the blocks specified by its id (number or hash).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  | - The number or hash of the block for which to retrieve block information. | &nbsp; |
+| filterOptions |  | - | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+
 ### src/bsv.js
 
 
@@ -573,26 +628,6 @@ Class for all Bitcoin SV based methods.
 #### new Btc()  *private method*
 
 Class for all Bitcoin based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-### src/bch.js
-
-
-#### new Bch()  *private method*
-
-Class for all Bitcoin Cash based methods.
 
 
 
@@ -863,41 +898,6 @@ const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f
 
 
 - `Promise.&lt;object&gt;`  The contract's bytecode.
-
-
-
-
-### src/block.js
-
-
-#### getBlock(id, filterOptions) 
-
-Retrieves the blocks specified by its id (number or hash).
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| id |  | - The number or hash of the block for which to retrieve block information. | &nbsp; |
-| filterOptions |  | - | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  
 
 
 
@@ -1358,316 +1358,6 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
-### src/transaction.js
-
-
-#### new Transaction() 
-
-Contains methods pertaining to the `/address` endpoint of Amberdata's API.
-See [documentation](https://docs.amberdata.io/reference#get-all-transactions) details about our transaction endpoints.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Transaction.constructor(web3data) 
-
-Creates an instance of Transaction. Meant to be used in conjunction with the Web3Data class.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  | - The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Transaction.getTransactions(filterOptions) 
-
-Retrieves all transactions matching the specified filters.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| filterOptions |  | - The filter options associated with the request. | &nbsp; |
-| filterOptions.status |  | - Filter by the status of the transactions to retrieve (all, completed, failed, pending). | &nbsp; |
-| filterOptions.includePrice |  | - Indicates whether or not to include price data with the results. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const transactions = await web3data.transaction.getTransactions() 
-// Include pricing data with transactions
-const transactions = await web3data.transaction.getTransactions({
-includePrice: true
-})
-```
-
-
-##### Returns
-
-
--  All transactions matched by the specified filters.
-
-
-
-#### Transaction.getAll(filterOptions) 
-
-See 'getTransactions' for details.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| filterOptions |  |  | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Transaction.getTransaction(hash, filterOptions) 
-
-Retrieves the transaction data for the specified hash.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash |  | - The transaction hash. | &nbsp; |
-| filterOptions |  | - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#get-transaction) for more details. | &nbsp; |
-| filterOptions.validationMethod&#x3D;none |  | - The validation method to be added to the response: `none`, `basic`, `full`. | &nbsp; |
-| filterOptions.includePrice&#x3D;true |  | - Indicates whether or not to include price data with the results. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const transaction = await web3data.transaction.getTransaction('0xd0a5a0912fdf87993b3cebd696f1ee667a8fbbe8fc890a22dcbdf114f36de4cf')
-```
-
-
-##### Returns
-
-
--  The data for the specified transaction hash.
-
-
-
-#### Transaction.getPendingTransactions() 
-
-Retrieves all pending transaction.
-
-
-
-
-
-
-##### Examples
-
-```javascript
-const pendingTransactions = await web3data.transaction.getPendingTransactions()
-```
-
-
-##### Returns
-
-
--  The pending transactions.
-
-
-
-#### Transaction.getGasPrediction() 
-
-Retrieves the latest gas predictions for the transactions.
-
-
-
-
-
-
-##### Examples
-
-```javascript
-const gasPredictions = await web3data.transaction.getGasPrediction()
-```
-
-
-##### Returns
-
-
--  The latest gas predictions for the transactions.
-
-
-
-#### Transaction.getGasPercentiles(filterOptions) 
-
-Retrieves the latest gas price percentiles for the transactions.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| filterOptions |  | - The filter options associated with the request. | &nbsp; |
-| filterOptions.numBlocks |  | - Number of past blocks on which to base the percentiles. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const gasPercentiles = await web3data.transaction.getGasPercentiles()
-```
-
-
-##### Returns
-
-
--  The latest gas price percentiles for the transactions.
-
-
-
-#### Transaction.getGasPrice() 
-
-Retrieves the latest average gas price. Uses `getGasPrediction` under the hood.
-
-
-
-
-
-
-##### Examples
-
-```javascript
-const gasPrice = await web3data.transaction.getGasPrice()
-```
-
-
-##### Returns
-
-
--  The latest gas price.
-
-
-
-#### Transaction.getVolume(filterOptions) 
-
-Retrieves the historical (time series) volume of transactions.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| filterOptions |  | - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#get-historical-transaction-volume) for more details. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const volume = await web3data.transaction.getVolume()
-```
-
-
-##### Returns
-
-
--  The historical (time series) volume of transactions.
-
-
-
-#### Transaction.getMetrics(filterOptions) 
-
-Get metrics for recent confirmed transactions for a given blockchain. Default metrics are over a 24h period.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| filterOptions |  |  | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const metrics = await web3data.transaction.getMetrics()
-```
-
-
-##### Returns
-
-
--  Metrics for recent confirmed transactions.
-
-
-
-
 ### src/signature.js
 
 
@@ -2025,6 +1715,316 @@ const transfers = await web3data.token.getTransfers('0x06012c8cf97bead5deae23707
 
 
 
+### src/transaction.js
+
+
+#### new Transaction() 
+
+Contains methods pertaining to the `/address` endpoint of Amberdata's API.
+See [documentation](https://docs.amberdata.io/reference#get-all-transactions) details about our transaction endpoints.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Transaction.constructor(web3data) 
+
+Creates an instance of Transaction. Meant to be used in conjunction with the Web3Data class.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  | - The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Transaction.getTransactions(filterOptions) 
+
+Retrieves all transactions matching the specified filters.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
+| filterOptions.status |  | - Filter by the status of the transactions to retrieve (all, completed, failed, pending). | &nbsp; |
+| filterOptions.includePrice |  | - Indicates whether or not to include price data with the results. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const transactions = await web3data.transaction.getTransactions() 
+// Include pricing data with transactions
+const transactions = await web3data.transaction.getTransactions({
+includePrice: true
+})
+```
+
+
+##### Returns
+
+
+-  All transactions matched by the specified filters.
+
+
+
+#### Transaction.getAll(filterOptions) 
+
+See 'getTransactions' for details.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Transaction.getTransaction(hash, filterOptions) 
+
+Retrieves the transaction data for the specified hash.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash |  | - The transaction hash. | &nbsp; |
+| filterOptions |  | - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#get-transaction) for more details. | &nbsp; |
+| filterOptions.validationMethod&#x3D;none |  | - The validation method to be added to the response: `none`, `basic`, `full`. | &nbsp; |
+| filterOptions.includePrice&#x3D;true |  | - Indicates whether or not to include price data with the results. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const transaction = await web3data.transaction.getTransaction('0xd0a5a0912fdf87993b3cebd696f1ee667a8fbbe8fc890a22dcbdf114f36de4cf')
+```
+
+
+##### Returns
+
+
+-  The data for the specified transaction hash.
+
+
+
+#### Transaction.getPendingTransactions() 
+
+Retrieves all pending transaction.
+
+
+
+
+
+
+##### Examples
+
+```javascript
+const pendingTransactions = await web3data.transaction.getPendingTransactions()
+```
+
+
+##### Returns
+
+
+-  The pending transactions.
+
+
+
+#### Transaction.getGasPrediction() 
+
+Retrieves the latest gas predictions for the transactions.
+
+
+
+
+
+
+##### Examples
+
+```javascript
+const gasPredictions = await web3data.transaction.getGasPrediction()
+```
+
+
+##### Returns
+
+
+-  The latest gas predictions for the transactions.
+
+
+
+#### Transaction.getGasPercentiles(filterOptions) 
+
+Retrieves the latest gas price percentiles for the transactions.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  | - The filter options associated with the request. | &nbsp; |
+| filterOptions.numBlocks |  | - Number of past blocks on which to base the percentiles. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const gasPercentiles = await web3data.transaction.getGasPercentiles()
+```
+
+
+##### Returns
+
+
+-  The latest gas price percentiles for the transactions.
+
+
+
+#### Transaction.getGasPrice() 
+
+Retrieves the latest average gas price. Uses `getGasPrediction` under the hood.
+
+
+
+
+
+
+##### Examples
+
+```javascript
+const gasPrice = await web3data.transaction.getGasPrice()
+```
+
+
+##### Returns
+
+
+-  The latest gas price.
+
+
+
+#### Transaction.getVolume(filterOptions) 
+
+Retrieves the historical (time series) volume of transactions.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  | - The filter options associated with the request. See [docs](https://docs.amberdata.io/reference#get-historical-transaction-volume) for more details. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const volume = await web3data.transaction.getVolume()
+```
+
+
+##### Returns
+
+
+-  The historical (time series) volume of transactions.
+
+
+
+#### Transaction.getMetrics(filterOptions) 
+
+Get metrics for recent confirmed transactions for a given blockchain. Default metrics are over a 24h period.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const metrics = await web3data.transaction.getMetrics()
+```
+
+
+##### Returns
+
+
+-  Metrics for recent confirmed transactions.
+
+
+
+
 ### src/utils.js
 
 
@@ -2211,6 +2211,139 @@ Creates a string in json rpc format.
 
 
 -  The json rpc formatted string.
+
+
+
+
+### src/web3data.js
+
+
+#### new Web3DataFactory()  *private method*
+
+Contains common methods used in.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Web3DataFactory.constructor(apiKey, options, blockchainId:, -, -) 
+
+Creates a Web3Data instance.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| apiKey |  | - The Amberdata api key needed to access data. | &nbsp; |
+| options | `object`  | Contains additional configuration options: | &nbsp; |
+| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
+| - |  | baseUrl: the base url of API calls | &nbsp; |
+| - |  | websocketUrl: the websocket url to use | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Web3DataFactory.rawQuery(url) 
+
+Appends the API base url with the endpoint  url. Then sends an
+http request to the Amberdata API endpoint.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| url |  | - The endpoint url with any query/path params if set. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The axios request object.
+
+
+
+#### Web3DataFactory.rpc(method, params) 
+
+Method used to interact with web3api json rpc endpoints.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| method |  | - The json rpc method to call. | &nbsp; |
+| params |  | - The parameters to the json rpc call. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns the json rpc result.
+
+
+
+#### new Web3Data() 
+
+Class Web3data contains methods for hitting Amberdata's
+API endpoints.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
 
 
 
@@ -2696,139 +2829,6 @@ Sends unsubscription message to the websocket connection.
 ```javascript
 
 ```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-### src/web3data.js
-
-
-#### new Web3DataFactory()  *private method*
-
-Contains common methods used in.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Web3DataFactory.constructor(apiKey, options, blockchainId:, -, -) 
-
-Creates a Web3Data instance.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| apiKey |  | - The Amberdata api key needed to access data. | &nbsp; |
-| options | `object`  | Contains additional configuration options: | &nbsp; |
-| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
-| - |  | baseUrl: the base url of API calls | &nbsp; |
-| - |  | websocketUrl: the websocket url to use | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Web3DataFactory.rawQuery(url) 
-
-Appends the API base url with the endpoint  url. Then sends an
-http request to the Amberdata API endpoint.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| url |  | - The endpoint url with any query/path params if set. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The axios request object.
-
-
-
-#### Web3DataFactory.rpc(method, params) 
-
-Method used to interact with web3api json rpc endpoints.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| method |  | - The json rpc method to call. | &nbsp; |
-| params |  | - The parameters to the json rpc call. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns the json rpc result.
-
-
-
-#### new Web3Data() 
-
-Class Web3data contains methods for hitting Amberdata's
-API endpoints.
-
-
-
-
 
 
 ##### Returns

@@ -168,12 +168,16 @@ class Transaction {
    * const metrics = await web3data.transaction.getMetrics()
    * @param filterOptions
    */
-  getMetrics(filterOptions = {}) {
+  getMetrics(filterOptions) {
+    const subendpoint =
+      filterOptions && (filterOptions.startDate || filterOptions.endDate)
+        ? 'historical'
+        : 'latest'
     return get(this.web3data, {
-      endpoint: ENDPOINT,
-      subendpoint: 'metrics/latest',
+      endpoint: `${ENDPOINT}/metrics`,
+      subendpoint,
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 }
 
