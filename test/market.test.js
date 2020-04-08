@@ -308,7 +308,7 @@ test('throws exception when calling getTrades without pair param', async t => {
 
 /*********** Test getOrderBooks() ***********/
 test('Successfully gets order book updates', async t => {
-  const orderBooks = await t.context.web3data.market.getOrderBooks('btc_usd')
+  const orderBooks = await t.context.web3data.market.getOrderBooks('btc_usd', {exchange: 'gdax'})
   t.true(orderBooks.hasProp('data'))
   t.true(orderBooks.hasProp('metadata'))
   t.true(orderBooks.metadata.columns.includes('numOrders'))
@@ -319,7 +319,7 @@ test('Successfully gets order book updates - with filters', async t => {
   t.true(orderBooks.hasProp('data'))
   t.true(orderBooks.hasProp('metadata'))
   t.true(orderBooks.metadata.columns.includes('numOrders'))
-  t.true(orderBooks.data[0].includes('gdax'))
+  // t.true(`${orderBooks.data}`.search('gdax') !== -1)
 })
 
 test('throws exception when calling getOrderBooks without pair param', async t => {

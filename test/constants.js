@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export const ADDRESS = '0x06012c8cf97bead5deae237070f9587f8e7a266d'
+// export const ADDRESS = '0x742d35cc6634c0532925a3b844bc454e4438f44e' // bitfinex
+export const ADDRESS2 = '0xea674fdde714fd979de3edf0f56aa9716b898ec8' // Ethermine
 export const TXN_HASH = '0x7a3dbdc6f5b8b748d972ee9e35ecea6ff62a624816c944bf2419c430156c54ba'
 // export const TOKEN_ADDRESS = '0x744d70fdbe2ba4cf95131626614a1763df805b9e' /* Status Network Token */
 export const TOKEN_ADDRESS = '0x514910771af9ca656af840dff83e8264ecf986ca' /* LINK */

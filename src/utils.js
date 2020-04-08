@@ -189,7 +189,7 @@ const formatJsonRpc = options => {
 }
 
 const defaultFormatter = (response, field) => {
-  return response[field] ? response[field] : null
+  return response && response[field] ? response[field] : response
 }
 
 const recordsFormatter = response => defaultFormatter(response, 'records')

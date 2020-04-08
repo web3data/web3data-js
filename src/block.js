@@ -145,7 +145,7 @@ class Block {
       endpoint: `${ENDPOINT}/metrics`,
       subendpoint,
       filterOptions
-    }).then(onFulfilled, onError)
+    }).then(onFulfilled.bind({formatter: recordsFormatter}), onError)
   }
 }
 
