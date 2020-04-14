@@ -129,6 +129,61 @@ the hood.
 
 **Namespace**: `.eth`
 
+<details><summary><b>Supported Methods </b></summary>
+
+<table style="width:100%">
+  <tr>
+    <th>address</th>
+    <th>block</th>
+    <th>contract</th>
+    <th>market</th>
+    <th>transaction</th>
+  </tr>
+  <tr>
+    <td>getBalance</td>
+    <td>getBlockNumber</td>
+    <td>getCode</td>
+    <td>getEtherPrice</td>
+    <td>getTransaction</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>getBlock</td>
+    <td></td>
+    <td></td>
+    <td>getPendingTransactions</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>getBlockTransactionCount</td>
+    <td></td>
+    <td></td>
+    <td>getGasPrice</td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>getTransactionFromBlock</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>getTransactions</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td></td>
+    <td>getMetrics</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</details>
+
 ##### Example:
 ```javascript
 web3data.eth.address.getBalance('0x734Ac651Dd95a339c633cdEd410228515F97fAfF')
@@ -164,7 +219,7 @@ web3data.eth.address.getBalance('0x734Ac651Dd95a339c633cdEd410228515F97fAfF')
   <tr>
     <td>getTransactions</td>
     <td>getTransactions</td>
-    <td></td>
+    <td>getMetrics</td>
   </tr>
   <tr>
     <td>getPendingTransactions</td>
@@ -213,10 +268,352 @@ web3data.btc.address.getBalance('1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL')
 
 **Namespace**: `.ltc`
 
+<details><summary><b>Supported Methods </b></summary>
+
+<table style="width:100%">
+  <tr>
+    <th>address</th>
+    <th>block</th>
+    <th>transaction</th>
+  </tr>
+  <tr>
+    <td>getAllAddresses</td>
+    <td>getBlocks</td>
+    <td>getTransactions</td>
+  </tr>
+  <tr>
+    <td>getInformation</td>
+    <td>getBlock</td>
+    <td>getTransaction</td>
+  </tr>
+  <tr>
+    <td>getMetadata</td>
+    <td>getBlockNumber</td>
+    <td>getPendingTransactions</td>
+  </tr>
+  <tr>
+    <td>getTransactions</td>
+    <td>getTransactions</td>
+    <td>getMetrics</td>
+  </tr>
+  <tr>
+    <td>getBalance</td>
+    <td>getTransactionFromBlock</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getLatestBalance</td>
+    <td>getMetrics</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getHistoricalBalance</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getMultipleBalances</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getBalancesBatch</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getMetrics</td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</details>
 
 ##### Example:
 ```javascript
 web3data.ltc.address.getBalance('LZo1qx6S5JEVh43KahTFBdvnkVFeQCz9Ze')
+```
+
+
+### Bitcoin Cash
+
+**Namespace**: `.bch`
+
+<details><summary><b>Supported Methods </b></summary>
+
+<table style="width:100%">
+  <tr>
+    <th>address</th>
+    <th>block</th>
+    <th>transaction</th>
+  </tr>
+  <tr>
+    <td>getAllAddresses</td>
+    <td>getBlocks</td>
+    <td>getTransactions</td>
+  </tr>
+  <tr>
+    <td>getInformation</td>
+    <td>getBlock</td>
+    <td>getTransaction</td>
+  </tr>
+  <tr>
+    <td>getMetadata</td>
+    <td>getBlockNumber</td>
+    <td>getPendingTransactions</td>
+  </tr>
+  <tr>
+    <td>getTransactions</td>
+    <td>getTransactions</td>
+    <td>getMetrics</td>
+  </tr>
+  <tr>
+    <td>getBalance</td>
+    <td>getTransactionFromBlock</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getLatestBalance</td>
+    <td>getMetrics</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getHistoricalBalance</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getMultipleBalances</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getBalancesBatch</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getMetrics</td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</details>
+
+##### Example:
+```javascript
+web3data.bch.address.getBalance('1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL')
+```
+
+### Bitcoin SV
+
+**Namespace**: `.bsv`
+
+<details><summary><b>Supported Methods </b></summary>
+
+<table style="width:100%">
+  <tr>
+    <th>address</th>
+    <th>block</th>
+    <th>transaction</th>
+  </tr>
+  <tr>
+    <td>getAllAddresses</td>
+    <td>getBlocks</td>
+    <td>getTransactions</td>
+  </tr>
+  <tr>
+    <td>getInformation</td>
+    <td>getBlock</td>
+    <td>getTransaction</td>
+  </tr>
+  <tr>
+    <td>getMetadata</td>
+    <td>getBlockNumber</td>
+    <td>getPendingTransactions</td>
+  </tr>
+  <tr>
+    <td>getTransactions</td>
+    <td>getTransactions</td>
+    <td>getMetrics</td>
+  </tr>
+  <tr>
+    <td>getBalance</td>
+    <td>getTransactionFromBlock</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getLatestBalance</td>
+    <td>getMetrics</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getHistoricalBalance</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getMultipleBalances</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getBalancesBatch</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getMetrics</td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</details>
+
+##### Example:
+```javascript
+web3data.bsv.address.getBalance('1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL')
+```
+
+
+### Stellar
+
+**Namespace**: `.xlm`
+
+<details><summary><b>Supported Methods </b></summary>
+
+<table style="width:100%">
+  <tr>
+    <th>address</th>
+    <th>block</th>
+    <th>transaction</th>
+  </tr>
+  <tr>
+    <td>getAllAddresses</td>
+    <td>getBlocks</td>
+    <td>getTransactions</td>
+  </tr>
+  <tr>
+    <td>getInformation</td>
+    <td>getBlock</td>
+    <td>getTransaction</td>
+  </tr>
+  <tr>
+    <td>getMetadata</td>
+    <td>getBlockNumber</td>
+    <td>getPendingTransactions</td>
+  </tr>
+  <tr>
+    <td>getTransactions</td>
+    <td>getTransactions</td>
+    <td>getMetrics</td>
+  </tr>
+  <tr>
+    <td>getBalance</td>
+    <td>getTransactionFromBlock</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getLatestBalance</td>
+    <td>getMetrics</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getHistoricalBalance</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getMultipleBalances</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getBalancesBatch</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getMetrics</td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</details>
+
+##### Example:
+```javascript
+web3data.xlm.address.getBalance('GB42PDYTMHVL7FG2KQ6DGCJSEOF6RXWX7BYJ7UISU5GCRRA5DPCY2X7R')
+```
+
+### Zcash
+
+**Namespace**: `.zec`
+
+<details><summary><b>Supported Methods </b></summary>
+
+<table style="width:100%">
+  <tr>
+    <th>address</th>
+    <th>block</th>
+    <th>transaction</th>
+  </tr>
+  <tr>
+    <td>getAllAddresses</td>
+    <td>getBlocks</td>
+    <td>getTransactions</td>
+  </tr>
+  <tr>
+    <td>getInformation</td>
+    <td>getBlock</td>
+    <td>getTransaction</td>
+  </tr>
+  <tr>
+    <td>getMetadata</td>
+    <td>getBlockNumber</td>
+    <td>getPendingTransactions</td>
+  </tr>
+  <tr>
+    <td>getTransactions</td>
+    <td>getTransactions</td>
+    <td>getMetrics</td>
+  </tr>
+  <tr>
+    <td>getBalance</td>
+    <td>getTransactionFromBlock</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getLatestBalance</td>
+    <td>getMetrics</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getHistoricalBalance</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getMultipleBalances</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getBalancesBatch</td>
+    <td></td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>getMetrics</td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+</details>
+
+##### Example:
+```javascript
+web3data.zec.address.getBalance('t1M5GSbdVpPA1XFkuzi12sJyqGkrEEfGwLJ')
 ```
 
 Note: When using the namespaced methods the blockchain Id set during instantiation will be ignored.
