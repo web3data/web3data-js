@@ -547,46 +547,6 @@ const metrics = await web3data.address.getMetrics('0x3f5ce5fbfe3e9af3971dd833d26
 
 
 
-### src/bch.js
-
-
-#### new Bch()  *private method*
-
-Class for all Bitcoin Cash based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-### src/bsv.js
-
-
-#### new Bsv()  *private method*
-
-Class for all Bitcoin SV based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
 ### src/block.js
 
 
@@ -924,6 +884,26 @@ Retrieves the blocks metrics & statistics. If no DateRange is specified, it will
 
 
 
+### src/bch.js
+
+
+#### new Bch()  *private method*
+
+Class for all Bitcoin Cash based methods.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
 ### src/blockchain.js
 
 
@@ -984,6 +964,26 @@ const metrics = await web3data.blockchain.getMetrics()
 
 
 - `Promise.&lt;object&gt;`  The blockchain metrics.
+
+
+
+
+### src/bsv.js
+
+
+#### new Bsv()  *private method*
+
+Class for all Bitcoin SV based methods.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
 
 
 
@@ -1214,6 +1214,26 @@ const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f
 #### new Eth()  *private method*
 
 Class for all Ethereum based methods.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+### src/ltc.js
+
+
+#### new Ltc()  *private method*
+
+Class for all Litecoin based methods.
 
 
 
@@ -1640,26 +1660,6 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 -  The address(es) of the asset(s).
-
-
-
-
-### src/ltc.js
-
-
-#### new Ltc()  *private method*
-
-Class for all Litecoin based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
 
 
 
@@ -3145,12 +3145,12 @@ Sends unsubscription message to the websocket connection.
 
 
 
-### src/zec.js
+### src/xlm.js
 
 
-#### new Zec()  *private method*
+#### new Xlm()  *private method*
 
-Class for all ZCash based methods.
+Class for all Stellar based methods.
 
 
 
@@ -3165,12 +3165,12 @@ Class for all ZCash based methods.
 
 
 
-### src/xlm.js
+### src/zec.js
 
 
-#### new Xlm()  *private method*
+#### new Zec()  *private method*
 
-Class for all Stellar based methods.
+Class for all ZCash based methods.
 
 
 
