@@ -1,4 +1,6 @@
-## Installation 
+![Web3data.js Javascript API](./assets/web3data-js-logo-banner.png)
+
+## Installation
 <i>Note that you must have node (and npm) installed.</i>
 
 Using npm:
@@ -37,7 +39,7 @@ the hood.
 
 **Namespace**: `.eth`
 
-##### Example: 
+##### Example:
 ```javascript
 web3data.eth.address.getBalance('0x734Ac651Dd95a339c633cdEd410228515F97fAfF')
 ```
@@ -99,7 +101,7 @@ web3data.eth.address.getBalance('0x734Ac651Dd95a339c633cdEd410228515F97fAfF')
 </table>
 </details>
 
-##### Example: 
+##### Example:
 ```javascript
 web3data.btc.address.getBalance('1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL')
 ```
@@ -109,7 +111,7 @@ web3data.btc.address.getBalance('1MUz4VMYui5qY1mxUiG8BQ1Luv6tqkvaiL')
 **Namespace**: `.ltc`
 
 
-##### Example: 
+##### Example:
 ```javascript
 web3data.ltc.address.getBalance('LZo1qx6S5JEVh43KahTFBdvnkVFeQCz9Ze')
 ```
