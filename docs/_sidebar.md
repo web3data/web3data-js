@@ -1,8 +1,8 @@
 - [Getting Started](quick-start.md)
 - [Examples](examples.md)
 - Core Methods
-  - [web3data](api.md?id=web3datafactoryconstructorapikey-options-blockchainid-)
-  - [webSockets](api.md?id=new-websocketclient)
+  - [Web3Data](api.md?id=web3datafactoryconstructorapikey-options-blockchainid-)
+  - [Websockets](api.md?id=new-websocketclient)
   - [RPC](api.md?id=web3datafactoryrpcmethod-params)
 - Market Data Methods
   - [market.getFeatures](api.md?id=getfeaturesfeatures-filteroptions)
