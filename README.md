@@ -1,3 +1,5 @@
+![Web3data.js Javascript API](./docs/assets/web3data-js-logo-banner.png)
+
 [![Build Status](https://travis-ci.com/web3data/web3data-js.svg?branch=master)](https://travis-ci.com/web3data/web3data-js)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 [![Try web3data-js on RunKit](https://badge.runkitcdn.com/web3data-js.svg)](https://npm.runkit.com/web3data-js)
@@ -45,7 +47,7 @@ Check out the [Quick Start](quick-start.md) documentation to get started.
 
 ## Usage
 ```js
-import Web3Data from 'Web3Data'
+import Web3Data from 'web3data-js'
 
 const w3d = new Web3Data('<api-key>')
 
@@ -57,7 +59,7 @@ const w3d = new Web3Data('<api-key>')
 
 #### Websockets
 ```js
-import Web3Data from 'Web3Data'
+import Web3Data from 'web3data-js'
 
 const w3d = new Web3Data('<api-key>')
 

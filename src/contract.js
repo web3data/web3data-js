@@ -50,33 +50,6 @@ class Contract {
   }
 
   /**
-   * Alias for getSecurityAudit.
-   *
-   * @param {string} hash - The contract address.
-   * @returns {Promise<object>} The vulnerabilities audit for the specified contract.
-   * @example const signatureDetails = await web3data.signature.getAudit('0x06012c8cf97bead5deae237070f9587f8e7a266d')
-   */
-  getAudit(hash) {
-    return this.getSecurityAudit(hash)
-  }
-
-  /**
-   * Retrieves the vulnerabilities audit for the specified contract (if available).
-   *
-   * @param {string} hash - The contract address.
-   * @returns {Promise<object>} The vulnerabilities audit for the specified contract.
-   * @example const audit = await web3data.contract.getSecurityAudit('0x06012c8cf97bead5deae237070f9587f8e7a266d')
-   */
-  getSecurityAudit(hash) {
-    if (is.notHash(hash)) return Promise.reject(new Error(NO_ADDRESS))
-    return get(this.web3data, {
-      pathParam: hash,
-      endpoint: ENDPOINT,
-      subendpoint: 'audit'
-    }).then(onFulfilled, onError)
-  }
-
-  /**
    * Retrieves the contract's abi.
    *
    * @param {string} hash - The contract address.

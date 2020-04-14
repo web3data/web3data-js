@@ -136,7 +136,7 @@ class Address {
    *
    * @param {string} hash - The address of the account.
    * @param {object} [filterOptions] - The filter options associated with the request.
-   * @returns {Promise<object>}The balance data of the account or if no address is found.
+   * @returns {Promise<object>} The balance data of the account or if no address is found.
    * @example
    * const functions = await web3data.address.getFunctions('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
@@ -155,7 +155,7 @@ class Address {
    *
    * @param {string} hash - The address of the account.
    * @param {object} [filterOptions] - The filter options associated with the request.
-   * @returns {Promise<object>}Promise object containing the array of logs.
+   * @returns {Promise<object>} Promise object containing the array of logs.
    * @public
    * @example
    * const logs = await web3data.address.getLogs('0x...')

@@ -1,11 +1,12 @@
 {
   "name": "web3data-js",
-  "version": "0.7.1",
+  "version": "0.7.3",
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "browser": "dist/web3data.min.js",
   "scripts": {
     "build": "rimraf dist/web3data.min.js && rollup -c",
+    "docs:init": "docsify init ./docs",
     "docs:serve": "docsify serve ./docs",
     "docs:gen": "doxdox 'src/**/*.js' --layout markdown --output docs/api.md",
     "lint": "xo",
@@ -25,9 +26,14 @@
   "keywords": [
     "blockchain",
     "web3",
-    "data"
+    "web3data",
+    "amberdata",
+    "ethereum",
+    "bitcoin",
+    "litecoin",
+    "zcash"
   ],
-  "author": "Taylor Dawson",
+  "authors": ["@trevorjtclarke", "Taylor Dawson"],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/web3data/web3data-js/issues"
@@ -47,6 +53,7 @@
     "ava": "^3.1.0",
     "capture-console": "^1.0.1",
     "cross-env": "^7.0.0",
+    "docsify-cli": "^4.4.0",
     "dotenv": "^8.2.0",
     "doxdox": "^3.0.0",
     "doxdox-parser-dox": "github:taylorjdawson/doxdox-parser-dox",

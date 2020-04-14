@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.7.1*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.7.3*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
@@ -269,7 +269,7 @@ const functions = await web3data.address.getFunctions('0x06012c8cf97bead5deae237
 ##### Returns
 
 
--  {Promise<object>}The balance data of the account or if no address is found.
+- `Promise.&lt;object&gt;`  The balance data of the account or if no address is found.
 
 
 
@@ -300,7 +300,7 @@ const logs = await web3data.address.getLogs('0x...')
 ##### Returns
 
 
--  {Promise<object>}Promise object containing the array of logs.
+- `Promise.&lt;object&gt;`  Promise object containing the array of logs.
 
 
 
@@ -567,7 +567,57 @@ Class for all Bitcoin Cash based methods.
 
 
 
+### src/bsv.js
+
+
+#### new Bsv()  *private method*
+
+Class for all Bitcoin SV based methods.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
 ### src/block.js
+
+
+#### constructor(web3data) 
+
+Creates an instance of Block.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data | `object`  | - The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const block = new Block(new Web3Data('API_KEY'))
+```
+
+
+##### Returns
+
+
+- `Void`
+
 
 
 #### getBlock(id, filterOptions) 
@@ -601,23 +651,339 @@ Retrieves the blocks specified by its id (number or hash).
 
 
 
+#### getBlockNumber() 
 
-### src/bsv.js
-
-
-#### new Bsv()  *private method*
-
-Class for all Bitcoin SV based methods.
+Retrieves the latest block number
 
 
 
 
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `String`  block Number
+
+
+
+#### getBlockTransactionCount(id, filterOptions) 
+
+Retrieves the block transaction count for a specific block based on hash or number
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  | - The number or hash of the block for which to retrieve block information. | &nbsp; |
+| filterOptions |  | - | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+#### getTransactions(id, filterOptions) 
+
+Retrieves all transactions for a given block specified by its id (number or hash).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  | - The number or hash of the block for which to retrieve block information. | &nbsp; |
+| filterOptions |  | - | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+#### getTransactionFromBlock(id, index, filterOptions) 
+
+Retrieves a single transaction for a block specified by its id (number or hash) and transaction index.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  | - The number or hash of the block for which to retrieve block information. | &nbsp; |
+| index |  | - The number of the transaction block index | &nbsp; |
+| filterOptions |  | - | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+#### getUncle(id, index, filterOptions) 
+
+Retrieves the uncle specified by its id (number or hash).
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  | - The number or hash of the uncle | &nbsp; |
+| index |  | - The index of the uncle, in most cases this is 0-2. | &nbsp; |
+| filterOptions |  | - | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+#### getTokenTransfers(id, filterOptions) 
+
+Retrieves the block token transfers executed at a specific block
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  | - The number or hash of the block for which to retrieve block information. | &nbsp; |
+| filterOptions |  | - | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+#### getLogs(id, filterOptions) 
+
+Retrieves the block logs executed at a specific block
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  | - The number or hash of the block for which to retrieve block information. | &nbsp; |
+| filterOptions |  | - | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+#### getFunctions(id, filterOptions) 
+
+Retrieves the block functions/internalMessages executed at a specific block
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| id |  | - The number or hash of the block for which to retrieve block information. | &nbsp; |
+| filterOptions |  | - | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+#### getMetrics(filterOptions) 
+
+Retrieves the blocks metrics & statistics. If no DateRange is specified, it will return a rolling window of latest data up until now. If startDate/endDate is used, it will return historical timeseries data.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions |  | - | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  
+
+
+
+
+### src/blockchain.js
+
+
+#### constructor(web3data) 
+
+Creates an instance of Address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data | `object`  | - The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const address = new Address(new Web3Data('API_KEY'))
+```
 
 
 ##### Returns
 
 
 - `Void`
+
+
+
+#### getMetrics([filterOptions]) 
+
+Get metrics for a blockchain for a given blockchain ID. Default metrics are for Ethereum over a 24h period.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions | `object`  | - The filters associated with the request. See [API docs](https://docs.amberdata.io/reference#blockchains-metrics-latest) for details. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+const metrics = await web3data.blockchain.getMetrics()
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;object&gt;`  The blockchain metrics.
 
 
 
@@ -751,66 +1117,6 @@ const functions = await web3data.contract.getFunctions('0x06012c8cf97bead5deae23
 
 
 
-#### Contract.getAudit(hash) 
-
-Alias for getSecurityAudit.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The contract address. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const signatureDetails = await web3data.signature.getAudit('0x06012c8cf97bead5deae237070f9587f8e7a266d')
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;object&gt;`  The vulnerabilities audit for the specified contract.
-
-
-
-#### Contract.getSecurityAudit(hash) 
-
-Retrieves the vulnerabilities audit for the specified contract (if available).
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The contract address. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const audit = await web3data.contract.getSecurityAudit('0x06012c8cf97bead5deae237070f9587f8e7a266d')
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;object&gt;`  The vulnerabilities audit for the specified contract.
-
-
-
 #### Contract.getAbi(hash) 
 
 Retrieves the contract's abi.
@@ -908,26 +1214,6 @@ const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f
 #### new Eth()  *private method*
 
 Class for all Ethereum based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-### src/ltc.js
-
-
-#### new Ltc()  *private method*
-
-Class for all Litecoin based methods.
 
 
 
@@ -1354,6 +1640,26 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 -  The address(es) of the asset(s).
+
+
+
+
+### src/ltc.js
+
+
+#### new Ltc()  *private method*
+
+Class for all Litecoin based methods.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
 
 
 
@@ -2839,12 +3145,12 @@ Sends unsubscription message to the websocket connection.
 
 
 
-### src/xlm.js
+### src/zec.js
 
 
-#### new Xlm()  *private method*
+#### new Zec()  *private method*
 
-Class for all Stellar based methods.
+Class for all ZCash based methods.
 
 
 
@@ -2859,12 +3165,12 @@ Class for all Stellar based methods.
 
 
 
-### src/zec.js
+### src/xlm.js
 
 
-#### new Zec()  *private method*
+#### new Xlm()  *private method*
 
-Class for all ZCash based methods.
+Class for all Stellar based methods.
 
 
 
