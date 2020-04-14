@@ -547,6 +547,26 @@ const metrics = await web3data.address.getMetrics('0x3f5ce5fbfe3e9af3971dd833d26
 
 
 
+### src/bch.js
+
+
+#### new Bch()  *private method*
+
+Class for all Bitcoin Cash based methods.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
 ### src/block.js
 
 
@@ -884,12 +904,12 @@ Retrieves the blocks metrics & statistics. If no DateRange is specified, it will
 
 
 
-### src/bch.js
+### src/btc.js
 
 
-#### new Bch()  *private method*
+#### new Btc()  *private method*
 
-Class for all Bitcoin Cash based methods.
+Class for all Bitcoin based methods.
 
 
 
@@ -974,26 +994,6 @@ const metrics = await web3data.blockchain.getMetrics()
 #### new Bsv()  *private method*
 
 Class for all Bitcoin SV based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-### src/btc.js
-
-
-#### new Btc()  *private method*
-
-Class for all Bitcoin based methods.
 
 
 
@@ -1208,26 +1208,6 @@ const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f
 
 
 
-### src/eth.js
-
-
-#### new Eth()  *private method*
-
-Class for all Ethereum based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
 ### src/ltc.js
 
 
@@ -1244,6 +1224,86 @@ Class for all Litecoin based methods.
 
 
 - `Void`
+
+
+
+
+### src/signature.js
+
+
+#### new Signature() 
+
+Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Signature.constructor(web3data) 
+
+Creates an instance of Signature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data | `object`  | - The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+new Signature(new Web3Data('API_KEY'))
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Signature.getSignature(hash) 
+
+Retrieves detailed information about the specified signature hash.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
 
 
 
@@ -1664,82 +1724,22 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
-### src/signature.js
+### src/eth.js
 
 
-#### new Signature() 
+#### new Eth()  *private method*
 
-Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Signature.constructor(web3data) 
-
-Creates an instance of Signature.
+Class for all Ethereum based methods.
 
 
 
 
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data | `object`  | - The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-new Signature(new Web3Data('API_KEY'))
-```
 
 
 ##### Returns
 
 
 - `Void`
-
-
-
-#### Signature.getSignature(hash) 
-
-Retrieves detailed information about the specified signature hash.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
 
 
 
