@@ -567,26 +567,6 @@ Class for all Bitcoin Cash based methods.
 
 
 
-### src/bsv.js
-
-
-#### new Bsv()  *private method*
-
-Class for all Bitcoin SV based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
 ### src/block.js
 
 
@@ -653,7 +633,7 @@ Retrieves the blocks specified by its id (number or hash).
 
 #### getBlockNumber() 
 
-Retrieves the latest block number
+Retrieves the latest block number.
 
 
 
@@ -670,13 +650,13 @@ Retrieves the latest block number
 ##### Returns
 
 
-- `String`  block Number
+- `string`  Block Number.
 
 
 
 #### getBlockTransactionCount(id, filterOptions) 
 
-Retrieves the block transaction count for a specific block based on hash or number
+Retrieves the block transaction count for a specific block based on hash or number.
 
 
 
@@ -748,7 +728,7 @@ Retrieves a single transaction for a block specified by its id (number or hash) 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
 | id |  | - The number or hash of the block for which to retrieve block information. | &nbsp; |
-| index |  | - The number of the transaction block index | &nbsp; |
+| index |  | - The number of the transaction block index. | &nbsp; |
 | filterOptions |  | - | &nbsp; |
 
 
@@ -779,7 +759,7 @@ Retrieves the uncle specified by its id (number or hash).
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| id |  | - The number or hash of the uncle | &nbsp; |
+| id |  | - The number or hash of the uncle. | &nbsp; |
 | index |  | - The index of the uncle, in most cases this is 0-2. | &nbsp; |
 | filterOptions |  | - | &nbsp; |
 
@@ -802,7 +782,7 @@ Retrieves the uncle specified by its id (number or hash).
 
 #### getTokenTransfers(id, filterOptions) 
 
-Retrieves the block token transfers executed at a specific block
+Retrieves the block token transfers executed at a specific block.
 
 
 
@@ -833,7 +813,7 @@ Retrieves the block token transfers executed at a specific block
 
 #### getLogs(id, filterOptions) 
 
-Retrieves the block logs executed at a specific block
+Retrieves the block logs executed at a specific block.
 
 
 
@@ -864,7 +844,7 @@ Retrieves the block logs executed at a specific block
 
 #### getFunctions(id, filterOptions) 
 
-Retrieves the block functions/internalMessages executed at a specific block
+Retrieves the block functions/internalMessages executed at a specific block.
 
 
 
@@ -984,6 +964,26 @@ const metrics = await web3data.blockchain.getMetrics()
 
 
 - `Promise.&lt;object&gt;`  The blockchain metrics.
+
+
+
+
+### src/bsv.js
+
+
+#### new Bsv()  *private method*
+
+Class for all Bitcoin SV based methods.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
 
 
 
@@ -1244,6 +1244,86 @@ Class for all Litecoin based methods.
 
 
 - `Void`
+
+
+
+
+### src/signature.js
+
+
+#### new Signature() 
+
+Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Signature.constructor(web3data) 
+
+Creates an instance of Signature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data | `object`  | - The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+new Signature(new Web3Data('API_KEY'))
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Signature.getSignature(hash) 
+
+Retrieves detailed information about the specified signature hash.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
 
 
 
@@ -1664,86 +1744,6 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
-### src/signature.js
-
-
-#### new Signature() 
-
-Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Signature.constructor(web3data) 
-
-Creates an instance of Signature.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data | `object`  | - The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-new Signature(new Web3Data('API_KEY'))
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Signature.getSignature(hash) 
-
-Retrieves detailed information about the specified signature hash.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
-
-
-
-
 ### src/token.js
 
 
@@ -2017,196 +2017,6 @@ const transfers = await web3data.token.getTransfers('0x06012c8cf97bead5deae23707
 
 
 - `Promise.&lt;Array&gt;`  All token transfers involving the specified address.
-
-
-
-
-### src/utils.js
-
-
-#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)  *private method*
-
-Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
-the appropriate parameter(s) where applicable.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  | - Instance on which to call .rawQuery(). | &nbsp; |
-| subendpoint |  | - The sub-endpoint. | &nbsp; |
-| endpoint |  | - The endpoint. | &nbsp; |
-| hash |  | - The address hash. | &nbsp; |
-| pathParam |  | - The path parameter. | &nbsp; |
-| filterOptions |  | - The filters associated with a given endpoint. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns a Promise of the rawQuery request from web3data.
-
-
-
-#### onFulfilled(response)  *private method*
-
-Handler for all request responses.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| response |  | - The Axios response object. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The data from the response.
-
-
-
-#### uuid(data)  *private method*
-
-Generates a uuid see [this gist]() for more details.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| data |  |  | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### getMethods(obj)  *private method*
-
-Returns an array of methods defined on the object.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| obj |  | - The object from which get methods. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  An array of method names.
-
-
-
-#### ethFactory(web3data)  *private method*
-
-Creates an object containing Ethereum based methods.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data |  | - { object } The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  methods { object } an object containing Ethereum based methods.
-
-
-
-#### formatJsonRpc(options)  *private method*
-
-Creates a string in json rpc format.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| options |  | - The json rpc options. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The json rpc formatted string.
 
 
 
@@ -2521,6 +2331,197 @@ const metrics = await web3data.transaction.getMetrics()
 
 
 
+### src/utils.js
+
+
+#### get(web3data, subendpoint, endpoint, hash, pathParam, filterOptions)  *private method*
+
+Builds the endpoint url to pass to .rawQuery(). Checks for non empties and appends
+the appropriate parameter(s) where applicable.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  | - Instance on which to call .rawQuery(). | &nbsp; |
+| subendpoint |  | - The sub-endpoint. | &nbsp; |
+| endpoint |  | - The endpoint. | &nbsp; |
+| hash |  | - The address hash. | &nbsp; |
+| pathParam |  | - The path parameter. | &nbsp; |
+| filterOptions |  | - The filters associated with a given endpoint. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns a Promise of the rawQuery request from web3data.
+
+
+
+#### onFulfilled(response)  *private method*
+
+Handler for all request responses.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| response |  | - The Axios response object. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The data from the response.
+
+
+
+#### uuid(data)  *private method*
+
+Generates a uuid see [this gist]() for more details.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| data |  |  | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### getMethods(object, obj)  *private method*
+
+Returns an array of methods defined on the object.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| object |  |  | &nbsp; |
+| obj |  | - The object from which get methods. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  An array of method names.
+
+
+
+#### ethFactory(web3data)  *private method*
+
+Creates an object containing Ethereum based methods.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data |  | - { object } The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  methods { object } an object containing Ethereum based methods.
+
+
+
+#### formatJsonRpc(options)  *private method*
+
+Creates a string in json rpc format.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| options |  | - The json rpc options. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The json rpc formatted string.
+
+
+
+
 ### src/web3data.js
 
 
@@ -2605,7 +2606,7 @@ http request to the Amberdata API endpoint.
 
 
 
-#### Web3DataFactory.rpc(method, params) 
+#### Web3DataFactory.rpc(method, parameters, params) 
 
 Method used to interact with web3api json rpc endpoints.
 
@@ -2617,6 +2618,7 @@ Method used to interact with web3api json rpc endpoints.
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
 | method |  | - The json rpc method to call. | &nbsp; |
+| parameters |  |  | &nbsp; |
 | params |  | - The parameters to the json rpc call. | &nbsp; |
 
 
@@ -3145,12 +3147,12 @@ Sends unsubscription message to the websocket connection.
 
 
 
-### src/zec.js
+### src/xlm.js
 
 
-#### new Zec()  *private method*
+#### new Xlm()  *private method*
 
-Class for all ZCash based methods.
+Class for all Stellar based methods.
 
 
 
@@ -3165,12 +3167,12 @@ Class for all ZCash based methods.
 
 
 
-### src/xlm.js
+### src/zec.js
 
 
-#### new Xlm()  *private method*
+#### new Zec()  *private method*
 
-Class for all Stellar based methods.
+Class for all ZCash based methods.
 
 
 

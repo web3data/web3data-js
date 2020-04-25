@@ -85,7 +85,7 @@ class Contract {
    * @example const code = await web3data.contract.getCode('0x06012c8cf97bead5deae237070f9587f8e7a266d')
    */
   getCode(hash) {
-    return this.getDetails(hash).then(details => details.bytecode || '0x')
+    return this.getDetails(hash).then((details) => details.bytecode || '0x')
   }
 }
 

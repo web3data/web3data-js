@@ -57,20 +57,20 @@ class Block {
   }
 
   /**
-   * Retrieves the latest block number
+   * Retrieves the latest block number.
    *
-   * @returns {String} block Number
+   * @returns {string} Block Number.
    * @example
    */
   getBlockNumber() {
-    return this.web3data.block.getBlock('latest').then(block => {
+    return this.web3data.block.getBlock('latest').then((block) => {
       throwIf(block | !block.number, 'Failed to retrieve block number.')
-      return parseInt(block.number, 10)
+      return Number.parseInt(block.number, 10)
     })
   }
 
   /**
-   * Retrieves the block transaction count for a specific block based on hash or number
+   * Retrieves the block transaction count for a specific block based on hash or number.
    *
    * @param id - The number or hash of the block for which to retrieve block information.
    * @param [filterOptions] -
@@ -78,13 +78,15 @@ class Block {
    * @example
    */
   getBlockTransactionCount(id) {
-    return this.web3data.block.getBlock(id).then(block => {
+    return this.web3data.block.getBlock(id).then((block) => {
       throwIf(
         !block || (!block.predictions && !block.numTransactions),
         'Failed to retrieve block transaction count.'
       )
       // If 'predictions' field exists then it's a future block thus has no txns
-      return block.predictions ? null : parseInt(block.numTransactions, 10)
+      return block.predictions
+        ? null
+        : Number.parseInt(block.numTransactions, 10)
     })
   }
 
@@ -110,14 +112,14 @@ class Block {
    * Retrieves a single transaction for a block specified by its id (number or hash) and transaction index.
    *
    * @param id - The number or hash of the block for which to retrieve block information.
-   * @param index - The number of the transaction block index
+   * @param index - The number of the transaction block index.
    * @param [filterOptions] -
    * @returns
    * @example
    */
   getTransactionFromBlock(id, index) {
     throwIf(is.undefined(id), NO_BLOCK_ID)
-    return this.web3data.block.getTransactions(id).then(txns => {
+    return this.web3data.block.getTransactions(id).then((txns) => {
       throwIf(!txns, 'Failed to retrieve transaction.')
 
       // Check that 'index' is within valid range
@@ -128,7 +130,7 @@ class Block {
   /**
    * Retrieves the uncle specified by its id (number or hash).
    *
-   * @param id - The number or hash of the uncle
+   * @param id - The number or hash of the uncle.
    * @param index - The index of the uncle, in most cases this is 0-2.
    * @param [filterOptions] -
    * @returns
@@ -141,7 +143,7 @@ class Block {
       .getBlock(id, {
         validationMethod: 'full'
       })
-      .then(block => {
+      .then((block) => {
         throwIf(
           !block ||
             (!block.predictions && !block.numTransactions && !block.validation),
@@ -161,7 +163,7 @@ class Block {
   }
 
   /**
-   * Retrieves the block token transfers executed at a specific block
+   * Retrieves the block token transfers executed at a specific block.
    *
    * @param id - The number or hash of the block for which to retrieve block information.
    * @param [filterOptions] -
@@ -179,7 +181,7 @@ class Block {
   }
 
   /**
-   * Retrieves the block logs executed at a specific block
+   * Retrieves the block logs executed at a specific block.
    *
    * @param id - The number or hash of the block for which to retrieve block information.
    * @param [filterOptions] -
@@ -197,7 +199,7 @@ class Block {
   }
 
   /**
-   * Retrieves the block functions/internalMessages executed at a specific block
+   * Retrieves the block functions/internalMessages executed at a specific block.
    *
    * @param id - The number or hash of the block for which to retrieve block information.
    * @param [filterOptions] -

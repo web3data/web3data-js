@@ -17,8 +17,8 @@ class Zec {
   }
 
   /* See Web3Data class for details on rpc method */
-  rpc(method, params) {
-    return this.web3data.rpc(method, params)
+  rpc(method, parameters) {
+    return this.web3data.rpc(method, parameters)
   }
 }
 
