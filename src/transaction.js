@@ -85,7 +85,7 @@ class Transaction {
    */
   getPendingTransactions() {
     return this.getTransactions({status: 'pending'}).then(
-      pendingTransactions => {
+      (pendingTransactions) => {
         throwIf(
           is.undefined(pendingTransactions) || is.null(pendingTransactions),
           'Failed to retrieve pending transactions.'
@@ -135,7 +135,7 @@ class Transaction {
    * const gasPrice = await web3data.transaction.getGasPrice()
    */
   getGasPrice() {
-    return this.getGasPrediction().then(gasPrediction => {
+    return this.getGasPrediction().then((gasPrediction) => {
       throwIf(
         !gasPrediction.average || !gasPrediction.average.gasPrice,
         'Failed to retrieve gas price.'

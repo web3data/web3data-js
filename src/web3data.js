@@ -90,30 +90,31 @@ http request to the Amberdata API endpoint.
       .get(this.baseUrl + url, {
         headers: this.headers
       })
-      .then(r => r.data)
+      .then((r) => r.data)
   }
 
   /**
    * Method used to interact with web3api json rpc endpoints.
    *
    * @param method - The json rpc method to call.
+   * @param parameters
    * @param params - The parameters to the json rpc call.
    * @returns Returns the json rpc result.
    * @example
    */
-  rpc(method, params = []) {
+  rpc(method, parameters = []) {
     throwIf(!method, ERROR_RPC_NO_METHOD)
     return axios
       .post(
         `${DEFAULT_RPC_URL}?${API_KEY_HEADER}=${this.apiKey}&${BLOCKCHAIN_ID_HEADER}=${this.blockchainId}`,
-        formatJsonRpc({method, params}),
+        formatJsonRpc({method, params: parameters}),
         {
           headers: this.headers
         }
       )
       .then(
-        response => response.data,
-        response => response.response.data
+        (response) => response.data,
+        (response) => response.response.data
       )
   }
 }
