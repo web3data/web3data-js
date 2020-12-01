@@ -30,7 +30,7 @@ class Market {
   async getEtherPrice() {
     return get(this.web3data, {
       endpoint: ENDPOINT + '/spot/prices/pairs/eth_usd/latest'
-    }).then(response => response.payload.price, onError)
+    }).then((response) => response.payload.price, onError)
   }
 
   /**
@@ -71,7 +71,7 @@ class Market {
     features = Array.isArray(features) ? features : [features]
 
     // Iterate through each feature and if all is valid return array of promises
-    features = features.map(feature => {
+    features = features.map((feature) => {
       // Check each feature that it is valid
       throwIf(is.undefined(feature) || !FEATURES.includes(feature), NO_FEATURE)
 
@@ -98,12 +98,12 @@ class Market {
           .then(onFulfilled, onError)
           // Return an object with 'feature' as the key and response the value
           // .split('/')[0] removes the extra endpoint added above in switch
-          .then(response => ({[feature.split('/')[0]]: response}))
+          .then((response) => ({[feature.split('/')[0]]: response}))
       )
     })
 
     // Returns array of promises that once resolved are merged into a single object
-    return Promise.all([...features]).then(data =>
+    return Promise.all([...features]).then((data) =>
       data.reduce((accumObject, curObject) => ({...accumObject, ...curObject}))
     )
   }
@@ -146,7 +146,7 @@ class Market {
   getOrders(pair, exchange, filterOptions = {}) {
     throwIf(is.undefined(pair), NO_MARKET_PAIR)
     exchange = Array.isArray(exchange) ? exchange : [exchange]
-    exchange.forEach(exchange =>
+    exchange.forEach((exchange) =>
       throwIf(is.undefined(exchange), 'No exchange specified')
     )
     filterOptions.exchange = exchange

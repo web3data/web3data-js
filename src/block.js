@@ -63,7 +63,7 @@ class Block {
    * @example
    */
   getBlockNumber() {
-    return this.web3data.block.getBlock('latest').then(block => {
+    return this.web3data.block.getBlock('latest').then((block) => {
       throwIf(block | !block.number, 'Failed to retrieve block number.')
       return Number.parseInt(block.number, 10)
     })
@@ -78,7 +78,7 @@ class Block {
    * @example
    */
   getBlockTransactionCount(id) {
-    return this.web3data.block.getBlock(id).then(block => {
+    return this.web3data.block.getBlock(id).then((block) => {
       throwIf(
         !block || (!block.predictions && !block.numTransactions),
         'Failed to retrieve block transaction count.'
@@ -119,7 +119,7 @@ class Block {
    */
   getTransactionFromBlock(id, index) {
     throwIf(is.undefined(id), NO_BLOCK_ID)
-    return this.web3data.block.getTransactions(id).then(txns => {
+    return this.web3data.block.getTransactions(id).then((txns) => {
       throwIf(!txns, 'Failed to retrieve transaction.')
 
       // Check that 'index' is within valid range
@@ -143,7 +143,7 @@ class Block {
       .getBlock(id, {
         validationMethod: 'full'
       })
-      .then(block => {
+      .then((block) => {
         throwIf(
           !block ||
             (!block.predictions && !block.numTransactions && !block.validation),

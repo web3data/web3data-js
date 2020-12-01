@@ -1248,86 +1248,6 @@ Class for all Litecoin based methods.
 
 
 
-### src/signature.js
-
-
-#### new Signature() 
-
-Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Signature.constructor(web3data) 
-
-Creates an instance of Signature.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data | `object`  | - The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-new Signature(new Web3Data('API_KEY'))
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Signature.getSignature(hash) 
-
-Retrieves detailed information about the specified signature hash.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
-
-
-
-
 ### src/market.js
 
 
@@ -2328,6 +2248,86 @@ const metrics = await web3data.transaction.getMetrics()
 
 
 -  Metrics for recent confirmed transactions.
+
+
+
+
+### src/signature.js
+
+
+#### new Signature() 
+
+Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Signature.constructor(web3data) 
+
+Creates an instance of Signature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data | `object`  | - The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+new Signature(new Web3Data('API_KEY'))
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Signature.getSignature(hash) 
+
+Retrieves detailed information about the specified signature hash.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
 
 
 
