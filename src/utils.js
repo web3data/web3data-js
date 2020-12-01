@@ -37,7 +37,7 @@ const get = (
   )
 }
 
-const buildFilterUrl = (filterOptions) => {
+const buildFilterUrl = filterOptions => {
   let filterUrl = ''
   for (const filter in filterOptions) {
     if ({}.hasOwnProperty.call(filterOptions, filter)) {
@@ -52,7 +52,7 @@ const throwIf = (bool, message) => {
   if (bool) throw new Error(message)
 }
 
-const throwNow = (message) => throwIf(true, message)
+const throwNow = message => throwIf(true, message)
 
 /**
  * Handler for all request responses.
@@ -62,7 +62,7 @@ const throwNow = (message) => throwIf(true, message)
  * @private
  * @example
  */
-const onFulfilled = function (response) {
+const onFulfilled = function(response) {
   throwIf(response.error, response.message)
   return this && this.formatter
     ? this.formatter(response.payload)
@@ -77,18 +77,18 @@ const rejectPromiseIf = (condition, message) => {
 }
 
 const is = () => {}
-is.string = (value) => typeof value === 'string'
-is.bool = (value) => typeof value === 'boolean'
-is.emptyString = (value) => is.string(value) && value.length === 0
-is.emptyObject = (object) => Object.keys(object).length === 0
+is.string = value => typeof value === 'string'
+is.bool = value => typeof value === 'boolean'
+is.emptyString = value => is.string(value) && value.length === 0
+is.emptyObject = object => Object.keys(object).length === 0
 is.inObject = (object, property) =>
   Object.prototype.hasOwnProperty.call(object, property)
-is.undefined = (value) => typeof value === 'undefined'
-is.null = (value) => value === null
-is.notHash = (hash) => is.undefined(hash) || is.emptyString(hash)
-is.notUndefined = (value) => !is.undefined(value)
-is.nonEmptyObject = (object) => !is.emptyObject(object)
-is.nonEmptyString = (value) => !is.emptyString(value)
+is.undefined = value => typeof value === 'undefined'
+is.null = value => value === null
+is.notHash = hash => is.undefined(hash) || is.emptyString(hash)
+is.notUndefined = value => !is.undefined(value)
+is.nonEmptyObject = object => !is.emptyObject(object)
+is.nonEmptyString = value => !is.emptyString(value)
 is.notInObject = (object, property) => !is.inObject(object, property)
 
 /**
@@ -98,7 +98,7 @@ is.notInObject = (object, property) => !is.inObject(object, property)
  * @example
  * @private
  */
-const uuid = (data) =>
+const uuid = data =>
   _uuid(JSON.stringify(data), 'ccfeca02-f0e9-4433-a740-b830cceb3d2d')
 
 /**
@@ -110,9 +110,9 @@ const uuid = (data) =>
  * @private
  * @example
  */
-const getMethods = (object) =>
+const getMethods = object =>
   Object.getOwnPropertyNames(object).filter(
-    (item) => typeof object[item] === 'function' && item !== 'constructor'
+    item => typeof object[item] === 'function' && item !== 'constructor'
   )
 
 /**
@@ -123,7 +123,7 @@ const getMethods = (object) =>
  * @private
  * @example
  */
-const ethFactory = function (web3data) {
+const ethFactory = function(web3data) {
   const methods = {}
 
   for (const method in ETH_METHODS) {
@@ -149,9 +149,9 @@ correct namespacing.
  * @example
  */
 const methodFactory = (_this, includeMethods) => {
-  Object.keys(includeMethods).forEach((namespace) => {
+  Object.keys(includeMethods).forEach(namespace => {
     getMethods(Object.getPrototypeOf(_this.web3data[namespace])).forEach(
-      (method) => {
+      method => {
         if (includeMethods[namespace].includes(method)) {
           _this[namespace] = _this[namespace] ? _this[namespace] : {}
           _this[namespace][method] = _this.web3data[namespace][method].bind(
@@ -173,7 +173,7 @@ const methodFactory = (_this, includeMethods) => {
  * @example
  *
  */
-const formatJsonRpc = (options) => {
+const formatJsonRpc = options => {
   if (!options) return ''
   if (options.params) {
     options.params = Array.isArray(options.params)
@@ -193,7 +193,7 @@ const defaultFormatter = (response, field) => {
   return response && response[field] ? response[field] : response
 }
 
-const recordsFormatter = (response) => defaultFormatter(response, 'records')
+const recordsFormatter = response => defaultFormatter(response, 'records')
 
 module.exports = {
   buildFilterUrl,

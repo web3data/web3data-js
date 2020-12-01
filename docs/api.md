@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.7.3*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.7.4*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
@@ -1248,86 +1248,6 @@ Class for all Litecoin based methods.
 
 
 
-### src/signature.js
-
-
-#### new Signature() 
-
-Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Signature.constructor(web3data) 
-
-Creates an instance of Signature.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data | `object`  | - The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-new Signature(new Web3Data('API_KEY'))
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Signature.getSignature(hash) 
-
-Retrieves detailed information about the specified signature hash.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
-
-
-
-
 ### src/market.js
 
 
@@ -1580,7 +1500,7 @@ const histBbos = await web3data.market.getBbos('eth_btc', {startDate: Math.round
 
 
 
-#### getPrices(base, filterOptions) 
+#### getPrices(base, pair, filterOptions) 
 
 Retrieves the historical prices for the specified asset.
 
@@ -1592,6 +1512,7 @@ Retrieves the historical prices for the specified asset.
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
 | base |  | - The base of a pair to retrieve the price. Example: If pair is "eth_usd", then base is "eth". | &nbsp; |
+| pair |  |  | &nbsp; |
 | filterOptions |  | - The filter options. See [docs](https://docs.amberdata.io/reference#market-prices-latest) for more details. | &nbsp; |
 
 
@@ -2017,6 +1938,86 @@ const transfers = await web3data.token.getTransfers('0x06012c8cf97bead5deae23707
 
 
 - `Promise.&lt;Array&gt;`  All token transfers involving the specified address.
+
+
+
+
+### src/signature.js
+
+
+#### new Signature() 
+
+Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Signature.constructor(web3data) 
+
+Creates an instance of Signature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data | `object`  | - The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+new Signature(new Web3Data('API_KEY'))
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Signature.getSignature(hash) 
+
+Retrieves detailed information about the specified signature hash.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
 
 
 

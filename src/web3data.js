@@ -90,7 +90,7 @@ http request to the Amberdata API endpoint.
       .get(this.baseUrl + url, {
         headers: this.headers
       })
-      .then((r) => r.data)
+      .then(r => r.data)
   }
 
   /**
@@ -113,8 +113,8 @@ http request to the Amberdata API endpoint.
         }
       )
       .then(
-        (response) => response.data,
-        (response) => response.response.data
+        response => response.data,
+        response => response.response.data
       )
   }
 }

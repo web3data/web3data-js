@@ -29,8 +29,8 @@ class Market {
    */
   async getEtherPrice() {
     return get(this.web3data, {
-      endpoint: ENDPOINT + '/prices/eth/latest'
-    }).then((response) => response.payload.eth_usd.price, onError)
+      endpoint: ENDPOINT + '/spot/prices/pairs/eth_usd/latest'
+    }).then(response => response.payload.price, onError)
   }
 
   /**
@@ -71,7 +71,7 @@ class Market {
     features = Array.isArray(features) ? features : [features]
 
     // Iterate through each feature and if all is valid return array of promises
-    features = features.map((feature) => {
+    features = features.map(feature => {
       // Check each feature that it is valid
       throwIf(is.undefined(feature) || !FEATURES.includes(feature), NO_FEATURE)
 
@@ -98,12 +98,12 @@ class Market {
           .then(onFulfilled, onError)
           // Return an object with 'feature' as the key and response the value
           // .split('/')[0] removes the extra endpoint added above in switch
-          .then((response) => ({[feature.split('/')[0]]: response}))
+          .then(response => ({[feature.split('/')[0]]: response}))
       )
     })
 
     // Returns array of promises that once resolved are merged into a single object
-    return Promise.all([...features]).then((data) =>
+    return Promise.all([...features]).then(data =>
       data.reduce((accumObject, curObject) => ({...accumObject, ...curObject}))
     )
   }
@@ -146,7 +146,7 @@ class Market {
   getOrders(pair, exchange, filterOptions = {}) {
     throwIf(is.undefined(pair), NO_MARKET_PAIR)
     exchange = Array.isArray(exchange) ? exchange : [exchange]
-    exchange.forEach((exchange) =>
+    exchange.forEach(exchange =>
       throwIf(is.undefined(exchange), 'No exchange specified')
     )
     filterOptions.exchange = exchange
@@ -210,6 +210,7 @@ class Market {
    * Retrieves the historical prices for the specified asset.
    *
    * @param base - The base of a pair to retrieve the price. Example: If pair is "eth_usd", then base is "eth".
+   * @param pair
    * @param [filterOptions] - The filter options. See [docs](https://docs.amberdata.io/reference#market-prices-latest) for more details.
    * @returns The latest or historical market prices indexed by pair.
    * @example // Latest
@@ -218,13 +219,13 @@ class Market {
    * // Historical (1 day ago)
    * const histPrices = await web3data.market.getPrices('eth', {startDate:  Math.round((Date.now() - 86400000) /1000)})
    */
-  getPrices(base, filterOptions = {}) {
-    throwIf(is.undefined(base), NO_MARKET_PAIR)
+  getPrices(pair, filterOptions = {}) {
+    throwIf(is.undefined(pair), NO_MARKET_PAIR)
     const subendpoint =
       filterOptions.startDate || filterOptions.endDate ? 'historical' : 'latest'
     return get(this.web3data, {
-      pathParam: base,
-      endpoint: `${ENDPOINT}/prices`,
+      pathParam: pair,
+      endpoint: `${ENDPOINT}/spot/prices/pairs`,
       subendpoint,
       filterOptions
     }).then(onFulfilled, onError)

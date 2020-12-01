@@ -10,7 +10,7 @@ const {is, uuid} = require('./utils')
  * @private
  * @example
  */
-const formatJsonRpc = (options) => {
+const formatJsonRpc = options => {
   if (!options) return ''
   if (options.params) {
     options.params = Array.isArray(options.params)
@@ -40,7 +40,7 @@ const RESPONSE_TYPE = {
  * @private
  * @example
  */
-const responseType = (message) => {
+const responseType = message => {
   if (message.params) {
     return RESPONSE_TYPE.DATA
   }
@@ -118,7 +118,7 @@ class WebSocketClient {
     )
 
     // Initialize connection attempt
-    this.socket.addEventListener('open', (result) => {
+    this.socket.addEventListener('open', result => {
       console.info('websocket client connection opened')
 
       this.connected = true
@@ -148,7 +148,7 @@ class WebSocketClient {
       }, NO_DATA_TIMEOUT)
     })
 
-    this.socket.addEventListener('error', (err) => {
+    this.socket.addEventListener('error', err => {
       if (callBack && err) {
         callBack('connection error occurred', err)
       } else {
@@ -158,7 +158,7 @@ class WebSocketClient {
       this._reconnect()
     })
 
-    this.socket.addEventListener('close', (data) => {
+    this.socket.addEventListener('close', data => {
       console.info('Websocket client connection closed - code', data.code)
       this._reconnect()
     })
@@ -221,7 +221,7 @@ class WebSocketClient {
    * @example
    */
   once({eventName, filters}, callback) {
-    this.on({eventName, filters}, (data) => {
+    this.on({eventName, filters}, data => {
       this.off({eventName, filters}, () => {})
       if (callback) callback(data)
 
@@ -304,7 +304,7 @@ and has at least 1 successful subscription.
    * @example
    */
   _listen() {
-    this.socket.addEventListener('message', (message) => {
+    this.socket.addEventListener('message', message => {
       let data
       try {
         data = JSON.parse(message.data)

@@ -3,7 +3,7 @@ import {
   TOKEN_ADDRESS, DATES
 } from "./constants";
 import { setUpPolly, isISOFormat, getNewWeb3DataInstance } from "./utils";
-import { ERROR_MESSAGE_MARKET_NO_PAIR as NO_PAIR,  MARKET_FEATURES} from "../src/constants";
+import { ERROR_MESSAGE_MARKET_NO_PAIR as NO_PAIR, MARKET_FEATURES } from "../src/constants";
 
 /***********************************
  * -------- Tests Setup ---------- *
@@ -42,7 +42,7 @@ test('Successfully gets market rankings', async t => {
 })
 
 test('Successfully gets market rankings - with filters', async t => {
-  const rankings = await t.context.web3data.market.getRankings({sortType: 'uniqueAddresses'})
+  const rankings = await t.context.web3data.market.getRankings({ sortType: 'uniqueAddresses' })
   t.true(rankings.hasProp('data'))
   t.true(Array.isArray(rankings.data))
   t.regex(rankings.data[0].changeInPriceDaily, /\d+\.?\d*/)
@@ -52,7 +52,7 @@ test('Successfully gets market rankings - with filters', async t => {
 test('Successfully gets market features - all', async t => {
   const features = await t.context.web3data.market.getFeatures()
   // Check each features name spacing
-  MARKET_FEATURES.forEach( feature => t.true(features.hasProp(feature)))
+  MARKET_FEATURES.forEach(feature => t.true(features.hasProp(feature)))
 })
 
 test('Successfully gets market features - single string param', async t => {
@@ -82,7 +82,7 @@ test('Successfully gets market features - array param', async t => {
 })
 
 test('Successfully gets market features - with filters', async t => {
-  const features = await t.context.web3data.market.getFeatures('ohlcv', {exchange: 'gdax'})
+  const features = await t.context.web3data.market.getFeatures('ohlcv', { exchange: 'gdax' })
   t.true(features.hasProp('ohlcv'))
 
   // Check that filtered exchange exists
@@ -100,7 +100,7 @@ test('Successfully gets latest ohlcv', async t => {
 })
 
 test('Successfully gets latest ohlcv - with filters', async t => {
-  const ohlcv = await t.context.web3data.market.getOhlcv('eth_btc', {exchange: 'bitfinex'})
+  const ohlcv = await t.context.web3data.market.getOhlcv('eth_btc', { exchange: 'bitfinex' })
   t.is(ohlcv.values().length, 1)
   t.true(ohlcv.hasProp('bitfinex'))
   t.true(ohlcv.bitfinex.hasProp('open'))
@@ -108,7 +108,7 @@ test('Successfully gets latest ohlcv - with filters', async t => {
 })
 
 test('Successfully gets historical ohlcv', async t => {
-  const ohlcv = await t.context.web3data.market.getOhlcv('eth_btc', {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]})
+  const ohlcv = await t.context.web3data.market.getOhlcv('eth_btc', { startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"] })
   t.true(ohlcv.hasProp('metadata'))
   t.regex(Object.values(ohlcv.data)[0].toString(), /\d+\.?\d*/)
 })
@@ -116,7 +116,7 @@ test('Successfully gets historical ohlcv', async t => {
 test('throws exception when calling getOhlcv without pair param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getOrders()
-  }, { instanceOf: Error, message: NO_PAIR})
+  }, { instanceOf: Error, message: NO_PAIR })
 })
 
 /*********** Test getOrders() ***********/
@@ -147,13 +147,13 @@ test('Successfully gets orders - with filters', async t => {
 test('throws exception when calling getOrders without pair param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getOrders()
-  }, { instanceOf: Error, message: NO_PAIR})
+  }, { instanceOf: Error, message: NO_PAIR })
 })
 
 test('throws exception when calling getOrders without exchange param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getOrders('eth_btc')
-  }, { instanceOf: Error, message: 'No exchange specified'})
+  }, { instanceOf: Error, message: 'No exchange specified' })
 })
 
 /*********** Test getBbos() ***********/
@@ -164,7 +164,7 @@ test.skip('Successfully gets latest bbos', async t => {
   t.true(exchangePairBbo.hasProp('price'))
 })
 test('Successfully gets historical bbos', async t => {
-  const bbos = await t.context.web3data.market.getBbos('eth_btc', {startDate: 1583708400000, endDate:  1583712000000})
+  const bbos = await t.context.web3data.market.getBbos('eth_btc', { startDate: 1583708400000, endDate: 1583712000000 })
 
   // Check existence of historical data properties
   t.true(bbos.hasProp('metadata'))
@@ -175,44 +175,42 @@ test('Successfully gets historical bbos', async t => {
 test('throws exception when calling getBbos without pair param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getBbos()
-  }, { instanceOf: Error, message: NO_PAIR})
+  }, { instanceOf: Error, message: NO_PAIR })
 })
 
 /*********** Test getPrices() ***********/
 const BASE = 'eth'
 test('Successfully gets latest market prices', async t => {
-  const prices = await t.context.web3data.market.getPrices(BASE)
+  const prices = await t.context.web3data.market.getPrices(`${BASE}_usd`)
+  t.true(prices.hasProp('price'))
+  t.true(prices.hasProp('volume'))
 
   // Test the there is a price property that has a float value
-  t.true(Array.isArray(prices.values()))
-  t.true(prices.values()[0].hasProp('price'))
-  t.regex(prices.values()[0].price.toString(), /\d+\.?\d*/)
+  t.regex(prices.price.toString(), /\d+\.?\d*/)
 })
 
 test('Successfully gets latest market prices - with filters', async t => {
-  const prices = await t.context.web3data.market.getPrices(BASE, {quote: 'eur'})
-  t.true(prices.hasProp('eth_eur'))
-  t.true(Array.isArray(Object.values(prices)))
-  t.true(Object.values(prices)[0].hasProp('price'))
+  const prices = await t.context.web3data.market.getPrices(`${BASE}_eur`)
+  t.true(prices.hasProp('price'))
+  t.true(prices.hasProp('volume'))
 
   // Test the there is a price property that has a float value
-  t.regex(Object.values(prices)[0].price.toString(), /\d+\.?\d*/)
+  t.regex(prices.price.toString(), /\d+\.?\d*/)
 })
 
 test('Successfully gets historical market prices', async t => {
-  const prices = await t.context.web3data.market.getPrices(BASE, {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]})
-  t.true(prices.hasProp('eth_usd'))
-  t.true(Array.isArray(prices.eth_usd))
-  t.true(prices.values()[0][0].hasProp('price'))
+  const prices = await t.context.web3data.market.getPrices(`${BASE}_usd`, { startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"] })
+  t.true(Array.isArray(prices.data))
+  t.true(prices.data[0].hasProp('price'))
 
   // Test there is a price property that has a float value
-  t.regex(prices.values()[0][0].price.toString(), /\d+\.?\d*/)
+  t.regex(prices.data[0].price.toString(), /\d+\.?\d*/)
 })
 
 test('throws exception when calling getPrices without base param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getPrices()
-  }, { instanceOf: Error, message: NO_PAIR})
+  }, { instanceOf: Error, message: NO_PAIR })
 })
 
 /*********** Test getTokenPrices() ***********/
@@ -223,7 +221,7 @@ test('Successfully gets current token price', async t => {
 })
 
 test('Successfully gets historical token price', async t => {
-  const tokenPrices = await t.context.web3data.market.getTokenPrices(TOKEN_ADDRESS, {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]})
+  const tokenPrices = await t.context.web3data.market.getTokenPrices(TOKEN_ADDRESS, { startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"] })
   t.true(tokenPrices.hasProp('metadata'))
   t.true(tokenPrices.hasProp('data'))
   t.true(tokenPrices.metadata.columns.includes('priceUSD'))
@@ -232,7 +230,7 @@ test('Successfully gets historical token price', async t => {
 test('throws exception when calling getTokenPrices without pair param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getTokenPrices()
-  }, { instanceOf: Error, message: NO_PAIR})
+  }, { instanceOf: Error, message: NO_PAIR })
 })
 
 /*********** Test getVwap() ***********/
@@ -243,7 +241,7 @@ test('Successfully gets current vwap prices', async t => {
 })
 
 test('Successfully gets current vwap prices - with filters', async t => {
-  const vwap = await t.context.web3data.market.getVwap('eth', {quote: 'usd'})
+  const vwap = await t.context.web3data.market.getVwap('eth', { quote: 'usd' })
 
   // check that it returns data for a single pair
   t.is(Object.keys(vwap).length, 1)
@@ -254,7 +252,7 @@ test('Successfully gets current vwap prices - with filters', async t => {
 test('throws exception when calling getVwap without base param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getVwap()
-  }, { instanceOf: Error, message: NO_PAIR})
+  }, { instanceOf: Error, message: NO_PAIR })
 })
 
 /*********** Test getTickers() ***********/
@@ -265,7 +263,7 @@ test('Successfully gets latest market tickers', async t => {
 })
 
 test('Successfully gets latest market tickers - with filters', async t => {
-  const tickers = await t.context.web3data.market.getTickers('eth_btc', {exchange: 'gdax'})
+  const tickers = await t.context.web3data.market.getTickers('eth_btc', { exchange: 'gdax' })
   // check that it returns data for a single exchange
   t.is(Object.keys(tickers).length, 1)
   t.true(tickers.hasProp('gdax'))
@@ -273,7 +271,7 @@ test('Successfully gets latest market tickers - with filters', async t => {
 })
 
 test('Successfully gets historical market tickers', async t => {
-  const tickers = await t.context.web3data.market.getTickers('eth_btc', {startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"]})
+  const tickers = await t.context.web3data.market.getTickers('eth_btc', { startDate: DATES["2019-10-14"], endDate: DATES["2019-10-15"] })
   t.true(tickers.hasProp('metadata'))
   t.true(tickers.hasProp('data'))
   t.true(tickers.metadata.columns.includes('bid'))
@@ -282,7 +280,7 @@ test('Successfully gets historical market tickers', async t => {
 test('throws exception when calling getTickers without pair param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getTickers()
-  }, { instanceOf: Error, message: NO_PAIR})
+  }, { instanceOf: Error, message: NO_PAIR })
 })
 
 /*********** Test getTrades() ***********/
@@ -294,7 +292,7 @@ test('Successfully gets market trades', async t => {
 })
 
 test('Successfully gets market trades - with filters', async t => {
-  const trades = await t.context.web3data.market.getTrades('eth_usd', {exchange: 'bitstamp'})
+  const trades = await t.context.web3data.market.getTrades('eth_usd', { exchange: 'bitstamp' })
   t.true(trades.hasProp('metadata'))
   t.true(trades.hasProp('data'))
   t.true(trades.data[0].includes('bitstamp'))
@@ -303,19 +301,19 @@ test('Successfully gets market trades - with filters', async t => {
 test('throws exception when calling getTrades without pair param', async t => {
   await t.throwsAsync(async () => {
     await t.context.web3data.market.getTrades()
-  }, { instanceOf: Error, message: NO_PAIR})
+  }, { instanceOf: Error, message: NO_PAIR })
 })
 
 /*********** Test getOrderBooks() ***********/
 test('Successfully gets order book updates', async t => {
-  const orderBooks = await t.context.web3data.market.getOrderBooks('btc_usd', {exchange: 'gdax'})
+  const orderBooks = await t.context.web3data.market.getOrderBooks('btc_usd', { exchange: 'gdax' })
   t.true(orderBooks.hasProp('data'))
   t.true(orderBooks.hasProp('metadata'))
   t.true(orderBooks.metadata.columns.includes('numOrders'))
 })
 
 test('Successfully gets order book updates - with filters', async t => {
-  const orderBooks = await t.context.web3data.market.getOrderBooks('btc_usd', {exchange: 'gdax'})
+  const orderBooks = await t.context.web3data.market.getOrderBooks('btc_usd', { exchange: 'gdax' })
   t.true(orderBooks.hasProp('data'))
   t.true(orderBooks.hasProp('metadata'))
   t.true(orderBooks.metadata.columns.includes('numOrders'))
