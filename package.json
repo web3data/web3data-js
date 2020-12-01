@@ -59,8 +59,6 @@
     "docsify-cli": "^4.4.0",
     "dotenv": "^8.2.0",
     "doxdox": "^3.0.0",
-    "doxdox-parser-dox": "github:taylorjdawson/doxdox-parser-dox",
-    "doxdox-plugin-markdown": "taylorjdawson/doxdox-plugin-markdown",
     "eslint-plugin-jsdoc": "^24.0.0",
     "get-port": "^5.1.1",
     "husky": "^4.2.5",
