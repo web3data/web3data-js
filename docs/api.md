@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.7.3*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.7.4*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
@@ -1248,86 +1248,6 @@ Class for all Litecoin based methods.
 
 
 
-### src/signature.js
-
-
-#### new Signature() 
-
-Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Signature.constructor(web3data) 
-
-Creates an instance of Signature.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data | `object`  | - The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-new Signature(new Web3Data('API_KEY'))
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Signature.getSignature(hash) 
-
-Retrieves detailed information about the specified signature hash.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
-
-
-
-
 ### src/market.js
 
 
@@ -1580,7 +1500,7 @@ const histBbos = await web3data.market.getBbos('eth_btc', {startDate: Math.round
 
 
 
-#### getPrices(base, filterOptions) 
+#### getPrices(base, pair, filterOptions) 
 
 Retrieves the historical prices for the specified asset.
 
@@ -1592,6 +1512,7 @@ Retrieves the historical prices for the specified asset.
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
 | base |  | - The base of a pair to retrieve the price. Example: If pair is "eth_usd", then base is "eth". | &nbsp; |
+| pair |  |  | &nbsp; |
 | filterOptions |  | - The filter options. See [docs](https://docs.amberdata.io/reference#market-prices-latest) for more details. | &nbsp; |
 
 
@@ -1744,46 +1665,16 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 
-### src/token.js
+### src/signature.js
 
 
-#### new Token() 
+#### new Signature() 
 
-Contains methods pertaining to the `/tokens` endpoint of Amberdata's API.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Token.constructor(web3data) 
-
-Creates an instance of Token.
+Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
 
 
 
 
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data | `Web3Data`  | - The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const token = new Token(new Web3data('API_KEY'))
-```
 
 
 ##### Returns
@@ -1793,39 +1684,9 @@ const token = new Token(new Web3data('API_KEY'))
 
 
 
-#### Token.getRankings([filterOptions]) 
+#### Signature.constructor(web3data) 
 
-Retrieves the top ranked tokens by a specific metric.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| filterOptions | `object`  | - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-rankings) for more details. | *Optional* |
-
-
-
-
-##### Examples
-
-```javascript
-const rankings = await web3data.token.getRankings()
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;object&gt;`  The token rankings.
-
-
-
-#### Token.getVolume(hash[, filterOptions]) 
-
-Retrieves the historical volume of token transfers for the specified address.
+Creates an instance of Signature.
 
 
 
@@ -1834,8 +1695,7 @@ Retrieves the historical volume of token transfers for the specified address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The address of the token contract. | &nbsp; |
-| filterOptions | `object`  | - - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-volume) for more details. | *Optional* |
+| web3data | `object`  | - The web3data instance. | &nbsp; |
 
 
 
@@ -1843,20 +1703,20 @@ Retrieves the historical volume of token transfers for the specified address.
 ##### Examples
 
 ```javascript
-
+new Signature(new Web3Data('API_KEY'))
 ```
 
 
 ##### Returns
 
 
-- `Promise.&lt;object&gt;`  The historical volume of token transfers. const tokenVolume = await web3data.token.getVolume('0x06012c8cf97bead5deae237070f9587f8e7a266d').
+- `Void`
 
 
 
-#### Token.getVelocity(hash[, filterOptions]) 
+#### Signature.getSignature(hash) 
 
-Retrieves the historical velocity for the specified address.
+Retrieves detailed information about the specified signature hash.
 
 
 
@@ -1865,8 +1725,7 @@ Retrieves the historical velocity for the specified address.
 
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The address of the token contract. | &nbsp; |
-| filterOptions | `object`  | - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-velocity) for more details. | *Optional* |
+| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
 
 
 
@@ -1874,149 +1733,14 @@ Retrieves the historical velocity for the specified address.
 ##### Examples
 
 ```javascript
-const velocity = await web3data.token.getVelocity('0x06012c8cf97bead5deae237070f9587f8e7a266d');
+const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
 ```
 
 
 ##### Returns
 
 
-- `Promise.&lt;object&gt;`  The historical velocity.
-
-
-
-#### Token.getHolders(hash[, filterOptions]) 
-
-Retrieves the latest or historical token holders for the specified address.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The address for which to retrieve token holders. | &nbsp; |
-| filterOptions | `object`  | - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-velocity) for more details. | *Optional* |
-| filterOptions.holderAddresses | `object`  | - The address for which to retrieve token holders. | *Optional* |
-
-
-
-
-##### Examples
-
-```javascript
-
-// Latest
-const latestHodlers =  await web3data.token.getHolders('0x06012c8cf97bead5deae237070f9587f8e7a266d');
-
-// Historical
-const historicalHodlers =  await web3data.token.getHolders('0x06012c8cf97bead5deae237070f9587f8e7a266d', {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022'});
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;object&gt;`  The latest or historical token holders for the specified address.
-
-
-
-#### Token.getHoldersHistorical(hash[, filterOptions]) 
-
-Retrieves the historical (time series) token holders for the specified token address. If the `holderAddresses` filter is present it will return historical data.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The address for which to retrieve token holders. | &nbsp; |
-| filterOptions | `object`  | - The filters associated with the request. | *Optional* |
-
-
-
-
-##### Examples
-
-```javascript
-const historicalHolders = getHoldersHistorical('0x06012c8cf97bead5deae237070f9587f8e7a266d', {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022'})
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;object&gt;`  The historical (time series) token holders for the specified token address.
-
-
-
-#### Token.getSupplies(hash[, filterOptions]) 
-
-Retrieves the latest or historical token supplies (and derivatives) for the specified address. Use the `startDate` or `endDate` filters to get historical data.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The address for which to retrieve token supplies. | &nbsp; |
-| filterOptions | `object`  | - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-supply-latest) for more details. | *Optional* |
-| filterOptions.startDate | `number`  | - Filter by token prices after this date - The interval can not exceed 6 months (d), or 30 days (h). | *Optional* |
-| filterOptions.endDate | `number`  | - Filter by token prices before this date - The interval can not exceed 6 months (d), or 30 days (h). | *Optional* |
-
-
-
-
-##### Examples
-
-```javascript
-// Latest
-const latestSupplies = await web3data.token.getSupplies('0x06012c8cf97bead5deae237070f9587f8e7a266d')
-// Historical
-const historicalSupplies = await t.context.web3data.token.getSupplies('0x06012c8cf97bead5deae237070f9587f8e7a266d', {startDate: 1571011200, endDate: 1571097600, timeFormat: 'iso'})
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;object&gt;`  The latest or historical token supplies.
-
-
-
-#### Token.getTransfers(hash[, filterOptions]) 
-
-Retrieves all token transfers involving the specified address.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The address for which to retrieve token transfers. | &nbsp; |
-| filterOptions | `object`  | - The filters associated with the request. | *Optional* |
-
-
-
-
-##### Examples
-
-```javascript
-const transfers = await web3data.token.getTransfers('0x06012c8cf97bead5deae237070f9587f8e7a266d', {validationMethod: 'full'})
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;Array&gt;`  All token transfers involving the specified address.
+- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
 
 
 
@@ -2331,6 +2055,417 @@ const metrics = await web3data.transaction.getMetrics()
 
 
 
+### src/token.js
+
+
+#### new Token() 
+
+Contains methods pertaining to the `/tokens` endpoint of Amberdata's API.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Token.constructor(web3data) 
+
+Creates an instance of Token.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data | `Web3Data`  | - The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const token = new Token(new Web3data('API_KEY'))
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Token.getRankings([filterOptions]) 
+
+Retrieves the top ranked tokens by a specific metric.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| filterOptions | `object`  | - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-rankings) for more details. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+const rankings = await web3data.token.getRankings()
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;object&gt;`  The token rankings.
+
+
+
+#### Token.getVolume(hash[, filterOptions]) 
+
+Retrieves the historical volume of token transfers for the specified address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  | - The address of the token contract. | &nbsp; |
+| filterOptions | `object`  | - - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-volume) for more details. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;object&gt;`  The historical volume of token transfers. const tokenVolume = await web3data.token.getVolume('0x06012c8cf97bead5deae237070f9587f8e7a266d').
+
+
+
+#### Token.getVelocity(hash[, filterOptions]) 
+
+Retrieves the historical velocity for the specified address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  | - The address of the token contract. | &nbsp; |
+| filterOptions | `object`  | - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-velocity) for more details. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+const velocity = await web3data.token.getVelocity('0x06012c8cf97bead5deae237070f9587f8e7a266d');
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;object&gt;`  The historical velocity.
+
+
+
+#### Token.getHolders(hash[, filterOptions]) 
+
+Retrieves the latest or historical token holders for the specified address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  | - The address for which to retrieve token holders. | &nbsp; |
+| filterOptions | `object`  | - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-velocity) for more details. | *Optional* |
+| filterOptions.holderAddresses | `object`  | - The address for which to retrieve token holders. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+
+// Latest
+const latestHodlers =  await web3data.token.getHolders('0x06012c8cf97bead5deae237070f9587f8e7a266d');
+
+// Historical
+const historicalHodlers =  await web3data.token.getHolders('0x06012c8cf97bead5deae237070f9587f8e7a266d', {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022'});
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;object&gt;`  The latest or historical token holders for the specified address.
+
+
+
+#### Token.getHoldersHistorical(hash[, filterOptions]) 
+
+Retrieves the historical (time series) token holders for the specified token address. If the `holderAddresses` filter is present it will return historical data.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  | - The address for which to retrieve token holders. | &nbsp; |
+| filterOptions | `object`  | - The filters associated with the request. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+const historicalHolders = getHoldersHistorical('0x06012c8cf97bead5deae237070f9587f8e7a266d', {holderAddresses: '0xbbf0cc1c63f509d48a4674e270d26d80ccaf6022'})
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;object&gt;`  The historical (time series) token holders for the specified token address.
+
+
+
+#### Token.getSupplies(hash[, filterOptions]) 
+
+Retrieves the latest or historical token supplies (and derivatives) for the specified address. Use the `startDate` or `endDate` filters to get historical data.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  | - The address for which to retrieve token supplies. | &nbsp; |
+| filterOptions | `object`  | - The filters associated with the request. See [docs](https://docs.amberdata.io/reference#get-token-supply-latest) for more details. | *Optional* |
+| filterOptions.startDate | `number`  | - Filter by token prices after this date - The interval can not exceed 6 months (d), or 30 days (h). | *Optional* |
+| filterOptions.endDate | `number`  | - Filter by token prices before this date - The interval can not exceed 6 months (d), or 30 days (h). | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+// Latest
+const latestSupplies = await web3data.token.getSupplies('0x06012c8cf97bead5deae237070f9587f8e7a266d')
+// Historical
+const historicalSupplies = await t.context.web3data.token.getSupplies('0x06012c8cf97bead5deae237070f9587f8e7a266d', {startDate: 1571011200, endDate: 1571097600, timeFormat: 'iso'})
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;object&gt;`  The latest or historical token supplies.
+
+
+
+#### Token.getTransfers(hash[, filterOptions]) 
+
+Retrieves all token transfers involving the specified address.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  | - The address for which to retrieve token transfers. | &nbsp; |
+| filterOptions | `object`  | - The filters associated with the request. | *Optional* |
+
+
+
+
+##### Examples
+
+```javascript
+const transfers = await web3data.token.getTransfers('0x06012c8cf97bead5deae237070f9587f8e7a266d', {validationMethod: 'full'})
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;Array&gt;`  All token transfers involving the specified address.
+
+
+
+
+### src/web3data.js
+
+
+#### new Web3DataFactory()  *private method*
+
+Contains common methods used in.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Web3DataFactory.constructor(apiKey, options, blockchainId:, -, -) 
+
+Creates a Web3Data instance.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| apiKey |  | - The Amberdata api key needed to access data. | &nbsp; |
+| options | `object`  | Contains additional configuration options: | &nbsp; |
+| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
+| - |  | baseUrl: the base url of API calls | &nbsp; |
+| - |  | websocketUrl: the websocket url to use | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Web3DataFactory.rawQuery(url) 
+
+Appends the API base url with the endpoint  url. Then sends an
+http request to the Amberdata API endpoint.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| url |  | - The endpoint url with any query/path params if set. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The axios request object.
+
+
+
+#### Web3DataFactory.rpc(method, parameters, params) 
+
+Method used to interact with web3api json rpc endpoints.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| method |  | - The json rpc method to call. | &nbsp; |
+| parameters |  |  | &nbsp; |
+| params |  | - The parameters to the json rpc call. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns the json rpc result.
+
+
+
+#### new Web3Data() 
+
+Class Web3data contains methods for hitting Amberdata's
+API endpoints.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
 ### src/utils.js
 
 
@@ -2518,140 +2653,6 @@ Creates a string in json rpc format.
 
 
 -  The json rpc formatted string.
-
-
-
-
-### src/web3data.js
-
-
-#### new Web3DataFactory()  *private method*
-
-Contains common methods used in.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Web3DataFactory.constructor(apiKey, options, blockchainId:, -, -) 
-
-Creates a Web3Data instance.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| apiKey |  | - The Amberdata api key needed to access data. | &nbsp; |
-| options | `object`  | Contains additional configuration options: | &nbsp; |
-| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
-| - |  | baseUrl: the base url of API calls | &nbsp; |
-| - |  | websocketUrl: the websocket url to use | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Web3DataFactory.rawQuery(url) 
-
-Appends the API base url with the endpoint  url. Then sends an
-http request to the Amberdata API endpoint.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| url |  | - The endpoint url with any query/path params if set. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The axios request object.
-
-
-
-#### Web3DataFactory.rpc(method, parameters, params) 
-
-Method used to interact with web3api json rpc endpoints.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| method |  | - The json rpc method to call. | &nbsp; |
-| parameters |  |  | &nbsp; |
-| params |  | - The parameters to the json rpc call. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns the json rpc result.
-
-
-
-#### new Web3Data() 
-
-Class Web3data contains methods for hitting Amberdata's
-API endpoints.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
 
 
 
