@@ -1,4 +1,4 @@
-# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.7.3*
+# [web3data-js](https://github.com/web3data/web3data-js#readme) *0.7.5*
 
 > A javascript wrapper for accessing amberdata&#x27;s public API.
 
@@ -547,6 +547,26 @@ const metrics = await web3data.address.getMetrics('0x3f5ce5fbfe3e9af3971dd833d26
 
 
 
+### src/bch.js
+
+
+#### new Bch()  *private method*
+
+Class for all Bitcoin Cash based methods.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
 ### src/blockchain.js
 
 
@@ -948,26 +968,6 @@ Retrieves the blocks metrics & statistics. If no DateRange is specified, it will
 
 
 
-### src/bch.js
-
-
-#### new Bch()  *private method*
-
-Class for all Bitcoin Cash based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
 ### src/bsv.js
 
 
@@ -1297,7 +1297,30 @@ Creates an instance of the Market class.
 
 
 
-#### getRankings(filterOptions) 
+#### Market.getEtherPrice() 
+
+Gets the current price of ether in USD.
+
+
+
+
+
+
+##### Examples
+
+```javascript
+const etherPrice = web3data.market.getEtherPrice()
+```
+
+
+##### Returns
+
+
+-  Returns the price of ether price in USD.
+
+
+
+#### Market.getRankings(filterOptions) 
 
 Retrieves the top ranked assets by a specific metric.
 
@@ -1464,7 +1487,7 @@ const histBbos = await web3data.market.getBbos('eth_btc', {startDate: Math.round
 
 
 
-#### getPrices(base, filterOptions) 
+#### getPrices(base, pair, filterOptions) 
 
 Retrieves the historical prices for the specified asset.
 
@@ -1476,6 +1499,7 @@ Retrieves the historical prices for the specified asset.
 | Name | Type | Description |  |
 | ---- | ---- | ----------- | -------- |
 | base |  | - The base of a pair to retrieve the price. Example: If pair is "eth_usd", then base is "eth". | &nbsp; |
+| pair |  |  | &nbsp; |
 | filterOptions |  | - The filter options. See [docs](https://docs.amberdata.io/reference#market-prices-latest) for more details. | &nbsp; |
 
 
@@ -2295,6 +2319,140 @@ const metrics = await web3data.transaction.getMetrics()
 
 
 
+### src/web3data.js
+
+
+#### new Web3DataFactory()  *private method*
+
+Contains common methods used in.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Web3DataFactory.constructor(apiKey, options, blockchainId:, -, -) 
+
+Creates a Web3Data instance.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| apiKey |  | - The Amberdata api key needed to access data. | &nbsp; |
+| options | `object`  | Contains additional configuration options: | &nbsp; |
+| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
+| - |  | baseUrl: the base url of API calls | &nbsp; |
+| - |  | websocketUrl: the websocket url to use | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Web3DataFactory.rawQuery(url) 
+
+Appends the API base url with the endpoint  url. Then sends an
+http request to the Amberdata API endpoint.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| url |  | - The endpoint url with any query/path params if set. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The axios request object.
+
+
+
+#### Web3DataFactory.rpc(method, parameters, params) 
+
+Method used to interact with web3api json rpc endpoints.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| method |  | - The json rpc method to call. | &nbsp; |
+| parameters |  |  | &nbsp; |
+| params |  | - The parameters to the json rpc call. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns the json rpc result.
+
+
+
+#### new Web3Data() 
+
+Class Web3data contains methods for hitting Amberdata's
+API endpoints.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
 ### src/utils.js
 
 
@@ -2482,180 +2640,6 @@ Creates a string in json rpc format.
 
 
 -  The json rpc formatted string.
-
-
-
-
-### src/web3data.js
-
-
-#### new Web3DataFactory()  *private method*
-
-Contains common methods used in.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Web3DataFactory.constructor(apiKey, options, blockchainId:, -, -) 
-
-Creates a Web3Data instance.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| apiKey |  | - The Amberdata api key needed to access data. | &nbsp; |
-| options | `object`  | Contains additional configuration options: | &nbsp; |
-| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
-| - |  | baseUrl: the base url of API calls | &nbsp; |
-| - |  | websocketUrl: the websocket url to use | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Web3DataFactory.rawQuery(url) 
-
-Appends the API base url with the endpoint  url. Then sends an
-http request to the Amberdata API endpoint.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| url |  | - The endpoint url with any query/path params if set. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The axios request object.
-
-
-
-#### Web3DataFactory.rpc(method, parameters, params) 
-
-Method used to interact with web3api json rpc endpoints.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| method |  | - The json rpc method to call. | &nbsp; |
-| parameters |  |  | &nbsp; |
-| params |  | - The parameters to the json rpc call. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns the json rpc result.
-
-
-
-#### new Web3Data() 
-
-Class Web3data contains methods for hitting Amberdata's
-API endpoints.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-### src/zec.js
-
-
-#### new Zec()  *private method*
-
-Class for all ZCash based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-### src/xlm.js
-
-
-#### new Xlm()  *private method*
-
-Class for all Stellar based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
 
 
 
@@ -3141,6 +3125,46 @@ Sends unsubscription message to the websocket connection.
 ```javascript
 
 ```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+### src/xlm.js
+
+
+#### new Xlm()  *private method*
+
+Class for all Stellar based methods.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+### src/zec.js
+
+
+#### new Zec()  *private method*
+
+Class for all ZCash based methods.
+
+
+
+
 
 
 ##### Returns

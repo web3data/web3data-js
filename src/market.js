@@ -27,10 +27,10 @@ class Market {
    * @public
    * @example const etherPrice = web3data.market.getEtherPrice()
    */
-  async getEtherPrice() {
+  getEtherPrice() {
     return get(this.web3data, {
-      endpoint: ENDPOINT + '/prices/eth/latest'
-    }).then((response) => response.payload.eth_usd.price, onError)
+      endpoint: ENDPOINT + '/spot/prices/pairs/eth_usd/latest'
+    }).then((response) => response.payload.price, onError)
   }
 
   /**
@@ -214,6 +214,7 @@ class Market {
    * Retrieves the historical prices for the specified asset.
    *
    * @param base - The base of a pair to retrieve the price. Example: If pair is "eth_usd", then base is "eth".
+   * @param pair
    * @param [filterOptions] - The filter options. See [docs](https://docs.amberdata.io/reference#market-prices-latest) for more details.
    * @returns The latest or historical market prices indexed by pair.
    * @example // Latest
@@ -222,13 +223,13 @@ class Market {
    * // Historical (1 day ago)
    * const histPrices = await web3data.market.getPrices('eth', {startDate:  Math.round((Date.now() - 86400000) /1000)})
    */
-  getPrices(base, filterOptions = {}) {
-    throwIf(is.undefined(base), NO_MARKET_PAIR)
+  getPrices(pair, filterOptions = {}) {
+    throwIf(is.undefined(pair), NO_MARKET_PAIR)
     const subendpoint =
       filterOptions.startDate || filterOptions.endDate ? 'historical' : 'latest'
     return get(this.web3data, {
-      pathParam: base,
-      endpoint: `${ENDPOINT}/prices`,
+      pathParam: pair,
+      endpoint: `${ENDPOINT}/spot/prices/pairs`,
       subendpoint,
       filterOptions
     }).then(onFulfilled, onError)
