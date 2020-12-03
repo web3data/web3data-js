@@ -1,6 +1,6 @@
 {
   "name": "web3data-js",
-  "version": "0.7.4",
+  "version": "0.7.5",
   "description": "A javascript wrapper for accessing amberdata's public API.",
   "main": "index.js",
   "browser": "dist/web3data.min.js",
@@ -76,13 +76,13 @@
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-terser": "^5.3.0",
-    "superstatic": "^6.0.4",
-    "xo": "^0.29.1"
+    "superstatic": "^7.0.1",
+    "xo": "^0.35.0"
   },
   "dependencies": {
     "axios": "^0.19.2",
     "isomorphic-ws": "^4.0.1",
-    "uuid": "^7.0.3",
+    "uuid": "^8.3.1",
     "ws": "^7.2.3"
   },
   "publishConfig": {

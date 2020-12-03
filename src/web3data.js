@@ -114,7 +114,7 @@ http request to the Amberdata API endpoint.
       )
       .then(
         (response) => response.data,
-        (response) => response.response.data
+        (error) => error.response.data
       )
   }
 }

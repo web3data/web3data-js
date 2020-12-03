@@ -1,4 +1,4 @@
-const _uuid = require('uuid/v5')
+const _uuid = require('uuid')
 const {ETH_METHODS} = require('./constants')
 
 /**
@@ -99,7 +99,7 @@ is.notInObject = (object, property) => !is.inObject(object, property)
  * @private
  */
 const uuid = (data) =>
-  _uuid(JSON.stringify(data), 'ccfeca02-f0e9-4433-a740-b830cceb3d2d')
+  _uuid.v5(JSON.stringify(data), 'ccfeca02-f0e9-4433-a740-b830cceb3d2d')
 
 /**
  * Returns an array of methods defined on the object.

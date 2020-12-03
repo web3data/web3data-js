@@ -27,7 +27,7 @@ class Market {
    * @public
    * @example const etherPrice = web3data.market.getEtherPrice()
    */
-  async getEtherPrice() {
+  getEtherPrice() {
     return get(this.web3data, {
       endpoint: ENDPOINT + '/spot/prices/pairs/eth_usd/latest'
     }).then((response) => response.payload.price, onError)
@@ -66,7 +66,7 @@ class Market {
    * // Multiple features, filter by pair
    * await web3data.market.getFeatures(['exchanges', 'tickers'], {pair: 'btc_usd'})
    */
-  getFeatures(features = FEATURES, filterOptions = {}) {
+  async getFeatures(features = FEATURES, filterOptions = {}) {
     // Force feature to be array but allows non-array input
     features = Array.isArray(features) ? features : [features]
 
@@ -103,9 +103,13 @@ class Market {
     })
 
     // Returns array of promises that once resolved are merged into a single object
-    return Promise.all([...features]).then((data) =>
-      data.reduce((accumObject, curObject) => ({...accumObject, ...curObject}))
-    )
+    let final = {}
+    const all = await Promise.all([...features])
+    all.map((a) => {
+      final = {...final, ...a}
+      return a
+    })
+    return final
   }
 
   /**

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,6 +41,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <div id='input'>
@@ -70,6 +72,7 @@
         <option value="getTrades">Trades</option>
         <option value="getBlockNumber">Block Latest</option>
         <option value="getTransaction">Single Transaction</option>
+        <option value="getFeatures">Market Features</option>
       </select>
     </div>
     <div id='input'>
@@ -87,7 +90,8 @@
       <button onClick="runBlockchain('xlm')" id="goBtn">Blockchain Method</button>
     </div>
     <div id="output">
-      <p>Results<p>
+      <p>Results
+      <p>
     </div>
   </div>
   <script type="text/javascript" src="../dist/web3data.min.js"></script>
@@ -116,7 +120,7 @@
       //   console.log('block NUMBER', data)
       //   setResult(data)
       // })
-      web3data.on({eventName: 'transaction'}, data => {
+      web3data.on({ eventName: 'transaction' }, data => {
         console.log('transaction', data)
         setResult(data)
       })
@@ -131,6 +135,7 @@
       const parentMethod = document.querySelector('#parent_method').value
       const childMethod = document.querySelector('#child_method').value
       const web3data = new Web3Data(apiKey, { blockchainId })
+      console.log('runMethod', parentMethod, childMethod, params, query)
 
       if (web3data[parentMethod] && web3data[parentMethod][childMethod]) {
         web3data[parentMethod][childMethod](params, queryObj).then(setResult, (err) => {
@@ -140,7 +145,7 @@
     }
 
     // run specific blockchain things
-    const activeBlockchain = 'xlm'
+    const activeBlockchain = 'eth'
     function runBlockchain(namespace) {
       namespace = namespace || activeBlockchain
       const apiKey = document.querySelector('#apikey-input').value
@@ -160,4 +165,5 @@
     }
   </script>
 </body>
+
 </html>

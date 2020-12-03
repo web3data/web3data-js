@@ -8,7 +8,7 @@ import {terser} from 'rollup-plugin-terser'
 
 import pkg from './package.json'
 
-export default {
+const config = {
   input: 'index.js',
   output: {
     name: 'web3data',
@@ -34,3 +34,5 @@ export default {
     terser()
   ]
 }
+
+export default config
