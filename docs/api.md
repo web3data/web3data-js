@@ -1228,106 +1228,6 @@ Class for all Ethereum based methods.
 
 
 
-### src/ltc.js
-
-
-#### new Ltc()  *private method*
-
-Class for all Litecoin based methods.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-
-### src/signature.js
-
-
-#### new Signature() 
-
-Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Signature.constructor(web3data) 
-
-Creates an instance of Signature.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| web3data | `object`  | - The web3data instance. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-new Signature(new Web3Data('API_KEY'))
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Signature.getSignature(hash) 
-
-Retrieves detailed information about the specified signature hash.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
-```
-
-
-##### Returns
-
-
-- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
-
-
-
-
 ### src/market.js
 
 
@@ -1406,42 +1306,6 @@ sortType: "uniqueAddresses"
 
 
 -  The market rankings data and total number of records.
-
-
-
-#### getFeatures(features, filterOptions) 
-
-Retrieves the list of supported details by feature.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| features |  | - The features for which to get supported details. Features: `pairs`, `exchanges`, `ohlcv`, `prices`, `tickers`. | &nbsp; |
-| filterOptions |  | - The filter options. | &nbsp; |
-| filterOptions.exchange |  | - Filter by exchange. | &nbsp; |
-| filterOptions.pair |  | filter] - By specific pairs. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-// Single feature, filter by exchange await web3data.market.getFeatures('pairs', {exchange: 'gdax'})
-
-// Multiple features, filter by pair
-await web3data.market.getFeatures(['exchanges', 'tickers'], {pair: 'btc_usd'})
-```
-
-
-##### Returns
-
-
--  The list of supported details by feature.
 
 
 
@@ -1740,6 +1604,106 @@ const batTokenAddress = web3data.market.getAssetAddresses('bat') const assetAddr
 
 
 -  The address(es) of the asset(s).
+
+
+
+
+### src/ltc.js
+
+
+#### new Ltc()  *private method*
+
+Class for all Litecoin based methods.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
+### src/signature.js
+
+
+#### new Signature() 
+
+Contains methods pertaining to the `/signatures` endpoint of Amberdata's API.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Signature.constructor(web3data) 
+
+Creates an instance of Signature.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| web3data | `object`  | - The web3data instance. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+new Signature(new Web3Data('API_KEY'))
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Signature.getSignature(hash) 
+
+Retrieves detailed information about the specified signature hash.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| hash | `string`  | - The (keccak 256) of the signature. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+const signatureDetails = await web3data.signature.getSignature('0xe2f0a05a')
+```
+
+
+##### Returns
+
+
+- `Promise.&lt;Array&gt;`  Information pertaining to the specified signature hash.
 
 
 
@@ -2331,6 +2295,140 @@ const metrics = await web3data.transaction.getMetrics()
 
 
 
+### src/web3data.js
+
+
+#### new Web3DataFactory()  *private method*
+
+Contains common methods used in.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Web3DataFactory.constructor(apiKey, options, blockchainId:, -, -) 
+
+Creates a Web3Data instance.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| apiKey |  | - The Amberdata api key needed to access data. | &nbsp; |
+| options | `object`  | Contains additional configuration options: | &nbsp; |
+| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
+| - |  | baseUrl: the base url of API calls | &nbsp; |
+| - |  | websocketUrl: the websocket url to use | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+#### Web3DataFactory.rawQuery(url) 
+
+Appends the API base url with the endpoint  url. Then sends an
+http request to the Amberdata API endpoint.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| url |  | - The endpoint url with any query/path params if set. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  The axios request object.
+
+
+
+#### Web3DataFactory.rpc(method, parameters, params) 
+
+Method used to interact with web3api json rpc endpoints.
+
+
+
+
+##### Parameters
+
+| Name | Type | Description |  |
+| ---- | ---- | ----------- | -------- |
+| method |  | - The json rpc method to call. | &nbsp; |
+| parameters |  |  | &nbsp; |
+| params |  | - The parameters to the json rpc call. | &nbsp; |
+
+
+
+
+##### Examples
+
+```javascript
+
+```
+
+
+##### Returns
+
+
+-  Returns the json rpc result.
+
+
+
+#### new Web3Data() 
+
+Class Web3data contains methods for hitting Amberdata's
+API endpoints.
+
+
+
+
+
+
+##### Returns
+
+
+- `Void`
+
+
+
+
 ### src/utils.js
 
 
@@ -2518,140 +2616,6 @@ Creates a string in json rpc format.
 
 
 -  The json rpc formatted string.
-
-
-
-
-### src/web3data.js
-
-
-#### new Web3DataFactory()  *private method*
-
-Contains common methods used in.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Web3DataFactory.constructor(apiKey, options, blockchainId:, -, -) 
-
-Creates a Web3Data instance.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| apiKey |  | - The Amberdata api key needed to access data. | &nbsp; |
-| options | `object`  | Contains additional configuration options: | &nbsp; |
-| blockchainId: |  | specifies the blockchain to get data from | &nbsp; |
-| - |  | baseUrl: the base url of API calls | &nbsp; |
-| - |  | websocketUrl: the websocket url to use | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
-- `Void`
-
-
-
-#### Web3DataFactory.rawQuery(url) 
-
-Appends the API base url with the endpoint  url. Then sends an
-http request to the Amberdata API endpoint.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| url |  | - The endpoint url with any query/path params if set. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  The axios request object.
-
-
-
-#### Web3DataFactory.rpc(method, parameters, params) 
-
-Method used to interact with web3api json rpc endpoints.
-
-
-
-
-##### Parameters
-
-| Name | Type | Description |  |
-| ---- | ---- | ----------- | -------- |
-| method |  | - The json rpc method to call. | &nbsp; |
-| parameters |  |  | &nbsp; |
-| params |  | - The parameters to the json rpc call. | &nbsp; |
-
-
-
-
-##### Examples
-
-```javascript
-
-```
-
-
-##### Returns
-
-
--  Returns the json rpc result.
-
-
-
-#### new Web3Data() 
-
-Class Web3data contains methods for hitting Amberdata's
-API endpoints.
-
-
-
-
-
-
-##### Returns
-
-
-- `Void`
 
 
 
@@ -3147,12 +3111,12 @@ Sends unsubscription message to the websocket connection.
 
 
 
-### src/xlm.js
+### src/zec.js
 
 
-#### new Xlm()  *private method*
+#### new Zec()  *private method*
 
-Class for all Stellar based methods.
+Class for all ZCash based methods.
 
 
 
@@ -3167,12 +3131,12 @@ Class for all Stellar based methods.
 
 
 
-### src/zec.js
+### src/xlm.js
 
 
-#### new Zec()  *private method*
+#### new Xlm()  *private method*
 
-Class for all ZCash based methods.
+Class for all Stellar based methods.
 
 
 

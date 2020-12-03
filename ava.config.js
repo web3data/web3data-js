@@ -1,4 +1,4 @@
-export default {
+const config = {
   files: ['test/**.test.js'],
   ignoredByWatcher: ['dist/**/*'],
   cache: true,
@@ -7,3 +7,5 @@ export default {
   babel: true,
   inherit: true
 }
+
+export default config
