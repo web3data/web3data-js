@@ -64,7 +64,10 @@ class Web3DataFactory {
       websocketUrl: options.websocketUrl ? options.websocketUrl : null
     }
 
-    this.baseUrl = options.baseUrl ? options.baseUrl : DEFAULT_BASE_URL
+    this.baseUrl = options.baseUrl || DEFAULT_BASE_URL
+    this.rpcUrl =
+      options.rpcUrl ||
+      `${DEFAULT_RPC_URL}?${API_KEY_HEADER}=${this.apiKey}&${BLOCKCHAIN_ID_HEADER}=${this.blockchainId}`
 
     /* Web3Data composite modules */
     this.address = new Address(this)
@@ -105,13 +108,9 @@ http request to the Amberdata API endpoint.
   rpc(method, parameters = []) {
     throwIf(!method, ERROR_RPC_NO_METHOD)
     return axios
-      .post(
-        `${DEFAULT_RPC_URL}?${API_KEY_HEADER}=${this.apiKey}&${BLOCKCHAIN_ID_HEADER}=${this.blockchainId}`,
-        formatJsonRpc({method, params: parameters}),
-        {
-          headers: this.headers
-        }
-      )
+      .post(this.rpcUrl, formatJsonRpc({method, params: parameters}), {
+        headers: this.headers
+      })
       .then(
         (response) => response.data,
         (error) => error.response.data
