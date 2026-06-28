@@ -1,6 +1,19 @@
 import Web3Data from '../src/web3data'
 import test from 'ava'
-import {API_KEY_HEADER, DEFAULT_BASE_URL, BLOCKCHAIN_ID_HEADER} from "../src/constants";
+import {
+    API_KEY_HEADER,
+    DEFAULT_BASE_URL,
+    BLOCKCHAIN_ID_HEADER,
+    BLOCKCHAIN_ID_ETHEREUM_MAINNET,
+    BLOCKCHAIN_ID_ETHEREUM_RINKEBY,
+    BLOCKCHAIN_ID_BITCOIN,
+    BLOCKCHAIN_ID_BITCOIN_CASH,
+    BLOCKCHAIN_ID_BITCOIN_SV,
+    BLOCKCHAIN_ID_LITECOIN,
+    BLOCKCHAIN_ID_RIPPLE,
+    BLOCKCHAIN_ID_ZCASH,
+    BLOCKCHAIN_ID_STELLAR
+} from "../src/constants";
 
 import {
     TOKEN_ADDRESS,
@@ -51,6 +64,18 @@ test('web3data can add alternative baseUrl', t => {
 test('web3data should accept a blockchain id & add to headers', t => {
     let web3data = getNewWeb3DataInstance({'blockchainId': BLOCKCHAIN_ID})
     t.is(web3data.headers[BLOCKCHAIN_ID_HEADER], BLOCKCHAIN_ID)
+});
+
+test('Web3data exposes blockchain id constants as public class properties', t => {
+    t.is(Web3Data.BLOCKCHAIN_ID_ETHEREUM_MAINNET, BLOCKCHAIN_ID_ETHEREUM_MAINNET)
+    t.is(Web3Data.BLOCKCHAIN_ID_ETHEREUM_RINKEBY, BLOCKCHAIN_ID_ETHEREUM_RINKEBY)
+    t.is(Web3Data.BLOCKCHAIN_ID_BITCOIN, BLOCKCHAIN_ID_BITCOIN)
+    t.is(Web3Data.BLOCKCHAIN_ID_BITCOIN_CASH, BLOCKCHAIN_ID_BITCOIN_CASH)
+    t.is(Web3Data.BLOCKCHAIN_ID_BITCOIN_SV, BLOCKCHAIN_ID_BITCOIN_SV)
+    t.is(Web3Data.BLOCKCHAIN_ID_LITECOIN, BLOCKCHAIN_ID_LITECOIN)
+    t.is(Web3Data.BLOCKCHAIN_ID_RIPPLE, BLOCKCHAIN_ID_RIPPLE)
+    t.is(Web3Data.BLOCKCHAIN_ID_ZCASH, BLOCKCHAIN_ID_ZCASH)
+    t.is(Web3Data.BLOCKCHAIN_ID_STELLAR, BLOCKCHAIN_ID_STELLAR)
 });
 
 test('Web3data rawQuery accepts url and returns valid response', async t => {
